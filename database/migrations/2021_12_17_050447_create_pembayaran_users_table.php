@@ -15,7 +15,7 @@ class CreatePembayaranUsersTable extends Migration
     {
         Schema::create('pembayaran_users', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->bigInteger('user_id');
             $table->string('bank');
             $table->string('no_rekening');
             $table->timestamps();

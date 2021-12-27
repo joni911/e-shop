@@ -15,6 +15,7 @@ class CreateDealBarangsTable extends Migration
     {
         Schema::create('deal_barangs', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('order_id');
             $table->decimal('harga');
             $table->longText('keterangan');
             $table->timestamps();

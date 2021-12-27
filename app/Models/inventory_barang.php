@@ -11,6 +11,7 @@ class inventory_barang extends Model
     use HasFactory,SoftDeletes;
 
     protected $fillable = [
+        'barang_id',
         'jumlah'
     ];
     protected $dates = ['deleted_at'];

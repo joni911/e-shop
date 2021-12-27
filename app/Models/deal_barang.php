@@ -11,6 +11,7 @@ class deal_barang extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'order_id',
         'harga',
         'keterangan'
     ];
@@ -19,5 +20,10 @@ class deal_barang extends Model
     public function barang()
     {
         return $this->belongsTo('App\Models\barang');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo('App\Model\order');
     }
 }

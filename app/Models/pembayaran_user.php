@@ -10,6 +10,16 @@ class pembayaran_user extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'user_id',
+        'bank',
+        'no_rekening'
+    ];
     protected $dates = ['deleted_at'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\Model\User');
+    }
 
 }

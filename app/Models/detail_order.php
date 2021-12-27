@@ -22,4 +22,10 @@ class detail_order extends Model
     {
         return $this->belongsTo('App\Model\order');
     }
+
+    public function barang()
+    {
+        return $this->belongsTo('App\Model\barang');
+    }
+
 }

@@ -247,11 +247,15 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
+            'text'        => 'Barang',
+            'url'         => 'barang',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
+        ],
+        [
+            'text' => 'Katagori',
+            'url'  => 'katagori'
         ],
         ['header' => 'account_settings'],
         [
@@ -269,6 +273,10 @@ return [
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
+                    'text' => 'x',
+                    'url' => '#'
+                ],
+                [
                     'text' => 'level_one',
                     'url'  => '#',
                 ],
@@ -277,6 +285,14 @@ return [
                     'url'     => '#',
                     'submenu' => [
                         [
+                            'text' => 'y',
+                            'url' => '#',
+                            'submenu' => [
+                                'text' => 'yy',
+                                'url' => '#'
+                            ]
+                        ],
+                        [
                             'text' => 'level_two',
                             'url'  => '#',
                         ],
@@ -284,6 +300,10 @@ return [
                             'text'    => 'level_two',
                             'url'     => '#',
                             'submenu' => [
+                                [
+                                    'text' => 'z',
+                                    'url' => '#'
+                                ],
                                 [
                                     'text' => 'level_three',
                                     'url'  => '#',

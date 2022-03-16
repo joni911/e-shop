@@ -22,7 +22,7 @@ class barang extends Model
 
     public function katagori_barang()
     {
-        return $this->hasOne('App\Models\katagori_barang');
+        return $this->belongsTo('App\Models\katagori_barang');
     }
 
     public function inventory_barang()

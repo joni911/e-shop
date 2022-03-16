@@ -49,6 +49,7 @@ class barangController extends Controller
         $store->nama = $request->nama;
         $store->keterangan = $request->keterangan;
         $store->katagori_barang_id = $request->katagori;
+        $store->deskripsi = $request->deskripsi;
         $store->harga = $request->harga;
         $store->save();
 
@@ -128,11 +129,13 @@ class barangController extends Controller
      */
     public function edit($id)
     {
+        $katagori = katagori_barang::get();
+
         $barang = barang::findorfail($id);
 
         // return $barang;
+        return view('Barang.create',['katagori'=>$katagori,'barang'=>$barang]);
 
-        return view('Barang.show',['barang'=>$barang]);
     }
 
     /**
@@ -145,6 +148,7 @@ class barangController extends Controller
     public function update(Request $request, $id)
     {
         //
+        return $request;
     }
 
     /**

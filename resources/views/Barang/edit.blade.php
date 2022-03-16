@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Create Barang')
+@section('title', 'Edit Barang')
 
 @section('content_header')
 
@@ -13,12 +13,13 @@
 <body>
     <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Tambah Barang</h3>
+          <h3 class="card-title">Edit Barang</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
 
-        <form action="{{ route('barang.store') }}" enctype="multipart/form-data" method="post">
+        <form action="{{ route('barang.update') }}" enctype="multipart/form-data" method="post">
+            
             @csrf
             @include('Barang.part.form')
           <!-- /.card-body -->

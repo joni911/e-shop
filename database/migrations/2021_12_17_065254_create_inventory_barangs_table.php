@@ -15,7 +15,7 @@ class CreateInventoryBarangsTable extends Migration
     {
         Schema::create('inventory_barangs', function (Blueprint $table) {
             $table->id();
-            $table->bigIncrements('barang_id');
+            $table->bigInteger('barang_id');
             $table->integer('jumlah');
             $table->timestamps();
             $table->softDeletes();

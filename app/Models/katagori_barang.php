@@ -18,6 +18,6 @@ class katagori_barang extends Model
 
     public function barang()
     {
-        return $this->belongsTo('App\Models\barang');
+        return $this->hasMany('App\Models\barang');
     }
 }

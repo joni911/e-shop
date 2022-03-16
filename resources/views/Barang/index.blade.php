@@ -28,7 +28,7 @@
                     <td> <a href="{{ route('barang.show', [$b->id]) }}">{{$b->nama}}</a></td>
                     <td>{{$b->inventory_barang->jumlah}}</td>
                     <td>
-                        <a name="" id="" class="btn btn-primary" href="{{ route('barang.show', [$b->id]) }}" role="button">Edit</a>
+                        <a name="" id="" class="btn btn-primary" href="{{ route('barang.edit', [$b->id]) }}" role="button">Edit</a>
                     </td>
                 </tr>
             @empty

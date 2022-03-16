@@ -15,6 +15,13 @@ Dashboard
 
 Welcome to this beautiful admin panel.
 
+{{-- @if((new \Jenssegers\Agent\Agent())->isMobile())
+    <p><a href="{{ route('barang.index') }}">barang</a></p>
+    <p>Menu 2</p>
+@endif --}}
+
+
+
 @stop
 
 @section('css')

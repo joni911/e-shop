@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\barangController;
 use App\Http\Controllers\katagori_barangController;
+use App\Http\Controllers\komentarController;
 use App\Models\katagori_barang;
 use Illuminate\Support\Facades\Route;
 
@@ -28,5 +29,6 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::get('/CreatePhoto',[barangController::class,'create_photo'])->name('photo.buat');
     Route::post('/photoStore',[barangController::class,'photoStore'])->name('photo.simpan');
     Route::resource('/katagori', katagori_barangController::class);
+    Route::resource('komentar',komentarController::class);
 });
 

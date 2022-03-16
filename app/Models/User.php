@@ -55,4 +55,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\alamat_user');
     }
+    public function komentar()
+    {
+        # code...
+        return $this->hasMany('App\Models\komentar');
+
+    }
 }

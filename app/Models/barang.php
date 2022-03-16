@@ -14,6 +14,7 @@ class barang extends Model
         'katagori_barang_id',
         'nama',
         'keterangan',
+        'deskripsi',
         'harga'
     ];
     protected $dates = ['deleted_at'];
@@ -32,5 +33,16 @@ class barang extends Model
     public function deal_barang()
     {
         return $this->hasOne('App\Models\deal_barang');
+    }
+
+    public function barang_photo()
+    {
+        return $this->hasMany('App\Models\barang_photo');
+    }
+    public function komentar()
+    {
+        # code...
+        return $this->hasMany('App\Models\komentar');
+
     }
 }

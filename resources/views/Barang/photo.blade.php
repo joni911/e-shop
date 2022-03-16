@@ -18,20 +18,35 @@
         <!-- /.card-header -->
         <!-- form start -->
 
+        <table class="table">
+            <tbody>
+                  <?php
+                      $int = 0;
+                  ?>
+                  <tr>
+                  @foreach ($barang->barang_photo as $b)
+                      <td><img src="/{{$b->foto}}" alt="" width="120" height="160" srcset=""></td>
+                  @endforeach
+                </tr>
+            </tbody>
+        </table>
         <form action="{{ route('photo.simpan') }}" enctype="multipart/form-data" method="post">
             @csrf
+          <input type="text" class="form-control" name="id" id="" aria-describedby="helpId" placeholder="" value="{{$barang->id}}" hidden>
           <div class="form-group">
             <label for="">Foto Barang</label>
-            <input type="file" class="form-control-file" name="" id="" placeholder="" aria-describedby="fileHelpId">
-            <small id="fileHelpId" class="form-text text-muted">Help text</small>
+            <input type="file" class="form-control-file" name="file" id="file" placeholder="" aria-describedby="fileHelpId">
           </div>
           <!-- /.card-body -->
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
+            <a name="" id="" class="btn btn-warning" href="{{ route('barang.index') }}" role="button">Selesai</a>
           </div>
         </form>
       </div>
+
+
 </body>
 
 @stop

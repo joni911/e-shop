@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\jenis_pengadaan;
 use Illuminate\Http\Request;
 
 class jenis_pengadaanController extends Controller
@@ -13,7 +14,9 @@ class jenis_pengadaanController extends Controller
      */
     public function index()
     {
-        //
+        $data = jenis_pengadaan::paginate(10);
+
+        return view('jenis_pengadaan.index',['data'=>$data]);
     }
 
     /**
@@ -24,6 +27,7 @@ class jenis_pengadaanController extends Controller
     public function create()
     {
         //
+        return view('jenis_pengadaan.create');
     }
 
     /**
@@ -35,6 +39,16 @@ class jenis_pengadaanController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+			'nama' => 'required'
+
+		]);
+
+        $data = new jenis_pengadaan();
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('jenis_pengadaan.index');
     }
 
     /**
@@ -56,7 +70,9 @@ class jenis_pengadaanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = jenis_pengadaan::findorfail($id);
+
+        return view('jenis_pengadaan.edit',['data'=>$data]);
     }
 
     /**
@@ -69,6 +85,15 @@ class jenis_pengadaanController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+			'nama' => 'required'
+		]);
+
+        $data = jenis_pengadaan::findorfail($id);
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('jenis_pengadaan.index');
     }
 
     /**
@@ -79,6 +104,9 @@ class jenis_pengadaanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = jenis_pengadaan::findorfail($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

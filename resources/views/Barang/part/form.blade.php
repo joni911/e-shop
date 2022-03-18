@@ -8,7 +8,8 @@
 
                   <select class="form-control" name="katagori" id="katagori">
 
-                      <option value="{{$barang->katagori_barang_id ?? ""}}">{{$barang->katagori_barang->nama}}</option>
+                      <option value="{{$barang->katagori_barang_id ?? ""}}">{{$barang->katagori_barang->nama ?? "Pilih Katagori"}}</option>
+
 
 
                     @foreach ($katagori as $k)
@@ -22,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label for="harga">Jumlah</label>
-                <input type="number" class="form-control" id='jumlah' name='jumlah' placeholder="Masukkan nama Barang" value="{{$barang->jumlah ?? "0"}}">
+                <input type="number" class="form-control" id='jumlah' name='jumlah' placeholder="Masukkan nama Barang" value="{{$barang->inventory_barang->jumlah ?? "0"}}">
             </div>
             <div class="form-group">
               <label for="">Keterangan</label>

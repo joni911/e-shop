@@ -18,8 +18,8 @@
         <!-- /.card-header -->
         <!-- form start -->
 
-        <form action="{{ route('barang.update') }}" enctype="multipart/form-data" method="post">
-            
+        <form action="{{ route('barang.update', [$barang->id]) }}" enctype="multipart/form-data" method="post">
+            @method('put')
             @csrf
             @include('Barang.part.form')
           <!-- /.card-body -->

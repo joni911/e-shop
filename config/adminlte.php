@@ -257,11 +257,11 @@ return [
             'text' => 'Katagori',
             'url'  => 'katagori'
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'Pengajuan'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Pengajuan',
+            'url'  => 'pengajuan',
+            'icon' => 'fas fa-fw fa-people-carry'
         ],
         [
             'text' => 'change_password',

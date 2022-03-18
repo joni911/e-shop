@@ -45,6 +45,14 @@ class barangController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+			'nama' => 'required',
+            'keterangan' => 'required',
+            'katagori' => 'required',
+            'deskripsi' => 'required',
+            'harga' => 'required'
+		]);
+
         $store = new barang;
         $store->nama = $request->nama;
         $store->keterangan = $request->keterangan;
@@ -69,6 +77,15 @@ class barangController extends Controller
         // return $barang->barang_photo;
 
         return view('Barang.photo',['barang'=>$barang]);
+    }
+    public function edit_photo($id)
+    {
+        $barang = barang::findorfail($id);
+
+        // return $barang->barang_photo;
+
+        return view('Barang.photo',['barang'=>$barang]);
+
     }
 
     /**
@@ -134,9 +151,10 @@ class barangController extends Controller
         $barang = barang::findorfail($id);
 
         // return $barang;
-        return view('Barang.create',['katagori'=>$katagori,'barang'=>$barang]);
+        return view('Barang.edit',['katagori'=>$katagori,'barang'=>$barang]);
 
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -148,7 +166,30 @@ class barangController extends Controller
     public function update(Request $request, $id)
     {
         //
-        return $request;
+        // return 'update';
+        $this->validate($request, [
+			'nama' => 'required',
+            'keterangan' => 'required',
+            'katagori' => 'required',
+            'deskripsi' => 'required',
+            'harga' => 'required'
+		]);
+
+        $store = barang::findorfail($id);
+        $store->nama = $request->nama;
+        $store->keterangan = $request->keterangan;
+        $store->katagori_barang_id = $request->katagori;
+        $store->deskripsi = $request->deskripsi;
+        $store->harga = $request->harga;
+        $store->save();
+
+        $inv = $store->inventory_barang;
+        $inv->jumlah = $request->jumlah;
+        $inv->save();
+
+
+        return redirect()->route('photo.edit',['id' => $id]);
+
     }
 
     /**

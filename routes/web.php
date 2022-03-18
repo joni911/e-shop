@@ -27,6 +27,7 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('/barang',barangController::class);
     Route::get('/CreatePhoto',[barangController::class,'create_photo'])->name('photo.buat');
+    Route::get('/foto/barang/{id}',[barangController::class,'edit_photo'])->name('photo.edit');
     Route::post('/photoStore',[barangController::class,'photoStore'])->name('photo.simpan');
     Route::resource('/katagori', katagori_barangController::class);
     Route::resource('komentar',komentarController::class);

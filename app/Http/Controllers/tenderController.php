@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\jenis_kontrak;
+use App\Models\jenis_pengadaan;
+use App\Models\metode_pengadaan;
+use App\Models\status_tender;
+use App\Models\tender;
 use Illuminate\Http\Request;
 
 class tenderController extends Controller
@@ -14,7 +19,9 @@ class tenderController extends Controller
     public function index()
     {
         //
-        
+        $data = tender::paginate(10);
+
+        return view('tender.index',['data'=>$data]);
     }
 
     /**
@@ -25,6 +32,18 @@ class tenderController extends Controller
     public function create()
     {
         //
+        $jk = jenis_kontrak::get();
+        $jp = jenis_pengadaan::get();
+        $mp = metode_pengadaan::get();
+        $st = status_tender::get();
+        return view('tender.create',
+        [
+            'kontrak'=>$jk,
+            'pengadaan'=>$jp,
+            'metode'=>$mp,
+            'status'=>$st
+        ]);
+
     }
 
     /**
@@ -36,7 +55,28 @@ class tenderController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+			'nama' => 'required',
+            'jk' => 'required',
+            'jp'  => 'required',
+            'mp' => 'required',
+            'klpd' => 'required',
+            'lokasi' => 'required',
+            'dana' => 'required',
+            'satuan_kerja' => 'required',
+            'tanggal' => 'required',
+            'nilai' => 'required',
+            'hps' => 'required',
+            'status' => 'required',
+		]);
+
+        $data = new tender();
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('tender.index');
     }
+    
 
     /**
      * Display the specified resource.
@@ -58,6 +98,9 @@ class tenderController extends Controller
     public function edit($id)
     {
         //
+        $data = tender::findorfail($id);
+
+        return view('tender.edit',['data'=>$data]);
     }
 
     /**
@@ -70,6 +113,15 @@ class tenderController extends Controller
     public function update(Request $request, $id)
     {
         //
+         $this->validate($request, [
+			'nama' => 'required'
+		]);
+
+        $data = tender::findorfail($id);
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('tender.index');
     }
 
     /**
@@ -81,5 +133,9 @@ class tenderController extends Controller
     public function destroy($id)
     {
         //
+        $data = tender::findorfail($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

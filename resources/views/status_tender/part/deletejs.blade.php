@@ -1,42 +1,42 @@
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js" > < /script>
 
-    <script type = "text/javascript" >
+    <script type="text/javascript">
 
 
 
-    $('.show_confirm').click(function (event) {
+     $('.show_confirm').click(function(event) {
 
-        var form = $(this).closest("form");
+          var form =  $(this).closest("form");
 
-        var name = $(this).data("name");
+          var name = $(this).data("name");
 
-        event.preventDefault();
+          event.preventDefault();
 
-        swal({
+          swal({
 
-                title: `Are you sure you want to delete this record?`,
+              title: `Are you sure you want to delete this record?`,
 
-                text: "If you delete this, it will be gone forever.",
+              text: "If you delete this, it will be gone forever.",
 
-                icon: "warning",
+              icon: "warning",
 
-                buttons: true,
+              buttons: true,
 
-                dangerMode: true,
+              dangerMode: true,
 
-            })
+          })
 
-            .then((willDelete) => {
+          .then((willDelete) => {
 
-                if (willDelete) {
+            if (willDelete) {
 
-                    form.submit();
+              form.submit();
 
-                }
+            }
 
-            });
+          });
 
-    });
+      });
 
 
 

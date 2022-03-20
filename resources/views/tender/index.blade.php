@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Status tender')
+@section('title', 'Tender')
 
 @section('content_header')
 
@@ -11,7 +11,7 @@
 @section('content')
 
 <body>
-    @include('status_tender.part.table')
+    @include('tender.part.table')
 </body>
 
 @stop
@@ -21,7 +21,7 @@
 @stop
 
 @section('js')
-@include('status_tender.part.deletejs')
+@include('tender.part.deletejs')
 
 
 @stop

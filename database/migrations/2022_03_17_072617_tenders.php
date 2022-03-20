@@ -30,7 +30,7 @@ class Tenders extends Migration
             $table->string('lokasi_pekerjaan');
 
             $table->timestamps();
-$table->softDeletes();
+            $table->softDeletes();
         });
     }
 

@@ -7,4 +7,5 @@
             class="form-control" name="nama" id="" aria-describedby="helpId" placeholder="" value="{{$data->nama ?? ""}}">
           <small id="helpId" class="form-text text-muted">Masukkan Nama Status tender</small>
         </div>
+        
     </div>

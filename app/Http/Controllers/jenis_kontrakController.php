@@ -15,7 +15,7 @@ class jenis_kontrakController extends Controller
     public function index()
     {
         //
-         $data = jenis_kontrak::paginate(10);
+        $data = jenis_kontrak::paginate(10);
 
         return view('jenis_kontrak.index',['data'=>$data]);
     }

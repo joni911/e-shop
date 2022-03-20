@@ -15,6 +15,9 @@ class MetodePengadaanController extends Controller
     public function index()
     {
         //
+        $data = metode_pengadaan::paginate(10);
+
+        return view('metode_pengadaan.index',['data'=>$data]);
     }
 
     /**
@@ -25,6 +28,8 @@ class MetodePengadaanController extends Controller
     public function create()
     {
         //
+        return view('metode_pengadaan.create');
+
     }
 
     /**
@@ -36,6 +41,16 @@ class MetodePengadaanController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+			'nama' => 'required'
+
+		]);
+
+        $data = new metode_pengadaan();
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('metode_pengadaan.index');
     }
 
     /**
@@ -58,6 +73,9 @@ class MetodePengadaanController extends Controller
     public function edit($id)
     {
         //
+          $data = metode_pengadaan::findorfail($id);
+
+        return view('metode_pengadaan.edit',['data'=>$data]);
     }
 
     /**
@@ -70,6 +88,15 @@ class MetodePengadaanController extends Controller
     public function update(Request $request, $id)
     {
         //
+         $this->validate($request, [
+			'nama' => 'required'
+		]);
+
+        $data = metode_pengadaan::findorfail($id);
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('metode_pengadaan.index');
     }
 
     /**
@@ -81,5 +108,9 @@ class MetodePengadaanController extends Controller
     public function destroy($id)
     {
         //
+        $data = metode_pengadaan::findorfail($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

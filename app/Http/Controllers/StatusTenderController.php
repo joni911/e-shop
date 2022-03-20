@@ -12,9 +12,12 @@ class StatusTenderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+     public function index()
     {
         //
+         $data = status_tender::paginate(10);
+
+        return view('status_tender.index',['data'=>$data]);
     }
 
     /**
@@ -25,6 +28,8 @@ class StatusTenderController extends Controller
     public function create()
     {
         //
+        return view('status_tender.create');
+
     }
 
     /**
@@ -36,12 +41,22 @@ class StatusTenderController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+			'nama' => 'required'
+
+		]);
+
+        $data = new status_tender();
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('status_tender.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\status_tender  $status_tender
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -52,34 +67,50 @@ class StatusTenderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\status_tender  $status_tender
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         //
+        $data = status_tender::findorfail($id);
+
+        return view('status_tender.edit',['data'=>$data]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\status_tender  $status_tender
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //
+         $this->validate($request, [
+			'nama' => 'required'
+		]);
+
+        $data = status_tender::findorfail($id);
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('status_tender.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\status_tender  $status_tender
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+        $data = status_tender::findorfail($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

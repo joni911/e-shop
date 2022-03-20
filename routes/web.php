@@ -6,7 +6,10 @@ use App\Http\Controllers\jenis_pengadaanController;
 use App\Http\Controllers\katagori_barangController;
 use App\Http\Controllers\komentarController;
 use App\Http\Controllers\metode_pengadaanController;
+use App\Http\Controllers\MetodePengadaanController;
 use App\Http\Controllers\StatusTenderController;
+use App\Http\Controllers\TahapanController;
+use App\Http\Controllers\tenderController;
 use App\Models\katagori_barang;
 use Illuminate\Support\Facades\Route;
 
@@ -39,8 +42,10 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     //resource
     Route::resource('jenis_pengadaan',jenis_pengadaanController::class);
     Route::resource('jenis_kontrak',jenis_kontrakController::class);
-    Route::resource('metode_pengadaan',metode_pengadaanController::class);
+    Route::resource('metode_pengadaan',MetodePengadaanController::class);
     Route::resource('status_tender',StatusTenderController::class);
-    
+    Route::resource('tahapan',TahapanController::class);
+    Route::resource('tender',tenderController::class);
+
 });
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\jenis_kontrak;
 use Illuminate\Http\Request;
 
 class jenis_kontrakController extends Controller
@@ -14,6 +15,9 @@ class jenis_kontrakController extends Controller
     public function index()
     {
         //
+         $data = jenis_kontrak::paginate(10);
+
+        return view('jenis_kontrak.index',['data'=>$data]);
     }
 
     /**
@@ -24,6 +28,8 @@ class jenis_kontrakController extends Controller
     public function create()
     {
         //
+        return view('jenis_kontrak.create');
+
     }
 
     /**
@@ -35,6 +41,16 @@ class jenis_kontrakController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+			'nama' => 'required'
+
+		]);
+
+        $data = new jenis_kontrak();
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('jenis_kontrak.index');
     }
 
     /**
@@ -57,6 +73,9 @@ class jenis_kontrakController extends Controller
     public function edit($id)
     {
         //
+        $data = jenis_kontrak::findorfail($id);
+
+        return view('jenis_kontrak.edit',['data'=>$data]);
     }
 
     /**
@@ -69,6 +88,15 @@ class jenis_kontrakController extends Controller
     public function update(Request $request, $id)
     {
         //
+         $this->validate($request, [
+			'nama' => 'required'
+		]);
+
+        $data = jenis_kontrak::findorfail($id);
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('jenis_kontrak.index');
     }
 
     /**
@@ -80,5 +108,9 @@ class jenis_kontrakController extends Controller
     public function destroy($id)
     {
         //
+        $data = jenis_kontrak::findorfail($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

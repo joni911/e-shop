@@ -15,6 +15,9 @@ class TahapanController extends Controller
     public function index()
     {
         //
+         $data = tahapan::paginate(10);
+
+        return view('tahapan.index',['data'=>$data]);
     }
 
     /**
@@ -25,6 +28,8 @@ class TahapanController extends Controller
     public function create()
     {
         //
+        return view('tahapan.create');
+
     }
 
     /**
@@ -36,12 +41,22 @@ class TahapanController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+			'nama' => 'required'
+
+		]);
+
+        $data = new tahapan();
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('tahapan.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\tahapan  $tahapan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -52,34 +67,50 @@ class TahapanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\tahapan  $tahapan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         //
+        $data = tahapan::findorfail($id);
+
+        return view('tahapan.edit',['data'=>$data]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\tahapan  $tahapan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         //
+         $this->validate($request, [
+			'nama' => 'required'
+		]);
+
+        $data = tahapan::findorfail($id);
+        $data->nama = $request->nama;
+        $data->save();
+
+        return redirect()->route('tahapan.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\tahapan  $tahapan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         //
+        $data = tahapan::findorfail($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

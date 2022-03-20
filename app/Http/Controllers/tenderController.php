@@ -14,6 +14,7 @@ class tenderController extends Controller
     public function index()
     {
         //
+        
     }
 
     /**

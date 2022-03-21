@@ -20,7 +20,7 @@ class Perubahans extends Migration
             $table->date('akhir');
             $table->string('keterangan');
             $table->timestamps();
-$table->softDeletes();
+            $table->softDeletes();
         });
     }
 

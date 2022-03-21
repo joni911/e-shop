@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\perubahan;
+use App\Models\tahapan;
+use App\Models\tender;
 use Illuminate\Http\Request;
 
 class PerubahanController extends Controller
@@ -47,6 +49,18 @@ class PerubahanController extends Controller
     public function show($id)
     {
         //
+        $data = perubahan::join('tahapans','tahapans.id','perubahans.tahapan_id')
+        ->join('tenders','tenders.id','tahapans.tender_id')
+        ->where('tahapans.id',$id)
+        ->select(
+            // 'tahapans.akhir as ta','tahapans.mulai as tm','tahapans.keterangan as tk',
+            'perubahans.*','tenders.nama as nama'
+            )
+        ->paginate(10)
+        ;
+        $tahapan = tahapan::findorfail($id);
+
+        return view('perubahan.index',["data"=>$data,'tahapan'=>$tahapan]);
     }
 
     /**

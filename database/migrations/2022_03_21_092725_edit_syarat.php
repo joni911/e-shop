@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropPaket extends Migration
+class EditSyarat extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class DropPaket extends Migration
      */
     public function up()
     {
-        Schema::table('tenders', function (Blueprint $table) {
+        Schema::table('syarats', function (Blueprint $table) {
             //
-            $table->double('nilai_pagu',19,2);
-            $table->double('hps',19,2);
+            $table->longText('content');
         });
     }
 
@@ -27,11 +26,10 @@ class DropPaket extends Migration
      */
     public function down()
     {
-        Schema::table('tenders', function (Blueprint $table) {
+        Schema::table('syarats', function (Blueprint $table) {
             //
-            
-            $table->dropColumn('paket');
-
+            $table->dropColumn('izin');
+            $table->dropColumn('usaha');
         });
     }
 }

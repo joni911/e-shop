@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\tahapanRequest;
+use App\Http\Requests\tahapanRequestupdate;
+use App\Http\Requests\tenderRequest;
+use App\Models\perubahan;
 use App\Models\tahapan;
 use Illuminate\Http\Request;
 
@@ -38,19 +42,19 @@ class TahapanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(tahapanRequest $request)
     {
-        //
-        $this->validate($request, [
-			'nama' => 'required'
-
-		]);
 
         $data = new tahapan();
+        $data->tender_id = $request->id;
         $data->nama = $request->nama;
+        $data->mulai = $request->awal;
+        $data->akhir = $request->akhir;
+        $data->keterangan = "";
+        $data->status = 0;
         $data->save();
 
-        return redirect()->route('tahapan.index');
+        return redirect()->back();
     }
 
     /**
@@ -63,7 +67,6 @@ class TahapanController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -85,18 +88,29 @@ class TahapanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(tahapanRequestupdate $request, $id)
     {
-        //
-         $this->validate($request, [
-			'nama' => 'required'
-		]);
-
         $data = tahapan::findorfail($id);
-        $data->nama = $request->nama;
-        $data->save();
 
-        return redirect()->route('tahapan.index');
+        $bak = new perubahan();
+        $bak->tahapan_id = $id;
+        $bak->awal = $data->mulai;
+        $bak->akhir = $data->akhir;
+        $bak->keterangan = $data->keterangan;
+
+        $data->nama = $request->nama;
+        $data->mulai = $request->awal;
+        $data->akhir = $request->akhir;
+        $data->keterangan = $request->keterangan;
+        $data->save();
+        if ($data) {
+            # code...
+            $bak->save();
+            return redirect()->route('tender.tahapan',[$data->tender->id]);
+
+        }else{
+            return 404;
+        }
     }
 
     /**
@@ -109,6 +123,8 @@ class TahapanController extends Controller
     {
         //
         $data = tahapan::findorfail($id);
+        $data->syarat->delete();
+        $data->tahap->delete();
         $data->delete();
 
         return redirect()->back();

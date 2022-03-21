@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\syaratRequest;
 use App\Models\syarat;
+use App\Models\tender;
 use Illuminate\Http\Request;
 
 class SyaratController extends Controller
@@ -33,9 +35,16 @@ class SyaratController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(syaratRequest $request)
     {
         //
+        $data = new syarat();
+        $data->tender_id = $request->id;
+        $data->judul = $request->nama;
+        $data->content = $request->content;
+        $data->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -47,6 +56,7 @@ class SyaratController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -58,6 +68,20 @@ class SyaratController extends Controller
     public function edit($id)
     {
         //
+        // $syarat = syarat::findorfail($id);
+        $data = syarat::join('tenders','tenders.id','syarats.tender_id')
+        ->where('syarats.id',$id)
+        ->select('syarats.*', 'tenders.nama as nama_tender')
+        ->first();
+        // return $data;
+        $syarat = tender::findorfail($data->tender_id);
+
+        return view('tender.syarat.edit',
+        [
+            'data'=>$data,
+            'syarat'=>$syarat
+        ]);
+
     }
 
     /**
@@ -70,6 +94,12 @@ class SyaratController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $data = syarat::findorfail($id);
+        $data->judul = $request->nama;
+        $data->content = $request->content;
+        $data->save();
+
+        return redirect()->route('tender.syarat',$data->tender->id);
     }
 
     /**

@@ -9,10 +9,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class tahapan extends Model
 {
     use HasFactory,SoftDeletes;
-    
+
     public function tender()
     {
         # code...
         return $this->belongsTo('App\Models\tender');
+    }
+    public function perubahan()
+    {
+        # code...
+        return $this->hasMany('App\Models\perubahan');
     }
 }

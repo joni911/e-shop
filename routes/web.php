@@ -7,7 +7,10 @@ use App\Http\Controllers\katagori_barangController;
 use App\Http\Controllers\komentarController;
 use App\Http\Controllers\metode_pengadaanController;
 use App\Http\Controllers\MetodePengadaanController;
+use App\Http\Controllers\PerubahanController;
 use App\Http\Controllers\StatusTenderController;
+use App\Http\Controllers\SyaratController;
+use App\Http\Controllers\SyaratDetailController;
 use App\Http\Controllers\TahapanController;
 use App\Http\Controllers\tenderController;
 use App\Models\katagori_barang;
@@ -39,13 +42,21 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('/katagori', katagori_barangController::class);
     Route::resource('komentar',komentarController::class);
 
-    //resource
+    //resource Master
     Route::resource('jenis_pengadaan',jenis_pengadaanController::class);
     Route::resource('jenis_kontrak',jenis_kontrakController::class);
     Route::resource('metode_pengadaan',MetodePengadaanController::class);
     Route::resource('status_tender',StatusTenderController::class);
     Route::resource('tahapan',TahapanController::class);
+
+    //Resource Tender
     Route::resource('tender',tenderController::class);
+    Route::get('/tender/syarat/{id}',[tenderController::class ,'show_syarat'])->name('tender.syarat');
+    Route::get('/tender/tahapan/{id}',[tenderController::class ,'show_tahapan'])->name('tender.tahapan');
+    Route::resource('perubahan',PerubahanController::class);
+    //Syarat
+    Route::resource('syarat',SyaratController::class);
+    Route::resource('syarat_detail',SyaratDetailController::class);
 
 });
 

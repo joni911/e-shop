@@ -24,7 +24,7 @@ class tenderController extends Controller
         //
         $data = tender::paginate(10);
 
-        return view('tender.index',['data'=>$data]);
+        return view('tender_admin.index',['data'=>$data]);
     }
 
     /**
@@ -39,7 +39,7 @@ class tenderController extends Controller
         $jp = jenis_pengadaan::get();
         $mp = metode_pengadaan::get();
         $st = status_tender::get();
-        return view('tender.create',
+        return view('tender_admin.create',
         [
             'kontrak'=>$jk,
             'pengadaan'=>$jp,
@@ -75,7 +75,7 @@ class tenderController extends Controller
         $data->hps = $request->hps;
         $data->save();
 
-        return redirect()->route('tender.index');
+        return redirect()->route('tender_admin.index');
     }
 
 
@@ -102,7 +102,7 @@ class tenderController extends Controller
 
         $tahapan = tahapan::where('tender_id',$id)->get();
 
-        return view('tender.tahapan.create',
+        return view('tender_admin.tahapan.create',
         [
             'data'=>$data,
             'tahapan'=>$tahapan
@@ -118,7 +118,7 @@ class tenderController extends Controller
 
         $syarat = tender::findorfail($id);
 
-        return view('tender.syarat.create',
+        return view('tender_admin.syarat.create',
         [
             'data'=>$data,
             'syarat'=>$syarat
@@ -149,7 +149,7 @@ class tenderController extends Controller
         $mp = metode_pengadaan::get();
         $st = status_tender::get();
 
-        return view('tender.edit',
+        return view('tender_admin.edit',
         [
             'kontrak'=>$jk,
             'pengadaan'=>$jp,
@@ -185,7 +185,7 @@ class tenderController extends Controller
         $data->hps = $request->hps;
         $data->save();
 
-        return redirect()->route('tender.tahapan',$data->id);
+        return redirect()->route('tender_admin.tahapan',$data->id);
     }
 
     /**
@@ -199,6 +199,6 @@ class tenderController extends Controller
         //
         $data = tender::findorfail($id);
         $data->delete();
-        return redirect()->route('tender.index');
+        return redirect()->route('tender_admin.index');
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\SyaratController;
 use App\Http\Controllers\SyaratDetailController;
 use App\Http\Controllers\TahapanController;
 use App\Http\Controllers\tenderController;
+use App\Http\Controllers\TenderHomeController;
 use App\Models\katagori_barang;
 use Illuminate\Support\Facades\Route;
 
@@ -50,10 +51,12 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('tahapan',TahapanController::class);
 
     //Resource Tender
-    Route::resource('tender',tenderController::class);
-    Route::get('/tender/syarat/{id}',[tenderController::class ,'show_syarat'])->name('tender.syarat');
-    Route::get('/tender/tahapan/{id}',[tenderController::class ,'show_tahapan'])->name('tender.tahapan');
+    Route::resource('tender_admin',tenderController::class);
+    Route::get('/tender_admin/syarat/{id}',[tenderController::class ,'show_syarat'])->name('tender_admin.syarat');
+    Route::get('/tender_admin/tahapan/{id}',[tenderController::class ,'show_tahapan'])->name('tender_admin.tahapan');
     Route::resource('perubahan',PerubahanController::class);
+    //Home
+    Route::resource('tender_home',TenderHomeController::class);
     //Syarat
     Route::resource('syarat',SyaratController::class);
     Route::resource('syarat_detail',SyaratDetailController::class);

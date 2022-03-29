@@ -18,14 +18,15 @@
         <!-- /.card-header -->
         <!-- form start -->
 
-        <form action="{{ route('syarat.store') }}" enctype="multipart/form-data" method="post">
+        <form action="{{ route('syarat.update',[$data->id]) }}" enctype="multipart/form-data" method="post">
             @csrf
-            @include('tender.syarat.form')
+            @method('put')
+            @include('tender.syarat.part.form')
           <!-- /.card-body -->
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-          <a name="" id="" class="btn btn-success" href="{{ route('tender.index') }}" role="button">Selesai</a>
+          <a name="" id="" class="btn btn-success" href="{{ route('tender_admin.index') }}" role="button">Selesai</a>
 
           </div>
         </form>
@@ -34,7 +35,7 @@
             <h3 class="card-title">Daftar Syarat {{$syarat->nama}}</h3>
         </div>
 
-        @include('tender.syarat.table')
+        {{-- @include('tender.syarat.table') --}}
 
     </div>
 </body>

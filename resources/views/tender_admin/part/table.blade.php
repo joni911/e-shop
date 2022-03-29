@@ -2,7 +2,7 @@
     <div class="card-header">
       <h3 class="card-title">Tabel Tender</h3>
       <br>
-      <a name="" id="" class="btn btn-primary" href="{{ route('tender.create') }}" role="button">Tambah</a>
+      <a name="" id="" class="btn btn-primary" href="{{ route('tender_admin.create') }}" role="button">Tambah</a>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -22,8 +22,8 @@
 
                     <td>{{$b->nama}}</td>
                     <td>
-                        <a name="" id="" class="btn btn-primary" href="{{ route('tender.edit', [$b->id]) }}" role="button"><i class="fas fa-pen    "></i></a>
-                        <form method="POST" action="{{ route('tender.destroy', $b->id) }}">
+                        <a name="" id="" class="btn btn-primary" href="{{ route('tender_admin.edit', [$b->id]) }}" role="button"><i class="fas fa-pen    "></i></a>
+                        <form method="POST" action="{{ route('tender_admin.destroy', $b->id) }}">
                             @csrf
                             @method("DELETE")
                             <button type="submit" class="btn btn-xs btn-danger btn-flat show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>

@@ -255,7 +255,7 @@ return [
         ],
         [
             'text'        => 'Tender',
-            'url'         => 'tender',
+            'url'         => 'tender_admin',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',

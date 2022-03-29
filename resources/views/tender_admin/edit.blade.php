@@ -18,10 +18,10 @@
         <!-- /.card-header -->
         <!-- form start -->
 
-        <form action="{{ route('tender.update', [$data->id]) }}" enctype="multipart/form-data" method="post">
+        <form action="{{ route('tender_admin.update', [$data->id]) }}" enctype="multipart/form-data" method="post">
             @method('put')
             @csrf
-            @include('tender.part.form')
+            @include('tender_admin.part.form')
           <!-- /.card-body -->
 
           <div class="card-footer">

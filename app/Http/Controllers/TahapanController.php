@@ -106,7 +106,7 @@ class TahapanController extends Controller
         if ($data) {
             # code...
             $bak->save();
-            return redirect()->route('tender.tahapan',[$data->tender->id]);
+            return redirect()->route('tender_admin.tahapan',[$data->tender->id]);
 
         }else{
             return 404;

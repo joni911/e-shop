@@ -2,7 +2,7 @@
     <div class="card-header">
       <h3 class="card-title">Tabel Perubahan {{$tahapan->tender->nama}}</h3>
       <br>
-      <a name="" id="" class="btn btn-primary" href="{{ route('tender.tahapan',[$tahapan->tender->id]) }}" role="button">Kembali</a>
+      <a name="" id="" class="btn btn-primary" href="{{ route('tender_admin.tahapan',[$tahapan->tender->id]) }}" role="button">Kembali</a>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

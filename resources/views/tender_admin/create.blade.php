@@ -18,9 +18,9 @@
         <!-- /.card-header -->
         <!-- form start -->
 
-        <form action="{{ route('tender.store') }}" enctype="multipart/form-data" method="post">
+        <form action="{{ route('tender_admin.store') }}" enctype="multipart/form-data" method="post">
             @csrf
-            @include('tender.part.form')
+            @include('tender_admin.part.form')
           <!-- /.card-body -->
 
           <div class="card-footer">

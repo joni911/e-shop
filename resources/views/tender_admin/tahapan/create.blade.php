@@ -25,7 +25,7 @@
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-          <a name="" id="" class="btn btn-success" href="{{ route('tender.syarat', [$data->id]) }}" role="button">Selesai</a>
+          <a name="" id="" class="btn btn-success" href="{{ route('tender_admin.syarat', [$data->id]) }}" role="button">Selesai</a>
 
           </div>
         </form>

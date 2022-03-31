@@ -21,12 +21,12 @@
         <form action="{{ route('syarat.update',[$data->id]) }}" enctype="multipart/form-data" method="post">
             @csrf
             @method('put')
-            @include('tender.syarat.part.form')
+            @include('tender_admin.syarat.part.form')
           <!-- /.card-body -->
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-          <a name="" id="" class="btn btn-success" href="{{ route('tender_admin.index') }}" role="button">Selesai</a>
+          <a name="" id="" class="btn btn-success" href="{{ route('tender_file.edit',[$data->id]) }}" role="button">Selesai X</a>
 
           </div>
         </form>

@@ -6,24 +6,13 @@ use App\Models\tender;
 use App\Models\tender_file;
 use Illuminate\Http\Request;
 
-class TenderHomeController extends Controller
+class TenderFileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function index()
     {
-        $data = tender::join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
-        ->join('jenis_kontraks','jenis_kontraks.id','tenders.jenis_kontrak_id')
-        ->join('metode_pengadaans','metode_pengadaans.id','tenders.metode_pengadaan_id')
-        ->join('status_tenders','status_tenders.id','tenders.status_tender_id')
-        ->select('tenders.*','jenis_pengadaans.nama as jpn','jenis_kontraks.nama as jkn',
-        'metode_pengadaans.nama as mpn','status_tenders.nama as stn')
-        ->paginate(10);
-        // return $data;
-        return view('tender_user.home.home',['data'=>$data]);
+        //
+        return view('tender_admin.files.create');
     }
 
     /**
@@ -44,7 +33,13 @@ class TenderHomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new tender_file();
+        $data->tender_id = $request->id;
+        $data->nama = $request->nama;
+        $data->keterangan = $request->keterangan;
+        $data->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -56,15 +51,9 @@ class TenderHomeController extends Controller
     public function show($id)
     {
         //
-        $data = tender::join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
-        ->join('jenis_kontraks','jenis_kontraks.id','tenders.jenis_kontrak_id')
-        ->join('metode_pengadaans','metode_pengadaans.id','tenders.metode_pengadaan_id')
-        ->join('status_tenders','status_tenders.id','tenders.status_tender_id')
-        ->select('tenders.*','jenis_pengadaans.nama as jpn','jenis_kontraks.nama as jkn',
-        'metode_pengadaans.nama as mpn','status_tenders.nama as stn')
-        ->findorfail($id);
-
-        return view('tender_user.home.show')
+        $data = tender::findorfail($id);
+        $table = tender_file::where('tender_id','=',$id)->paginate(10);
+        return view('tender_admin.files.create',['data'=>$data,'table'=>$table]);
     }
 
     /**

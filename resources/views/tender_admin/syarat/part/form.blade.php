@@ -1,4 +1,4 @@
-@include('tender.part.alert')
+@include('tender_admin.part.alert')
 
     <div class="card-body">
         <div class="form-group">

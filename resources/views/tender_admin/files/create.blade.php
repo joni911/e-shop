@@ -18,14 +18,14 @@
         <!-- /.card-header -->
         <!-- form start -->
 
-        <form action="{{ route('tahapan.store') }}" enctype="multipart/form-data" method="post">
+        <form action="{{ route('tender_file.store') }}" enctype="multipart/form-data" method="post">
             @csrf
-            @include('tender_admin.tahapan.form')
+            @include('tender_admin.files.form')
           <!-- /.card-body -->
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-          <a name="" id="" class="btn btn-success" href="{{ route('tender_admin.syarat', [$data->id]) }}" role="button">Selesai</a>
+          <a name="" id="" class="btn btn-success" href="{{ route('tender_admin.index') }}" role="button">Selesai</a>
 
           </div>
         </form>
@@ -34,7 +34,7 @@
             <h3 class="card-title">Daftar Tender {{$data->nama}}</h3>
         </div>
 
-        @include('tender_admin.tahapan.table')
+        @include('tender_admin.files.table')
 
     </div>
 </body>

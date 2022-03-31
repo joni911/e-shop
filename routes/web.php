@@ -13,6 +13,8 @@ use App\Http\Controllers\SyaratController;
 use App\Http\Controllers\SyaratDetailController;
 use App\Http\Controllers\TahapanController;
 use App\Http\Controllers\tenderController;
+use App\Http\Controllers\TenderFileController;
+use App\Http\Controllers\TenderFileDetailController;
 use App\Http\Controllers\TenderHomeController;
 use App\Models\katagori_barang;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +62,9 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     //Syarat
     Route::resource('syarat',SyaratController::class);
     Route::resource('syarat_detail',SyaratDetailController::class);
+    //FILES
+    Route::resource('tender_file',TenderFileController::class);
+    Route::resource('tender_file_detail',TenderFileDetailController::class);
 
 });
 

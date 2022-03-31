@@ -261,6 +261,13 @@ return [
             'label_color' => 'success',
         ],
         [
+            'text'        => 'Tender User',
+            'url'         => 'tender_home',
+            'icon'        => 'far fa-fw fa-file',
+            'label'       => 4,
+            'label_color' => 'success',
+        ],
+        [
             'text'    => 'Master',
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [

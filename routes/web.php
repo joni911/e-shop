@@ -8,6 +8,7 @@ use App\Http\Controllers\komentarController;
 use App\Http\Controllers\metode_pengadaanController;
 use App\Http\Controllers\MetodePengadaanController;
 use App\Http\Controllers\PerubahanController;
+use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\StatusTenderController;
 use App\Http\Controllers\SyaratController;
 use App\Http\Controllers\SyaratDetailController;
@@ -65,6 +66,8 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     //FILES
     Route::resource('tender_file',TenderFileController::class);
     Route::resource('tender_file_detail',TenderFileDetailController::class);
-
+    //Peserta
+    Route::resource('peserta',PesertaController::class);
+    
 });
 

@@ -46,4 +46,9 @@ class tender extends Model
         # code...
         return $this->hasMany('App\Models\tender_file');
     }
+    public function peserta()
+    {
+        # code...
+        return $this->hasMany('App\Models\peserta');
+    }
 }

@@ -21,7 +21,7 @@ class Pesertas extends Migration
             $table->double('penawaran',19,2);
             $table->double('harga_koreksi',19,2);
             $table->timestamps();
-$table->softDeletes();
+            $table->softDeletes();
         });
     }
 

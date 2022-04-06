@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\tender;
 use App\Models\tender_file;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TenderHomeController extends Controller
@@ -23,7 +24,9 @@ class TenderHomeController extends Controller
         'metode_pengadaans.nama as mpn','status_tenders.nama as stn')
         ->paginate(10);
         // return $data;
-        return view('tender_user.home.home',['data'=>$data]);
+        $now = Carbon::now();
+        // return $now;
+        return view('tender_user.home.home',['data'=>$data,'now'=>$now]);
     }
 
     /**
@@ -64,7 +67,9 @@ class TenderHomeController extends Controller
         'metode_pengadaans.nama as mpn','status_tenders.nama as stn')
         ->findorfail($id);
 
-        return view('tender_user.home.show')
+        $now = Carbon::now();
+
+        return view('tender_user.home.show',['data'=>$data,'now'=>$now]);
     }
 
     /**

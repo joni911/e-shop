@@ -44,7 +44,7 @@ class PesertaController extends Controller
         //
         $user = Auth::user();
         $file = tender::findorfail($request->id);
-        //validasi file
+        //validasi file yang di upload
         foreach ($file->tender_file as $key => $tc) {
             # code...
             $x = $tc->id;
@@ -54,24 +54,7 @@ class PesertaController extends Controller
             }
         }
         //save file
-        foreach ($file->tender_file as $key => $ts) {
-            # code...
-            $x = $ts->id;
-            $tmp_file = $request->file($x);
-            $nama_file = time()."_".$tmp_file->getClientOriginalName();
 
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$request->id.'/'.$ts->id;
-            $tmp_file->move($tujuan_upload,$nama_file);
-            if ($request->$x) {
-                # code...
-                //id 	tender_file_id 	user_id 	files 	keterangan 	created_at 	updated_at 	deleted_at
-                $tfs = new tender_file_detail();
-                $tfs->tender_file_id = $x;
-                $tfs->user_id = $user->id;
-                $tfs->files = $nama_file;
-            }
-        }
         $data = new peserta();
         $data->tender_id = $request->id;
         $data->nama_perusahaan = $request->nama_pt;
@@ -83,7 +66,33 @@ class PesertaController extends Controller
         $data->user_id = $user->id;
         $data->save();
 
-        return redirect()->back();
+        //upload file setelah falidasi
+        foreach ($file->tender_file as $key => $ts) {
+            # code...
+            $x = $ts->id;
+            $tmp_file = $request->file($x);
+            $file = time()."_".$tmp_file->getClientOriginalName();
+
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/FILE/'.$request->id.'/'.$ts->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+            if ($request->$x) {
+                # code...
+                //id 	tender_file_id 	user_id 	files 	keterangan 	created_at 	updated_at 	deleted_at
+                $tfs = new tender_file_detail();
+                $tfs->tender_file_id = $x;
+                $tfs->user_id = $user->id;
+                $tfs->files = $nama_file;
+                $tfs->keterangan = "";
+                $tfs->peserta_id = $data->id;
+                $tfs->tender_id = $request->id;
+                $tfs->save();
+            }
+        }
+
+        return redirect()->route('tender_home.show',$request->id);
 
     }
 
@@ -107,7 +116,40 @@ class PesertaController extends Controller
         // $now = Carbon::now();
         return view('tender_user.peserta.create',['data'=>$data]);
     }
+    public function show_peserta($id)
+    {
+        //
+        $data = tender::findorfail($id);
+        $peserta = peserta::join('tenders','tenders.id','pesertas.tender_id')
+        // ->join('tender_files','tender_files.tender_id','tenders.id')
+        // ->join('tender_file_details','tender_file_details.tender_file_id','tender_files.id')
+        ->where('tenders.id',$id)
+        ->select('pesertas.*')
+        // ->groupBy('id')
+        ->paginate(10);
+        return view('tender_user.peserta.show',['data'=>$data,'peserta'=>$peserta]);
+    }
 
+    public function show_file_peserta($id,$pid)
+    {
+        // $p = $
+        $data = peserta::join('tenders','tenders.id','pesertas.tender_id')
+        ->select('pesertas.*','tenders.nama as nama_tender')
+        ->findorfail($pid)
+        ;
+        $file = tender_file_detail::join('pesertas','pesertas.id','tender_file_details.peserta_id')
+        ->join('tender_files','tender_files.id','tender_file_details.tender_file_id')
+        ->join('tenders','tenders.id','tender_files.tender_id')
+        ->where('pesertas.id',$pid)
+        ->where('tenders.id',$id)
+        ->select('tender_file_details.id as id','tender_files.nama as nama_file'
+        ,'tender_file_details.files as file')
+        ->get();
+
+        return view('tender_user.peserta.files.show',['data'=>$data,'file'=>$file]);
+
+
+    }
     /**
      * Show the form for editing the specified resource.
      *

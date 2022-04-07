@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNoHpToPesertasTable extends Migration
+class AddPesertaIdToTenderFileDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class AddNoHpToPesertasTable extends Migration
      */
     public function up()
     {
-        Schema::table('pesertas', function (Blueprint $table) {
+        Schema::table('tender_file_details', function (Blueprint $table) {
             //
-            $table->string('nama_perusahaan');
-            $table->string('alamat');
-            $table->string('no_hp');
+            $table->bigInteger('peserta_id');
+            $table->bigInteger('tender_id');
         });
     }
 
@@ -28,7 +27,7 @@ class AddNoHpToPesertasTable extends Migration
      */
     public function down()
     {
-        Schema::table('pesertas', function (Blueprint $table) {
+        Schema::table('tender_file_details', function (Blueprint $table) {
             //
         });
     }

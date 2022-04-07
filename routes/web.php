@@ -68,6 +68,7 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('tender_file_detail',TenderFileDetailController::class);
     //Peserta
     Route::resource('peserta',PesertaController::class);
-    
+    Route::get('peserta/tender/{id}',[PesertaController::class,'show_peserta'])->name('peserta.tender');
+    Route::get('peserta/{id}/file_tender/{pid}',[PesertaController::class,'show_file_peserta'])->name('peserta.file');
 });
 

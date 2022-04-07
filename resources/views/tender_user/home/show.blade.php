@@ -102,11 +102,10 @@
                     <?php
                         $j++
                     ?>
-                        <p>{{$p}}</p>
                     @empty
 
                     @endforelse
-                    {{-- {{$j}} --}}
+                    <a href="{{ route('peserta.tender', [$data->id]) }}">Peserta {{$j}}</a>
                 </td>
             </tr>
             <tr>

@@ -15,4 +15,9 @@ class tender_file_detail extends Model
         # code...
         return $this->belongsTo('App\Models\tender_file');
     }
+    public function peserta()
+    {
+        # code...
+        return $this->belongsTo('App\Models\peserta');
+    }
 }

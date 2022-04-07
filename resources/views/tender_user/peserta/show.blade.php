@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Pendaftaran Peserta')
+@section('title', 'Daftar Peserta')
 
 @section('content_header')
 
@@ -13,9 +13,10 @@
 
 <div class="card">
     <div class="card-header">
-      <h3 class="card-title-center">Pendaftaran Tender {{$data->nama}}</h3>
+      <h3 class="card-title-center">Daftar Peserta Tender {{$data->nama}}</h3>
     </div>
-    
+    @include('tender_user.peserta.part.table')
+
 
 </div>
 

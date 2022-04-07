@@ -15,4 +15,9 @@ class peserta extends Model
         # code...
         return $this->belongsTo('App\Models\tender');
     }
+    public function tender_file_detail()
+    {
+        # code...
+        return $this->belongsTo('App\Models\tender_file_detail');
+    }
 }

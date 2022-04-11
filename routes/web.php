@@ -17,6 +17,7 @@ use App\Http\Controllers\tenderController;
 use App\Http\Controllers\TenderFileController;
 use App\Http\Controllers\TenderFileDetailController;
 use App\Http\Controllers\TenderHomeController;
+use App\Http\Controllers\UserBarangController;
 use App\Models\katagori_barang;
 use Illuminate\Support\Facades\Route;
 
@@ -40,11 +41,16 @@ Auth::routes();
 Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::resource('/barang',barangController::class);
+    //barang admin
     Route::get('/CreatePhoto',[barangController::class,'create_photo'])->name('photo.buat');
     Route::get('/foto/barang/{id}',[barangController::class,'edit_photo'])->name('photo.edit');
     Route::post('/photoStore',[barangController::class,'photoStore'])->name('photo.simpan');
     Route::resource('/katagori', katagori_barangController::class);
     Route::resource('komentar',komentarController::class);
+
+    //barang user
+    Route::resource('shops', UserBarangController::class);
+    Route::get('shops/add/{id}',[UserBarangController::class,'add'])->name('shops.add');
 
     //resource Master
     Route::resource('jenis_pengadaan',jenis_pengadaanController::class);

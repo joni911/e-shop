@@ -254,6 +254,13 @@ return [
             'label_color' => 'success',
         ],
         [
+            'text'        => 'Barang User',
+            'url'         => 'shops',
+            'icon'        => 'far fa-fw fa-file',
+            'label'       => 4,
+            'label_color' => 'success',
+        ],
+        [
             'text'        => 'Tender',
             'url'         => 'tender_admin',
             'icon'        => 'far fa-fw fa-file',

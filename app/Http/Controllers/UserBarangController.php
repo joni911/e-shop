@@ -52,8 +52,8 @@ class UserBarangController extends Controller
     }
     public function add($id)
     {
-        //
-        
+        //tambahkan sesi belanja   
+
     }
     /**
      * Show the form for editing the specified resource.

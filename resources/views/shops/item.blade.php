@@ -17,7 +17,7 @@
                     <div class="card-body p-4">
                         <div class="text-center">
                             <!-- Product name-->
-                            <h5 class="fw-bolder">{{$b->nama}}</h5>
+                            <h5 class="fw-bolder"><a href="{{ route('barang.show', [$b->id]) }}">{{$b->nama}}</a></h5>
                             <p class="text-justify">{{$b->keterangan}}</p>
                             <!-- Product reviews-->
                             <div class="d-flex justify-content-center small text-warning mb-2">

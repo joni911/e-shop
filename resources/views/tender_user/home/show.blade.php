@@ -63,17 +63,6 @@
                 <td>Nilai Pagu Paket</td>
                 <td>{{$data->nilai_pagu}}</td>
             </tr>
-             {{-- {"id":1,"tahapan_id":0,"jenis_pegadaan_id":3,
-                "metode_pengadaan_id":1,"jenis_kontrak_id":1,
-                "syarat_id":0,"status_tender_id":1,
-                "nama":"Pengadaan Alat Kebersihan","sumber_dana":"apbd",
-                "KLPD":"bpr","satuan_kerja":"itx",
-                "tahun_anggaran":"2022-03-21","lokasi_pekerjaan":"bangli",
-                "created_at":"2022-03-21T02:09:09.000000Z",
-                "updated_at":"2022-04-06T02:13:03.000000Z",
-                "deleted_at":null,"nilai_pagu":1200000,"hps":1000000,
-                "jpn":"Pekerjaan Konstruksi","jkn":"Kontrak Lumsum",
-                "mpn":"Pengadaan 1 File","stn":"Dimulai"} --}}
             <tr>
                 <td>Jenis Kontrak</td>
                 <td>{{$data->jkn}}</td>
@@ -87,6 +76,19 @@
                 <td>
                     @forelse ($data->syarat as $s)
                         {!! $s->content !!}
+                    @empty
+
+                    @endforelse
+                </td>
+            </tr>
+            <tr>
+                <td>File yang Di Butuhkan</td>
+                <td>
+                    <?php
+                        $key = 1;
+                    ?>
+                    @forelse ($data->tender_file as $fs)
+                        <p>{{$key++}}. {{$fs->nama}}</p>
                     @empty
 
                     @endforelse

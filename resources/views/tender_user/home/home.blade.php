@@ -24,9 +24,12 @@
 
 <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Tabel Tender</h3>
+      <h3 class="card-title">Tabel Tender </h3>
       <br>
+      @if (auth()->user()->hak_akses != 'user')
       <a name="" id="" class="btn btn-primary" href="{{ route('tender_admin.create') }}" role="button">Tambah</a>
+
+      @endif
     </div>
     <x-adminlte-datatable id="table6" :heads="$heads" head-theme="dark" theme="light"
     striped hoverable footer-theme="light" beautify>

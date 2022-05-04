@@ -62,4 +62,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\komentar');
 
     }
+    public function peserta()
+    {
+        return $this->hasOne(peserta::class);
+    }
 }

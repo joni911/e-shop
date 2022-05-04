@@ -102,19 +102,32 @@ class PesertaController extends Controller
      * @param  \App\Models\peserta  $peserta
      * @return \Illuminate\Http\Response
      */
+    public function getPeserta($user,$id)
+    {
+        return $peserta = peserta::where('user_id',$user->id)
+        ->where('tender_id',$id)
+        ->first();
+    }
     public function show($id)
     {
-        //
-        $data = tender::join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
-        ->join('jenis_kontraks','jenis_kontraks.id','tenders.jenis_kontrak_id')
-        ->join('metode_pengadaans','metode_pengadaans.id','tenders.metode_pengadaan_id')
-        ->join('status_tenders','status_tenders.id','tenders.status_tender_id')
-        ->select('tenders.*','jenis_pengadaans.nama as jpn','jenis_kontraks.nama as jkn',
-        'metode_pengadaans.nama as mpn','status_tenders.nama as stn')
-        ->findorfail($id);
 
-        // $now = Carbon::now();
-        return view('tender_user.peserta.create',['data'=>$data]);
+        $user = Auth::user();
+        $peserta = $this->getPeserta($user,$id);
+        if (is_null($peserta)) {
+            # code...
+            $data = tender::join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
+            ->join('jenis_kontraks','jenis_kontraks.id','tenders.jenis_kontrak_id')
+            ->join('metode_pengadaans','metode_pengadaans.id','tenders.metode_pengadaan_id')
+            ->join('status_tenders','status_tenders.id','tenders.status_tender_id')
+            ->select('tenders.*','jenis_pengadaans.nama as jpn','jenis_kontraks.nama as jkn',
+            'metode_pengadaans.nama as mpn','status_tenders.nama as stn')
+            ->findorfail($id);
+
+            // $now = Carbon::now();
+            return view('tender_user.peserta.create',['data'=>$data]);
+        }
+        return redirect()->route('peserta.file',['id'=>$id,'pid'=>$peserta->id]);
+
     }
     public function show_peserta($id)
     {

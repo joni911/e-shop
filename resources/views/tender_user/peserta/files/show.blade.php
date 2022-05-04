@@ -63,6 +63,7 @@
 
         </tbody>
     </table>
+    @include('tender_user.peserta.komentar.index')
 
 </div>
 

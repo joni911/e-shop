@@ -20,4 +20,10 @@ class peserta extends Model
         # code...
         return $this->belongsTo('App\Models\tender_file_detail');
     }
+
+    public function User()
+    {
+        # code...
+        return $this->belongsTo(User::class);
+    }
 }

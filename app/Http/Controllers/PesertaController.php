@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\pesertaRequest;
+use App\Models\komentar;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Models\tender_file_detail;
+use App\Models\tender_komen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -131,7 +133,7 @@ class PesertaController extends Controller
     }
     public function show_peserta($id)
     {
-        //
+
         $data = tender::findorfail($id);
         $peserta = peserta::join('tenders','tenders.id','pesertas.tender_id')
         // ->join('tender_files','tender_files.tender_id','tenders.id')
@@ -159,7 +161,14 @@ class PesertaController extends Controller
         ,'tender_file_details.files as file')
         ->get();
 
-        return view('tender_user.peserta.files.show',['data'=>$data,'file'=>$file]);
+        $komen = tender_komen::where('peserta_id',$pid)
+
+        ->join('pesertas','pesertas.id','tender_komens.peserta_id')
+        ->join('users','users.id','tender_komens.user_id')
+        ->select('tender_komens.*','pesertas.nama_perusahaan as pt','users.name as user')
+        ->get();
+
+        return view('tender_user.peserta.files.show',['data'=>$data,'file'=>$file,'komen'=>$komen]);
 
 
     }

@@ -13,7 +13,7 @@
 
 <div class="card">
     <div class="card-header">
-      <h3 class="card-title-center"></h3>
+      <h3 class="card-title-center text-center">Tender {{$data->nama_tender}}</h3>
     </div>
     <table class="table">
         <tbody>
@@ -46,6 +46,7 @@
                 <td>Penawaran</td>
                 <td>Penwaran : {{$data->penawaran}}
                     Koreksi : {{$data->harga_koreksi}}
+                    <a name="" id="" class="btn-sm btn-primary" href="#" role="button"><i class="fas fa-pencil-alt    "></i> Koreksi</a>
                 </td>
 
             </tr>

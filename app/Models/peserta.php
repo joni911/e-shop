@@ -26,4 +26,10 @@ class peserta extends Model
         # code...
         return $this->belongsTo(User::class);
     }
+
+    public function komentar()
+    {
+        # code...
+        return $this->hasMany(tender_komen::class);
+    }
 }

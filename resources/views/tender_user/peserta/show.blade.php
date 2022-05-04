@@ -15,7 +15,12 @@
     <div class="card-header">
       <h3 class="card-title-center">Daftar Peserta Tender {{$data->nama}}</h3>
     </div>
-    @include('tender_user.peserta.part.table')
+    @if (auth()->user()->hak_akses = 'admin')
+        @include('tender_user.peserta.part.admintable')
+    @else
+        @include('tender_user.peserta.part.table')
+
+    @endif
 
 
 </div>

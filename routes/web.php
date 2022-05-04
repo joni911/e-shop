@@ -17,8 +17,11 @@ use App\Http\Controllers\tenderController;
 use App\Http\Controllers\TenderFileController;
 use App\Http\Controllers\TenderFileDetailController;
 use App\Http\Controllers\TenderHomeController;
+use App\Http\Controllers\TenderKomenController;
 use App\Http\Controllers\UserBarangController;
 use App\Models\katagori_barang;
+use App\Models\tender_komen;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,5 +79,7 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('peserta',PesertaController::class);
     Route::get('peserta/tender/{id}',[PesertaController::class,'show_peserta'])->name('peserta.tender');
     Route::get('peserta/{id}/file_tender/{pid}',[PesertaController::class,'show_file_peserta'])->name('peserta.file');
+    //Komentar
+    Route::resource('komen', TenderKomenController::class);
 });
 

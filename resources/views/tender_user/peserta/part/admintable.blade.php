@@ -11,7 +11,7 @@
           <tr>
             <th style="width: 10px">No</th>
             <th>Nama PT</th>
-            {{-- <td>Cek Kelengkapan</td> --}}
+            <td>Cek Kelengkapan</td>
 
             {{-- <th>Aksi</th> --}}
           </tr>
@@ -23,14 +23,14 @@
             @forelse ($peserta as $b)
 
                 <tr>
-                    <td scope="row">{{$no}}</td>
+                    <td scope="row">{{$no++}}</td>
 
-                    <td>Peserta {{$no++}} Menawarkan @currency($b->penawaran)</td>
-                    {{-- <td>
+                    <td>{{$b->nama_perusahaan}} Menawarkan @currency($b->penawaran)</td>
+                    <td>
                         <a name="" id="" class="btn btn-primary" href="{{ route('peserta.file', ['id'=>$data->id,'pid'=>$b->id]) }}" role="button">
                             <i class="fas fa-eye    "></i>
                         </a>
-                    </td> --}}
+                    </td>
                   </tr>
             @empty
                 <tr>

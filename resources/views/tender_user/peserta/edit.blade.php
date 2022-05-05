@@ -18,9 +18,10 @@
         <!-- /.card-header -->
         <!-- form start -->
 
-        <form action="{{ route('peserta.store') }}" enctype="multipart/form-data" method="post">
+        <form action="{{ route('peserta.update',[$data->id]) }}" enctype="multipart/form-data" method="post">
             @csrf
-            @include('tender_user.peserta.part.form')
+            @method('PUT')
+            @include('tender_user.peserta.part.eform')
           <!-- /.card-body -->
 
           <div class="card-footer">

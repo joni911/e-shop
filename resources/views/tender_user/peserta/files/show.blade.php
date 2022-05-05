@@ -13,7 +13,9 @@
 
 <div class="card">
     <div class="card-header">
-      <h3 class="card-title-center text-center">Tender {{$data->nama_tender}}</h3>
+        <h3 class="card-title-center text-center">Tender {{$data->nama_tender}}
+            <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>
+        </h3>
     </div>
     <table class="table">
         <tbody>

@@ -39,16 +39,16 @@ class tender extends Model
     public function syarat()
     {
         # code...
-        return $this->hasMany('App\Models\syarat');
+        return $this->hasMany(syarat::class);
     }
     public function tender_file()
     {
         # code...
-        return $this->hasMany('App\Models\tender_file');
+        return $this->hasMany(tender_file::class);
     }
     public function peserta()
     {
         # code...
-        return $this->hasMany('App\Models\peserta');
+        return $this->hasMany(peserta::class);
     }
 }

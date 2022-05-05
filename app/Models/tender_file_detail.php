@@ -13,11 +13,11 @@ class tender_file_detail extends Model
     public function tender_file()
     {
         # code...
-        return $this->belongsTo('App\Models\tender_file');
+        return $this->belongsTo(tender_file::class);
     }
     public function peserta()
     {
         # code...
-        return $this->belongsTo('App\Models\peserta');
+        return $this->belongsTo(peserta::class);
     }
 }

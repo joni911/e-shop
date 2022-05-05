@@ -8,7 +8,7 @@
         <div class="comment-text">
             <span class="username">
                {{$k->user}}
-                <span class="text-muted float-right">{{$k->created_at}}</span>
+                <span class="text-muted float-right">{{$k->created_at->locale('id')->isoFormat('dddd D MMMM Y hh:mm:ss')}}</span>
             </span>
             <!-- /.username -->
             {{$k->komentar}}
@@ -16,6 +16,7 @@
         <!-- /.comment-text -->
     </div>
     @endforeach
+
 </div>
 <!-- /.card-footer -->
 <div class="card-footer">

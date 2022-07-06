@@ -5,8 +5,10 @@ use App\Http\Controllers\jenis_kontrakController;
 use App\Http\Controllers\jenis_pengadaanController;
 use App\Http\Controllers\katagori_barangController;
 use App\Http\Controllers\komentarController;
+use App\Http\Controllers\KoreksiController;
 use App\Http\Controllers\metode_pengadaanController;
 use App\Http\Controllers\MetodePengadaanController;
+use App\Http\Controllers\PemeriksaanController;
 use App\Http\Controllers\PerubahanController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\StatusTenderController;
@@ -81,5 +83,7 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::get('peserta/{id}/file_tender/{pid}',[PesertaController::class,'show_file_peserta'])->name('peserta.file');
     //Komentar
     Route::resource('komen', TenderKomenController::class);
+    Route::resource('koreksi', KoreksiController::class);
+    Route::resource('pemeriksaan', PemeriksaanController::class);
 });
 

@@ -77,28 +77,28 @@ class AppServiceProvider extends ServiceProvider
                             'text'        => 'Barang',
                             'url'         => 'barang',
                             'icon'        => 'far fa-fw fa-file',
-                            'label'       => 4,
+                            // 'label'       => 4,
                             'label_color' => 'success',
                         ],
                         [
                             'text'        => 'Barang User',
                             'url'         => 'shops',
                             'icon'        => 'far fa-fw fa-file',
-                            'label'       => 4,
+                            // 'label'       => 4,
                             'label_color' => 'success',
                         ],
                         [
                             'text'        => 'Tender',
                             'url'         => 'tender_admin',
                             'icon'        => 'far fa-fw fa-file',
-                            'label'       => 4,
+                            // 'label'       => 4,
                             'label_color' => 'success',
                         ],
                         [
                             'text'        => 'Tender User',
                             'url'         => 'tender_home',
                             'icon'        => 'far fa-fw fa-file',
-                            'label'       => 4,
+                            // 'label'       => 4,
                             'label_color' => 'success',
                         ],
                         [
@@ -136,87 +136,13 @@ class AppServiceProvider extends ServiceProvider
                             ],
                         ],
 
-                        ['header' => 'Pengajuan'],
+                        ['header' => 'Pemeriksaan'],
                         [
-                            'text' => 'Pengajuan',
-                            'url'  => 'pengajuan',
-                            'icon' => 'fas fa-fw fa-people-carry'
+                            'text' => 'Pemeriksaan',
+                            'url'  => 'pemeriksaan',
+                            'icon' => 'fas fa-search'
                         ],
-                        [
-                            'text' => 'change_password',
-                            'url'  => 'admin/settings',
-                            'icon' => 'fas fa-fw fa-lock',
-                        ],
-                        [
-                            'text'    => 'multilevel',
-                            'icon'    => 'fas fa-fw fa-share',
-                            'submenu' => [
-                                [
-                                    'text' => 'x',
-                                    'url' => '#'
-                                ],
-                                [
-                                    'text' => 'level_one',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text'    => 'level_one',
-                                    'url'     => '#',
-                                    'submenu' => [
-                                        [
-                                            'text' => 'y',
-                                            'url' => '#',
-                                            'submenu' => [
-                                                'text' => 'yy',
-                                                'url' => '#'
-                                            ]
-                                        ],
-                                        [
-                                            'text' => 'level_two',
-                                            'url'  => '#',
-                                        ],
-                                        [
-                                            'text'    => 'level_two',
-                                            'url'     => '#',
-                                            'submenu' => [
-                                                [
-                                                    'text' => 'z',
-                                                    'url' => '#'
-                                                ],
-                                                [
-                                                    'text' => 'level_three',
-                                                    'url'  => '#',
-                                                ],
-                                                [
-                                                    'text' => 'level_three',
-                                                    'url'  => '#',
-                                                ],
-                                            ],
-                                        ],
-                                    ],
-                                ],
-                                [
-                                    'text' => 'level_one',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                        ['header' => 'labels'],
-                        [
-                            'text'       => 'important',
-                            'icon_color' => 'red',
-                            'url'        => '#',
-                        ],
-                        [
-                            'text'       => 'warning',
-                            'icon_color' => 'yellow',
-                            'url'        => '#',
-                        ],
-                        [
-                            'text'       => 'information',
-                            'icon_color' => 'cyan',
-                            'url'        => '#',
-                        ],
+
 
                 );
                     break;

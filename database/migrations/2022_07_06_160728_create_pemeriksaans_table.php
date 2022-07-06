@@ -4,21 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTenderFilesTable extends Migration
+class CreatePemeriksaansTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    // 
     public function up()
     {
-        Schema::create('tender_files', function (Blueprint $table) {
+        Schema::create('pemeriksaans', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('tender_id');
-            $table->string('nama');
-            $table->longText('keterangan');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateTenderFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tender_files');
+        Schema::dropIfExists('pemeriksaans');
     }
 }

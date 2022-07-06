@@ -11,7 +11,7 @@
         <div class="form-group">
             <label for="">NPWP</label>
             <input type="text"
-              class="form-control" name="NPWP" id="" aria-describedby="helpId" placeholder="" value="{{$data->nama_perusahaan ?? ""}}">
+              class="form-control" name="NPWP" id="" aria-describedby="helpId" placeholder="" value="{{$data->NPWP ?? ""}}">
             <small id="helpId" class="form-text text-muted">Masukkan Nama Perusahaan</small>
           </div>
           <div class="form-group">
@@ -33,7 +33,9 @@
           <div class="form-group">
             <label for="">Penawaran</label>
             <input type="number"
-              class="form-control" name="penawaran" id="" aria-describedby="helpId" placeholder="" value="{{$data->penawaran ?? ""}}">
+              class="form-control" name="" id="" aria-describedby="helpId" placeholder="" value="{{$data->penawaran ?? ""}}" disabled>
+            <input type="number"
+              class="form-control" name="penawaran" id="" aria-describedby="helpId" placeholder="" value="{{$data->penawaran ?? ""}}" hidden>
             <small id="helpId" class="form-text text-muted">Masukkan Nomor Telephone Perusahaan</small>
           </div>
           @forelse ($data->tender->tender_file as $tf)

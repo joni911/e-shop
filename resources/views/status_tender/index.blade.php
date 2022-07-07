@@ -11,7 +11,7 @@
 @section('content')
 
 <body>
-    @include('status_tender_admin.part.table')
+    @include('status_tender.part.table')
 </body>
 
 @stop
@@ -21,7 +21,7 @@
 @stop
 
 @section('js')
-@include('status_tender_admin.part.deletejs')
+@include('status_tender.part.deletejs')
 
 
 @stop

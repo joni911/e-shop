@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\status_tender;
+use App\Models\User;
+use App\Notifications\EmailNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class StatusTenderController extends Controller
 {
@@ -12,6 +15,24 @@ class StatusTenderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function send()
+    {
+    	$user = User::first();
+
+        $project = [
+            'greeting' => 'Hi '.$user->name.',',
+            'body' => 'Terimakasih Telah Mendaftar Di Layanan Pengadaan Barang jasa PT. BANK Daerah bangli Perseroda.',
+            'thanks' => 'Terima Kasih dari bankdaerahbangli.com',
+            'actionText' => 'Kunjungi Situs Pengadaan',
+            'actionURL' => url('/'),
+            'id' => 57
+        ];
+
+        Notification::send($user, new EmailNotification($project));
+
+        dd('Notification sent!');
+    }
+
      public function index()
     {
         //

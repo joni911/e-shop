@@ -62,6 +62,7 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('jenis_kontrak',jenis_kontrakController::class);
     Route::resource('metode_pengadaan',MetodePengadaanController::class);
     Route::resource('status_tender',StatusTenderController::class);
+    Route::get('send',[StatusTenderController::class,'send'])->name('send');
     Route::resource('tahapan',TahapanController::class);
 
     //Resource Tender

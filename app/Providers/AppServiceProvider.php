@@ -139,7 +139,7 @@ class AppServiceProvider extends ServiceProvider
                         ['header' => 'Pemeriksaan'],
                         [
                             'text' => 'Pemeriksaan',
-                            'url'  => 'pemeriksaan',
+                            'url'  => 'dashboard',
                             'icon' => 'fas fa-search'
                         ],
 

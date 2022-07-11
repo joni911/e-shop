@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\barangController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\jenis_kontrakController;
 use App\Http\Controllers\jenis_pengadaanController;
 use App\Http\Controllers\katagori_barangController;
@@ -86,5 +87,8 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('komen', TenderKomenController::class);
     Route::resource('koreksi', KoreksiController::class);
     Route::resource('pemeriksaan', PemeriksaanController::class);
+
+    //dashboard
+    Route::resource('dashboard', DashboardController::class);
 });
 

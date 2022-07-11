@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Notifications\EmailNotification;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -65,11 +67,29 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'hak_akses' => 'user'
         ]);
+
+        $this->send($user);
+        return $user;
+    }
+
+    public function send($user)
+    {
+        $project = [
+            'greeting' => 'Hi '.$user->name.',',
+            'body' => 'Terimakasih Telah Mendaftar Di Layanan Pengadaan Barang jasa PT.co BANK Daerah bangli Perseroda.',
+            'thanks' => 'Terima Kasih dari bankdaerahbangli.com',
+            'actionText' => 'Kunjungi Situs Pengadaan',
+            'actionURL' => url('/'),
+            'id' => 57
+        ];
+
+        Notification::send($user, new EmailNotification($project));
+
     }
 }

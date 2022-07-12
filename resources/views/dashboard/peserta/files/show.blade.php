@@ -91,7 +91,7 @@
                 <td>File</td>
                 <td>
                     @forelse ($file as $f)
-                       <a href="/{{$f->file}}">{{$f->id}}</a> <br>
+                       <a href="/{{$f->file}}">{{$f->nama_file}}</a> <br>
                     @empty
 
                     @endforelse

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\peserta;
 use App\Models\tender;
+use App\Models\tender_file;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -15,6 +17,7 @@ class DashboardController extends Controller
     public function index()
     {
         $data = tender::paginate(10);
+        // return $data = tender_file::get();
         return view('dashboard.index',['data'=>$data]);
     }
 
@@ -47,7 +50,18 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = tender::findorfail($id);
+         $peserta = peserta::join('tenders','tenders.id','pesertas.tender_id')
+        // ->join('tender_files','tender_files.tender_id','tenders.id')
+        // ->join('tender_file_details','tender_file_details.tender_file_id','tender_files.id')
+        ->where('tenders.id',$id)
+        ->select('pesertas.*')
+        // ->select('pesertas.*','tender_file_details.files')
+        // ->groupBy('pesertas.id')
+        // ->groupBy('pesertas.user_id','pesertas.id','pesertas.tender_id','pesertas.NPWP','pesertas.penawaran','pesertas.harga_koreksi','pesertas.created_at','pesertas.updated_at','pesertas.deleted_at','pesertas.nama_perusahaan')
+        ->paginate(10);
+        // ->get();
+        return view('dashboard.peserta.show',['data'=>$data,'peserta'=>$peserta]);
     }
 
     /**

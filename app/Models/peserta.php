@@ -18,7 +18,7 @@ class peserta extends Model
     public function tender_file_detail()
     {
         # code...
-        return $this->belongsTo('App\Models\tender_file_detail');
+        return $this->hasMany(tender_file_detail::class);
     }
 
     public function User()

@@ -89,6 +89,7 @@ class PesertaController extends Controller
                 $tfs->keterangan = "";
                 $tfs->peserta_id = $data->id;
                 $tfs->tender_id = $request->id;
+                $tfs->status_id = 0;
                 $tfs->save();
             }
         }

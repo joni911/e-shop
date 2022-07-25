@@ -1,4 +1,4 @@
-@include('tender.part.alert')
+@include('tahapan.part.alert')
 
     <div class="card-body">
         <div class="form-group">

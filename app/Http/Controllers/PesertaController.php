@@ -42,8 +42,10 @@ class PesertaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // public function store(Request $request)
     public function store(pesertaRequest $request)
     {
+        // return redirect()->route('pengalaman.create');
         //
         $user = Auth::user();
         $file = tender::findorfail($request->id);
@@ -59,10 +61,25 @@ class PesertaController extends Controller
         //save file
         $data = new peserta();
         $data->tender_id = $request->id;
-        $data->nama_perusahaan = $request->nama_pt;
+        $data->nama_pt = $request->nama_pt;
         $data->NPWP = $request->NPWP;
         $data->no_hp = $request->no_hp;
         $data->alamat = $request->alamat;
+        $data->izin = $request->izin;
+        $data->nomor_izin = $request->nomor_izin;
+        $data->izin_berlaku = $request->izin_berlaku;
+        $data->instansi_pemberi = $request->instansi_pemberi;
+        $data->kualifikasi = $request->kualifikasi;
+        $data->klasifikasi = $request->klasifikasi;
+        $data->no_akta = $request->no_akta;
+        $data->tgl_akta = $request->tgl_akta;
+        $data->notaris = $request->notaris;
+        $data->no_aktab = $request->no_aktab;
+        $data->tgl_aktab = $request->tgl_aktab;
+        $data->notaris_b = $request->notaris_b;
+        $data->nama_npwp = $request->nama_npwp;
+        $data->kswp_npwp = $request->kswp_npwp;
+        $data->kswp_nama = $request->kswp_nama;
         $data->penawaran = $request->penawaran;
         $data->harga_koreksi = 0;
         $data->user_id = $user->id;
@@ -93,7 +110,7 @@ class PesertaController extends Controller
                 $tfs->save();
             }
         }
-        return redirect()->route('tender_home.show',$request->id);
+        return redirect()->route('pengalaman.show',$data->id);
 
     }
 

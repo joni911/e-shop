@@ -30,7 +30,22 @@ class pesertaRequest extends FormRequest
             // 'no_tlp' => 'required',
             'alamat' => 'required',
             'penawaran' => 'required',
-            'id' => 'required',
+            'izin' => 'required',
+            'nomor_izin' => 'required',
+            'izin_berlaku' => 'required',
+            'instansi_pemberi' => 'required',
+            'kualifikasi' => 'required',
+            'klasifikasi' => 'required',
+            'no_akta' => 'required',
+            'tgl_akta' => 'required',
+            'notaris' => 'required',
+            'no_aktab' => 'required',
+            'tgl_aktab' => 'required',
+            'notaris_b' => 'required',
+            'nama_npwp' => 'required',
+            'kswp_npwp' => 'required',
+            'kswp_nama' => 'required',
+
         ];
     }
 }

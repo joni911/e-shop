@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIzinToPesertasTable extends Migration
+class AddNoHpToPesertasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,8 @@ class AddIzinToPesertasTable extends Migration
     public function up()
     {
         Schema::table('pesertas', function (Blueprint $table) {
-            //
-            $table->string('izin');
-            $table->string('nomor_izin');
-            $table->date('izin_berlaku')->nullable();
-            $table->string('instansi_pemberi');
-            $table->string('kualifikasi');
-            $table->longText('klasifikasi');
-            $table->string('nama_pt');
+            $table->string('no_hp');
+            $table->longText('alamat');
 
         });
     }

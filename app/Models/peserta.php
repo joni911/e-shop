@@ -32,4 +32,9 @@ class peserta extends Model
         # code...
         return $this->hasMany(tender_komen::class);
     }
+    public function pengalaman()
+    {
+        # code...
+        return $this->hasMany(pengalaman_tender::class);
+    }
 }

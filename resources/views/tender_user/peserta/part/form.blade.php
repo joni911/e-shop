@@ -82,7 +82,7 @@
           <h3>NPWP</h3>
         <div class="form-group">
             <label for="">NPWP</label>
-            <input type="number"
+            <input type="text"
               class="form-control" name="NPWP" id="" aria-describedby="helpId" placeholder="" value="{{$data->NPWP ?? ""}}">
             <small id="helpId" class="form-text text-muted">Masukkan No NPWP</small>
           </div>
@@ -95,7 +95,7 @@
           <h2>Bukti KSWP</h2>
           <div class="form-group">
             <label for="">NPWP</label>
-            <input type="number"
+            <input type="text"
               class="form-control" name="kswp_npwp" id="" aria-describedby="helpId" placeholder="" value="{{$data->kswp_npwp ?? ""}}">
             <small id="helpId" class="form-text text-muted">Masukkan No NPWP</small>
           </div>

@@ -10,6 +10,7 @@ use App\Http\Controllers\KoreksiController;
 use App\Http\Controllers\metode_pengadaanController;
 use App\Http\Controllers\MetodePengadaanController;
 use App\Http\Controllers\PemeriksaanController;
+use App\Http\Controllers\PengalamanTenderController;
 use App\Http\Controllers\PerubahanController;
 use App\Http\Controllers\PesertaController;
 use App\Http\Controllers\StatusTenderController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\TenderHomeController;
 use App\Http\Controllers\TenderKomenController;
 use App\Http\Controllers\UserBarangController;
 use App\Models\katagori_barang;
+use App\Models\pengalaman_tender;
 use App\Models\tender_komen;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -83,6 +85,7 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('peserta',PesertaController::class);
     Route::get('peserta/tender/{id}',[PesertaController::class,'show_peserta'])->name('peserta.tender');
     Route::get('peserta/{id}/file_tender/{pid}',[PesertaController::class,'show_file_peserta'])->name('peserta.file');
+    Route::resource('pengalaman', PengalamanTenderController::class);
     //Komentar
     Route::resource('komen', TenderKomenController::class);
     Route::resource('koreksi', KoreksiController::class);

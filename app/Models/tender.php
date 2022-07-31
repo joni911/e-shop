@@ -56,4 +56,9 @@ class tender extends Model
         # code...
         return $this->hasMany(pengalaman_tender::class);
     }
+     public function peralatan()
+    {
+        # code...
+        return $this->hasMany(peralatan::class);
+    }
 }

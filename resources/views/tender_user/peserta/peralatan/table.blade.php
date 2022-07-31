@@ -5,10 +5,14 @@
           <tr>
             <th style="width: 10px">No</th>
             <th>Nama</th>
-            <th>Tgl Lahir</th>
-            <th>Jenis Klamin</th>
-            <th>Alamat</th>
-            <th>Pengalaman</th>
+            <th>Jumlah</th>
+            <th>Kapasitas</th>
+            <th>Merek/Tipe</th>
+            <th>Tahun</th>
+            <th>Kondisi</th>
+            <th>Lokasi</th>
+            <th>Kepemilikan</th>
+            <th>bukti</th>
             <th>Aksi</th>
           </tr>
         </thead>
@@ -21,11 +25,14 @@
                 <tr>
                     <td scope="row">{{$no}}</td>
                     <td>{{$l->nama}}</td>
-                    <td>{{$l->tgl_lahir}}</td>
-                    <td>{{$l->jk}}</td>
-                    <td>{{$l->alamat}}</td>
-                    <td>{{$l->jabatan}}</td>
-                    <td>{{$l->pengalaman}}</td>
+                    <td>{{$l->jumlah}}</td>
+                    <td>{{$l->kapasitas}}</td>
+                    <td>{{$l->merk}}</td>
+                    <td>{{$l->tahun}}</td>
+                    <td>{{$l->kondisi}}</td>
+                    <td>{{$l->lokasi}}</td>
+                    <td>{{$l->kepemilikan}}</td>
+                    <td>{{$l->bukti}}</td>
                     <td></td>
                   </tr>
             @empty

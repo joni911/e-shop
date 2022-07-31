@@ -7,6 +7,7 @@ use App\Http\Requests\Storetenaga_ahliRequest;
 use App\Http\Requests\Updatetenaga_ahliRequest;
 use App\Models\pengalaman_tender;
 use App\Models\peserta;
+use Illuminate\Support\Facades\Auth;
 
 class TenagaAhliController extends Controller
 {
@@ -38,11 +39,11 @@ class TenagaAhliController extends Controller
      */
     public function store(Storetenaga_ahliRequest $request)
     {
-        $
+        $user = Auth::user();
         $data = new tenaga_ahli();
+        $data->user_id = $user->id;
         $data->peserta_id = $request->id;
         $data->tender_id = $request->tender_id;
-        $data->user_id = $request->user_id;
         $data->nama = $request->nama;
         $data->tgl_lahir = $request->tgl_lahir;
         $data->jk = $request->jk;
@@ -67,7 +68,7 @@ class TenagaAhliController extends Controller
     {
         $p = peserta::findorfail($id);
         $list = tenaga_ahli::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.tenaga_ahli.create',['peserta'=>$p]);
+        return view('tender_user.peserta.tenaga_ahli.create',['peserta'=>$p,'list'=>$list]);
     }
 
     /**

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Pendaftaran Tenaga Ahli Tender')
+@section('title', 'Pendaftaran Alat Tender')
 
 @section('content_header')
 
@@ -13,24 +13,24 @@
 <body>
     <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Pendaftaran Tenaga Ahli Tender {{$data->tender->nama ?? $peserta->tender->nama}}</h3>
+          <h3 class="card-title">Pendaftaran Peralatan Tender {{$data->tender->nama ?? $peralatan->tender->nama}}</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
 
-        <form action="{{ route('tenagaahli.store') }}" enctype="multipart/form-data" method="post">
+        <form action="{{ route('peralatan.store') }}" enctype="multipart/form-data" method="post">
             @csrf
-            @include('tender_user.peserta.tenaga_ahli.form')
+            @include('tender_user.peserta.peralatan.form')
           <!-- /.card-body -->
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a name="" id="" class="btn btn-success" href="{{ route('peralatan.show', [$peserta->id]) }}" role="button">Selesai</a>
+            <a name="" id="" class="btn btn-success" href="{{ route('tender_home.index') }}" role="button">Selesai</a>
           </div>
         </form>
     </div>
     <div class="card card-primary">
-        @include('tender_user.peserta.tenaga_ahli.table')
+        @include('tender_user.peserta.peralatan.table')
     </div>
 
 </body>

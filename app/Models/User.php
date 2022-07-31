@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(peserta::class);
     }
+    public function peralatan()
+    {
+        # code...
+        return $this->hasMany(peralatan::class);
+    }
 }

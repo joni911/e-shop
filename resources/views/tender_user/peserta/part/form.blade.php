@@ -38,7 +38,7 @@
           </div>
           <div class="form-group">
             <label for="">Klasifikasi</label>
-            <textarea class="form-control" name="klasifikasi" id="" rows="3"></textarea>
+            <textarea class="form-control" name="klasifikasi" id="" rows="3">{{$data->klasifikasi ?? ""}}</textarea>
           </div>
         <div class="form-group">
           <label for="">Nama Perusahaan</label>
@@ -119,7 +119,7 @@
           </div> --}}
           <div class="form-group">
             <label for="">Alamat</label>
-            <textarea class="form-control" name="alamat" id="" rows="3"></textarea>
+            <textarea class="form-control" name="alamat" id="" rows="3">{{$data->alamat ?? ""}}</textarea>
           </div>
           <div class="form-group">
             <label for="">Penawaran</label>
@@ -128,14 +128,14 @@
             <small id="helpId" class="form-text text-muted">Masukkan Nomor Telephone Perusahaan</small>
           </div>
 
-          @forelse ($data->tender_file as $tf)
-            <div class="form-group">
-              <label for="">{{$tf->nama}}</label>
-              <input type="file" class="form-control-file" name="{{$tf->id}}" id="" placeholder="" aria-describedby="fileHelpId">
-              <small id="fileHelpId" class="form-text text-muted">{{$tf->keterangan}}</small>
-            </div>
-          @empty
+          @forelse ($data->tender->tender_file as $tf)
+          <div class="form-group">
+            <label for="">{{$tf->nama}}</label>
+            <input type="file" class="form-control-file" name="{{$tf->id}}" id="" placeholder="" aria-describedby="fileHelpId">
+            <small id="fileHelpId" class="form-text text-muted">{{$tf->keterangan}}</small>
+          </div>
+        @empty
 
-          @endforelse
+        @endforelse
 
     </div>

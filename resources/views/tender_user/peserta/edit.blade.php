@@ -21,7 +21,8 @@
         <form action="{{ route('peserta.update',[$data->id]) }}" enctype="multipart/form-data" method="post">
             @csrf
             @method('PUT')
-            @include('tender_user.peserta.part.eform')
+            @include('tender_user.peserta.part.form')
+            {{-- @include('tender_user.peserta.part.eform') --}}
           <!-- /.card-body -->
 
           <div class="card-footer">

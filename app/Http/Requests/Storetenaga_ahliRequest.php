@@ -13,7 +13,7 @@ class Storetenaga_ahliRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class Storetenaga_ahliRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => 'required',
+            'nama' => 'required',
+            'tgl_lahir' => 'required',
+            'jk' => 'required',
+            'alamat' => 'required',
+            'negara' => 'required',
+            'jabatan' => 'required',
+            'pengalaman' => 'required',
+            'email' => 'required',
+            'keterangan' => 'required'
         ];
     }
 }

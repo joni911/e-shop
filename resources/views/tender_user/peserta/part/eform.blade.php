@@ -3,7 +3,7 @@
         <div class="form-group">
           <label for="">Nama Perusahaan</label>
           <input type="text"
-            class="form-control" name="nama_pt" id="" aria-describedby="helpId" placeholder="" value="{{$data->nama_perusahaan ?? ""}}">
+            class="form-control" name="nama_pt" id="" aria-describedby="helpId" placeholder="" value="{{$data->nama_pt ?? ""}}">
             <input type="text"
             class="form-control" name="id" hidden id="" aria-describedby="helpId" placeholder="" value="{{$data->id ?? ""}}">
           <small id="helpId" class="form-text text-muted">Masukkan Nama Perusahaan</small>

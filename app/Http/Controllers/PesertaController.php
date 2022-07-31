@@ -181,7 +181,7 @@ class PesertaController extends Controller
 
         ->join('pesertas','pesertas.id','tender_komens.peserta_id')
         ->join('users','users.id','tender_komens.user_id')
-        ->select('tender_komens.*','pesertas.nama_perusahaan as pt','users.name as user')
+        ->select('tender_komens.*','pesertas.nama_pt as pt','users.name as user')
         ->get();
 
         return view('tender_user.peserta.files.show',['data'=>$data,'file'=>$file,'komen'=>$komen]);
@@ -240,7 +240,7 @@ class PesertaController extends Controller
         // }
 
         // $data->tender_id = $request->id;
-        $data->nama_perusahaan = $request->nama_pt;
+        $data->nama_pt = $request->nama_pt;
         $data->NPWP = $request->NPWP;
         $data->no_hp = $request->no_hp;
         $data->alamat = $request->alamat;
@@ -268,7 +268,9 @@ class PesertaController extends Controller
                 $tfs->save();
             }
         }
-        return redirect()->route('tender_home.show',$data->tender_id);
+        // return redirect()->route('tender_home.show',$data->tender_id);
+        return redirect()->route('pengalaman.show',$data->id);
+
 
 
     }

@@ -29,7 +29,7 @@
         <tbody>
             <tr>
                 <td scope="row">Nama Perusahaan</td>
-                <td>{{$data->nama_perusahaan}}</td>
+                <td>{{$data->nama_pt}}</td>
             </tr>
             <tr>
                 <td scope="row">Nama User</td>

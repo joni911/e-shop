@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\managemen;
 use App\Http\Requests\StoremanagemenRequest;
 use App\Http\Requests\UpdatemanagemenRequest;
+use App\Models\peserta;
+use Illuminate\Support\Facades\Auth;
 
 class ManagemenController extends Controller
 {
@@ -36,7 +38,20 @@ class ManagemenController extends Controller
      */
     public function store(StoremanagemenRequest $request)
     {
-        //
+        $user = Auth::user();
+        $data = new managemen();
+        $data->user_id = $user->id;
+        $data->peserta_id = $request->id;
+        $data->tender_id = $request->tender_id;
+        $data->nama = $request->nama;
+        $data->tgl_menjabat = $request->tgl_menjabat;
+        $data->tgl_berakhir = $request->tgl_berakhir;
+        $data->ktp = $request->ktp;
+        $data->alamat = $request->alamat;
+        $data->npwp = $request->npwp;
+        $data->status = $request->status;
+        $data->save();
+        return redirect()->back()->with('success','Data '.$data->nama.' telah disimpan');
     }
 
     /**
@@ -45,9 +60,11 @@ class ManagemenController extends Controller
      * @param  \App\Models\managemen  $managemen
      * @return \Illuminate\Http\Response
      */
-    public function show(managemen $managemen)
+    public function show($id)
     {
-        //
+        $p = peserta::findorfail($id);
+        $list = managemen::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
+        return view('tender_user.peserta.managemen.create',['managemen'=>$p,'list'=>$list]);
     }
 
     /**

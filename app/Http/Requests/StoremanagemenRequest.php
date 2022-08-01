@@ -24,13 +24,13 @@ class StoremanagemenRequest extends FormRequest
     public function rules()
     {
         return [
-            'pekerjaan' => 'required',
-            'pekerjaan' => 'required',
-            'pekerjaan' => 'required',
-            'pekerjaan' => 'required',
-            'pekerjaan' => 'required',
-            'pekerjaan' => 'required',
-            'pekerjaan' => 'required',
+            'nama' => 'required',
+            'tgl_menjabat' => 'required',
+            'tgl_berakhir' => 'required',
+            'ktp' => 'required',
+            'alamat' => 'required',
+            'npwp' => 'required',
+            'status' => 'required',
 
         ];
     }

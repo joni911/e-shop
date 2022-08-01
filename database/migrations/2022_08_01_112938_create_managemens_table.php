@@ -23,7 +23,7 @@ class CreateManagemensTable extends Migration
             $table->date('tgl_berakhir')->nullable();
             $table->string('ktp');
             $table->longText('alamat');
-            $table->string('NPWP');
+            $table->string('npwp');
             $table->string('status');
             $table->softDeletes();
             $table->timestamps();

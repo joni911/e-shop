@@ -7,6 +7,7 @@ use App\Http\Controllers\jenis_pengadaanController;
 use App\Http\Controllers\katagori_barangController;
 use App\Http\Controllers\komentarController;
 use App\Http\Controllers\KoreksiController;
+use App\Http\Controllers\ManagemenController;
 use App\Http\Controllers\metode_pengadaanController;
 use App\Http\Controllers\MetodePengadaanController;
 use App\Http\Controllers\PekerjaanBerjalanController;
@@ -92,6 +93,7 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('tenagaahli', TenagaAhliController::class);
     Route::resource('peralatan', PeralatanController::class);
     Route::resource('pekerjaan_berjalan', PekerjaanBerjalanController::class);
+    Route::resource('managemen', ManagemenController::class);
     //Komentar
     Route::resource('komen', TenderKomenController::class);
     Route::resource('koreksi', KoreksiController::class);

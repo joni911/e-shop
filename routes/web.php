@@ -9,6 +9,7 @@ use App\Http\Controllers\komentarController;
 use App\Http\Controllers\KoreksiController;
 use App\Http\Controllers\metode_pengadaanController;
 use App\Http\Controllers\MetodePengadaanController;
+use App\Http\Controllers\PekerjaanBerjalanController;
 use App\Http\Controllers\PemeriksaanController;
 use App\Http\Controllers\PengalamanTenderController;
 use App\Http\Controllers\PeralatanController;
@@ -90,6 +91,7 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('pengalaman', PengalamanTenderController::class);
     Route::resource('tenagaahli', TenagaAhliController::class);
     Route::resource('peralatan', PeralatanController::class);
+    Route::resource('pekerjaan_berjalan', PekerjaanBerjalanController::class);
     //Komentar
     Route::resource('komen', TenderKomenController::class);
     Route::resource('koreksi', KoreksiController::class);

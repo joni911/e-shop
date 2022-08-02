@@ -184,8 +184,11 @@ class PesertaController extends Controller
         ->select('tender_komens.*','pesertas.nama_pt as pt','users.name as user')
         ->get();
 
+        $berkas = tender_file_detail::where('tender_id',$data->tender_id)
+        ->where('peserta_id',$data->id)
+        ->get();
 
-        return view('tender_user.peserta.files.show',['data'=>$data,'file'=>$file,'komen'=>$komen]);
+        return view('tender_user.peserta.files.show',['data'=>$data,'file'=>$file,'komen'=>$komen,'berkas'=>$berkas]);
 
 
     }

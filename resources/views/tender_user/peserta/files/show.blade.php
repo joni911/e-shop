@@ -100,6 +100,8 @@
 
         </tbody>
     </table>
+     <h3 class="text-center">File</h3>
+    @include('tender_user.peserta.admin.file')
     <h3 class="text-center">Pengalaman</h3>
     @include('tender_user.peserta.admin.pengalaman')
     <h3 class="text-center">Tenaga Ahli Perusahaan</h3>

@@ -100,6 +100,17 @@
 
         </tbody>
     </table>
+    <h3 class="text-center">Pengalaman</h3>
+    @include('tender_user.peserta.admin.pengalaman')
+    <h3 class="text-center">Tenaga Ahli Perusahaan</h3>
+    @include('tender_user.peserta.admin.tenaga_ahli')
+    <h3 class="text-center">Peralatan</h3>
+    @include('tender_user.peserta.admin.peralatan')
+    <h3 class="text-center">Pekerjaan Sedang Berjalan</h3>
+    @include('tender_user.peserta.admin.pekerjaan_berjalan')
+
+    <h3 class="text-center">Managemen Perusahaan</h3>
+    @include('tender_user.peserta.admin.managemen')
     @include('tender_user.peserta.komentar.index')
 
 </div>

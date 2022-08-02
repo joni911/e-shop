@@ -18,17 +18,17 @@
             <?php
                 $no = 1;
             ?>
-            @forelse ($list as $l)
+            @forelse ($data->managemen as $m)
 
                 <tr>
                     <td scope="row">{{$no}}</td>
-                    <td>{{$l->nama}}</td>
-                    <td>{{$l->ktp}}</td>
-                    <td>{{$l->NPWP}}</td>
-                    <td>{{$l->alamat}}</td>
-                    <td>{{$l->tgl_menjabat}}</td>
-                    <td>{{$l->tgl_berakhir}}</td>
-                    <td>{{$l->status}}</td>
+                    <td>{{$m->nama}}</td>
+                    <td>{{$m->ktp}}</td>
+                    <td>{{$m->NPWP}}</td>
+                    <td>{{$m->alamat}}</td>
+                    <td>{{$m->tgl_menjabat}}</td>
+                    <td>{{$m->tgl_berakhir}}</td>
+                    <td>{{$m->status}}</td>
                     <td></td>
                   </tr>
             @empty
@@ -44,7 +44,7 @@
     <!-- /.card-body -->
     <div class="card-footer clearfix">
       <ul class="pagination pagination-sm m-0 float-right">
-        {{$list->links()}}
+        {{-- {{$da->links()}} --}}
       </ul>
     </div>
   </div>

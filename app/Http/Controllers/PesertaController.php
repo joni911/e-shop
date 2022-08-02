@@ -184,6 +184,7 @@ class PesertaController extends Controller
         ->select('tender_komens.*','pesertas.nama_pt as pt','users.name as user')
         ->get();
 
+
         return view('tender_user.peserta.files.show',['data'=>$data,'file'=>$file,'komen'=>$komen]);
 
 

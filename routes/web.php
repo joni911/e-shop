@@ -27,6 +27,7 @@ use App\Http\Controllers\TenderFileDetailController;
 use App\Http\Controllers\TenderHomeController;
 use App\Http\Controllers\TenderKomenController;
 use App\Http\Controllers\UserBarangController;
+use App\Http\Controllers\ValidasiFileController;
 use App\Models\katagori_barang;
 use App\Models\pengalaman_tender;
 use App\Models\tender_komen;
@@ -94,6 +95,7 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('peralatan', PeralatanController::class);
     Route::resource('pekerjaan_berjalan', PekerjaanBerjalanController::class);
     Route::resource('managemen', ManagemenController::class);
+    Route::resource('validasi_file', ValidasiFileController::class);
     //Komentar
     Route::resource('komen', TenderKomenController::class);
     Route::resource('koreksi', KoreksiController::class);

@@ -20,4 +20,9 @@ class tender_file_detail extends Model
         # code...
         return $this->belongsTo(peserta::class);
     }
+
+    public function validasi_file()
+    {
+        return $this->hasOne(validasi_file::class);
+    }
 }

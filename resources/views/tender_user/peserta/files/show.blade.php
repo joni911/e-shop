@@ -18,7 +18,7 @@
 
 
 @endif
-
+@include('global.alert')
 <div class="card">
     <div class="card-header">
         <h3 class="card-title-center text-center">Tender {{$data->nama_tender}}

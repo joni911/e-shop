@@ -9,6 +9,7 @@ use App\Models\tender;
 use App\Models\tender_file;
 use App\Models\tender_file_detail;
 use App\Models\tender_komen;
+use App\Models\tender_status_files;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -187,6 +188,7 @@ class PesertaController extends Controller
         $berkas = tender_file_detail::where('tender_id',$data->tender_id)
         ->where('peserta_id',$data->id)
         ->get();
+
 
         return view('tender_user.peserta.files.show',['data'=>$data,'file'=>$file,'komen'=>$komen,'berkas'=>$berkas]);
 

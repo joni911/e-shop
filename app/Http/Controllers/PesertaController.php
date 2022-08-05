@@ -107,7 +107,7 @@ class PesertaController extends Controller
                 $tfs->keterangan = "";
                 $tfs->peserta_id = $data->id;
                 $tfs->tender_id = $request->id;
-                $tfs->status_id = 0;
+                // $tfs->status_id = 0;
                 $tfs->save();
             }
         }
@@ -141,9 +141,9 @@ class PesertaController extends Controller
             ->select('tenders.*','jenis_pengadaans.nama as jpn','jenis_kontraks.nama as jkn',
             'metode_pengadaans.nama as mpn','status_tenders.nama as stn')
             ->findorfail($id);
-
+            $file = tender_file::where('tender_id',$id)->get();
             // $now = Carbon::now();
-            return view('tender_user.peserta.create',['data'=>$data]);
+            return view('tender_user.peserta.create',['data'=>$data, 'file'=>$file]);
         }
         return redirect()->route('peserta.file',['id'=>$id,'pid'=>$peserta->id]);
 
@@ -189,8 +189,13 @@ class PesertaController extends Controller
         ->where('peserta_id',$data->id)
         ->get();
 
+        $pemeriksanaan = $data->pemeriksaan;
 
-        return view('tender_user.peserta.files.show',['data'=>$data,'file'=>$file,'komen'=>$komen,'berkas'=>$berkas]);
+        return view('tender_user.peserta.files.show',
+        ['data'=>$data,'file'=>$file,
+        'komen'=>$komen,'berkas'=>$berkas,
+        'pemeriksaan' => $pemeriksanaan
+        ]);
 
 
     }

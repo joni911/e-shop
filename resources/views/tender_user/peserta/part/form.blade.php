@@ -128,7 +128,7 @@
             <small id="helpId" class="form-text text-muted">Masukkan Nomor Telephone Perusahaan</small>
           </div>
 
-          @forelse ($data->tender->tender_file as $tf)
+        @forelse ($file as $tf)
           <div class="form-group">
             <label for="">{{$tf->nama}}</label>
             <input type="file" class="form-control-file" name="{{$tf->id}}" id="" placeholder="" aria-describedby="fileHelpId">

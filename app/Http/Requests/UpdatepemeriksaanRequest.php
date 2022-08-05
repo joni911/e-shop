@@ -13,7 +13,7 @@ class UpdatepemeriksaanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class UpdatepemeriksaanRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            
+            'pengalaman' => 'required',
+            'tenaga_ahli' => 'required',
+            'peralatan' => 'required',
+            'pekerjaan_berjalan' => 'required',
+            'managemen' => 'required'
         ];
     }
 }

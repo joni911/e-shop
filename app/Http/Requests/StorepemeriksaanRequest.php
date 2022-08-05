@@ -13,7 +13,7 @@ class StorepemeriksaanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,13 @@ class StorepemeriksaanRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+
+            'peserta_id' => 'required|unique:pemeriksaans',
+            'pengalaman' => 'required',
+            'tenaga_ahli' => 'required',
+            'peralatan' => 'required',
+            'pekerjaan_berjalan' => 'required',
+            'managemen' => 'required'
         ];
     }
 }

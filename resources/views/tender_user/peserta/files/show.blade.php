@@ -21,9 +21,16 @@
 @include('global.alert')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title-center text-center">Tender {{$data->nama_tender}}
+        b:if
+        @if ($pemeriksaan->kesimpulan != 'Lulus')
+        <h3 class="card-title-center text-center bg-danger">Tender {{$data->nama_tender}} {{$pemeriksaan->kesimpulan}}
             <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>
         </h3>
+        @else
+        <h3 class="card-title-center text-center bg-success">Tender {{$data->nama_tender}} {{$pemeriksaan->kesimpulan}}
+            <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>
+        </h3>
+        @endif
     </div>
     <table class="table">
         <tbody>
@@ -100,20 +107,15 @@
 
         </tbody>
     </table>
-     <h3 class="text-center">File</h3>
+    <h3 class="text-center">File</h3>
     @include('tender_user.peserta.admin.file')
-    <h3 class="text-center">Pengalaman</h3>
-    @include('tender_user.peserta.admin.pengalaman')
-    <h3 class="text-center">Tenaga Ahli Perusahaan</h3>
-    @include('tender_user.peserta.admin.tenaga_ahli')
-    <h3 class="text-center">Peralatan</h3>
-    @include('tender_user.peserta.admin.peralatan')
-    <h3 class="text-center">Pekerjaan Sedang Berjalan</h3>
-    @include('tender_user.peserta.admin.pekerjaan_berjalan')
+    @include('tender_user.peserta.admin.pemeriksaan.form')
 
-    <h3 class="text-center">Managemen Perusahaan</h3>
-    @include('tender_user.peserta.admin.managemen')
+
+
     @include('tender_user.peserta.komentar.index')
+
+
 
 </div>
 

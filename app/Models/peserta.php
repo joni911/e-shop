@@ -57,4 +57,11 @@ class peserta extends Model
         # code...
         return $this->hasMany(pekerjaan_berjalan::class);
     }
+
+    public function pemeriksaan()
+    {
+        # code...
+        return $this->hasOne(pemeriksaan::class);
+
+    }
 }

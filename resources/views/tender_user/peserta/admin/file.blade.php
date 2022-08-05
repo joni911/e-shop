@@ -9,7 +9,7 @@
                     <td>
                         <x-adminlte-modal id="modalCustom-{{$tfd->id}}" title="{{$tfd->tender_file->nama}}" size="lg" theme="teal"
                             icon="fas fa-bell" v-centered static-backdrop scrollable>
-                            <div style="height:800px;">
+                            <div style="height:auto;">
                                 <h3>File {{$tfd->tender_file->nama}}</h3>
                                 @php
                                     $ext = pathinfo($tfd->files, PATHINFO_EXTENSION)
@@ -32,7 +32,7 @@
                             </div>
                             <x-slot name="footerSlot">
                                 {{-- <x-adminlte-button class="mr-auto" type="submit" theme="success" label="Terima"/> --}}
-                                <x-adminlte-button theme="danger" label="Tolak" data-dismiss="modal"/>
+                                <x-adminlte-button theme="danger" label="Tutup" data-dismiss="modal"/>
                             </x-slot>
                             </x-adminlte-modal>
                             {{-- Example button to open modal --}}

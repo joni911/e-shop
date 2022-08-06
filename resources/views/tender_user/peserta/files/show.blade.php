@@ -21,7 +21,6 @@
 @include('global.alert')
 <div class="card">
     <div class="card-header">
-        b:if
         @if ($pemeriksaan->kesimpulan != 'Lulus')
         <h3 class="card-title-center text-center bg-danger">Tender {{$data->nama_tender}} {{$pemeriksaan->kesimpulan}}
             <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>

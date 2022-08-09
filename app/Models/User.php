@@ -77,4 +77,11 @@ class User extends Authenticatable
         return $this->hasMany(pemeriksaan::class);
 
     }
+
+    public function tender()
+    {
+        # code...
+        return $this->hasMany(tender::class);
+
+    }
 }

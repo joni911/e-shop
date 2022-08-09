@@ -43,8 +43,6 @@ class TenderKomenController extends Controller
     {
         $user = Auth::user();
 
-
-
         $data = new tender_komen();
         $data->user_id = $user->id;
         $data->peserta_id = $request->id;
@@ -53,16 +51,16 @@ class TenderKomenController extends Controller
 
         $sendto = '';
         if ($user->hak_akses == 'admin') {
-            # code...
+            # code...admin mengirim ke user
             $peserta = peserta::where('id',$request->id)->first();
             $sendto = $peserta->user;
-
-        } else {
-            # code...
-            $sendto = User::where('hak_akses','admin')->first();
             $this->send_user($sendto,$data);
+        } else {
+            # code...user mengirim ke admin
+            $peserta = peserta::where('id',$request->id)->first();
+            $sendto = $peserta->tender->user;
 
-
+            $this->send_admin($sendto,$data);
         }
 
 

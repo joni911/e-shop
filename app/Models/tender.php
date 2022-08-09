@@ -82,4 +82,10 @@ class tender extends Model
         return $this->hasMany(pemeriksaan::class);
 
     }
+    public function user()
+    {
+        # code...
+        return $this->belongsTo(user::class);
+
+    }
 }

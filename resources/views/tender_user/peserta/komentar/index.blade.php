@@ -3,11 +3,15 @@
     @foreach ($komen as $k)
     <div class="card-comment">
         <!-- User image -->
-        <img class="img-circle img-sm" src="{{ asset('default/user.png') }}" alt="">
+        @if ($k->hak_akses == 'admin')
+            <img class="img-fluid img-circle img-sm" src="{{ asset('default/admin.png') }}" alt="">
+        @else
+            <img class="img-fluid img-circle img-sm" src="{{ asset('default/user.png') }}" alt="">
+        @endif
 
         <div class="comment-text">
             <span class="username">
-               {{$k->user}} {{$k}}
+               {{$k->user}} 
                 <span class="text-muted float-right">{{$k->created_at->locale('id')->isoFormat('dddd D MMMM Y hh:mm:ss')}}</span>
             </span>
             <!-- /.username -->
@@ -22,7 +26,11 @@
 <div class="card-footer">
     <form action="{{ route('komen.store') }}" method="post">
         @csrf
-        <img class="img-fluid img-circle img-sm" src="{{ asset('default/user.png') }}" alt="">
+        @if ($hak_akses->hak_akses == 'admin')
+            <img class="img-fluid img-circle img-sm" src="{{ asset('default/admin.png') }}" alt="">
+        @else
+            <img class="img-fluid img-circle img-sm" src="{{ asset('default/user.png') }}" alt="">
+        @endif
         <!-- .img-push is used to add margin to elements next to floating images -->
         <div class="container">
             <div class="row">

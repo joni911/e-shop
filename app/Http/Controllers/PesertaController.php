@@ -11,6 +11,7 @@ use App\Models\tender_file;
 use App\Models\tender_file_detail;
 use App\Models\tender_komen;
 use App\Models\tender_status_files;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -183,7 +184,7 @@ class PesertaController extends Controller
 
         ->join('pesertas','pesertas.id','tender_komens.peserta_id')
         ->join('users','users.id','tender_komens.user_id')
-        ->select('tender_komens.*','pesertas.nama_pt as pt','users.name as user')
+        ->select('tender_komens.*','pesertas.nama_pt as pt','users.name as user','users.hak_akses as hak_akses')
         ->get();
 
         $berkas = tender_file_detail::where('tender_id',$data->tender_id)
@@ -195,9 +196,11 @@ class PesertaController extends Controller
         $nilai = pemeriksaan::where('tender_id',$data->tender_id)
         ->orderBy('nilai','desc')
         ->get();
+
+        $hak_akses = Auth::user();
         return view('tender_user.peserta.files.show',
         ['data'=>$data,'file'=>$file,
-        'komen'=>$komen,'berkas'=>$berkas,
+        'komen'=>$komen,'berkas'=>$berkas,'hak_akses'=>$hak_akses,
         'pemeriksaan' => $pemeriksanaan, 'nilai'=>$nilai
         ]);
 

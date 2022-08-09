@@ -6,17 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class tenaga_ahli extends Model
+class validasi_file extends Model
 {
     use HasFactory,SoftDeletes;
 
-    public function tender()
+    public function tender_file_detail()
     {
-        # code...
-        return $this->belongsTo(tender::class);
-    }
-    public function peserta()
-    {
-        return $this->belongsTo(peserta::class);
+        return $this->belongsTo(tender_file_detail::class);
     }
 }

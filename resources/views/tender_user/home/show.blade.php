@@ -10,33 +10,20 @@
 
 @section('content')
 
+  <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>Table 06</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
-
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  
-  <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}"> 
-
-  </head>
   <body>
     {{-- <div>
       <h3 class="card-title">Tabel Barang</h3>
       <br>
       <a name="" id="" class="btn btn-primary" href="{{ route('barang.create') }}" role="button">Tambah</a>
     </div> --}}
-  
+
     <div class="content">
       <div class="row">
         <div class="col-md-12">
           <div class="card" style="background-color: #1a642b7a;">
-            
+
             {{-- <div class="card"> --}}
               <div>
                 <h3>{{$data->nama}}</h3>
@@ -48,7 +35,7 @@
                           <td>{{$data->nama}}</td>
                       </tr>
                       <tr>
-          
+
                           <td scope="row" style="background-color: #1a642b30;">Tanggal Pembuatan</td>
                           <td>{{ Carbon\Carbon::parse($data->created_at)->format('d-m-Y') }}</td>
                       </tr>
@@ -60,7 +47,7 @@
                                       <p>{{$t->nama}} {{$t->mulai}} : {{$t->akhir}}</p>
                                       @break
                                   @else
-          
+
                                   @endif
                               @endforeach
                           </td>
@@ -103,7 +90,7 @@
                               @forelse ($data->syarat as $s)
                                   {!! $s->content !!}
                               @empty
-          
+
                               @endforelse
                           </td>
                       </tr>
@@ -116,7 +103,7 @@
                               @forelse ($data->tender_file as $fs)
                                   <p>{{$key++}}. {{$fs->nama}}</p>
                               @empty
-          
+
                               @endforelse
                           </td>
                       </tr>
@@ -131,9 +118,9 @@
                                   $j++
                               ?>
                               @empty
-          
+
                               @endforelse
-                              
+
                               <a href="{{ route('peserta.tender', [$data->id]) }}">Peserta {{$j}}</a>
                           </td>
                       </tr>
@@ -144,21 +131,21 @@
                       </tr>
                   </tbody>
               </table>
-          
+
           </div>
-          
+
       </div>
     </div>
-    
+
   </div>
 </div>
-      
-  
 
-  <script src="{{ asset('assets/js/jquery.min.js')}}"></script> 
-  <script src="{{ asset('assets/js/popper.js')}}"></script> 
-  <script src="{{ asset('assets/js/bootstrap.min.js')}}"></script> 
-  <script src="{{ asset('assets/js/main.js')}}"></script> 
+
+
+  <script src="{{ asset('assets/js/jquery.min.js')}}"></script>
+  <script src="{{ asset('assets/js/popper.js')}}"></script>
+  <script src="{{ asset('assets/js/bootstrap.min.js')}}"></script>
+  <script src="{{ asset('assets/js/main.js')}}"></script>
 
   </body>
 </html>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorepemeriksaanRequest extends FormRequest
+class Storevalidasi_fileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,7 @@ class StorepemeriksaanRequest extends FormRequest
     public function rules()
     {
         return [
-
-            'peserta_id' => 'required|unique:pemeriksaans',
-            'pengalaman' => 'required',
-            'tenaga_ahli' => 'required',
-            'peralatan' => 'required',
-            'pekerjaan_berjalan' => 'required',
-            'managemen' => 'required'
+            'status' => 'required'
         ];
     }
 }

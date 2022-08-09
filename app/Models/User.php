@@ -71,4 +71,17 @@ class User extends Authenticatable
         # code...
         return $this->hasMany(peralatan::class);
     }
+    public function pemeriksaan()
+    {
+        # code...
+        return $this->hasMany(pemeriksaan::class);
+
+    }
+
+    public function tender()
+    {
+        # code...
+        return $this->hasMany(tender::class);
+
+    }
 }

@@ -7,8 +7,10 @@ use App\Http\Controllers\jenis_pengadaanController;
 use App\Http\Controllers\katagori_barangController;
 use App\Http\Controllers\komentarController;
 use App\Http\Controllers\KoreksiController;
+use App\Http\Controllers\ManagemenController;
 use App\Http\Controllers\metode_pengadaanController;
 use App\Http\Controllers\MetodePengadaanController;
+use App\Http\Controllers\PekerjaanBerjalanController;
 use App\Http\Controllers\PemeriksaanController;
 use App\Http\Controllers\PengalamanTenderController;
 use App\Http\Controllers\PeralatanController;
@@ -25,6 +27,7 @@ use App\Http\Controllers\TenderFileDetailController;
 use App\Http\Controllers\TenderHomeController;
 use App\Http\Controllers\TenderKomenController;
 use App\Http\Controllers\UserBarangController;
+use App\Http\Controllers\ValidasiFileController;
 use App\Models\katagori_barang;
 use App\Models\pengalaman_tender;
 use App\Models\tender_komen;
@@ -90,6 +93,9 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('pengalaman', PengalamanTenderController::class);
     Route::resource('tenagaahli', TenagaAhliController::class);
     Route::resource('peralatan', PeralatanController::class);
+    Route::resource('pekerjaan_berjalan', PekerjaanBerjalanController::class);
+    Route::resource('managemen', ManagemenController::class);
+    Route::resource('validasi_file', ValidasiFileController::class);
     //Komentar
     Route::resource('komen', TenderKomenController::class);
     Route::resource('koreksi', KoreksiController::class);

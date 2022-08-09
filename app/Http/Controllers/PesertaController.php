@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\pesertaRequest;
 use App\Models\komentar;
+use App\Models\pemeriksaan;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Models\tender_file;
 use App\Models\tender_file_detail;
 use App\Models\tender_komen;
+use App\Models\tender_status_files;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -106,7 +109,7 @@ class PesertaController extends Controller
                 $tfs->keterangan = "";
                 $tfs->peserta_id = $data->id;
                 $tfs->tender_id = $request->id;
-                $tfs->status_id = 0;
+                // $tfs->status_id = 0;
                 $tfs->save();
             }
         }
@@ -140,9 +143,9 @@ class PesertaController extends Controller
             ->select('tenders.*','jenis_pengadaans.nama as jpn','jenis_kontraks.nama as jkn',
             'metode_pengadaans.nama as mpn','status_tenders.nama as stn')
             ->findorfail($id);
-
+            $file = tender_file::where('tender_id',$id)->get();
             // $now = Carbon::now();
-            return view('tender_user.peserta.create',['data'=>$data]);
+            return view('tender_user.peserta.create',['data'=>$data, 'file'=>$file]);
         }
         return redirect()->route('peserta.file',['id'=>$id,'pid'=>$peserta->id]);
 
@@ -181,10 +184,25 @@ class PesertaController extends Controller
 
         ->join('pesertas','pesertas.id','tender_komens.peserta_id')
         ->join('users','users.id','tender_komens.user_id')
-        ->select('tender_komens.*','pesertas.nama_pt as pt','users.name as user')
+        ->select('tender_komens.*','pesertas.nama_pt as pt','users.name as user','users.hak_akses as hak_akses')
         ->get();
 
-        return view('tender_user.peserta.files.show',['data'=>$data,'file'=>$file,'komen'=>$komen]);
+        $berkas = tender_file_detail::where('tender_id',$data->tender_id)
+        ->where('peserta_id',$data->id)
+        ->get();
+
+        $pemeriksanaan = $data->pemeriksaan;
+
+        $nilai = pemeriksaan::where('tender_id',$data->tender_id)
+        ->orderBy('nilai','desc')
+        ->get();
+
+        $hak_akses = Auth::user();
+        return view('tender_user.peserta.files.show',
+        ['data'=>$data,'file'=>$file,
+        'komen'=>$komen,'berkas'=>$berkas,'hak_akses'=>$hak_akses,
+        'pemeriksaan' => $pemeriksanaan, 'nilai'=>$nilai
+        ]);
 
 
     }

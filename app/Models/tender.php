@@ -56,9 +56,36 @@ class tender extends Model
         # code...
         return $this->hasMany(pengalaman_tender::class);
     }
-     public function peralatan()
+    public function peralatan()
     {
         # code...
         return $this->hasMany(peralatan::class);
+    }
+    public function managemen()
+    {
+        # code...
+        return $this->hasMany(managemen::class);
+    }
+    public function tenaga_ahli()
+    {
+        # code...
+        return $this->hasMany(tenaga_ahli::class);
+    }
+    public function pekerjaan()
+    {
+        # code...
+        return $this->hasMany(pekerjaan_berjalan::class);
+    }
+    public function pemeriksaan()
+    {
+        # code...
+        return $this->hasMany(pemeriksaan::class);
+
+    }
+    public function user()
+    {
+        # code...
+        return $this->belongsTo(user::class);
+
     }
 }

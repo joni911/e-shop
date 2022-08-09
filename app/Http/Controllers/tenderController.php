@@ -11,6 +11,7 @@ use App\Models\syarat;
 use App\Models\tahapan;
 use App\Models\tender;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class tenderController extends Controller
 {
@@ -57,8 +58,9 @@ class tenderController extends Controller
      */
     public function store(tenderRequest $request)
     {
-
+        $user = Auth::user();
         $data = new tender();
+        $data->user_id = $user->id;
         $data->nama = $request->nama;
         $data->tahapan_id = 0;
         $data->jenis_pegadaan_id = $request->jp;

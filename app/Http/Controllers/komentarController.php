@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\komentar;
+use App\Notifications\EmailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class komentarController extends Controller
 {
@@ -49,6 +51,21 @@ class komentarController extends Controller
 
         return redirect()->back();
 
+
+    }
+
+    public function send($user)
+    {
+        $project = [
+            'greeting' => 'Hi '.$user->name.',',
+            'body' => 'Terimakasih Telah Mendaftar Di Layanan Pengadaan Barang jasa PT.co BANK Daerah bangli Perseroda.',
+            'thanks' => 'Terima Kasih dari bankdaerahbangli.com',
+            'actionText' => 'Kunjungi Situs Pengadaan',
+            'actionURL' => url('/'),
+            'id' => 57
+        ];
+
+        Notification::send($user, new EmailNotification($project));
 
     }
 

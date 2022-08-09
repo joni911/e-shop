@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\pemeriksaan;
 use App\Http\Requests\StorepemeriksaanRequest;
 use App\Http\Requests\UpdatepemeriksaanRequest;
+use App\Notifications\EmailNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class PemeriksaanController extends Controller
 {
@@ -114,11 +116,16 @@ class PemeriksaanController extends Controller
 
         $total = $this->penilaian($request);
         $kesimpulan = "Tidak Lulus";
+        $resend = true;
         if ($total >= 100) {
             $kesimpulan = 'Lulus';
         }
 
         $data = $pemeriksaan;
+        if ($data->kesimpulan == $kesimpulan) {
+            $resend = false;
+        }
+
         $data->pengalaman = $request->pengalaman;
         $data->kpengalaman = $request->kpengalaman;
         $data->tenaga_ahli = $request->tenaga_ahli;
@@ -134,9 +141,41 @@ class PemeriksaanController extends Controller
         $data->nilai = $total;
         $data->kesimpulan = $kesimpulan;
         $data->save();
+        $user = $data->peserta->user;
+        if ($resend) {
+            # code...
+            $this->send($user,$data);
 
+        }
 
         return redirect()->back()->with('success','Data telah disimpan');
+    }
+
+    public function send($user,$data)
+    {
+        if ($data->kesimpulan == 'Lulus') {
+            $project = [
+                'greeting' => 'Hi '.$user->name.',',
+                'body' => 'Selamat penilaian telah selesai dan anda di nyatakan Lulus untuk pengumuman lebih lanjut akan kami informasikan lewat email atau whatsapp Terimakasih',
+                'thanks' => 'Terima Kasih dari bankdaerahbangli.com',
+                'actionText' => 'Kunjungi Situs Pengadaan',
+                'actionURL' => url('/'),
+                'id' => 57
+            ];
+        } else {
+            $project = [
+                'greeting' => 'Hi '.$user->name.',',
+                'body' => 'Penilaian telah selesai dan anda di nyatakan Tidak Lulus untuk perbaikan data bisa dilakukan selama masa penawaran masih berlanjut!',
+                'thanks' => 'Terima Kasih dari bankdaerahbangli.com',
+                'actionText' => 'Kunjungi Situs Pengadaan',
+                'actionURL' => url('/'),
+                'id' => 57
+            ];
+        }
+
+
+        Notification::send($user, new EmailNotification($project));
+
     }
 
     /**

@@ -7,7 +7,7 @@
 
         <div class="comment-text">
             <span class="username">
-               {{$k->user}}
+               {{$k->user}} {{$k}}
                 <span class="text-muted float-right">{{$k->created_at->locale('id')->isoFormat('dddd D MMMM Y hh:mm:ss')}}</span>
             </span>
             <!-- /.username -->

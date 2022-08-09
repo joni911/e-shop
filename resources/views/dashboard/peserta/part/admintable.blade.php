@@ -27,10 +27,11 @@
 
                     <td>{{$b->nama_perusahaan}} Menawarkan @currency($b->penawaran)</td>
                     <td>
-                        Nama : {{$b->User->name}} <br>
+                        Nama : {{$b->User->email}} <br>
                         NPWP : {{$b->NPWP}} <br>
                         Alamat : {{$b->alamat}} <br>
                         No HP : {{$b->no_hp}}
+                        Nilai : {{$b->nilai}}
                     </td>
                     <td>
                         @foreach ($b->tender_file_detail as $tfd)

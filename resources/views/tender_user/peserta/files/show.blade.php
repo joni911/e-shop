@@ -21,14 +21,20 @@
 @include('global.alert')
 <div class="card">
     <div class="card-header">
-        @if ($pemeriksaan->kesimpulan != 'Lulus')
-        <h3 class="card-title-center text-center bg-danger">Tender {{$data->nama_tender}} {{$pemeriksaan->kesimpulan}}
+        @if ($pemeriksaan == null)
+        <h3 class="card-title-center text-center">Tender {{$data->nama_tender}}
             <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>
         </h3>
         @else
-        <h3 class="card-title-center text-center bg-success">Tender {{$data->nama_tender}} {{$pemeriksaan->kesimpulan}}
-            <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>
-        </h3>
+            @if ($pemeriksaan->kesimpulan != 'Lulus')
+            <h3 class="card-title-center text-center bg-danger">Tender {{$data->nama_tender}} {{$pemeriksaan->kesimpulan}}
+                <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>
+            </h3>
+            @else
+            <h3 class="card-title-center text-center bg-success">Tender {{$data->nama_tender}} {{$pemeriksaan->kesimpulan}}
+                <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>
+            </h3>
+            @endif
         @endif
     </div>
     <table class="table">
@@ -60,6 +66,21 @@
                 <td>HPS: {{$data->tender->hps}}
                     <br>
                     Pagu : {{$data->tender->nilai_pagu}}
+                </td>
+            </tr>
+            <tr>
+                <td>Peringkat Peserta</td>
+                <td>
+
+                    @forelse ($nilai as $urut => $n)
+                        @if ($n->peserta_id == $data->id)
+                            Peringkat ke : {{$urut+1}}
+                            <br>
+                            Nilai :{{$n->nilai}}
+                        @endif
+                    @empty
+                        Tender Belum dinilai
+                    @endforelse
                 </td>
             </tr>
             <tr>

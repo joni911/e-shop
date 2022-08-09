@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\pesertaRequest;
 use App\Models\komentar;
+use App\Models\pemeriksaan;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Models\tender_file;
@@ -191,10 +192,13 @@ class PesertaController extends Controller
 
         $pemeriksanaan = $data->pemeriksaan;
 
+        $nilai = pemeriksaan::where('tender_id',$data->tender_id)
+        ->orderBy('nilai','desc')
+        ->get();
         return view('tender_user.peserta.files.show',
         ['data'=>$data,'file'=>$file,
         'komen'=>$komen,'berkas'=>$berkas,
-        'pemeriksaan' => $pemeriksanaan
+        'pemeriksaan' => $pemeriksanaan, 'nilai'=>$nilai
         ]);
 
 

@@ -6,7 +6,10 @@ use App\Models\tender_komen;
 use App\Http\Requests\Storetender_komenRequest;
 use App\Http\Requests\Updatetender_komenRequest;
 use App\Models\peserta;
+use App\Models\User;
+use App\Notifications\EmailNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class TenderKomenController extends Controller
 {
@@ -39,12 +42,60 @@ class TenderKomenController extends Controller
     public function store(Storetender_komenRequest $request)
     {
         $user = Auth::user();
+
+
+
         $data = new tender_komen();
         $data->user_id = $user->id;
         $data->peserta_id = $request->id;
         $data->komentar = $request->komentar;
         $data->save();
+
+        $sendto = '';
+        if ($user->hak_akses == 'admin') {
+            # code...
+            $peserta = peserta::where('id',$request->id)->first();
+            $sendto = $peserta->user;
+
+        } else {
+            # code...
+            $sendto = User::where('hak_akses','admin')->first();
+            $this->send_user($sendto,$data);
+
+
+        }
+
+
         return redirect()->back()->with(['success'=>'Data Berhasil Disimpan']);
+    }
+
+    public function send_user($user,$data)
+    {
+        $project = [
+            'greeting' => 'Hi '.$user->name.',',
+            'body' => 'Admin tender '.$user->name.' Telah Mengirim Komentar '.$data->komentar,
+            'thanks' => 'Terima Kasih dari bankdaerahbangli.com',
+            'actionText' => 'Kunjungi Situs Pengadaan',
+            'actionURL' => url('/'),
+            'id' => 57
+        ];
+
+        Notification::send($user, new EmailNotification($project));
+
+    }
+    public function send_admin($user,$data)
+    {
+        $project = [
+            'greeting' => 'Hi Admin '.$user->name.',',
+            'body' => 'Peserta tender '.$data->peserta->user->name.' Telah Mengirim Komentar '.$data->komentar,
+            'thanks' => 'Terima Kasih dari bankdaerahbangli.com',
+            'actionText' => 'Kunjungi Situs Pengadaan',
+            'actionURL' => url('/'),
+            'id' => 57
+        ];
+
+        Notification::send($user, new EmailNotification($project));
+
     }
 
     /**

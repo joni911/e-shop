@@ -33199,7 +33199,7 @@ html.maximized-card {
 }
 
 .alert a {
-  color: #fff;
+  color: #1a642ba6 !important;
   text-decoration: underline;
 }
 

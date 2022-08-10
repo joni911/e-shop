@@ -9,6 +9,7 @@
 @stop
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
 
 <header class="bg-light">
     <div class="container">

@@ -55,40 +55,40 @@ class AppServiceProvider extends ServiceProvider
                     # code...
                     $event->menu->add(
 
-                        [
-                            'type'         => 'navbar-search',
-                            'text'         => 'search',
-                            'topnav_right' => true,
-                        ],
-                        [
-                            'type'         => 'fullscreen-widget',
-                            'topnav_right' => true,
-                        ],
+                        // [
+                        //     'type'         => 'navbar-search',
+                        //     'text'         => 'search',
+                        //     'topnav_right' => true,
+                        // ],
+                        // [
+                        //     'type'         => 'fullscreen-widget',
+                        //     'topnav_right' => true,
+                        // ],
 
-                        // Sidebar items:
-                        [
-                            'type' => 'sidebar-menu-search',
-                            'text' => 'search',
-                        ],
-                        [
-                            'text' => 'blog',
-                            'url'  => 'admin/blog',
-                            'can'  => 'manage-blog',
-                        ],
-                        [
-                            'text'        => 'Barang',
-                            'url'         => 'barang',
-                            'icon'        => 'far fa-fw fa-file',
-                            // 'label'       => 4,
-                            'label_color' => 'success',
-                        ],
-                        [
-                            'text'        => 'Barang User',
-                            'url'         => 'shops',
-                            'icon'        => 'far fa-fw fa-file',
-                            // 'label'       => 4,
-                            'label_color' => 'success',
-                        ],
+                        // // Sidebar items:
+                        // [
+                        //     'type' => 'sidebar-menu-search',
+                        //     'text' => 'search',
+                        // ],
+                        // [
+                        //     'text' => 'blog',
+                        //     'url'  => 'admin/blog',
+                        //     'can'  => 'manage-blog',
+                        // ],
+                        // [
+                        //     'text'        => 'Barang',
+                        //     'url'         => 'barang',
+                        //     'icon'        => 'far fa-fw fa-file',
+                        //     // 'label'       => 4,
+                        //     'label_color' => 'success',
+                        // ],
+                        // [
+                        //     'text'        => 'Barang User',
+                        //     'url'         => 'shops',
+                        //     'icon'        => 'far fa-fw fa-file',
+                        //     // 'label'       => 4,
+                        //     'label_color' => 'success',
+                        // ],
                         [
                             'text'        => 'Tender',
                             'url'         => 'tender_admin',

@@ -3,8 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rules\Unique;
 
-class CreateValidasiFilesTable extends Migration
+class AddUniqueToPesertasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +14,8 @@ class CreateValidasiFilesTable extends Migration
      */
     public function up()
     {
-        Schema::create('validasi_files', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('tender_file_detail_id')->unique();
+        Schema::table('pesertas', function (Blueprint $table) {
             $table->bigInteger('user_id')->unique();
-            $table->string('status');
-            $table->longText('keterangan')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
         });
     }
 
@@ -31,6 +26,9 @@ class CreateValidasiFilesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('validasi_files');
+        Schema::table('pesertas', function (Blueprint $table) {
+            $table->bigInteger('user_id');
+            //
+        });
     }
 }

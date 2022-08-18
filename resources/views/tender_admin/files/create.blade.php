@@ -17,9 +17,15 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-
+        @if ($page == 'lihat')
         <form action="{{ route('tender_file.store') }}" enctype="multipart/form-data" method="post">
             @csrf
+        @else
+        <form action="{{ route('tender_file.update',[$file->id ?? ""]) }}" enctype="multipart/form-data" method="post">
+            @csrf
+            @method('PUT')
+        @endif
+
             @include('tender_admin.files.form')
           <!-- /.card-body -->
 

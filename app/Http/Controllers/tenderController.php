@@ -23,7 +23,9 @@ class tenderController extends Controller
     public function index()
     {
         //
+        //  $data = tender::where('default','!=','1')->paginate(10);
         $data = tender::paginate(10);
+
 
         return view('tender_admin.index',['data'=>$data]);
     }

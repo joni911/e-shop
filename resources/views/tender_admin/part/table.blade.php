@@ -24,12 +24,13 @@
                     <td>{{$b->nama}}</td>
                     <td>
                         <a name="" id="" class="btn btn-primary" href="{{ route('tender_admin.edit', [$b->id]) }}" role="button"><i class="fas fa-pen    "></i></a>
-                        <form method="POST" action="{{ route('tender_admin.destroy', $b->id) }}">
+                       @if ($b->default == false)
+                       <form method="POST" action="{{ route('tender_admin.destroy', $b->id) }}">
                             @csrf
                             @method("DELETE")
                             <button type="submit" class="btn btn-xs btn-danger btn-flat show_confirm" data-toggle="tooltip" title='Delete'>Delete</button>
                         </form>
-
+                       @endif
                     </td>
                   </tr>
             @empty

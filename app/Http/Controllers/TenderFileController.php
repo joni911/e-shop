@@ -50,10 +50,12 @@ class TenderFileController extends Controller
      */
     public function show($id)
     {
-        //
+        // return $id;
+        $page = 'lihat';
         $data = tender::findorfail($id);
         $table = tender_file::where('tender_id','=',$id)->paginate(10);
-        return view('tender_admin.files.create',['data'=>$data,'table'=>$table]);
+        return view('tender_admin.files.create',
+        ['data'=>$data,'table'=>$table,'page'=>$page]);
     }
 
     /**
@@ -64,7 +66,13 @@ class TenderFileController extends Controller
      */
     public function edit($id)
     {
-        //
+        $page = 'edit';
+        $file = tender_file::findorfail($id);
+        $data = tender::findorfail($file->tender_id);
+        $table = tender_file::where('tender_id','=',$data->id)->paginate(10);
+        return view('tender_admin.files.create',
+        ['data'=>$data,'table'=>$table,
+        'page'=>$page,'file'=>$file]);
     }
 
     /**
@@ -76,7 +84,13 @@ class TenderFileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = tender_file::findorfail($id);
+        $data->tender_id = $request->id;
+        $data->nama = $request->nama;
+        $data->keterangan = $request->keterangan;
+        $data->save();
+
+        return redirect()->route('tender_file.show',[$data->tender->id]);
     }
 
     /**

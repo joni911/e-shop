@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>DBP</b> Pengadaan',
+    'logo' => '<b>BDB</b> Pengadaan',
     'logo_img' => 'icon/bpr.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\barangController;
+use App\Http\Controllers\DaftarPesertaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\jenis_kontrakController;
 use App\Http\Controllers\jenis_pengadaanController;
@@ -96,6 +97,8 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('pekerjaan_berjalan', PekerjaanBerjalanController::class);
     Route::resource('managemen', ManagemenController::class);
     Route::resource('validasi_file', ValidasiFileController::class);
+    //daftar peserta
+    Route::resource('daftar_peserta', DaftarPesertaController::class);
     //Komentar
     Route::resource('komen', TenderKomenController::class);
     Route::resource('koreksi', KoreksiController::class);

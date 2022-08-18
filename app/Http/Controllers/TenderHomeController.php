@@ -6,6 +6,7 @@ use App\Models\tender;
 use App\Models\tender_file;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TenderHomeController extends Controller
 {
@@ -16,7 +17,10 @@ class TenderHomeController extends Controller
      */
     public function index()
     {
-        $data = tender::join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
+        // $data = tender::where('default','!=','1')->paginate(10);
+
+        $data = tender::where('default','==',0)
+        ->join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
         ->join('jenis_kontraks','jenis_kontraks.id','tenders.jenis_kontrak_id')
         ->join('metode_pengadaans','metode_pengadaans.id','tenders.metode_pengadaan_id')
         ->join('status_tenders','status_tenders.id','tenders.status_tender_id')
@@ -58,7 +62,8 @@ class TenderHomeController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = Auth::user();
+        $Peserta = $user->peserta;
         $data = tender::join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
         ->join('jenis_kontraks','jenis_kontraks.id','tenders.jenis_kontrak_id')
         ->join('metode_pengadaans','metode_pengadaans.id','tenders.metode_pengadaan_id')
@@ -69,7 +74,7 @@ class TenderHomeController extends Controller
 
         $now = Carbon::now();
 
-        return view('tender_user.home.show',['data'=>$data,'now'=>$now]);
+        return view('tender_user.home.show',['data'=>$data,'now'=>$now,'peserta'=>$Peserta]);
     }
 
     /**

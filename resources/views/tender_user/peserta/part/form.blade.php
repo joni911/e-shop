@@ -122,10 +122,10 @@
             <textarea class="form-control" name="alamat" id="" rows="3">{{$data->alamat ?? ""}}</textarea>
           </div>
           <div class="form-group">
-            <label for="">Penawaran</label>
-            <input type="number"
-              class="form-control" name="penawaran" id="" aria-describedby="helpId" placeholder="" value="{{$data->penawaran ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan Nomor Telephone Perusahaan</small>
+            <label for="">Email</label>
+            <input type="email"
+              class="form-control" name="email" id="" aria-describedby="helpId" placeholder="" value="{{$data->email ?? ""}}">
+            <small id="helpId" class="form-text text-muted">Masukkan Email Perusahaan</small>
           </div>
 
         @forelse ($file as $tf)

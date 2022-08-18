@@ -52,7 +52,7 @@ class DashboardController extends Controller
     {
         $data = tender::findorfail($id);
         $peserta = peserta::join('tenders','tenders.id','pesertas.tender_id')
-        ->join('pemeriksaans','pemeriksaans.peserta_id','pesertas.id')
+        // ->join('pemeriksaans','pemeriksaans.peserta_id','pesertas.id')
         // ->join('tender_files','tender_files.tender_id','tenders.id')
         // ->join('tender_file_details','tender_file_details.tender_file_id','tender_files.id')
         ->where('tenders.id',$id)

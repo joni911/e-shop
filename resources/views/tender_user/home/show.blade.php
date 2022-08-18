@@ -126,7 +126,36 @@
                       </tr>
                       <tr>
                           <td colspan="2" class="text-center">
-                              <a name="" id="" class="btn btn-primary" href="{{ route('peserta.show',[$data->id]) }}" role="button">Ajukan</a>
+                        {{-- <x-adminlte-modal id="modalGreen" title="Pendaftaran" theme="success"
+                            icon="fas fa-pen" size='lg' disable-animations>
+
+                            <h3 class="text-dark">Apakah anda Ingin mendaftarkan {{$peserta->nama_pt}} ?</h3>
+                            <form action="{{ route('daftar_peserta.store') }}" method="post">
+                                @csrf
+                                <input type="text" class="form-control" name="id" value="{{$peserta->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
+                                <input type="text" class="form-control" name="tender_id" value="{{$data->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
+                                <button type="submit" class="btn btn-primary">Daftarkan</button>
+                            </form>
+                        </x-adminlte-modal> --}}
+                        {{-- Example button to open modal --}}
+                        {{-- <x-adminlte-button label="Daftar Sebagai Peserta" data-toggle="modal" data-target="#modalGreen" class="bg-success"/> --}}
+
+                            <x-adminlte-modal id="modalCustom" title="Pendaftaran Tender" size="lg" theme="green"
+                            icon="fas fa-bell" v-centered static-backdrop scrollable>
+                            {{-- <div style="height:800px;">Read the account policies...</div> --}}
+                            <x-slot name="footerSlot">
+                                <h3 class="text-dark">Apakah anda Ingin mendaftarkan {{$peserta->nama_pt}} ?</h3>
+                                <form action="{{ route('daftar_peserta.store') }}" method="post">
+                                    @csrf
+                                    <input type="text" class="form-control" name="id" value="{{$peserta->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
+                                    <input type="text" class="form-control" name="tender_id" value="{{$data->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
+                                    <x-adminlte-button type="submit" class="mr-auto" theme="success" label="Daftarkan"/>
+                                </form>
+                                <x-adminlte-button theme="danger" label="Dismiss" data-dismiss="modal"/>
+                            </x-slot>
+                            </x-adminlte-modal>
+                            {{-- Example button to open modal --}}
+                            <x-adminlte-button label="Daftar Sebagai Peserta" data-toggle="modal" data-target="#modalCustom" class="bg-teal"/>
                           </td>
                       </tr>
                   </tbody>

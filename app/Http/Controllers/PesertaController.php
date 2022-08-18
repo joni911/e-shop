@@ -36,9 +36,9 @@ class PesertaController extends Controller
     public function create()
     {
         $user = Auth::user();
-        // if ($user->peserta != null) {
-        //     return redirect()->route('peserta.edit',[$user->peserta->id]);
-        // }
+        if ($user->peserta != null) {
+            return redirect()->route('peserta.edit',[$user->peserta->id]);
+        }
         $data = tender::join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
             ->join('jenis_kontraks','jenis_kontraks.id','tenders.jenis_kontrak_id')
             ->join('metode_pengadaans','metode_pengadaans.id','tenders.metode_pengadaan_id')
@@ -79,6 +79,7 @@ class PesertaController extends Controller
         $data->nama_pt = $request->nama_pt;
         $data->NPWP = $request->NPWP;
         $data->no_hp = $request->no_hp;
+        $data->email = $request->email;
         $data->alamat = $request->alamat;
         $data->izin = $request->izin;
         $data->nomor_izin = $request->nomor_izin;
@@ -121,7 +122,7 @@ class PesertaController extends Controller
                 $tfs->keterangan = "";
                 $tfs->peserta_id = $data->id;
                 $tfs->tender_id = $request->id;
-                $tfs->status_id = 0;
+                // $tfs->status_id = 0;
                 $tfs->save();
             }
         }

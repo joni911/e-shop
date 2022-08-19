@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\pesertaRequest;
+use App\Models\daftar_peserta;
 use App\Models\komentar;
 use App\Models\pemeriksaan;
 use App\Models\peserta;
@@ -25,7 +26,7 @@ class PesertaController extends Controller
      */
     public function index()
     {
-        //
+        return view('tender_user.peserta.registrasi.index');
     }
 
     /**
@@ -167,10 +168,12 @@ class PesertaController extends Controller
     {
 
         $data = tender::findorfail($id);
-        $peserta = peserta::join('tenders','tenders.id','pesertas.tender_id')
+        $peserta = daftar_peserta::
+        join('pesertas','pesertas.id','daftar_pesertas.peserta_id')
+        ->join('tenders','tenders.id','pesertas.tender_id')
         // ->join('tender_files','tender_files.tender_id','tenders.id')
         // ->join('tender_file_details','tender_file_details.tender_file_id','tender_files.id')
-        ->where('tenders.id',$id)
+        // ->where('tenders.id',$id)
         ->select('pesertas.*')
         // ->groupBy('id')
         ->paginate(10);

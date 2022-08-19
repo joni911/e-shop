@@ -113,7 +113,7 @@
                               <?php
                                   $j = 0;
                               ?>
-                              @forelse ($data->peserta as $p)
+                              @forelse ($data->daftar_peserta as $p)
                               <?php
                                   $j++
                               ?>
@@ -140,22 +140,34 @@
                         {{-- Example button to open modal --}}
                         {{-- <x-adminlte-button label="Daftar Sebagai Peserta" data-toggle="modal" data-target="#modalGreen" class="bg-success"/> --}}
 
-                            <x-adminlte-modal id="modalCustom" title="Pendaftaran Tender" size="lg" theme="green"
-                            icon="fas fa-bell" v-centered static-backdrop scrollable>
-                            {{-- <div style="height:800px;">Read the account policies...</div> --}}
-                            <x-slot name="footerSlot">
-                                <h3 class="text-dark">Apakah anda Ingin mendaftarkan {{$peserta->nama_pt}} ?</h3>
-                                <form action="{{ route('daftar_peserta.store') }}" method="post">
-                                    @csrf
-                                    <input type="text" class="form-control" name="id" value="{{$peserta->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
-                                    <input type="text" class="form-control" name="tender_id" value="{{$data->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
-                                    <x-adminlte-button type="submit" class="mr-auto" theme="success" label="Daftarkan"/>
-                                </form>
-                                <x-adminlte-button theme="danger" label="Dismiss" data-dismiss="modal"/>
-                            </x-slot>
-                            </x-adminlte-modal>
-                            {{-- Example button to open modal --}}
-                            <x-adminlte-button label="Daftar Sebagai Peserta" data-toggle="modal" data-target="#modalCustom" class="bg-teal"/>
+
+                            @if ($daftar_peserta)
+                                <h3 class="text-dark">Perusahaan anda {{$daftar_peserta->peserta->nama_pt}} Sudah Terdaftar !</h3>
+                            @else
+                                @if ($peserta)
+                                <x-adminlte-modal id="modalCustom" title="Pendaftaran Tender" size="lg" theme="green"
+                                icon="fas fa-bell" v-centered static-backdrop scrollable>
+                                {{-- <div style="height:800px;">Read the account policies...</div> --}}
+                                <x-slot name="footerSlot">
+                                    <h3 class="text-dark">Apakah anda Ingin mendaftarkan {{$peserta->nama_pt}} ?</h3>
+                                    <p class="text-justify">Dengan menekan tombol DAFTARKAN maka anda akan dinyatakan setuju untuk melakukan proses pengadaan barang jasa sesuai aturan di PT. BPR Bank Daerah Bangli (Perseroda).</p>
+                                    <form action="{{ route('daftar_peserta.store') }}" method="post">
+                                        @csrf
+                                        <input type="text" class="form-control" name="id" value="{{$peserta->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
+                                        <input type="text" class="form-control" name="tender_id" value="{{$data->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
+                                        <x-adminlte-button type="submit" class="mr-auto" theme="success" label="Daftarkan"/>
+                                    </form>
+                                    <x-adminlte-button theme="danger" label="Batalkan" data-dismiss="modal"/>
+                                </x-slot>
+                                </x-adminlte-modal>
+                                {{-- Example button to open modal --}}
+                                <x-adminlte-button label="Daftar Sebagai Peserta" data-toggle="modal" data-target="#modalCustom" class="bg-teal"/>
+                                @else
+                                Belum mendaftarkan perusahaan
+
+                                @endif
+
+                            @endif
                           </td>
                       </tr>
                   </tbody>
@@ -171,10 +183,10 @@
 
 
 
-  <script src="{{ asset('assets/js/jquery.min.js')}}"></script>
+  {{-- <script src="{{ asset('assets/js/jquery.min.js')}}"></script>
   <script src="{{ asset('assets/js/popper.js')}}"></script>
   <script src="{{ asset('assets/js/bootstrap.min.js')}}"></script>
-  <script src="{{ asset('assets/js/main.js')}}"></script>
+  <script src="{{ asset('assets/js/main.js')}}"></script> --}}
 
   </body>
 </html>

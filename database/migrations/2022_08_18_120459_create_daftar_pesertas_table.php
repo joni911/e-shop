@@ -19,6 +19,7 @@ class CreateDaftarPesertasTable extends Migration
             $table->bigInteger('tender_id');
             $table->bigInteger('peserta_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

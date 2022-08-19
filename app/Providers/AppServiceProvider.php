@@ -42,6 +42,13 @@ class AppServiceProvider extends ServiceProvider
                     # code...
                     $event->menu->add(
                         [
+                            'text'        => 'Peserta',
+                            'url'         => 'peserta/create',
+                            'icon'        => 'far fa-fw fa-file',
+                            // 'label'       => 4,
+                            'label_color' => 'success',
+                        ],
+                        [
                             'text'        => 'Tender User',
                             'url'         => 'tender_home',
                             'icon'        => 'far fa-fw fa-file',

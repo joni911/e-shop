@@ -64,4 +64,10 @@ class peserta extends Model
         return $this->hasOne(pemeriksaan::class);
 
     }
+    public function daftar_peserta()
+    {
+        # code...
+        return $this->hasMany(daftar_peserta::class);
+
+    }
 }

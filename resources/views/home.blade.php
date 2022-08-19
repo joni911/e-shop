@@ -15,7 +15,7 @@
     <div class="container">
 
         <div class="text-center text-white">
-        <h2 class="text-center text-dark">Hello Selamat datang {{$user->peserta->nama_pt}}</h2>
+        <h2 class="text-center text-dark">Hello Selamat datang {{$user->peserta->nama_pt ?? $user->name." Segeralengkapi data anda di halaman Peserta"}}</h2>
 
             <img src="template/Background.jpg" style="height: 13cm; width:26cm; margin-top: 20px" />
             <p class="lead fw-normal text-white-50 mb-0" ></p>

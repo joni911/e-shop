@@ -84,4 +84,11 @@ class User extends Authenticatable
         return $this->hasMany(tender::class);
 
     }
+
+    public function daftar_peserta()
+    {
+        # code...
+        return $this->belongsTo(daftar_peserta::class);
+
+    }
 }

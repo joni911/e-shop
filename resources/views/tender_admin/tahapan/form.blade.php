@@ -21,5 +21,14 @@
                   class="form-control form-control-sm" name="akhir" id="" aria-describedby="helpId" placeholder="">
               <small id="helpId" class="form-text text-muted">Masukkan Tanggal Akhir Tahapan</small>
             </div>
+            <div class="form-group">
+                <label for="">Jenis</label>
+                <select class="form-control" name="status" id="">
+                  <option value="0">Biasa</option>
+                  <option value="1">Masa Pendaftaran</option>
+                  <option value="2">Masa Pembukaan File</option>
+                  <option value="3">Pengumuman Pemenang</option>
+                </select>
+              </div>
     </div>
 

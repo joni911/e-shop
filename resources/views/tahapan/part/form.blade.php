@@ -19,6 +19,15 @@
                   class="form-control form-control-sm" name="akhir" id="" aria-describedby="helpId" placeholder="" value="{{$data->akhir ?? ""}}">
               <small id="helpId" class="form-text text-muted">Masukkan Tanggal Akhir Tahapan</small>
             </div>
+            <div class="form-group">
+              <label for="">Jenis</label>
+              <select class="form-control" name="status" id="">
+                <option value="0">Biasa</option>
+                <option value="1">Masa Pendaftaran</option>
+                <option value="2">Masa Pembukaan File</option>
+                <option value="3">Pengumuman Pemenang</option>
+              </select>
+            </div>
         <div class="form-group">
           <label for="">Keterangan Edit</label>
           <textarea class="form-control" name="keterangan" id="" rows="3">{{$data->keterangan ?? "" ?? ""}}</textarea>

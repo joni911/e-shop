@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\daftar_peserta;
 use App\Http\Requests\Storedaftar_pesertaRequest;
 use App\Http\Requests\Updatedaftar_pesertaRequest;
+use Illuminate\Support\Facades\Auth;
 
 class DaftarPesertaController extends Controller
 {
@@ -37,6 +38,14 @@ class DaftarPesertaController extends Controller
     public function store(Storedaftar_pesertaRequest $request)
     {
         //
+        $user = Auth::user();
+        $data  = new daftar_peserta();
+        $data->peserta_id = $request->id;
+        $data->tender_id = $request->tender_id;
+        $data->user_id = $user->id;
+        $data->save();
+
+        return redirect()->back();
     }
 
     /**

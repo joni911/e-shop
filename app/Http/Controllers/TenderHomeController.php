@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\daftar_peserta;
 use App\Models\tender;
 use App\Models\tender_file;
 use Carbon\Carbon;
@@ -71,10 +72,15 @@ class TenderHomeController extends Controller
         ->select('tenders.*','jenis_pengadaans.nama as jpn','jenis_kontraks.nama as jkn',
         'metode_pengadaans.nama as mpn','status_tenders.nama as stn')
         ->findorfail($id);
-
+       
+        if (!$Peserta) {
+            return redirect()->route('peserta.index');
+        }
+        $daftar_peserta = daftar_peserta::where('peserta_id',$Peserta->id)
+        ->where('tender_id',$data->id)->first();
         $now = Carbon::now();
 
-        return view('tender_user.home.show',['data'=>$data,'now'=>$now,'peserta'=>$Peserta]);
+        return view('tender_user.home.show',['data'=>$data,'now'=>$now,'peserta'=>$Peserta,'daftar_peserta'=>$daftar_peserta]);
     }
 
     /**

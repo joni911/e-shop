@@ -40,7 +40,50 @@
             <option value="">Pilih Data</option>
             <option value="Pemilik">Pemilik</option>
             <option value="Pengurus">Pengurus</option>
+            <option value="Direktur">Direktur</option>
         </select>
     </div>
-
+    <h2>Minimal 1 File Sertifikat</h2>
+    <div class="form-group">
+      <label for="">Sertifikat 1</label>
+      <input type="file" class="form-control-file" name="file1" id="" placeholder="" aria-describedby="fileHelpId">
+    </div>
+    <div class="form-group">
+      <label for="">Keterangan Sertifikat</label>
+      <input type="text"
+        class="form-control" name="ket1" id="" aria-describedby="helpId" placeholder="">
+    </div>
+    <div class="form-group">
+      <label for="">Sertifikat 2</label>
+      <input type="file" class="form-control-file" name="file2" id="" placeholder="" aria-describedby="fileHelpId">
+    </div>
+    <div class="form-group">
+      <label for="">Keterangan Sertifikat Keahlian</label>
+      <input type="text"
+        class="form-control" name="ket2" id="" aria-describedby="helpId" placeholder="">
+    </div><div class="form-group">
+      <label for="">Sertifikat 3</label>
+      <input type="file" class="form-control-file" name="file3" id="" placeholder="" aria-describedby="fileHelpId">
+    </div>
+    <div class="form-group">
+      <label for="">Keterangan Sertifikat</label>
+      <input type="text"
+        class="form-control" name="ket3" id="" aria-describedby="helpId" placeholder="">
+    </div><div class="form-group">
+      <label for="">Sertifikat 4</label>
+      <input type="file" class="form-control-file" name="file4" id="" placeholder="" aria-describedby="fileHelpId">
+    </div>
+    <div class="form-group">
+      <label for="">Keterangan Sertifikat</label>
+      <input type="text"
+        class="form-control" name="ket4" id="" aria-describedby="helpId" placeholder="">
+    </div><div class="form-group">
+      <label for="">Sertifikat 5</label>
+      <input type="file" class="form-control-file" name="file5" id="" placeholder="" aria-describedby="fileHelpId">
+    </div>
+    <div class="form-group">
+      <label for="">Keterangan Sertifikat</label>
+      <input type="text"
+        class="form-control" name="ket5" id="" aria-describedby="helpId" placeholder="">
+    </div>
 </div>

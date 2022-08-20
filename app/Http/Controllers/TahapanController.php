@@ -51,7 +51,7 @@ class TahapanController extends Controller
         $data->mulai = $request->awal;
         $data->akhir = $request->akhir;
         $data->keterangan = "";
-        $data->status = 0;
+        $data->status = $request->status;
         $data->save();
 
         return redirect()->back();
@@ -90,6 +90,7 @@ class TahapanController extends Controller
      */
     public function update(tahapanRequestupdate $request, $id)
     {
+        // return $request;
         $data = tahapan::findorfail($id);
 
         $bak = new perubahan();
@@ -102,6 +103,7 @@ class TahapanController extends Controller
         $data->mulai = $request->awal;
         $data->akhir = $request->akhir;
         $data->keterangan = $request->keterangan;
+        $data->status = $request->status;
         $data->save();
         if ($data) {
             # code...

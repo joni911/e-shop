@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\daftar_peserta;
+use App\Models\tahapan;
 use App\Models\tender;
 use App\Models\tender_file;
 use Carbon\Carbon;
@@ -63,6 +64,7 @@ class TenderHomeController extends Controller
      */
     public function show($id)
     {
+        $today = Carbon::now()->format('Y-m-d');
         $user = Auth::user();
         $Peserta = $user->peserta;
         $data = tender::join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
@@ -72,7 +74,7 @@ class TenderHomeController extends Controller
         ->select('tenders.*','jenis_pengadaans.nama as jpn','jenis_kontraks.nama as jkn',
         'metode_pengadaans.nama as mpn','status_tenders.nama as stn')
         ->findorfail($id);
-       
+
         if (!$Peserta) {
             return redirect()->route('peserta.index');
         }
@@ -80,7 +82,13 @@ class TenderHomeController extends Controller
         ->where('tender_id',$data->id)->first();
         $now = Carbon::now();
 
-        return view('tender_user.home.show',['data'=>$data,'now'=>$now,'peserta'=>$Peserta,'daftar_peserta'=>$daftar_peserta]);
+        $tahapan = tahapan::where('tender_id',$data->id)->where('status',1)->first();
+        return view('tender_user.home.show',
+        [
+            'data'=>$data,'now'=>$now,'peserta'=>$Peserta,
+            'daftar_peserta'=>$daftar_peserta,'tahapan' => $tahapan,
+            'today'=>$today
+        ]);
     }
 
     /**

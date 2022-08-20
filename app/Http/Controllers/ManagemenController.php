@@ -38,6 +38,16 @@ class ManagemenController extends Controller
      */
     public function store(StoremanagemenRequest $request)
     {
+        // file upload
+        // note ambil id peserta buat folder peserta go!
+        // $tmp_file = $request->file($x);
+        //     $file = time()."_".$tmp_file->getClientOriginalName();
+
+      	//         // isi dengan nama folder tempat kemana file diupload
+        //     $tujuan_upload = 'Tender/FILE/'.$request->id.'/'.$ts->id;
+        //     $tmp_file->move($tujuan_upload,$file);
+        //     //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+        //     $nama_file=$tujuan_upload.'/'.$file;
         $user = Auth::user();
         $data = new managemen();
         $data->user_id = $user->id;
@@ -50,6 +60,16 @@ class ManagemenController extends Controller
         $data->alamat = $request->alamat;
         $data->npwp = $request->npwp;
         $data->status = $request->status;
+        $data->file1 = $request->file1;
+        $data->ket1 = $request->ket1;
+        $data->file2 = $request->file2;
+        $data->ket2 = $request->ket2;
+        $data->file3 = $request->file3;
+        $data->ket3 = $request->ket3;
+        $data->file4 = $request->file4;
+        $data->ket4 = $request->ket4;
+        $data->file5 = $request->file5;
+        $data->ket5 = $request->ket5;
         $data->save();
         return redirect()->back()->with('success','Data '.$data->nama.' telah disimpan');
     }

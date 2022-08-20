@@ -24,7 +24,7 @@
                     <td scope="row">{{$no}}</td>
                     <td>{{$l->nama}}</td>
                     <td>{{$l->ktp}}</td>
-                    <td>{{$l->NPWP}}</td>
+                    <td>{{$l->npwp}}</td>
                     <td>{{$l->alamat}}</td>
                     <td>{{$l->tgl_menjabat}}</td>
                     <td>{{$l->tgl_berakhir}}</td>

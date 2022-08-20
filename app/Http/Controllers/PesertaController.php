@@ -97,7 +97,7 @@ class PesertaController extends Controller
         $data->nama_npwp = $request->nama_npwp;
         $data->kswp_npwp = $request->kswp_npwp;
         $data->kswp_nama = $request->kswp_nama;
-        $data->penawaran = $request->penawaran;
+        $data->penawaran = 0;
         $data->harga_koreksi = 0;
         $data->user_id = $user->id;
         $data->save();

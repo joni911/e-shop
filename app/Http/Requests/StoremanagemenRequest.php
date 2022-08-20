@@ -31,6 +31,7 @@ class StoremanagemenRequest extends FormRequest
             'alamat' => 'required',
             'npwp' => 'required',
             'status' => 'required',
+            'file1' => 'required'
 
         ];
     }

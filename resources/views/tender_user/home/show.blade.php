@@ -140,8 +140,8 @@
                         {{-- Example button to open modal --}}
                         {{-- <x-adminlte-button label="Daftar Sebagai Peserta" data-toggle="modal" data-target="#modalGreen" class="bg-success"/> --}}
 
-
-                            @if ($daftar_peserta)
+                            @if ($today>=$tahapan->mulai && $today<=$tahapan->akhir)
+                                 @if ($daftar_peserta)
                                 <h3 class="text-dark">Perusahaan anda {{$daftar_peserta->peserta->nama_pt}} Sudah Terdaftar !</h3>
                             @else
                                 @if ($peserta)
@@ -163,10 +163,15 @@
                                 {{-- Example button to open modal --}}
                                 <x-adminlte-button label="Daftar Sebagai Peserta" data-toggle="modal" data-target="#modalCustom" class="bg-teal"/>
                                 @else
-                                Belum mendaftarkan perusahaan
+                                    Belum mendaftarkan perusahaan
 
                                 @endif
 
+                            @endif
+                            @else
+
+                                Tender Dimulai pada {{$tahapan->mulai}} <br>
+                                Tender Selesai pada {{$tahapan->akhir}}
                             @endif
                           </td>
                       </tr>

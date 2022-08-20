@@ -11,6 +11,7 @@
             <th>Tgl Menjabat</th>
             <th>Tgl Selesai Menjabat</th>
             <th>Status</th>
+            <th>File</th>
             <th>Aksi</th>
           </tr>
         </thead>
@@ -24,16 +25,22 @@
                     <td scope="row">{{$no}}</td>
                     <td>{{$l->nama}}</td>
                     <td>{{$l->ktp}}</td>
-                    <td>{{$l->npwp}}</td>
+                    <td>{{$l->npwp ?? $l->NPWP}}</td>
                     <td>{{$l->alamat}}</td>
                     <td>{{$l->tgl_menjabat}}</td>
                     <td>{{$l->tgl_berakhir}}</td>
                     <td>{{$l->status}}</td>
+                    <td><a href="{{$l->file1 ?? "#"}}">{{$l->ket1 ?? "Kosong" }}</a> <br>
+                        <a href="{{$l->file2 ?? "#"}}">{{$l->ket2 ?? "Kosong" }}</a> <br>
+                        <a href="{{$l->file3 ?? "#"}}">{{$l->ket3 ?? "Kosong" }}</a> <br>
+                        <a href="{{$l->file4 ?? "#"}}">{{$l->ket4 ?? "Kosong" }}</a> <br>
+                        <a href="{{$l->file5 ?? "#"}}">{{$l->ket5 ?? "Kosong" }}</a> <br>
+                    </td>
                     <td></td>
                   </tr>
             @empty
                 <tr>
-                    <td colspan="3" align="center">Kosong</td>
+                    <td colspan="10" align="center">Kosong</td>
                 </tr>
             @endforelse
 

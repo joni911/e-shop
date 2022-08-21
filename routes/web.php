@@ -27,11 +27,15 @@ use App\Http\Controllers\TenderFileController;
 use App\Http\Controllers\TenderFileDetailController;
 use App\Http\Controllers\TenderHomeController;
 use App\Http\Controllers\TenderKomenController;
+use App\Http\Controllers\TenderPersyaratanController;
+use App\Http\Controllers\TenderPersyaratanFileController;
 use App\Http\Controllers\UserBarangController;
 use App\Http\Controllers\ValidasiFileController;
 use App\Models\katagori_barang;
 use App\Models\pengalaman_tender;
 use App\Models\tender_komen;
+use App\Models\tender_persyaratan;
+use App\Models\tender_persyaratan_file;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -97,6 +101,8 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('pekerjaan_berjalan', PekerjaanBerjalanController::class);
     Route::resource('managemen', ManagemenController::class);
     Route::resource('validasi_file', ValidasiFileController::class);
+    Route::resource('tender_persyarat', TenderPersyaratanController::class);
+    Route::resource('tender_persyaratan_file', TenderPersyaratanFileController::class);
     //daftar peserta
     Route::resource('daftar_peserta', DaftarPesertaController::class);
     //Komentar

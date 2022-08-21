@@ -91,4 +91,16 @@ class User extends Authenticatable
         return $this->belongsTo(daftar_peserta::class);
 
     }
+    public function tender_persyaratan()
+    {
+        # code...
+        return $this->belongsTo(tender_persyaratan::class);
+
+    }
+    public function tender_persyaratan_file()
+    {
+        # code...
+        return $this->belongsTo(tender_persyaratan_file::class);
+
+    }
 }

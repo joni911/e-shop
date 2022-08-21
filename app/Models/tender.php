@@ -94,4 +94,10 @@ class tender extends Model
         return $this->hasMany(daftar_peserta::class);
 
     }
+
+    public function tender_persyaratan()
+    {
+        # code...
+        return $this->hasOne(tender_persyaratan::class);
+    }
 }

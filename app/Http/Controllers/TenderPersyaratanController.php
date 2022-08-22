@@ -81,12 +81,11 @@ class TenderPersyaratanController extends Controller
      */
     public function edit($id)
     {
-       $admin = Auth::user();
+        $admin = Auth::user();
 
         $persyaratan = tender_persyaratan::findorfail($id);
 
         $tender = $persyaratan->tender;
-
 
         return view('tender_admin.tender_syarat.create',
         [

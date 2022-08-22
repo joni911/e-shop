@@ -42,7 +42,7 @@ class TenderPersyaratanFileController extends Controller
 
 
             $tmp_file = $request->file;
-            $file = time()."_".$tmp_file->getClientOriginalName();
+            $file = time()."_".$request->nama.".".$tmp_file->getClientOriginalExtension();
 
             // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/Persyaratan/'.$request->id;
@@ -100,8 +100,11 @@ class TenderPersyaratanFileController extends Controller
      * @param  \App\Models\tender_persyaratan_file  $tender_persyaratan_file
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tender_persyaratan_file $tender_persyaratan_file)
+    public function destroy($id)
     {
-        //
+        $data = tender_persyaratan_file::findorfail($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

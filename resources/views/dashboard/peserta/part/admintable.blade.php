@@ -12,7 +12,7 @@
             <th style="width: 10px">No</th>
             <th>Nama PT</th>
             <th>Cek Kelengkapan</th>
-            <th>Files</th>
+            {{-- <th>Files</th> --}}
             <th>Aksi</th>
           </tr>
         </thead>
@@ -23,20 +23,20 @@
             @forelse ($peserta as $b)
 
                 <tr>
+                    {{-- <td>{{$b}}</td> --}}
                     <td scope="row">{{$no++}}</td>
 
                     <td>{{$b->nama_perusahaan}} Menawarkan @currency($b->penawaran)</td>
                     <td>
-                        Nama : {{$b->User->email}} <br>
+                        Nama : {{$b->email}} <br>
                         NPWP : {{$b->NPWP}} <br>
                         Alamat : {{$b->alamat}} <br>
                         No HP : {{$b->no_hp}}
-                        Nilai : {{$b->nilai}}
+                        {{-- Nilai : {{$b->nilai}} --}}
                     </td>
-                    <td>
+                    {{-- <td>
                         @foreach ($b->tender_file_detail as $tfd)
-                            {{-- <a href="{{$tfd->files}}">{{$tfd->tender_file->nama}}</a> --}}
-                            {{-- Custom --}}
+
                                 <x-adminlte-modal id="modalCustom-{{$tfd->id}}" title="{{$tfd->tender_file->nama}}" size="lg" theme="teal"
                                 icon="fas fa-bell" v-centered static-backdrop scrollable>
                                 <div style="height:800px;">
@@ -65,10 +65,10 @@
                                     <x-adminlte-button theme="danger" label="Tolak" data-dismiss="modal"/>
                                 </x-slot>
                                 </x-adminlte-modal>
-                                {{-- Example button to open modal --}}
+
                                 <x-adminlte-button label="{{$tfd->tender_file->nama}}" data-toggle="modal" data-target="#modalCustom-{{$tfd->id}}" class="bg-teal"/>
                         @endforeach
-                    </td>
+                    </td> --}}
                     <td>
                         <a name="" id="" class="btn btn-primary" href="{{ route('peserta.file', ['id'=>$data->id,'pid'=>$b->id]) }}" role="button">
                             <i class="fas fa-eye    "></i>

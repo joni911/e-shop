@@ -28,7 +28,7 @@
             @endphp
         <x-adminlte-text-editor name="content" label="Detail Persyaratan" label-class="text-default"
         igroup-size="sm" placeholder="Write some text..." :config="$config">
-        {!!$persyaratan->penjelasan!!}
+        {!!$persyaratan->penjelasan ?? ""!!}
         </x-adminlte-text-editor>
     </div>
 

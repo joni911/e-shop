@@ -12,26 +12,31 @@
 
 <body>
     <div class="card card-primary">
+
+
+       @if ($admin->hak_akses == 'admin')
         <div class="card-header">
-          <h3 class="card-title">Tambah Persyaratan {{$tender->nama}}</h3>
+            <h3 class="card-title">Tambah Persyaratan {{$tender->nama}}</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-
-       @if ($admin->hak_akses == 'admin')
+        
             @include('tender_admin.tender_syarat.part.admin')
        @endif
 
+       @if ($persyaratan)
         <div class="card-header">
             <h3 class="card-title">Daftar File Persyaratan {{$tender->nama}}</h3>
         </div>
         <div class="card-body">
-            <h3>{{$persyaratan->judul}}</h3>
-            <p>{!!$persyaratan->penjelasan!!}</p>
+            <h3>{{$persyaratan->judul ?? ""}}</h3>
+            <p>{!!$persyaratan->penjelasan ?? ""!!}</p>
             <h5 class="text-center">Data File yang Bisa Di Download</h5>
             @include('tender_admin.tender_syarat.files.table')
 
         </div>
+       @endif
+
 
 
     </div>

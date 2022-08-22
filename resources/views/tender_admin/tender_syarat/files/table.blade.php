@@ -19,7 +19,11 @@
                 </th>
                 <th>
                     @if ($admin->hak_akses == 'admin')
-                           <a name="" id="" class="btn btn-danger" href="#" role="button"><i class="fas fa-trash    "></i></a>
+                        <form method="POST" action="{{ route('tender_persyaratan_file.destroy', $t->id) }}">
+                            @csrf
+                            @method("DELETE")
+                            <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger" data-toggle="tooltip" title='Delete'><i class="fas fa-trash    "></i></button>
+                        </form>
                     @endif
                     {{-- <a name="" id="" class="btn btn-primary" href="{{ route('tender_file.edit', [$t->id]) }}" role="button">
                         <i class="fa fa-edit" aria-hidden="true"></i>

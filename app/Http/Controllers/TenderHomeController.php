@@ -6,6 +6,7 @@ use App\Models\daftar_peserta;
 use App\Models\tahapan;
 use App\Models\tender;
 use App\Models\tender_file;
+use App\Models\tender_persyaratan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -99,7 +100,21 @@ class TenderHomeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = tender::findorfail($id);
+        $persyaratan = $data->tender_persyaratan;
+
+        $admin = Auth::user();
+
+        // $persyaratan = tender_persyaratan::findorfail($id);
+
+        $tender = $data;
+
+        return view('tender_admin.tender_syarat.create',
+        [
+            'tender' => $tender,
+            'persyaratan' => $persyaratan,
+            'admin' =>$admin
+        ]);
     }
 
     /**

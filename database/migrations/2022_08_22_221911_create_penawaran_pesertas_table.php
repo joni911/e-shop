@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePenawaransTable extends Migration
+class CreatePenawaranPesertasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreatePenawaransTable extends Migration
      */
     public function up()
     {
-        Schema::create('penawarans', function (Blueprint $table) {
+        Schema::create('penawaran_pesertas', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->bigInteger('tender_id')->unique();
-            $table->string('judul');
-            $table->longText('penjelasan');
-            $table->string('anggaran');
-            $table->string('hps');
+            $table->bigInteger('tender_id');
+            $table->bigInteger('peserta_id');
+            $table->string('penawaran');
+            $table->string('koreksi');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -33,6 +32,6 @@ class CreatePenawaransTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('penawarans');
+        Schema::dropIfExists('penawaran_pesertas');
     }
 }

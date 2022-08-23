@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\penawaran;
 use App\Http\Requests\StorepenawaranRequest;
 use App\Http\Requests\UpdatepenawaranRequest;
+use App\Models\tender;
+use App\Models\tender_persyaratan;
+use Illuminate\Support\Facades\Auth;
 
 class PenawaranController extends Controller
 {
@@ -36,7 +39,19 @@ class PenawaranController extends Controller
      */
     public function store(StorepenawaranRequest $request)
     {
-        //
+        $user = Auth::user();
+
+        $data = new penawaran();
+        $data->judul = $request->judul;
+        $data->user_id = $user->id;
+        $data->tender_id = $request->id;
+        $data->anggaran = $request->anggaran;
+        $data->hps = $request->hps;
+        $data->penjelasan = $request->penjelasan;
+
+        $data->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -45,9 +60,13 @@ class PenawaranController extends Controller
      * @param  \App\Models\penawaran  $penawaran
      * @return \Illuminate\Http\Response
      */
-    public function show(penawaran $penawaran)
+    public function show($id)
     {
-        //
+        $tender = tender::findorfail($id);
+
+        $penawaran = $tender->penawaran;
+
+        return view('tender_admin.penawaran.create',['tender'=>$tender,'penawaran'=>$penawaran]);
     }
 
     /**
@@ -56,9 +75,9 @@ class PenawaranController extends Controller
      * @param  \App\Models\penawaran  $penawaran
      * @return \Illuminate\Http\Response
      */
-    public function edit(penawaran $penawaran)
+    public function edit($id)
     {
-        //
+        return $data = tender::findorfail($id);
     }
 
     /**
@@ -68,7 +87,7 @@ class PenawaranController extends Controller
      * @param  \App\Models\penawaran  $penawaran
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatepenawaranRequest $request, penawaran $penawaran)
+    public function update(UpdatepenawaranRequest $request, $id)
     {
         //
     }
@@ -79,7 +98,7 @@ class PenawaranController extends Controller
      * @param  \App\Models\penawaran  $penawaran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(penawaran $penawaran)
+    public function destroy($id)
     {
         //
     }

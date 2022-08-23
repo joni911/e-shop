@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\penawaran_file;
 use App\Http\Requests\Storepenawaran_fileRequest;
 use App\Http\Requests\Updatepenawaran_fileRequest;
+use App\Models\tender;
+use Illuminate\Support\Facades\Auth;
 
 class PenawaranFileController extends Controller
 {
@@ -36,7 +38,19 @@ class PenawaranFileController extends Controller
      */
     public function store(Storepenawaran_fileRequest $request)
     {
-        //
+         $user = Auth::user();
+
+         $penawaran_file = tender::findorfail($request->id);
+
+         $data = new penawaran_file();
+         $data->user_id = $user->id;
+         $data->penawaran_id = $penawaran_file->penawaran->id;
+         $data->nama = $request->nama;
+         $data->keterangan = $request->keterngan;
+
+         $data->save();
+
+         return redirect()->back();
     }
 
     /**

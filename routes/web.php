@@ -15,6 +15,8 @@ use App\Http\Controllers\PekerjaanBerjalanController;
 use App\Http\Controllers\PemeriksaanController;
 use App\Http\Controllers\PenawaranController;
 use App\Http\Controllers\PenawaranFileController;
+use App\Http\Controllers\PenawaranPesertaController;
+use App\Http\Controllers\PenawaranPesertaFileController;
 use App\Http\Controllers\PengalamanTenderController;
 use App\Http\Controllers\PeralatanController;
 use App\Http\Controllers\PerubahanController;
@@ -107,6 +109,8 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('tender_persyaratan_file', TenderPersyaratanFileController::class);
     Route::resource('penawaran', PenawaranController::class);
     Route::resource('penawaran_file', PenawaranFileController::class);
+    Route::resource('penawaran_peserta', PenawaranPesertaController::class);
+    Route::resource('penawaran_peserta_file', PenawaranPesertaFileController::class);
     //daftar peserta
     Route::resource('daftar_peserta', DaftarPesertaController::class);
     //Komentar

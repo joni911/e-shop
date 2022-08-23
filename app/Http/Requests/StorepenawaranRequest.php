@@ -13,7 +13,7 @@ class StorepenawaranRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,10 @@ class StorepenawaranRequest extends FormRequest
     {
         return [
             //
+            'judul' => 'required',
+            'penjelasan' => 'required',
+            'anggaran' => 'required',
+            'hps' => 'required',
         ];
     }
 }

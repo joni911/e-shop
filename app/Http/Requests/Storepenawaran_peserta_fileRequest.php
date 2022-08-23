@@ -13,7 +13,7 @@ class Storepenawaran_peserta_fileRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**

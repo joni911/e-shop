@@ -17,8 +17,8 @@ class CreatePenawaranFilesTable extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->bigInteger('penawaran_id');
-            $table->string('file');
             $table->string('nama');
+            $table->string('keterangan')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -100,4 +100,10 @@ class tender extends Model
         # code...
         return $this->hasOne(tender_persyaratan::class);
     }
+
+    public function penawaran()
+    {
+        # code...
+        return $this->hasOne(penawaran::class);
+    }
 }

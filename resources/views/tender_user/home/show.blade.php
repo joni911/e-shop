@@ -143,7 +143,8 @@
                             @if ($today>=$tahapan->mulai && $today<=$tahapan->akhir)
                                  @if ($daftar_peserta)
                                 <h3 class="text-dark">Perusahaan anda {{$daftar_peserta->peserta->nama_pt}} Sudah Terdaftar !</h3>
-                            <a name="" id="" class="btn btn-primary" href="{{ route('tender_home.edit', [$data->id]) }}" role="button">Cek Dokumen Persyaratan dan Petunjuk disini!</a>
+                                <a name="" id="" class="btn btn-primary" href="{{ route('routeName', ['id'=>1]) }}" role="button"></a>
+                                <a name="" id="" class="btn btn-primary" href="{{ route('tender_home.edit', [$data->id]) }}" role="button">Cek Dokumen Persyaratan dan Petunjuk disini!</a>
                             @else
                                 @if ($peserta)
                                 <x-adminlte-modal id="modalCustom" title="Pendaftaran Tender" size="lg" theme="green"
@@ -163,6 +164,7 @@
                                 </x-adminlte-modal>
                                 {{-- Example button to open modal --}}
                                 <x-adminlte-button label="Daftar Sebagai Peserta" data-toggle="modal" data-target="#modalCustom" class="bg-teal"/>
+
                                 @else
                                     Belum mendaftarkan perusahaan
 

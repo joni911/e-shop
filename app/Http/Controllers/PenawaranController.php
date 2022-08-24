@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\penawaran;
 use App\Http\Requests\StorepenawaranRequest;
 use App\Http\Requests\UpdatepenawaranRequest;
+use App\Models\penawaran_file;
 use App\Models\tender;
 use App\Models\tender_persyaratan;
 use Illuminate\Support\Facades\Auth;
@@ -64,9 +65,15 @@ class PenawaranController extends Controller
     {
         $tender = tender::findorfail($id);
 
-        $penawaran = $tender->penawaran;
+        $penawaran = penawaran::where('tender_id',$tender->id)->first();
+        $file = null;
+        if ($penawaran) {
+            # code...
+            $file = penawaran_file::where('penawaran_id',$penawaran->id)->first();
 
-        return view('tender_admin.penawaran.create',['tender'=>$tender,'penawaran'=>$penawaran]);
+        }
+
+        return view('tender_admin.penawaran.create',['tender'=>$tender,'penawaran'=>$penawaran,'file'=>$file]);
     }
 
     /**
@@ -90,6 +97,7 @@ class PenawaranController extends Controller
     public function update(UpdatepenawaranRequest $request, $id)
     {
         //
+        return $request;
     }
 
     /**

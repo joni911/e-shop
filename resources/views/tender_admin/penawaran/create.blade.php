@@ -29,11 +29,14 @@
             <?php
                 $no = 1;
             ?>
-            @forelse ($penawaran->penawaran_file as $f)
-                <p>{{$no++}}. {{$f->nama}} {{$f->keterangan}}</p>
-            @empty
+            @if ($file)
+                @forelse ($penawaran->penawaran_file as $f)
+                    <p>{{$no++}}. {{$f->nama}} {{$f->keterangan}}</p>
+                @empty
 
-            @endforelse
+                @endforelse
+            @endif
+
 
 
         </div>

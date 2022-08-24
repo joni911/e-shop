@@ -26,6 +26,7 @@
                 <option value="1">Masa Pendaftaran</option>
                 <option value="2">Masa Pembukaan File</option>
                 <option value="3">Pengumuman Pemenang</option>
+                <option value="4">Masa Upload File</option>
               </select>
             </div>
         <div class="form-group">

@@ -35,11 +35,6 @@ use App\Http\Controllers\TenderPersyaratanController;
 use App\Http\Controllers\TenderPersyaratanFileController;
 use App\Http\Controllers\UserBarangController;
 use App\Http\Controllers\ValidasiFileController;
-use App\Models\katagori_barang;
-use App\Models\pengalaman_tender;
-use App\Models\tender_komen;
-use App\Models\tender_persyaratan;
-use App\Models\tender_persyaratan_file;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

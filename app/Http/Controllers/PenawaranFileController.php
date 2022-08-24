@@ -17,7 +17,7 @@ class PenawaranFileController extends Controller
      */
     public function index()
     {
-        //
+        return 'index';
     }
 
     /**
@@ -59,9 +59,10 @@ class PenawaranFileController extends Controller
      * @param  \App\Models\penawaran_file  $penawaran_file
      * @return \Illuminate\Http\Response
      */
-    public function show(penawaran_file $penawaran_file)
+    public function show($id)
     {
         //
+        return $data = penawaran_file::findorfail($id);
     }
 
     /**
@@ -70,7 +71,7 @@ class PenawaranFileController extends Controller
      * @param  \App\Models\penawaran_file  $penawaran_file
      * @return \Illuminate\Http\Response
      */
-    public function edit(penawaran_file $penawaran_file)
+    public function edit($id)
     {
         //
     }
@@ -82,7 +83,7 @@ class PenawaranFileController extends Controller
      * @param  \App\Models\penawaran_file  $penawaran_file
      * @return \Illuminate\Http\Response
      */
-    public function update(Updatepenawaran_fileRequest $request, penawaran_file $penawaran_file)
+    public function update(Updatepenawaran_fileRequest $request, $id)
     {
         //
     }
@@ -93,7 +94,7 @@ class PenawaranFileController extends Controller
      * @param  \App\Models\penawaran_file  $penawaran_file
      * @return \Illuminate\Http\Response
      */
-    public function destroy(penawaran_file $penawaran_file)
+    public function destroy($id)
     {
         //
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\penawaran_file;
 use App\Http\Requests\Storepenawaran_fileRequest;
 use App\Http\Requests\Updatepenawaran_fileRequest;
+use App\Models\penawaran;
 use App\Models\tender;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,7 +63,10 @@ class PenawaranFileController extends Controller
     public function show($id)
     {
         //
-        return $data = penawaran_file::findorfail($id);
+        // return $id;
+        $tender = tender::findorfail($id);
+        $data = penawaran::where('tender_id',$id)->first();
+        return view('tender_admin.penawaran.show',['tender'=>$tender,'data'=>$data]);
     }
 
     /**

@@ -25,11 +25,7 @@
             <p>Penjelasan : </p>
             <p>{!!$data->penjelasan!!}</p>
         </div>
-        @forelse ($pp->penawaran_peserta_file as $item)
-{{$item}}
-        @empty
-
-        @endforelse
+       
 
         <form action="{{ route('penawaran_peserta.store') }}" method="post" enctype="multipart/form-data">
             @csrf

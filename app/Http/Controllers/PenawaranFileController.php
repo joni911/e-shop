@@ -6,6 +6,8 @@ use App\Models\penawaran_file;
 use App\Http\Requests\Storepenawaran_fileRequest;
 use App\Http\Requests\Updatepenawaran_fileRequest;
 use App\Models\penawaran;
+use App\Models\penawaran_peserta;
+use App\Models\penawaran_peserta_file;
 use App\Models\tender;
 use Illuminate\Support\Facades\Auth;
 
@@ -66,7 +68,14 @@ class PenawaranFileController extends Controller
         // return $id;
         $tender = tender::findorfail($id);
         $data = penawaran::where('tender_id',$id)->first();
-        return view('tender_admin.penawaran.show',['tender'=>$tender,'data'=>$data]);
+        $user = Auth::user();
+        $pp = penawaran_peserta::
+        where('penawaran_pesertas.peserta_id',$user->peserta->id)
+        ->where('penawaran_pesertas.tender_id',$tender->id)
+        ->get()
+        ;
+
+        return view('tender_admin.penawaran.show',['tender'=>$tender,'data'=>$data,'pp'=>$pp]);
     }
 
     /**

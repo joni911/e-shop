@@ -10,9 +10,10 @@ class penawaran_peserta_file extends Model
 {
     use HasFactory,SoftDeletes;
 
-    public function peserta_file()
+    public function penawaran_peserta()
     {
         # code...
-        return $this->belongsTo(peserta_file::class);
+        return $this->belongsTo(penawaran_peserta::class);
     }
+
 }

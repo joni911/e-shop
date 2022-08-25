@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\penawaran_peserta;
 use App\Http\Requests\Storepenawaran_pesertaRequest;
 use App\Http\Requests\Updatepenawaran_pesertaRequest;
+use App\Models\penawaran;
+use App\Models\penawaran_peserta_file;
+use App\Models\tender;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class PenawaranPesertaController extends Controller
 {
@@ -37,7 +42,54 @@ class PenawaranPesertaController extends Controller
     public function store(Storepenawaran_pesertaRequest $request)
     {
         //
-        
+        $user = Auth::user();
+        $data = tender::findorfail($request->id) ;
+        // return
+        foreach ($data->penawaran->penawaran_file as $key => $x) {
+            # code...
+
+            if (!$request->file($x->id)) {
+                # code...
+                return Redirect::back()->withErrors(['msg' => 'File '.$x->nama.' Tidak Boleh Kosong']);
+            }
+        }
+
+        $pp = new penawaran_peserta();
+        $pp->user_id = $user->id;
+        $pp->tender_id = $request->id;
+        $pp->peserta_id = $user->peserta->id;
+        $pp->penawaran = $request->penawaran;
+        $pp->koreksi = 0;
+        $pp->save();
+
+
+        foreach ($data->penawaran->penawaran_file as $key => $x) {
+            # code...e
+            if ($request->file($x->id)) {
+            $tmp_file = $request->file($x->id);
+            $file = time()."_".$tmp_file->getClientOriginalName();
+
+      	    // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/penawaran/'.$request->id.'/'.$user->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+
+
+                # code...
+                $data = new penawaran_peserta_file();
+                $data->user_id = $user->id;
+                $data->penawaran_peserta_id = $pp->id;
+                $data->file = $nama_file;
+                $data->nama = $x->nama;
+                $data->save();
+            }
+
+        }
+
+        return redirect()->back();
+
+
     }
 
     /**

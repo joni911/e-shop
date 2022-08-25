@@ -15,4 +15,11 @@ class penawaran_peserta extends Model
         # code...
         return $this->belongsTo(penawaran::class);
     }
+
+    public function penawaran_peserta_file()
+    {
+        # code...
+        return $this->hasMany(penawaran_peserta_file::class);
+
+    }
 }

@@ -19,6 +19,7 @@
         </div>
         <!-- /.card-header -->
         <!-- form start -->
+        {{$penawaran}}
 
         @include('tender_admin.penawaran.part.admin')
 

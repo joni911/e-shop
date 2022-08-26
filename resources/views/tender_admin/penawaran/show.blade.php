@@ -25,7 +25,7 @@
             <p>Penjelasan : </p>
             <p>{!!$data->penjelasan!!}</p>
         </div>
-       
+
 
         <form action="{{ route('penawaran_peserta.store') }}" method="post" enctype="multipart/form-data">
             @csrf

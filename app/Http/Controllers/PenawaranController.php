@@ -52,7 +52,8 @@ class PenawaranController extends Controller
 
         $data->save();
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data '.$data->judul.' telah disimpan');
+
     }
 
     /**

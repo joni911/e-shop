@@ -12,7 +12,7 @@
 
 <body>
 
-    @include('tender_admin.part.alert')
+    @include('global.alert')
     <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">Tambah Penawaran {{$tender->nama}}</h3>
@@ -20,52 +20,58 @@
         <!-- /.card-header -->
         <!-- form start -->
         <div class="card-body">
-            <p>Nilai HPS        = {{$data->hps}}</p>
-            <p>Niali Anggaran   = {{$data->anggaran}}</p>
+            <p>Nilai HPS        = {{$data->hps ?? ""}}</p>
+            <p>Niali Anggaran   = {{$data->anggaran ?? ""}}</p>
             <p>Penjelasan : </p>
-            <p>{!!$data->penjelasan!!}</p>
+            <p>{!!$data->penjelasan ?? ""!!}</p>
         </div>
 
 
-        <form action="{{ route('penawaran_peserta.store') }}" method="post" enctype="multipart/form-data">
-            @csrf
-            <div class="card-body">
-                <div class="form-group">
-                  <label for="">Penawaran</label>
-                  <input type="number"
-                    class="form-control" name="penawaran" id="" aria-describedby="helpId" placeholder="">
-                  <small id="helpId" class="form-text text-muted">Help text</small>
+        @if (!$pp)
+            <form action="{{ route('penawaran_peserta.store') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="card-body">
+                    <div class="form-group">
+                    <label for="">Penawaran</label>
+                    <input type="number"
+                        class="form-control" name="penawaran" id="" aria-describedby="helpId" placeholder="">
+                    <small id="helpId" class="form-text text-muted">Help text</small>
+                    </div>
+                    @forelse ($data->penawaran_file as $no => $pf)
+                    <div class="form-group">
+                        <label for="">{{$pf->nama}}</label>
+                        <input type="file" class="form-control-file" name="{{$pf->id}}" id="" placeholder="" aria-describedby="fileHelpId">
+                        <small id="fileHelpId" class="form-text text-muted">{{$pf->keterangan}}</small>
+                    </div>
+
+                    @empty
+
+                    @endforelse
+
+                    <input type="text" class="form-control" name="id" hidden value="{{$tender->id}}" id="" aria-describedby="helpId" placeholder="">
+
                 </div>
-                @forelse ($data->penawaran_file as $no => $pf)
-                   <div class="form-group">
-                     <label for="">{{$pf->nama}}</label>
-                     <input type="file" class="form-control-file" name="{{$pf->id}}" id="" placeholder="" aria-describedby="fileHelpId">
-                     <small id="fileHelpId" class="form-text text-muted">{{$pf->keterangan}}</small>
-                   </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    {{-- <a name="" id="" class="btn btn-success" href="{{ route('tender_file.show',[$syarat->id]) }}" role="button">Selesai</a> --}}
 
-                @empty
+                </div>
+            </form>
+        @else
+        <?php
+            $no = 1;
+        ?>
+        <div class="card-body">
+            <p>Penawaran : {{$pp->penawaran}}</p>
+            @forelse ($pp->penawaran_peserta_file as $item)
 
-                @endforelse
+                <p><a href="/{{$item->file}}">{{$no++}}. {{$item->nama}}</a></p>
 
-                  <input type="text" class="form-control" name="id" hidden value="{{$tender->id}}" id="" aria-describedby="helpId" placeholder="">
+            @empty
 
-            </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                {{-- <a name="" id="" class="btn btn-success" href="{{ route('tender_file.show',[$syarat->id]) }}" role="button">Selesai</a> --}}
-
-              </div>
-        </form>
-
-
-
-
-
+            @endforelse
         </div>
-
-
-
-
+        @endif
     </div>
 </body>
 

@@ -87,7 +87,8 @@ class PenawaranPesertaController extends Controller
 
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('success','Data telah disimpan');
+
 
 
     }

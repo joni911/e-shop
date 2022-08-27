@@ -53,7 +53,8 @@ class PenawaranFileController extends Controller
 
          $data->save();
 
-         return redirect()->back();
+         return redirect()->back()->with('success','Data '.$data->nama.' telah disimpan');
+
     }
 
     /**
@@ -70,10 +71,11 @@ class PenawaranFileController extends Controller
         $data = penawaran::where('tender_id',$id)->first();
         $user = Auth::user();
         $pp = penawaran_peserta::
-        where('penawaran_pesertas.peserta_id',$user->peserta->id)
-        ->where('penawaran_pesertas.tender_id',$tender->id)
-        ->get()
+        where('peserta_id',$user->peserta->id)
+        ->where('tender_id',$tender->id)
+        ->first()
         ;
+        // dd($pp->penawaran_peserta_file);
 
         return view('tender_admin.penawaran.show',['tender'=>$tender,'data'=>$data,'pp'=>$pp]);
     }

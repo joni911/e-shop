@@ -17,7 +17,7 @@ class CreatePenawaranPesertasTable extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->bigInteger('tender_id');
-            $table->bigInteger('peserta_id');
+            $table->bigInteger('peserta_id')->unique();
             $table->string('penawaran');
             $table->string('koreksi');
             $table->softDeletes();

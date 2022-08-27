@@ -70,4 +70,9 @@ class peserta extends Model
         return $this->hasMany(daftar_peserta::class);
 
     }
+    public function penawaran_peserta()
+    {
+        # code...
+        return $this->belongsTo(penawaran_peserta::class);
+    }
 }

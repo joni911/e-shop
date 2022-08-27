@@ -12,14 +12,14 @@
 
 <body>
 
-    @include('tender_admin.part.alert')
+    @include('global.alert')
     <div class="card card-primary">
         <div class="card-header">
             <h3 class="card-title">Tambah Penawaran {{$tender->nama}}</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
-        {{$penawaran}}
+        {{-- {{$penawaran}} --}}
 
         @include('tender_admin.penawaran.part.admin')
 

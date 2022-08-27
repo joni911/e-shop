@@ -22,4 +22,10 @@ class penawaran_peserta extends Model
         return $this->hasMany(penawaran_peserta_file::class);
 
     }
+
+    public function peserta()
+    {
+        # code...
+        return $this->hasMany(peserta::class);
+    }
 }

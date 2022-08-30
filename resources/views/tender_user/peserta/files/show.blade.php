@@ -83,7 +83,7 @@
                     @endforelse
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td>Penawaran</td>
                 <td>Penwaran : {{$data->penawaran}}
                     Koreksi : {{$data->harga_koreksi}}
@@ -112,7 +112,7 @@
                         @endif
                 </td>
 
-            </tr>
+            </tr> --}}
 
             <tr>
                 <td>File</td>
@@ -127,8 +127,14 @@
 
         </tbody>
     </table>
+    <h3 class="text-center">Penawaran Peserta</h3>
+        <h5 class="text-center">Penawaran : {{$pp->penawaran}}</h5>
     <h3 class="text-center">File</h3>
+    <?php
+        $fn = str_replace('.',' ',"{$data->nama_pt}")
+    ?>
     @include('tender_user.peserta.admin.file')
+    @include('tender_user.peserta.admin.file2')
     @include('tender_user.peserta.admin.pemeriksaan.form')
 
 

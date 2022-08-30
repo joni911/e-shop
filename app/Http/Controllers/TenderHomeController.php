@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\daftar_peserta;
+use App\Models\penawaran_peserta;
 use App\Models\tahapan;
 use App\Models\tender;
 use App\Models\tender_file;
@@ -84,11 +85,13 @@ class TenderHomeController extends Controller
         $now = Carbon::now();
 
         $tahapan = tahapan::where('tender_id',$data->id)->where('status',1)->first();
+        $upfile = tahapan::where('tender_id',$data->id)->where('status',4)->first();
+        $penawaran = penawaran_peserta::where('tender_id',$id)->where('peserta_id',$user->peserta->id)->first();
         return view('tender_user.home.show',
         [
             'data'=>$data,'now'=>$now,'peserta'=>$Peserta,
             'daftar_peserta'=>$daftar_peserta,'tahapan' => $tahapan,
-            'today'=>$today
+            'today'=>$today,'upfile'=>$upfile,'penawaran'=>$penawaran
         ]);
     }
 

@@ -14,31 +14,44 @@
                                 @php
                                     $ext = pathinfo($tfd->files, PATHINFO_EXTENSION)
                                 @endphp
-                                @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
-                                        $ext == 'JPG' || $ext == 'PNG' || $ext == 'JPEG')
-                                        <img src="/{{$tfd->files}}" class="img-fluid" alt="Responsive image">
+                                <?php
 
-                                @elseif ($ext == 'pdf' || $ext == 'PDF')
-                                    <object data="/{{$tfd->files}}" width="750" height="400"></object>
+                                $fs = round(filesize($tfd->files)/1024/1024,1)
+                                ?>
+                                @if ($fs<=2)
+                                    @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
+                                    $ext == 'JPG' || $ext == 'PNG' || $ext == 'JPEG')
+                                    <img src="/{{$tfd->files}}" class="img-fluid" alt="Responsive image">
 
-                                @elseif ($ext == 'zip' || $ext == 'rar' || $ext == '7z')
-                                    <a name="" id="" class="btn btn-primary" href="/{{$tfd->files}}" role="button"><i class="fas fa-download    "> Download File</i></a>
+                                    @elseif ($ext == 'pdf' || $ext == 'PDF')
+                                        <object data="/{{$tfd->files}}" width="750" height="400"></object>
+
+                                    @elseif ($ext == 'zip' || $ext == 'rar' || $ext == '7z')
+                                        <a name="" id="" class="btn btn-primary" href="/{{$tfd->files}}" role="button"><i class="fas fa-download    "> Download File</i></a>
+                                    @else
+                                        File {{$tfd->files}}
+                                        <br>
+                                        Extensi {{$ext}} Tidak di dukung
+                                    @endif
                                 @else
-                                    File {{$tfd->files}}
-                                    <br>
-                                    Extensi {{$ext}} Tidak di dukung
+                                    File Terlalu Besar Silakan Simpan FIle
                                 @endif
-                                @include('tender_user.peserta.admin.validasi.create')
+
+                                {{-- @include('tender_user.peserta.admin.validasi.create') --}}
                             </div>
                             <x-slot name="footerSlot">
                                 {{-- <x-adminlte-button class="mr-auto" type="submit" theme="success" label="Terima"/> --}}
+                                <a name="" id="" class="mr-auto btn btn-primary" href="/{{$tfd->files}}" download="{{$tfd->tender_file->nama}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i> Simpan File</a>
+
                                 <x-adminlte-button theme="danger" label="Tutup" data-dismiss="modal"/>
                             </x-slot>
                             </x-adminlte-modal>
+
                             {{-- Example button to open modal --}}
-                            <x-adminlte-button label="{{$tfd->tender_file->nama}}" data-toggle="modal" data-target="#modalCustom-{{$tfd->id}}" class="bg-teal"/>
-                            <p>Status File</p>
-                            <p>{{$tfd->validasi_file->status ?? "Belum di verifikasi"}}</p>
+                            <x-adminlte-button icon="fas fa-eye" label="{{$tfd->tender_file->nama}}" data-toggle="modal" data-target="#modalCustom-{{$tfd->id}}" class="bg-teal"/>
+                            <a name="" id="" class="btn btn-primary" href="/{{$tfd->files}}" download="{{$tfd->tender_file->nama}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i></a>
+                            {{-- <p>Status File</p> --}}
+                            {{-- <p>{{$tfd->validasi_file->status ?? "Belum di verifikasi"}}</p> --}}
                     </td>
 
             @endforeach

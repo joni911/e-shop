@@ -6,6 +6,7 @@ use App\Http\Requests\pesertaRequest;
 use App\Models\daftar_peserta;
 use App\Models\komentar;
 use App\Models\pemeriksaan;
+use App\Models\penawaran_peserta;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Models\tender_file;
@@ -187,6 +188,8 @@ class PesertaController extends Controller
         ->select('pesertas.*','tenders.nama as nama_tender')
         ->findorfail($pid);
 
+        $penawaran_peserta=penawaran_peserta::where('peserta_id',$pid)->where('tender_id',$id)->first();
+        // $penawaran_file = $penawaran_peserta->penawaran_peserta_file;
         $file = tender_file_detail::join('pesertas','pesertas.id','tender_file_details.peserta_id')
         ->join('tender_files','tender_files.id','tender_file_details.tender_file_id')
         ->join('tenders','tenders.id','tender_files.tender_id')
@@ -217,7 +220,7 @@ class PesertaController extends Controller
         return view('tender_user.peserta.files.show',
         ['data'=>$data,'file'=>$file,
         'komen'=>$komen,'berkas'=>$berkas,'hak_akses'=>$hak_akses,
-        'pemeriksaan' => $pemeriksanaan, 'nilai'=>$nilai
+        'pemeriksaan' => $pemeriksanaan, 'nilai'=>$nilai,'pp'=>$penawaran_peserta
         ]);
 
 

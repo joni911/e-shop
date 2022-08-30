@@ -67,7 +67,7 @@ class PenawaranPesertaController extends Controller
             # code...e
             if ($request->file($x->id)) {
             $tmp_file = $request->file($x->id);
-            $file = time()."_".$tmp_file->getClientOriginalName();
+            $file = time()."_".$x->nama.".".$tmp_file->getClientOriginalExtension();
 
       	    // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/penawaran/'.$request->id.'/'.$user->id;

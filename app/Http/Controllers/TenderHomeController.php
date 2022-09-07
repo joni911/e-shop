@@ -23,7 +23,7 @@ class TenderHomeController extends Controller
     {
         // $data = tender::where('default','!=','1')->paginate(10);
 
-        $data = tender::where('default','==',0)
+        $data = tender::where('default',0)
         ->join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
         ->join('jenis_kontraks','jenis_kontraks.id','tenders.jenis_kontrak_id')
         ->join('metode_pengadaans','metode_pengadaans.id','tenders.metode_pengadaan_id')

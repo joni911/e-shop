@@ -41,14 +41,15 @@ class PesertaController extends Controller
         if ($user->peserta != null) {
             return redirect()->route('peserta.edit',[$user->peserta->id]);
         }
+        $default = tender::where('default',1)->first();
         $data = tender::join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
             ->join('jenis_kontraks','jenis_kontraks.id','tenders.jenis_kontrak_id')
             ->join('metode_pengadaans','metode_pengadaans.id','tenders.metode_pengadaan_id')
             ->join('status_tenders','status_tenders.id','tenders.status_tender_id')
             ->select('tenders.*','jenis_pengadaans.nama as jpn','jenis_kontraks.nama as jkn',
             'metode_pengadaans.nama as mpn','status_tenders.nama as stn')
-            ->findorfail(2);
-            $file = tender_file::where('tender_id',2)->get();
+            ->findorfail($default->id);
+            $file = tender_file::where('tender_id',$default->id)->get();
             // $now = Carbon::now();
         return view('tender_user.peserta.registrasi.create',['data'=>$data, 'file'=>$file]);
     }
@@ -128,7 +129,7 @@ class PesertaController extends Controller
                 $tfs->save();
             }
         }
-        return redirect()->route('pengalaman.show',$data->id);
+        return redirect()->route('tender_home.index');
 
     }
 

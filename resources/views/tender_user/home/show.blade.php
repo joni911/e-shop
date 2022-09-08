@@ -144,11 +144,22 @@
                                  @if ($daftar_peserta)
                                 <h3 class="text-dark">Perusahaan anda {{$daftar_peserta->peserta->nama_pt}} Sudah Terdaftar !</h3>
                                 <a name="" id="" class="btn btn-primary" href="{{ route('tender_home.edit', [$data->id]) }}" role="button">Cek Dokumen Persyaratan dan Petunjuk disini!</a>
+
+                                    @if ($today>=$upfile->mulai && $today<=$upfile->akhir)
+                                        <a name="" id="" class="btn btn-primary" href="{{ route('penawaran_file.show', [$data->id   ]) }}" role="button">
+                                            @if ($penawaran)
+                                            Lihat File
+                                            @else
+                                            Masukkan File
+                                            @endif
+                                        </a>
+                                    @else
+                                        <p>Masa Penawaran File Sudah Berakhir</p>
+                                    @endif
                             @else
                                 @if ($peserta)
                                 <x-adminlte-modal id="modalCustom" title="Pendaftaran Tender" size="lg" theme="green"
                                 icon="fas fa-bell" v-centered static-backdrop scrollable>
-                                {{-- <div style="height:800px;">Read the account policies...</div> --}}
                                 <x-slot name="footerSlot">
                                     <h3 class="text-dark">Apakah anda Ingin mendaftarkan {{$peserta->nama_pt}} ?</h3>
                                     <p class="text-justify">Dengan menekan tombol DAFTARKAN maka anda akan dinyatakan setuju untuk melakukan proses pengadaan barang jasa sesuai aturan di PT. BPR Bank Daerah Bangli (Perseroda).</p>
@@ -161,7 +172,6 @@
                                     <x-adminlte-button theme="danger" label="Batalkan" data-dismiss="modal"/>
                                 </x-slot>
                                 </x-adminlte-modal>
-                                {{-- Example button to open modal --}}
                                 <x-adminlte-button label="Daftar Sebagai Peserta" data-toggle="modal" data-target="#modalCustom" class="bg-teal"/>
 
                                 @else
@@ -176,17 +186,7 @@
                                 Tender Selesai pada {{$tahapan->akhir}}
                             @endif
 
-                            @if ($today>=$upfile->mulai && $today<=$upfile->akhir)
-                                <a name="" id="" class="btn btn-primary" href="{{ route('penawaran_file.show', [$data->id   ]) }}" role="button">
-                                    @if ($penawaran)
-                                    Lihat File
-                                    @else
-                                    Masukkan File
-                                    @endif
-                                </a>
-                            @else
-                                <p>Masa Penawaran File Sudah Berakhir</p>
-                            @endif
+
                           </td>
                       </tr>
                   </tbody>

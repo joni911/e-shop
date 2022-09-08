@@ -15,8 +15,12 @@
     <div class="container">
 
         <div class="text-center text-white">
-        <h2 class="text-center text-dark">Hello Selamat datang {{$user->peserta->nama_pt ?? $user->name." Segeralengkapi data anda di halaman Peserta"}}</h2>
-
+        <h2 class="text-center text-dark">Hello Selamat datang {{$user->peserta->nama_pt ?? $user->name." Segera lengkapi data anda"}}</h2>
+            @if (!$user->peserta)
+                <h2>
+                    <a href="/peserta">di Halaman {{--  --}}Peserta</a>
+                </h2>
+            @endif
             <img src="template/Background.jpg" style="height: 13cm; width:26cm; margin-top: 20px" />
             <p class="lead fw-normal text-white-50 mb-0" ></p>
         </div>

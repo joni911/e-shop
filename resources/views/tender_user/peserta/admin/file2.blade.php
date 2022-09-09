@@ -18,7 +18,7 @@
 
                         $fs = round(filesize($ppf->file)/1024/1024,1)
                     ?>
-                    @if ($fs<=10)
+                    @if ($fs<=2)
                         @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
                         $ext == 'JPG' || $ext == 'PNG' || $ext == 'JPEG')
                         <img src="/{{$ppf->file}}" class="img-fluid" alt="Responsive image">

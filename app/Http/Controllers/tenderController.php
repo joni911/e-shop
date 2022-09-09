@@ -77,6 +77,7 @@ class tenderController extends Controller
         $data->lokasi_pekerjaan = $request->lokasi;
         $data->nilai_pagu = $request->nilai;
         $data->hps = $request->hps;
+        $data->default = 0;
         $data->save();
 
         return redirect()->route('tender_admin.index');

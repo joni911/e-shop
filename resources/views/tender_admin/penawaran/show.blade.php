@@ -20,8 +20,8 @@
         <!-- /.card-header -->
         <!-- form start -->
         <div class="card-body">
-            <p>Nilai HPS        = {{$data->hps ?? ""}}</p>
-            <p>Niali Anggaran   = {{$data->anggaran ?? ""}}</p>
+            <p>Nilai HPS        = @currency($data->hps ?? "")</p>
+            <p>Niali Anggaran   = @currency($data->anggaran ?? "")</p>
             <p>Penjelasan : </p>
             <p>{!!$data->penjelasan ?? ""!!}</p>
         </div>
@@ -35,7 +35,7 @@
                     <label for="">Penawaran</label>
                     <input type="number"
                         class="form-control" name="penawaran" id="" aria-describedby="helpId" placeholder="">
-                    <small id="helpId" class="form-text text-muted">Help text</small>
+                    <small id="helpId" class="form-text text-muted">Masukkan Penawaran Anda Di berupa Angka</small>
                     </div>
                     @forelse ($data->penawaran_file as $no => $pf)
                     <div class="form-group">
@@ -62,10 +62,10 @@
             $no = 1;
         ?>
         <div class="card-body">
-            <p>Penawaran : {{$pp->penawaran}}</p>
+            <p>Penawaran : @currency($pp->penawaran)</p>
             @forelse ($pp->penawaran_peserta_file as $item)
 
-                <p><a href="/{{$item->file}}">{{$no++}}. {{$item->nama}}</a></p>
+                <p><a href="/{{$item->file}}" download="{{$item->nama}}">{{$no++}}. {{$item->nama}}</a></p>
 
             @empty
 

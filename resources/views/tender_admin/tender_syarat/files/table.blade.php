@@ -13,9 +13,12 @@
             ?>
             @forelse ($persyaratan->tender_persyaratan_file as $t)
             <tr>
+                @php
+                    $ext = pathinfo($t->file, PATHINFO_EXTENSION)
+                @endphp
                 <td scope="row">{{$i++}}</td>
                 <td>{{$t->nama ?? ""}}</td>
-                <th><a href="/{{$t->file ?? ""}}">Download</a>
+                <th><a href="/{{$t->file ?? ""}}" download="{{$t->nama}}">Download </a>
                 </th>
                 <th>
                     @if ($admin->hak_akses == 'admin')

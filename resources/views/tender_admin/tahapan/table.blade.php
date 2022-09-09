@@ -6,6 +6,7 @@
             <th>Mulai</th>
             <th>Slesai</th>
             <th>Keterangan</th>
+            <th>Status</th>
             <th>Aksi</th>
         </tr>
         </thead>
@@ -25,6 +26,26 @@
                     <a href="{{ route('perubahan.show', [$t->id]) }}">Periksa Perubahan</a>
                     @endif
                 </th>
+                <td>
+                    @switch($t->status)
+                        @case(1)
+                            Masa Pendaftaran
+                            @break
+                        @case(2)
+                            Masa Pembukaan File
+
+                            @break
+                        @case(3)
+                            Pengumuman Pemenang
+
+                            @break
+                        @case(4)
+                            Upload File
+                            @break
+                        @default
+                            Biasa
+                    @endswitch
+                </td>
                 <th>
                     <a name="" id="" class="btn btn-primary" href="{{ route('tahapan.edit', [$t->id]) }}" role="button">
                         <i class="fa fa-edit" aria-hidden="true"></i>

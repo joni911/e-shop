@@ -282,7 +282,7 @@ class PesertaController extends Controller
         $data->NPWP = $request->NPWP;
         $data->no_hp = $request->no_hp;
         $data->alamat = $request->alamat;
-        $data->penawaran = $request->penawaran;
+        // $data->penawaran = $request->penawaran;
         $data->harga_koreksi = 0;
         $data->save();
         //upload file setelah falidasi
@@ -307,7 +307,7 @@ class PesertaController extends Controller
             }
         }
         // return redirect()->route('tender_home.show',$data->tender_id);
-        return redirect()->route('pengalaman.show',$data->id);
+        return redirect()->back();
 
 
 

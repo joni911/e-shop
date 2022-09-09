@@ -22,6 +22,26 @@
             <div class="form-group">
               <label for="">Jenis</label>
               <select class="form-control" name="status" id="">
+                <option value="{{$data->status}}">
+                    @switch($data->status)
+                        @case(1)
+                            Masa Pendaftaran
+                            @break
+                        @case(2)
+                            Masa Pembukaan File
+
+                            @break
+                        @case(3)
+                            Pengumuman Pemenang
+
+                            @break
+                        @case(4)
+                            Upload File
+                            @break
+                        @default
+                            Biasa
+                    @endswitch
+                </option>
                 <option value="0">Biasa</option>
                 <option value="1">Masa Pendaftaran</option>
                 <option value="2">Masa Pembukaan File</option>

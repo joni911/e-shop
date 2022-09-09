@@ -9,15 +9,16 @@
                     <x-adminlte-modal id="modalCustom2-{{$ppf->id}}" title="{{$ppf->nama}}" size="lg" theme="teal"
                     icon="fas fa-bell" v-centered static-backdrop scrollable>
                     <h3>File {{$ppf->nama}}</h3>
-                    {{-- <p>{{$ppf->file}}</p> --}}
+                    <p>{{$ppf->file}}</p>
                     @php
                         $ext = pathinfo($ppf->file, PATHINFO_EXTENSION)
                     @endphp
+                    <p>{{$ext}}</p>
                     <?php
 
                         $fs = round(filesize($ppf->file)/1024/1024,1)
                     ?>
-                    @if ($fs<=2)
+                    @if ($fs<=10)
                         @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
                         $ext == 'JPG' || $ext == 'PNG' || $ext == 'JPEG')
                         <img src="/{{$ppf->file}}" class="img-fluid" alt="Responsive image">

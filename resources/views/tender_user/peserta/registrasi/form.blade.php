@@ -6,35 +6,35 @@
               class="form-control" name="izin" id="" aria-describedby="helpId" placeholder="" value="{{$data->izin ?? ""}}">
               <input type="text"
               class="form-control" name="id" hidden id="" aria-describedby="helpId" placeholder="" value="{{$data->id ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan Nama Perusahaan</small>
+            <small id="helpId" class="form-text text-muted">Masukkan Izin Perusahaan</small>
         </div>
         <div class="form-group">
             <label for="">Nomor Surat</label>
             <input type="text"
               class="form-control" name="nomor_izin" id="" aria-describedby="helpId" placeholder="" value="{{$data->nomor_izin ?? ""}}">
 
-            <small id="helpId" class="form-text text-muted">Masukkan Nama Perusahaan</small>
+            <small id="helpId" class="form-text text-muted">Masukkan Nomor Surat Izin Perusahaan</small>
           </div>
           <div class="form-group">
             <label for="">Berlaku Sampai</label>
             <input type="date"
               class="form-control" name="izin_berlaku" id="" aria-describedby="helpId" placeholder="" value="{{$data->izin_berlaku ?? ""}}">
 
-            <small id="helpId" class="form-text text-muted">Masukkan Nama Perusahaan</small>
+            <small id="helpId" class="form-text text-muted">Masukkan Masa Berlaku Izin Usaha jika Izin Seumur hidup pakai sampai 2050</small>
           </div>
           <div class="form-group">
             <label for="">Instansi Pemberi</label>
             <input type="text"
               class="form-control" name="instansi_pemberi" id="" aria-describedby="helpId" placeholder="" value="{{$data->instansi_pemberi ?? ""}}">
 
-            <small id="helpId" class="form-text text-muted">Masukkan Nama Perusahaan</small>
+            <small id="helpId" class="form-text text-muted">Masukkan Instansi Pemeberi Izin</small>
           </div>
           <div class="form-group">
             <label for="">Kualifikasi</label>
             <input type="text"
               class="form-control" name="kualifikasi" id="" aria-describedby="helpId" placeholder="" value="{{$data->kualifikasi ?? ""}}">
 
-            <small id="helpId" class="form-text text-muted">Masukkan Nama Perusahaan</small>
+            <small id="helpId" class="form-text text-muted">Masukkan Jenis Kualifikasi Perusahaan</small>
           </div>
           <div class="form-group">
             <label for="">Klasifikasi</label>

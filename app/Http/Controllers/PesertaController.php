@@ -260,6 +260,7 @@ class PesertaController extends Controller
      */
     public function update(pesertaRequest $request, $id)
     {
+        // return $request;
          $data =  peserta::findorfail($id);
 
          $file = tender_file_detail::join('tender_files','tender_files.id','tender_file_details.tender_file_id')
@@ -281,7 +282,23 @@ class PesertaController extends Controller
         $data->nama_pt = $request->nama_pt;
         $data->NPWP = $request->NPWP;
         $data->no_hp = $request->no_hp;
+        $data->email = $request->email;
         $data->alamat = $request->alamat;
+        $data->izin = $request->izin;
+        $data->nomor_izin = $request->nomor_izin;
+        $data->izin_berlaku = $request->izin_berlaku;
+        $data->instansi_pemberi = $request->instansi_pemberi;
+        $data->kualifikasi = $request->kualifikasi;
+        $data->klasifikasi = $request->klasifikasi;
+        $data->no_akta = $request->no_akta;
+        $data->tgl_akta = $request->tgl_akta;
+        $data->notaris = $request->notaris;
+        $data->no_aktab = $request->no_aktab;
+        $data->tgl_aktab = $request->tgl_aktab;
+        $data->notaris_b = $request->notaris_b;
+        $data->nama_npwp = $request->nama_npwp;
+        $data->kswp_npwp = $request->kswp_npwp;
+        $data->kswp_nama = $request->kswp_nama;;
         // $data->penawaran = $request->penawaran;
         $data->harga_koreksi = 0;
         $data->save();

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Tahapan')
 
 @section('content_header')
 
@@ -65,59 +65,29 @@
                   <tr>
 
                     <th><b>No</b></th>
-                    <th><b>Nama Tender</b></th>
-                    <th><b>HPS</b></th>
-                    <th><b>Status</b></th>
-                    <th style="text-align: center"><b>Tahapan</b></th>
+                    <th><b>Nama Tahapan </b></th>
+                    <th><b>Tanggal Mulai</b></th>
+                    <th><b>Tanggal Akhir</b></th>
+                    <th><b>Keterangan</b></th>
                   </tr>
                 </thead>
                 <tbody>
+                    {{-- Foreach  --}}
+                    <?php
+                        $no = 1;
+                    ?>
                     @forelse ($data as $d)
-                  <tr class="alert" role="alert">
-                    <td>
-                        {{$no++}}
-                    </td>
-                    <td>
-                        <a href="{{ route('tender_home.show', [$d->id]) }}">{{$d->nama}}</a>
-                    </td>
-                    <td>
-                        {{$d->hps}}
-                    </td>
-                    <td>{{$d->stn}}</td>
-                    <td>
+                    <tr>
+                        <td>{{$no++}}</td>
+                        <td>{{$d->nama}}</td>
+                        <td>{{$d->mulai}}</td>
+                        <td>{{$d->akhir}}</td>
+                        <td>{{$d->keterangan}}</td>
+                    </tr>
 
-                        <table>
-                            @foreach ($d->tahapan as $t)
-                               <tr>
-
-
-
-                                @if ($now<$t->akhir)
-                                    <td class="text-justify"><a href="{{ route('tahapan.show', $d->id) }}">{{$t->nama}}</a></td>
-                                    <td>Mulai {{$t->mulai}}</td>
-                                    <td>Berakhir {{$t->akhir}}</td>
-                                    @break
-                                @else
-                                    {{-- <td class="text-justify">Selesai {{$t->nama}}</td>
-                                    <td>Mulai {{$t->mulai}}</td>
-                                    <td>Berakhir {{$t->akhir}}</td> --}}
-                                @endif
-                               </tr>
-                            @endforeach
-                        </table>
-
-                    </td>
-
-                  </tr>
-
-                  @empty
-
-        @endforelse
-
-
-
-
-
+                    @empty
+                        Jadwal Kosong
+                    @endforelse
 
                 </tbody>
               </table>

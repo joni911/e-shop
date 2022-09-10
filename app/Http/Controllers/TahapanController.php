@@ -7,6 +7,7 @@ use App\Http\Requests\tahapanRequestupdate;
 use App\Http\Requests\tenderRequest;
 use App\Models\perubahan;
 use App\Models\tahapan;
+use App\Models\tender;
 use Illuminate\Http\Request;
 
 class TahapanController extends Controller
@@ -65,7 +66,8 @@ class TahapanController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = tahapan::where('tender_id',$id)->get();
+        return view('tender_admin.tahapan.tahapan',['data'=>$data]);
     }
     /**
      * Show the form for editing the specified resource.

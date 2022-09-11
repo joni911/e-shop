@@ -129,7 +129,9 @@ class PesertaController extends Controller
                 $tfs->save();
             }
         }
-        return redirect()->route('tender_home.index');
+        // return redirect()->route('tender_home.index');
+        return redirect()->route('pengalaman.show',$data->id);
+
 
     }
 

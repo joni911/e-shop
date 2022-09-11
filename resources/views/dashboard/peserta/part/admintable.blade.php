@@ -26,13 +26,14 @@
                     {{-- <td>{{$b}}</td> --}}
                     <td scope="row">{{$no++}}</td>
 
-                    <td>{{$b->nama_perusahaan}} Menawarkan @currency($b->penawaran)</td>
+                    <td>{{$b->nama_pt}} Menawarkan @currency($b->penawaran_peserta ?? 1)</td>
                     <td>
-                        Nama : {{$b->email}} <br>
+                        Email Perusahaan : {{$b->email}} <br>
                         NPWP : {{$b->NPWP}} <br>
                         Alamat : {{$b->alamat}} <br>
                         No HP : {{$b->no_hp}}
                         {{-- Nilai : {{$b->nilai}} --}}
+                        <p>{{$b->managemen}}</p>
                     </td>
                     {{-- <td>
                         @foreach ($b->tender_file_detail as $tfd)

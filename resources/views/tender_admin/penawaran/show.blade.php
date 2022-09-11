@@ -32,15 +32,15 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                    <label for="">Penawaran</label>
+                    <label for="">Penawaran *</label>
                     <input type="number"
-                        class="form-control" name="penawaran" id="" aria-describedby="helpId" placeholder="">
-                    <small id="helpId" class="form-text text-muted">Masukkan Penawaran Anda Di berupa Angka</small>
+                        class="form-control" required name="penawaran" id="" aria-describedby="helpId" placeholder="">
+                    <small id="helpId" class="form-text text-muted">Masukkan nominal penawaran anda disini!</small>
                     </div>
                     @forelse ($data->penawaran_file as $no => $pf)
                     <div class="form-group">
-                        <label for="">{{$pf->nama}}</label>
-                        <input type="file" class="form-control-file" name="{{$pf->id}}" id="" placeholder="" aria-describedby="fileHelpId">
+                        <label for="">{{$pf->nama}} *</label>
+                        <input required type="file" class="form-control-file" name="{{$pf->id}}" id="" placeholder="" aria-describedby="fileHelpId">
                         <small id="fileHelpId" class="form-text text-muted">{{$pf->keterangan}}</small>
                     </div>
 

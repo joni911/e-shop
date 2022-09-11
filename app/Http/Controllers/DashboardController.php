@@ -54,8 +54,10 @@ class DashboardController extends Controller
         $data = tender::findorfail($id);
         $daftar = daftar_peserta::where('daftar_pesertas.tender_id',$id)
         ->join('pesertas','pesertas.id','daftar_pesertas.peserta_id')
+        ->join('penawaran_pesertas','penawaran_pesertas.peserta_id','pesertas.id')
         ->join('tenders','tenders.id','pesertas.tender_id')
-        ->select('pesertas.*')
+
+        ->select('pesertas.*','penawaran_pesertas.penawaran as penawaran_peserta')
         ->paginate(10);
 
         $peserta = peserta::join('tenders','tenders.id','pesertas.tender_id')

@@ -16,6 +16,7 @@
       <h3 class="card-title-center">Daftar Peserta Tender {{$data->nama}}</h3>
     </div>
     {{-- <p>{{auth()->user()->hak_akses}}</p> --}}
+
     @if (auth()->user()->hak_akses == 'admin')
         @include('dashboard.peserta.part.admintable')
     @else

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\daftar_peserta;
 use App\Http\Requests\Storedaftar_pesertaRequest;
 use App\Http\Requests\Updatedaftar_pesertaRequest;
+use App\Notifications\NotifikasiDaftarTender;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class DaftarPesertaController extends Controller
 {
@@ -44,8 +46,23 @@ class DaftarPesertaController extends Controller
         $data->tender_id = $request->tender_id;
         $data->user_id = $user->id;
         $data->save();
-
+        $this->send($user,$data);
         return redirect()->back();
+    }
+
+    public function send($user,$data)
+    {
+        # code...
+
+
+        $project = [
+            'greeting' => 'Hi '.$user->name.',',
+            'body' => 'Terimakasih Telah Mendaftar Di tender ini',
+            'thanks' => 'Thank you this is from codeanddeploy.com',
+            'id' => $data->id
+        ];
+
+        Notification::send($user, new NotifikasiDaftarTender($project));
     }
 
     /**

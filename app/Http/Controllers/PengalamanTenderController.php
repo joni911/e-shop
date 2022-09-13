@@ -69,9 +69,10 @@ class PengalamanTenderController extends Controller
      */
     public function show($id)
     {
+        $status = 'show';
         $p = peserta::findorfail($id);
         $list = pengalaman_tender::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.pengalaman.create',['peserta'=>$p,'list'=>$list]);
+        return view('tender_user.peserta.pengalaman.create',['peserta'=>$p,'list'=>$list,'status'=>$status]);
     }
 
     /**
@@ -80,9 +81,13 @@ class PengalamanTenderController extends Controller
      * @param  \App\Models\pengalaman_tender  $pengalaman_tender
      * @return \Illuminate\Http\Response
      */
-    public function edit(pengalaman_tender $pengalaman_tender)
+    public function edit($id)
     {
-        //
+        $status = 'edit';
+        $data = pengalaman_tender::findorfail($id);
+        $p = peserta::findorfail($data->peserta_id);
+        $list = pengalaman_tender::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
+        return view('tender_user.peserta.pengalaman.create',['peserta'=>$p,'list'=>$list,'data'=>$data,'status'=>$status]);
     }
 
     /**
@@ -92,9 +97,31 @@ class PengalamanTenderController extends Controller
      * @param  \App\Models\pengalaman_tender  $pengalaman_tender
      * @return \Illuminate\Http\Response
      */
-    public function update(Updatepengalaman_tenderRequest $request, pengalaman_tender $pengalaman_tender)
+    public function update(Updatepengalaman_tenderRequest $request, $id)
     {
         //
+        // $user = Auth::user();
+        // $data = new pengalaman_tender();
+        $data = pengalaman_tender::findorfail($id);
+        // $data->peserta_id = $request->id;
+        // $data->tender_id = $request->tender_id;
+        // $data->user_id = $user->id;
+
+        $data->lokasi = $request->lokasi;
+        $data->instansi = $request->instansi;
+        $data->alamat = $request->alamat;
+        $data->no_hp = $request->no_hp;
+        $data->no_kontrak = $request->no_kontrak;
+        $data->tgl_kontrak = $request->tgl_kontrak;
+        $data->presentasi = $request->presentasi;
+        $data->tgl_selesai_kontrak = $request->tgl_selesai_kontrak;
+        $data->tgl_serah_terima = $request->tgl_serah_terima;
+        $data->keterangan = $request->keterangan;
+        $data->pekerjaan = $request->pekerjaan;
+        $data->nilai_kontrak = $request->nilai_kontrak;
+        $data->save();
+
+        return redirect()->route('pengalaman.show',$data->peserta_id)->with('success','Data '.$data->pekerjaan.' telah dirubah');
     }
 
     /**
@@ -103,7 +130,7 @@ class PengalamanTenderController extends Controller
      * @param  \App\Models\pengalaman_tender  $pengalaman_tender
      * @return \Illuminate\Http\Response
      */
-    public function destroy(pengalaman_tender $pengalaman_tender)
+    public function destroy($id)
     {
         //
     }

@@ -13,7 +13,7 @@ class Updatepengalaman_tenderRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**

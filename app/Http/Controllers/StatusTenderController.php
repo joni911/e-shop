@@ -134,4 +134,10 @@ class StatusTenderController extends Controller
 
         return redirect()->back();
     }
+
+    public function test()
+    {
+        # code...
+        return view('email.emali');
+    }
 }

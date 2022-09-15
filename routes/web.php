@@ -37,6 +37,7 @@ use App\Http\Controllers\UserBarangController;
 use App\Http\Controllers\ValidasiFileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,7 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
     Route::resource('metode_pengadaan',MetodePengadaanController::class);
     Route::resource('status_tender',StatusTenderController::class);
     Route::get('send',[StatusTenderController::class,'send'])->name('send');
+    route::get('test',[StatusTenderController::class,'test']);
     Route::resource('tahapan',TahapanController::class);
 
     //Resource Tender
@@ -115,5 +117,20 @@ Route::middleware(['middleware' => 'auth' ])->group(function () {
 
     //dashboard
     Route::resource('dashboard', DashboardController::class);
+
+    Route::get('testmail', function () {
+        $user = Auth::user();
+        $pt = $user->peserta->nama_pt;
+        $details = [
+            'PT' => $pt,
+            'title' => 'Mail from Online Web Tutor',
+            'body' => 'Test mail sent by Laravel 8 using SMTP.'
+        ];
+
+        Mail::to('artha699@gmail.com')->send(new \App\Mail\VMail($details));
+
+        dd("Email is Sent, please check your inbox.");
+    });
+
 });
 

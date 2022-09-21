@@ -66,9 +66,10 @@ class TenagaAhliController extends Controller
      */
     public function show($id)
     {
+        $status = 'show';
         $p = peserta::findorfail($id);
         $list = tenaga_ahli::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.tenaga_ahli.create',['peserta'=>$p,'list'=>$list]);
+        return view('tender_user.peserta.tenaga_ahli.create',['peserta'=>$p,'list'=>$list,'status'=>$status]);
     }
 
     /**
@@ -77,9 +78,13 @@ class TenagaAhliController extends Controller
      * @param  \App\Models\tenaga_ahli  $tenaga_ahli
      * @return \Illuminate\Http\Response
      */
-    public function edit(tenaga_ahli $tenaga_ahli)
+    public function edit($id)
     {
-        //
+        $status = 'edit';
+        $data  = tenaga_ahli::findorfail($id);
+        $p = peserta::findorfail($data->peserta_id);
+        $list = tenaga_ahli::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
+        return view('tender_user.peserta.tenaga_ahli.create',['peserta'=>$p,'list'=>$list,'data'=>$data,'status'=>$status]);
     }
 
     /**
@@ -89,9 +94,22 @@ class TenagaAhliController extends Controller
      * @param  \App\Models\tenaga_ahli  $tenaga_ahli
      * @return \Illuminate\Http\Response
      */
-    public function update(Updatetenaga_ahliRequest $request, tenaga_ahli $tenaga_ahli)
+    public function update(Updatetenaga_ahliRequest $request, $id)
     {
-        //
+        $data = tenaga_ahli::findorfail($id);
+        // $data = new tenaga_ahli();
+        $data->nama = $request->nama;
+        $data->tgl_lahir = $request->tgl_lahir;
+        $data->jk = $request->jk;
+        $data->alamat = $request->alamat;
+        $data->negara = $request->negara;
+        $data->jabatan = $request->jabatan;
+        $data->pengalaman = $request->pengalaman;
+        $data->email = $request->email;
+        $data->keterangan = $request->keterangan;
+        $data->save();
+        return redirect()->route('tenagaahli.show',[$data->peserta_id])->with('success','Data '.$data->nama.' telah disimpan');
+
     }
 
     /**

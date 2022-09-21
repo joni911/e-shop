@@ -65,9 +65,10 @@ class PeralatanController extends Controller
      */
     public function show($id)
     {
+        $status = 'show';
         $p = peserta::findorfail($id);
         $list = peralatan::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.peralatan.create',['peralatan'=>$p,'list'=>$list]);
+        return view('tender_user.peserta.peralatan.create',['peralatan'=>$p,'list'=>$list,'status'=>$status]);
     }
 
     /**
@@ -76,9 +77,13 @@ class PeralatanController extends Controller
      * @param  \App\Models\peralatan  $peralatan
      * @return \Illuminate\Http\Response
      */
-    public function edit(peralatan $peralatan)
+    public function edit($id)
     {
-        //
+        $status = 'edit';
+        $data = peralatan::findorfail($id);
+        $p = peserta::findorfail($data->peserta_id);
+        $list = peralatan::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
+        return view('tender_user.peserta.peralatan.create',['peralatan'=>$p,'list'=>$list,'status'=>$status,'data'=>$data]);
     }
 
     /**
@@ -88,9 +93,20 @@ class PeralatanController extends Controller
      * @param  \App\Models\peralatan  $peralatan
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateperalatanRequest $request, peralatan $peralatan)
+    public function update(UpdateperalatanRequest $request, $id)
     {
-        //
+        $data = peralatan::findorfail($id);
+        $data->nama = $request->nama;
+        $data->jumlah = $request->jumlah;
+        $data->kapasitas = $request->kapasitas;
+        $data->merk = $request->merk;
+        $data->tahun = $request->tahun;
+        $data->kondisi = $request->kondisi;
+        $data->lokasi = $request->lokasi;
+        $data->kepemilikan = $request->kepemilikan;
+        $data->bukti = $request->bukti;
+        $data->save();
+        return redirect()->route('peralatan.show',$data->peserta_id)->with('success','Data '.$data->nama.' telah disimpan');
     }
 
     /**

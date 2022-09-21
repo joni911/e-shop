@@ -18,8 +18,14 @@
         <!-- /.card-header -->
         <!-- form start -->
 
+        @if ($status == 'show')
         <form action="{{ route('peralatan.store') }}" enctype="multipart/form-data" method="post">
             @csrf
+        @else
+        <form action="{{ route('peralatan.update',$data) }}" enctype="multipart/form-data" method="post">
+            @method('PUT')
+            @csrf
+        @endif
             @include('tender_user.peserta.peralatan.form')
           <!-- /.card-body -->
 

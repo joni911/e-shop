@@ -33,7 +33,11 @@
                     <td>{{$l->lokasi}}</td>
                     <td>{{$l->kepemilikan}}</td>
                     <td>{{$l->bukti}}</td>
-                    <td></td>
+                    <td>
+                        <a name="" id="" class="btn btn-primary" href="{{ route('peralatan.edit', $l) }}" role="button">
+                            <i class="fas fa-edit    "></i>
+                        </a>
+                    </td>
                   </tr>
             @empty
                 <tr>

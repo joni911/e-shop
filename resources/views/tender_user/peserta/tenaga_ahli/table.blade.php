@@ -26,7 +26,7 @@
                     <td>{{$l->alamat}}</td>
                     <td>{{$l->jabatan}}</td>
                     <td>{{$l->pengalaman}}</td>
-                    <td></td>
+                    <td><a name="" id="" class="btn btn-primary" href="{{ route('tenagaahli.edit', $l) }}" role="button"><i class="fas fa-edit    "></i></a></td>
                   </tr>
             @empty
                 <tr>

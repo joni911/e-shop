@@ -18,7 +18,7 @@
         <div class="form-group">
             <label for="">Kapasitas *</label>
             <input type="text"
-              class="form-control" required name="kapasitas" id="" aria-describedby="helpId" placeholder="" value="{{$data->kamapsitas ?? ""}}">
+              class="form-control" required name="kapasitas" id="" aria-describedby="helpId" placeholder="" value="{{$data->kapasitas ?? ""}}">
         </div>
         <div class="form-group">
             <label for="">Merk *</label>
@@ -33,7 +33,7 @@
         <div class="form-group">
             <label for="">Kepemilikan *</label>
               <select class="form-control" required name="kepemilikan" id="">
-                <option value="">Pilih Kepemilikan Barang</option>
+                <option value="{{$data->kepemilikan ?? ""}}">{{$data->kepemilikan ?? "Pilih Kepemilikan Barang"}}</option>
                 <option value="Sewa">Sewa</option>
                 <option value="Miliki Sendiri">Milik Sendiri</option>
               </select>
@@ -41,19 +41,19 @@
           <div class="form-group">
             <label for="">Kondisi *</label>
               <select class="form-control" required name="kondisi" id="">
-                <option value="">Pilih Jenis Klamin</option>
+                <option value="{{$data->kondisi ?? ""}}">{{$data->kondisi ?? "Pilih Jenis Kondisi"}}</option>
                 <option value="Baik">Baik</option>
                 <option value="Rusak">Rusak</option>
               </select>
           </div>
           <div class="form-group">
             <label for="">Lokasi Alat *</label>
-            <textarea class="form-control" required name="lokasi" id="" rows="3">{{$data->alamat ?? ""}}</textarea>
+            <textarea class="form-control" required name="lokasi" id="" rows="3">{{$data->lokasi ?? ""}}</textarea>
           </div>
             <div class="form-group">
                 <label for="">Bukti Kepemilikan *</label>
                 <input type="text"
-                class="form-control" required name="bukti" id="" aria-describedby="helpId" placeholder="" value="{{$data->merk ?? ""}}">
+                class="form-control" required name="bukti" id="" aria-describedby="helpId" placeholder="" value="{{$data->bukti ?? ""}}">
             </div>
 
 

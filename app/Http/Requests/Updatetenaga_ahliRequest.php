@@ -13,7 +13,7 @@ class Updatetenaga_ahliRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**

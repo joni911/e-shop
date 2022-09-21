@@ -13,7 +13,7 @@
         <div class="form-group">
             <label for="">Nilai Kontrak *</label>
             <input type="number"
-              class="form-control" required name="nilai_kontrak" id="" aria-describedby="helpId" placeholder="" value="{{$data->lokasi ?? ""}}">
+              class="form-control" required name="nilai_kontrak" id="" aria-describedby="helpId" placeholder="" value="{{$data->nilai_kontrak ?? ""}}">
           </div>
         <div class="form-group">
             <label for="">Lokasi *</label>

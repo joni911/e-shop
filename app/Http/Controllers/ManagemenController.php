@@ -178,9 +178,11 @@ class ManagemenController extends Controller
      */
     public function show($id)
     {
+        $status = 'show';
+        $data = '';
         $p = peserta::findorfail($id);
         $list = managemen::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.managemen.create',['managemen'=>$p,'list'=>$list]);
+        return view('tender_user.peserta.managemen.create',['managemen'=>$p,'list'=>$list,'status'=>$status]);
     }
 
     /**
@@ -189,9 +191,13 @@ class ManagemenController extends Controller
      * @param  \App\Models\managemen  $managemen
      * @return \Illuminate\Http\Response
      */
-    public function edit(managemen $managemen)
+    public function edit($id)
     {
-        //
+        $status = 'edit';
+        $data = managemen::findorfail($id);
+        $p = peserta::findorfail($data->peserta_id);
+        $list = managemen::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
+        return view('tender_user.peserta.managemen.create',['managemen'=>$p,'list'=>$list,'status'=>$status,'data'=>$data]);
     }
 
     /**

@@ -15,6 +15,7 @@
             <th>Tanggal Selesai Kontrak</th>
             <th>Nilai Kontrak</th>
             <th>Nomor Kontrak</th>
+            <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
@@ -37,7 +38,11 @@
                     <td>{{$l->tgl_selesai_kontrak}}</td>
                     <td>{{$l->tgl_serah_terima}}</td>
                     <td>{{$l->nilai_kontrak}}</td>
-
+                    <td>
+                        <a name="" id="" class="btn btn-primary" href="{{ route('pekerjaan_berjalan.edit', $l) }}" role="button">
+                            <i class="fas fa-edit    "></i>
+                        </a>
+                    </td>
                   </tr>
             @empty
                 <tr>

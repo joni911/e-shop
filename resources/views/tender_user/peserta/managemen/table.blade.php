@@ -36,7 +36,11 @@
                         <a href="{{$l->file4 ?? "#"}}">{{$l->ket4 ?? "Kosong" }}</a> <br>
                         <a href="{{$l->file5 ?? "#"}}">{{$l->ket5 ?? "Kosong" }}</a> <br>
                     </td>
-                    <td></td>
+                    <td>
+                        <a name="" id="" class="btn btn-primary" href="{{ route('managemen.edit', $l) }}" role="button">
+                            <i class="fas fa-edit    "></i>
+                        </a>
+                    </td>
                   </tr>
             @empty
                 <tr>

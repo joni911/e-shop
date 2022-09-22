@@ -68,9 +68,10 @@ class PekerjaanBerjalanController extends Controller
      */
     public function show($id)
     {
+        $status = 'show';
         $p = peserta::findorfail($id);
         $list = pekerjaan_berjalan::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.pekerjaan_berjalan.create',['peserta'=>$p,'list'=>$list]);
+        return view('tender_user.peserta.pekerjaan_berjalan.create',['peserta'=>$p,'list'=>$list,'status'=>$status]);
     }
 
     /**
@@ -79,9 +80,13 @@ class PekerjaanBerjalanController extends Controller
      * @param  \App\Models\pekerjaan_berjalan  $pekerjaan_berjalan
      * @return \Illuminate\Http\Response
      */
-    public function edit(pekerjaan_berjalan $pekerjaan_berjalan)
+    public function edit($id)
     {
-        //
+        $status = 'edit';
+        $data = pekerjaan_berjalan::findorfail($id);
+        $p = peserta::findorfail($data->peserta_id);
+        $list = pekerjaan_berjalan::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
+        return view('tender_user.peserta.pekerjaan_berjalan.create',['peserta'=>$p,'list'=>$list,'status'=>$status,'data'=>$data]);
     }
 
     /**
@@ -91,9 +96,24 @@ class PekerjaanBerjalanController extends Controller
      * @param  \App\Models\pekerjaan_berjalan  $pekerjaan_berjalan
      * @return \Illuminate\Http\Response
      */
-    public function update(Updatepekerjaan_berjalanRequest $request, pekerjaan_berjalan $pekerjaan_berjalan)
+    public function update(Updatepekerjaan_berjalanRequest $request, $id)
     {
-        //
+        $data = pekerjaan_berjalan::findorfail($id);
+        $data->lokasi = $request->lokasi;
+        $data->instansi = $request->instansi;
+        $data->alamat = $request->alamat;
+        $data->no_hp = $request->no_hp;
+        $data->no_kontrak = $request->no_kontrak;
+        $data->tgl_kontrak = $request->tgl_kontrak;
+        $data->presentasi = $request->presentasi;
+        $data->tgl_selesai_kontrak = $request->tgl_selesai_kontrak;
+        $data->tgl_serah_terima = $request->tgl_serah_terima;
+        $data->keterangan = $request->keterangan;
+        $data->pekerjaan = $request->pekerjaan;
+        $data->nilai_kontrak = $request->nilai_kontrak;
+        $data->save();
+
+        return redirect()->route('pekerjaan_berjalan.show',$data->peserta_id)->with('success','Data '.$data->pekerjaan.' telah disimpan');
     }
 
     /**

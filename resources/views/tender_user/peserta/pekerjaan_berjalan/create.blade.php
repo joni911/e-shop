@@ -18,8 +18,15 @@
         <!-- /.card-header -->
         <!-- form start -->
 
+        @if ($status == 'show')
+        {{-- <p>Show</p>     --}}
         <form action="{{ route('pekerjaan_berjalan.store') }}" enctype="multipart/form-data" method="post">
             @csrf
+        @else
+        <form action="{{ route('pekerjaan_berjalan.update',$data) }}" enctype="multipart/form-data" method="post">
+            @method('PUT')
+            @csrf
+        @endif
             @include('tender_user.peserta.pekerjaan_berjalan.form')
           <!-- /.card-body -->
 

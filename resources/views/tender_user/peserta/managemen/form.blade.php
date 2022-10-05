@@ -37,7 +37,7 @@
     <div class="form-group">
         <label for="">Status Dalam Manajemen *</label>
         <select class="form-control" required name="status" id="">
-            <option value="{{$data->status}}">{{$data->status ?? "Pilih Data"}}</option>
+            <option value="{{$data->status ?? ""}}">{{$data->status ?? "Pilih Data"}}</option>
             <option value="Pemilik">Pemilik</option>
             <option value="Pengurus">Pengurus</option>
             <option value="Direktur">Direktur</option>

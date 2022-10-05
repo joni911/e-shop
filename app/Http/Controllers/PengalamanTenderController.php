@@ -39,6 +39,8 @@ class PengalamanTenderController extends Controller
      */
     public function store(Storepengalaman_tenderRequest $request)
     {
+
+        $file = $this->pengalaman_file($request);
         $user = Auth::user();
         $data = new pengalaman_tender();
         $data->peserta_id = $request->id;
@@ -56,11 +58,31 @@ class PengalamanTenderController extends Controller
         $data->keterangan = $request->keterangan;
         $data->pekerjaan = $request->pekerjaan;
         $data->nilai_kontrak = $request->nilai_kontrak;
+        $data->file = $file;
+        $data->nama_file = $request->nama_file;
         $data->save();
 
         return redirect()->back()->with('success','Data '.$data->pekerjaan.' telah disimpan');
     }
 
+    public function pengalaman_file($request)
+    {
+        # code...
+        $nama_file ="";
+        if ($request->file()) {
+            # code...
+             $tmp_file = $request->file('file1');
+            $file = time()."_".$tmp_file->getClientOriginalExtension();
+
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/pengalaman/'.$request->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+        }
+
+        return $nama_file;
+    }
     /**
      * Display the specified resource.
      *

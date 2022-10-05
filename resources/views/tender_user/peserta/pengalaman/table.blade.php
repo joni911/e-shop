@@ -15,6 +15,7 @@
             <th>Tanggal Selesai Kontrak</th>
             <th>Nilai Kontrak</th>
             <th>Nomor Kontrak</th>
+            <th>File</th>
             <th>Aksi</th>
           </tr>
         </thead>
@@ -38,6 +39,7 @@
                     <td>{{$l->tgl_selesai_kontrak}}</td>
                     <td>{{$l->tgl_serah_terima}}</td>
                     <td>{{$l->nilai_kontrak}}</td>
+                    <td><a href="/{{$l->file ?? '#'}}">{{$l->nama_file ?? "Kosong"}}</a></td>
                     <td>
                         <a name="" id="" class="btn btn-primary" href="{{ route('pengalaman.edit', $l->id) }}" role="button">
                             <i class="fas fa-pencil-alt    "></i>

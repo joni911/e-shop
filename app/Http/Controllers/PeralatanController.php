@@ -38,6 +38,7 @@ class PeralatanController extends Controller
      */
     public function store(StoreperalatanRequest $request)
     {
+        $file = $this->peralatan_file($request);
         $user = Auth::user();
         $data = new peralatan();
         $data->nama = $request->nama;
@@ -52,11 +53,29 @@ class PeralatanController extends Controller
         $data->lokasi = $request->lokasi;
         $data->kepemilikan = $request->kepemilikan;
         $data->bukti = $request->bukti;
+        $data->file = $file;
         $data->save();
         return redirect()->back()->with('success','Data '.$data->nama.' telah disimpan');
 
     }
+    public function peralatan_file($request)
+    {
+        # code...
+        $nama_file ="";
+        if ($request->file()) {
+            # code...
+             $tmp_file = $request->file('file');
+            $file = time()."_".$tmp_file->getClientOriginalExtension();
 
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/peralatan/'.$request->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+        }
+
+        return $nama_file;
+    }
     /**
      * Display the specified resource.
      *

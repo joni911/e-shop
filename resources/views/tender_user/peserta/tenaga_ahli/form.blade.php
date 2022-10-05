@@ -55,5 +55,14 @@
             <small id="helpId" class="form-text text-muted">Deskripsikan Pengalaman Kerja Petugas Disini</small>
           </div>
 
-
+          <div class="form-group">
+            <label for="">Sertifikat Pendukung *</label>
+            <input type="file" class="form-control-file" required name="file" id="" placeholder="" aria-describedby="fileHelpId">
+            <small id="fileHelpId" class="form-text text-muted">Mohon Di isi dengan sertifikat yang dapat mendukung keahlian tenaga ahli</small>
+          </div>
+          <div class="form-group">
+            <label for="">Nama Sertifikat *</label>
+            <input type="text" class="form-control" required name="nama_file" id="" aria-describedby="helpId" placeholder="">
+            {{-- <small id="helpId" class="form-text text-muted">Help text</small> --}}
+          </div>
     </div>

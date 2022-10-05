@@ -32,7 +32,7 @@
                     <td>{{$l->kondisi}}</td>
                     <td>{{$l->lokasi}}</td>
                     <td>{{$l->kepemilikan}}</td>
-                    <td>{{$l->bukti}}</td>
+                    <td><a href="/{{$l->file}}" download="{{$l->bukti}}">{{$l->bukti}}</a></td>
                     <td>
                         <a name="" id="" class="btn btn-primary" href="{{ route('peralatan.edit', $l) }}" role="button">
                             <i class="fas fa-edit    "></i>

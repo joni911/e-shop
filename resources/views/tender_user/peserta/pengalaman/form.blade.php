@@ -66,6 +66,13 @@
             <label for="">Keterangan *</label>
             <textarea class="form-control" required name="keterangan" id="" rows="3">{{$data->keterangan ?? ""}}</textarea>
           </div>
-
-
+          <div class="form-group">
+            <label for="">File *</label>
+            <input type="file" class="form-control-file" required name="file1" id="" placeholder="" aria-describedby="fileHelpId">
+          </div>
+          <div class="form-group">
+            <label for="">Nama File *</label>
+            <input type="text"
+              class="form-control" required name="nama_file" id="" aria-describedby="helpId" placeholder="">
+          </div>
     </div>

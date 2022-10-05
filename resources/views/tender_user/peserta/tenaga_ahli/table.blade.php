@@ -9,6 +9,7 @@
             <th>Jenis Klamin</th>
             <th>Alamat</th>
             <th>Pengalaman</th>
+            <th>Sertifikat</th>
             <th>Aksi</th>
           </tr>
         </thead>
@@ -26,6 +27,7 @@
                     <td>{{$l->alamat}}</td>
                     <td>{{$l->jabatan}}</td>
                     <td>{{$l->pengalaman}}</td>
+                    <td><a href="/{{$l->file}}">{{$l->nama_file}}</a></td>
                     <td><a name="" id="" class="btn btn-primary" href="{{ route('tenagaahli.edit', $l) }}" role="button"><i class="fas fa-edit    "></i></a></td>
                   </tr>
             @empty

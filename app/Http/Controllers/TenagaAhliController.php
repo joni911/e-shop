@@ -39,6 +39,7 @@ class TenagaAhliController extends Controller
      */
     public function store(Storetenaga_ahliRequest $request)
     {
+        $fiile = $this->tenaga_file($request);
         $user = Auth::user();
         $data = new tenaga_ahli();
         $data->user_id = $user->id;
@@ -53,9 +54,30 @@ class TenagaAhliController extends Controller
         $data->pengalaman = $request->pengalaman;
         $data->email = $request->email;
         $data->keterangan = $request->keterangan;
+        $data->file = $fiile;
+        $data->nama_file = $request->nama_file;
         $data->save();
         return redirect()->back()->with('success','Data '.$data->nama.' telah disimpan');
 
+    }
+
+    public function tenaga_file($request)
+    {
+        # code...
+        $nama_file ="";
+        if ($request->file()) {
+            # code...
+             $tmp_file = $request->file('file');
+            $file = time()."_".$tmp_file->getClientOriginalExtension();
+
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/tenaga_ahli/'.$request->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+        }
+
+        return $nama_file;
     }
 
     /**

@@ -139,7 +139,7 @@ class PengalamanTenderController extends Controller
         $data->tgl_selesai_kontrak = $request->tgl_selesai_kontrak;
         $data->tgl_serah_terima = $request->tgl_serah_terima;
         $data->keterangan = $request->keterangan;
-        $data->pekerjaan = $request->pekerjaan;
+        $data->pekerjaan = $request->pekerjaan; 
         $data->nilai_kontrak = $request->nilai_kontrak;
         $data->save();
 

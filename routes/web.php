@@ -55,8 +55,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::middleware(['middleware' => 'auth' ])->group(function () {
+Auth::routes(['verify' => true]);
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     Route::get('/home', [TenderHomeController::class, 'index'])->name('home');
     Route::resource('/barang',barangController::class);
     //barang admin

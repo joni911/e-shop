@@ -19,6 +19,10 @@ class TenderHomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function __construct()
+    // {
+    //     $this->middleware(['auth','verified']);
+    // }
     public function index()
     {
         // $data = tender::where('default','!=','1')->paginate(10);

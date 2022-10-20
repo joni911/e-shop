@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Pendaftaran Peserta Tender')
+@section('title', 'Pendaftaran Pengalaman Tender')
 
 @section('content_header')
 
@@ -13,13 +13,16 @@
 <body>
     <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Pendaftaran Tender {{$data->tender->nama ?? $peserta->tender->nama}}</h3>
+          <h3 class="card-title">Pendaftaran Penglaman Tender</h3>
         </div>
+        <p class="form-text">
+            Masukkanlah Pengalaman Pengalaman dalam pengadaan barang jasa ataupun pembangunan yang telah dilakukan perusahaan anda
+        </p>
         <!-- /.card-header -->
         <!-- form start -->
 
         {{-- @if ($status == 'show') --}}
-        <p>SHOW</p>
+
         <form action="{{ route('pengalaman.store') }}" enctype="multipart/form-data" method="post">
             @csrf
         {{-- @else

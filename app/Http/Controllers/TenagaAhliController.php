@@ -67,7 +67,7 @@ class TenagaAhliController extends Controller
         $nama_file ="";
         if ($request->file()) {
             # code...
-             $tmp_file = $request->file('file');
+            $tmp_file = $request->file('file');
             $file = time()."_".$tmp_file->getClientOriginalExtension();
 
       	        // isi dengan nama folder tempat kemana file diupload

@@ -15,6 +15,9 @@
         <div class="card-header">
           <h3 class="card-title">Pendaftaran Tenaga Ahli Tender {{$data->tender->nama ?? $peserta->tender->nama}}</h3>
         </div>
+        <p class="form-text">
+            Masukkanlah tim ahli di perusahaan anda disini!
+        </p>
         <!-- /.card-header -->
         <!-- form start -->
 

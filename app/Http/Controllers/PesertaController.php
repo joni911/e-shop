@@ -108,7 +108,7 @@ class PesertaController extends Controller
             # code...
             $x = $ts->id;
             $tmp_file = $request->file($x);
-            $file = time()."_".$tmp_file->getClientOriginalName();
+            $file = time()."_".$tmp_file->getClientOriginalExtension();
 
       	        // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/FILE/'.$request->id.'/'.$ts->id;
@@ -241,7 +241,7 @@ class PesertaController extends Controller
         ->select('pesertas.*','tenders.nama as nama_tender')
         ->findorfail($id);
 
-        $file = tender_file_detail::join('pesertas','pesertas.id','tender_file_details.peserta_id')
+         $file = tender_file_detail::join('pesertas','pesertas.id','tender_file_details.peserta_id')
         ->join('tender_files','tender_files.id','tender_file_details.tender_file_id')
         ->join('tenders','tenders.id','tender_files.tender_id')
         ->where('pesertas.id',$id)
@@ -263,12 +263,21 @@ class PesertaController extends Controller
     public function update(pesertaRequest $request, $id)
     {
         // return $request;
-         $data =  peserta::findorfail($id);
+        $data =  peserta::findorfail($id);
 
-         $file = tender_file_detail::join('tender_files','tender_files.id','tender_file_details.tender_file_id')
-        ->where('tender_file_details.tender_id',$data->tender_id)
-        ->where('tender_file_details.peserta_id',$data->id)
-        ->select('tender_file_details.*','tender_files.nama as nama')
+        // return  $file = tender_file_detail::join('tender_files','tender_files.id','tender_file_details.tender_file_id')
+        // ->where('tender_file_details.tender_id',$data->tender_id)
+        // ->where('tender_file_details.peserta_id',$data->id)
+        // ->select('tender_file_details.*','tender_files.nama as nama')
+        // ->get();
+
+        $file = tender_file_detail::join('pesertas','pesertas.id','tender_file_details.peserta_id')
+        ->join('tender_files','tender_files.id','tender_file_details.tender_file_id')
+        ->join('tenders','tenders.id','tender_files.tender_id')
+        ->where('pesertas.id',$data->id)
+        ->where('tenders.id',$data->tender_id)
+        ->select('tender_file_details.id as id','tender_files.nama as nama_file'
+        ,'tender_file_details.files as file')
         ->get();
         //validasi file yang di upload
         // foreach ($file as $key => $tc) {
@@ -307,24 +316,31 @@ class PesertaController extends Controller
         //upload file setelah falidasi
         foreach ($file as $key => $ts) {
             # code...
-            $x = $ts->tender_file_id;
+            // return $ts;
+            $x = $ts->id;
+            // echo $ts->id.". ".$ts."<br>";
+            // echo $x.'<br>';
             if ($request->$x) {
 
             $tmp_file = $request->file($x);
-            $file = time()."_".$tmp_file->getClientOriginalName();
+            $file = time().".".$tmp_file->getClientOriginalExtension();
 
             // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$request->id.'/'.$ts->tender_file_id;
+            $tujuan_upload = 'Tender/FILE/'.$request->id.'/'.$ts->id;
             $tmp_file->move($tujuan_upload,$file);
             //nama file dan tujuan di jadikan satu agar mudah di buat link
             $nama_file=$tujuan_upload.'/'.$file;
+
                 # code...
                 //id 	tender_file_id 	user_id 	files 	keterangan 	created_at 	updated_at 	deleted_at
-                $tfs = tender_file_detail::findorfail($ts->id);
+                $tfs = tender_file_detail::findorfail($x);
+                echo $tfs;
                 $tfs->files = $nama_file;
                 $tfs->save();
+                // return $tfs;
             }
         }
+        // return 0;
         // return redirect()->route('tender_home.show',$data->tender_id);
         return redirect()->back();
 

@@ -68,11 +68,13 @@
           </div>
           <div class="form-group">
             <label for="">File *</label>
-            <input type="file" class="form-control-file" required name="file1" id="" placeholder="" aria-describedby="fileHelpId">
+            <input type="file"
+            accept=".jpg, .jpeg, .png, .xls, .xlsx, .pdf, .doc, .docx, .pdf, .zip, .rar, .7z"
+            class="form-control-file" required name="file1" id="" placeholder="" aria-describedby="fileHelpId">
           </div>
           <div class="form-group">
             <label for="">Nama File *</label>
             <input type="text"
-              class="form-control" required name="nama_file" id="" aria-describedby="helpId" placeholder="">
+              class="form-control" required value="{{$data->nama_file ?? ""}}" name="nama_file" id="" aria-describedby="helpId" placeholder="">
           </div>
     </div>

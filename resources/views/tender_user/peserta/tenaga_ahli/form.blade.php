@@ -54,15 +54,32 @@
             <textarea class="form-control" required name="keterangan" id="" rows="3">{{$data->keterangan ?? ""}}</textarea>
             <small id="helpId" class="form-text text-muted">Deskripsikan Pengalaman Kerja Petugas Disini</small>
           </div>
+            @if ($status == 'show')
+                <div class="form-group">
+                    <label for="">Sertifikat Pendukung *</label>
+                    <input type="file"
+                    accept=".jpg, .jpeg, .png, .xls, .xlsx, .pdf, .doc, .docx, .pdf, .zip, .rar, .7z"
+                    class="form-control-file" required name="file" id="" placeholder="" aria-describedby="fileHelpId">
+                    <small id="fileHelpId" class="form-text text-muted">Mohon Di isi dengan sertifikat yang dapat mendukung keahlian tenaga ahli</small>
+                </div>
+                <div class="form-group">
+                    <label for="">Nama Sertifikat *</label>
+                    <input type="text" class="form-control" value="{{$data->nama_file ?? ""}}" required name="nama_file" id="" aria-describedby="helpId" placeholder="">
+                    {{-- <small id="helpId" class="form-text text-muted">Help text</small> --}}
+                </div>
+            @else
+                <div class="form-group">
+                    <label for="">Sertifikat Pendukung</label>
+                    <input type="file"
+                    accept=".jpg, .jpeg, .png, .xls, .xlsx, .pdf, .doc, .docx, .pdf, .zip, .rar, .7z"
+                    class="form-control-file" name="file" id="" placeholder="" aria-describedby="fileHelpId">
+                    <small id="fileHelpId" class="form-text text-muted">Mohon Di isi dengan sertifikat yang dapat mendukung keahlian tenaga ahli</small>
+                </div>
+                <div class="form-group">
+                    <label for="">Nama Sertifikat</label>
+                    <input type="text" class="form-control" value="{{$data->nama_file ?? ""}}" name="nama_file" id="" aria-describedby="helpId" placeholder="">
+                    {{-- <small id="helpId" class="form-text text-muted">Help text</small> --}}
+                </div>
+            @endif
 
-          <div class="form-group">
-            <label for="">Sertifikat Pendukung *</label>
-            <input type="file" class="form-control-file" required name="file" id="" placeholder="" aria-describedby="fileHelpId">
-            <small id="fileHelpId" class="form-text text-muted">Mohon Di isi dengan sertifikat yang dapat mendukung keahlian tenaga ahli</small>
-          </div>
-          <div class="form-group">
-            <label for="">Nama Sertifikat *</label>
-            <input type="text" class="form-control" required name="nama_file" id="" aria-describedby="helpId" placeholder="">
-            {{-- <small id="helpId" class="form-text text-muted">Help text</small> --}}
-          </div>
     </div>

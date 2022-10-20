@@ -65,7 +65,7 @@ class PeralatanController extends Controller
         if ($request->file()) {
             # code...
              $tmp_file = $request->file('file');
-            $file = time()."_".$tmp_file->getClientOriginalExtension();
+            $file = time().".".$tmp_file->getClientOriginalExtension();
 
       	        // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/peralatan/'.$request->id;
@@ -115,6 +115,8 @@ class PeralatanController extends Controller
     public function update(UpdateperalatanRequest $request, $id)
     {
         $data = peralatan::findorfail($id);
+        $file = $this->update_peralatan_file($request,$data);
+
         $data->nama = $request->nama;
         $data->jumlah = $request->jumlah;
         $data->kapasitas = $request->kapasitas;
@@ -123,9 +125,33 @@ class PeralatanController extends Controller
         $data->kondisi = $request->kondisi;
         $data->lokasi = $request->lokasi;
         $data->kepemilikan = $request->kepemilikan;
-        $data->bukti = $request->bukti;
+        if ($request->bukti) {
+            $data->bukti = $request->bukti;
+        }
+        if ($file) {
+            $data->file = $file;
+        }
         $data->save();
         return redirect()->route('peralatan.show',$data->peserta_id)->with('success','Data '.$data->nama.' telah disimpan');
+    }
+
+    public function update_peralatan_file($request,$data)
+    {
+        # code...
+        $nama_file ="";
+        if ($request->file()) {
+            # code...
+            $tmp_file = $request->file('file');
+            $file = time().".".$tmp_file->getClientOriginalExtension();
+
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/peralatan/'.$data->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+        }
+
+        return $nama_file;
     }
 
     /**

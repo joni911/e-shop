@@ -32,7 +32,7 @@
     </div>
     <div class="form-group">
         <label for="">Alamat *</label>
-        <textarea class="form-control" required name="alamat" id="" rows="3">{{$data ?? ""}}</textarea>
+        <textarea class="form-control" required name="alamat" id="" rows="3">{{$data->alamat ?? ""}}</textarea>
     </div>
     <div class="form-group">
         <label for="">Status Dalam Manajemen *</label>
@@ -62,7 +62,7 @@
       <div class="form-group">
         <label for="">Keterangan Sertifikat</label>
         <input type="text"
-          class="form-control"  name="ket1" id="" aria-describedby="helpId" placeholder="">
+          class="form-control" value="{{$data->ket1 ?? ""}}" name="ket1" id="" aria-describedby="helpId" placeholder="">
       </div>
     @endif
     <div class="form-group">
@@ -72,7 +72,7 @@
     <div class="form-group">
       <label for="">Keterangan Sertifikat Keahlian </label>
       <input type="text"
-        class="form-control"  name="ket2" id="" aria-describedby="helpId" placeholder="">
+        class="form-control" value="{{$data->ket2 ?? ""}}" name="ket2" id="" aria-describedby="helpId" placeholder="">
     </div><div class="form-group">
       <label for="">Sertifikat 3 </label>
       <input type="file" class="form-control-file"  name="file3" id="" placeholder="" aria-describedby="fileHelpId">
@@ -80,10 +80,10 @@
     <div class="form-group">
       <label for="">Keterangan Sertifikat </label>
       <input type="text"
-        class="form-control"  name="ket3" id="" aria-describedby="helpId" placeholder="">
+        class="form-control" value="{{$data->ket3 ?? ""}}"  name="ket3" id="" aria-describedby="helpId" placeholder="">
     </div><div class="form-group">
       <label for="">Sertifikat 4 </label>
-      <input type="file" class="form-control-file"  name="file4" id="" placeholder="" aria-describedby="fileHelpId">
+      <input type="file" class="form-control-file" value="{{$data->ket4 ?? ""}}" name="file4" id="" placeholder="" aria-describedby="fileHelpId">
     </div>
     <div class="form-group">
       <label for="">Keterangan Sertifikat </label>
@@ -96,6 +96,6 @@
     <div class="form-group">
       <label for="">Keterangan Sertifikat </label>
       <input type="text"
-        class="form-control"  name="ket5" id="" aria-describedby="helpId" placeholder="">
+        class="form-control" value="{{$data->ket5 ?? ""}}" name="ket5" id="" aria-describedby="helpId" placeholder="">
     </div>
 </div>

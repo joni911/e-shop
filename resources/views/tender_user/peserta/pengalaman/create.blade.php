@@ -21,15 +21,15 @@
         <!-- /.card-header -->
         <!-- form start -->
 
-        {{-- @if ($status == 'show') --}}
+        @if ($status == 'show')
 
         <form action="{{ route('pengalaman.store') }}" enctype="multipart/form-data" method="post">
             @csrf
-        {{-- @else
+        @else
         <form action="{{ route('pengalaman.update',$data->id) }}" enctype="multipart/form-data" method="post">
             @method('PUT')
             @csrf
-        @endif --}}
+        @endif
             @include('tender_user.peserta.pengalaman.form')
           <!-- /.card-body -->
 

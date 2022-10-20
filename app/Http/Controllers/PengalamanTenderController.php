@@ -72,7 +72,7 @@ class PengalamanTenderController extends Controller
         if ($request->file()) {
             # code...
              $tmp_file = $request->file('file1');
-            $file = time()."_".$tmp_file->getClientOriginalExtension();
+            $file = time().".".$tmp_file->getClientOriginalExtension();
 
       	        // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/pengalaman/'.$request->id;
@@ -125,9 +125,11 @@ class PengalamanTenderController extends Controller
         // $user = Auth::user();
         // $data = new pengalaman_tender();
         $data = pengalaman_tender::findorfail($id);
+        $file = $this->update_pengalaman_file($request,$data);
         // $data->peserta_id = $request->id;
         // $data->tender_id = $request->tender_id;
         // $data->user_id = $user->id;
+
 
         $data->lokasi = $request->lokasi;
         $data->instansi = $request->instansi;
@@ -141,9 +143,30 @@ class PengalamanTenderController extends Controller
         $data->keterangan = $request->keterangan;
         $data->pekerjaan = $request->pekerjaan;
         $data->nilai_kontrak = $request->nilai_kontrak;
+        $data->file = $file;
+        $data->nama_file = $request->nama_file;
         $data->save();
 
         return redirect()->route('pengalaman.show',$data->peserta_id)->with('success','Data '.$data->pekerjaan.' telah dirubah');
+    }
+
+    public function update_pengalaman_file($request,$data)
+    {
+        # code...
+        $nama_file ="";
+        if ($request->file()) {
+            # code...
+             $tmp_file = $request->file('file1');
+            $file = time().".".$tmp_file->getClientOriginalExtension();
+
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/pengalaman/'.$data->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+        }
+
+        return $nama_file;
     }
 
     /**

@@ -68,7 +68,7 @@ class TenagaAhliController extends Controller
         if ($request->file()) {
             # code...
             $tmp_file = $request->file('file');
-            $file = time()."_".$tmp_file->getClientOriginalExtension();
+            $file = time().".".$tmp_file->getClientOriginalExtension();
 
       	        // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/tenaga_ahli/'.$request->id;
@@ -119,6 +119,7 @@ class TenagaAhliController extends Controller
     public function update(Updatetenaga_ahliRequest $request, $id)
     {
         $data = tenaga_ahli::findorfail($id);
+        $fiile = $this->update_tenaga_file($request,$data);
         // $data = new tenaga_ahli();
         $data->nama = $request->nama;
         $data->tgl_lahir = $request->tgl_lahir;
@@ -129,9 +130,34 @@ class TenagaAhliController extends Controller
         $data->pengalaman = $request->pengalaman;
         $data->email = $request->email;
         $data->keterangan = $request->keterangan;
+        if ($fiile) {
+            $data->file = $fiile;
+        }
+        if ($request->nama_file) {
+            $data->nama_file =$request->nama_file;
+        }
         $data->save();
         return redirect()->route('tenagaahli.show',[$data->peserta_id])->with('success','Data '.$data->nama.' telah disimpan');
 
+    }
+
+    public function update_tenaga_file($request,$data)
+    {
+        # code...
+        $nama_file ="";
+        if ($request->file()) {
+            # code...
+            $tmp_file = $request->file('file');
+            $file = time().".".$tmp_file->getClientOriginalExtension();
+
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/tenaga_ahli/'.$data->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+        }
+
+        return $nama_file;
     }
 
     /**

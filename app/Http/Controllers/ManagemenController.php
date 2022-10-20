@@ -44,7 +44,7 @@ class ManagemenController extends Controller
         if ($request->file1) {
             # code...
             $tmp_file = $request->file('file1');
-            $file = time()."_".$tmp_file->getClientOriginalName();
+            $file = time().".".$tmp_file->getClientOriginalExtension();
 
       	        // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/FILE/'.$request->id;
@@ -63,7 +63,7 @@ class ManagemenController extends Controller
         if ($request->file2) {
             # code...
             $tmp_file = $request->file('file2');
-            $file = time()."_".$tmp_file->getClientOriginalName();
+            $file = time().".".$tmp_file->getClientOriginalExtension();
 
       	        // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/FILE/'.$request->id;
@@ -83,7 +83,7 @@ class ManagemenController extends Controller
         if ($request->file3) {
             # code...
             $tmp_file = $request->file('file3');
-            $file = time()."_".$tmp_file->getClientOriginalName();
+            $file = time().".".$tmp_file->getClientOriginalExtension();
 
       	        // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/FILE/'.$request->id;
@@ -102,7 +102,7 @@ class ManagemenController extends Controller
         if ($request->file4) {
             # code...
             $tmp_file = $request->file('file4');
-            $file = time()."_".$tmp_file->getClientOriginalName();
+            $file = time().".".$tmp_file->getClientOriginalExtension();
 
       	        // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/FILE/'.$request->id;
@@ -122,7 +122,7 @@ class ManagemenController extends Controller
         if ($request->file5) {
             # code...
             $tmp_file = $request->file('file5');
-            $file = time()."_".$tmp_file->getClientOriginalName();
+            $file = time().".".$tmp_file->getClientOriginalExtension();
 
       	        // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/FILE/'.$request->id;
@@ -207,10 +207,151 @@ class ManagemenController extends Controller
      * @param  \App\Models\managemen  $managemen
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatemanagemenRequest $request, managemen $managemen)
+    public function update(UpdatemanagemenRequest $request, $id)
     {
-        //
+        $user = Auth::user();
+        $data = managemen::findorfail($id);
+
+        $nf1 = $this->ufile1($request,$data);
+        $nf2 = $this->ufile2($request,$data);
+        $nf3 = $this->ufile3($request,$data);
+        $nf4 = $this->ufile4($request,$data);
+        $nf5 = $this->ufile5($request,$data);
+
+
+        $data->nama = $request->nama;
+        $data->tgl_menjabat = $request->tgl_menjabat;
+        $data->tgl_berakhir = $request->tgl_berakhir;
+        $data->ktp = $request->ktp;
+        $data->alamat = $request->alamat;
+        $data->npwp = $request->npwp;
+        $data->status = $request->status;
+        if ($nf1) {
+            $data->file1 = $nf1;
+        }if ($nf2) {
+            $data->file2 = $nf2;
+        }if ($nf3) {
+            $data->file3 = $nf3;
+        }if ($nf4) {
+            $data->file4 = $nf4;
+        }if ($nf5) {
+            $data->file5 = $nf5;
+        }
+
+        if ($request->ket1) {
+            $data->ket1 = $request->ket1;
+        }if ($request->ket2) {
+            $data->ket2 = $request->ket2;
+        }if ($request->ket3) {
+            $data->ket3 = $request->ket3;
+        }if ($request->ket4) {
+            $data->ket4 = $request->ket4;
+        }if ($request->ket5) {
+            $data->ket5 = $request->ket5;
+        }
+
+
+        $data->save();
+        return redirect()->route("managemen.show",$data->peserta_id)->with('success','Data '.$data->nama.' telah diupdate');
     }
+
+    public function ufile1($request,$data)
+     {
+        # code...
+        $nama_file = "";
+        if ($request->file1) {
+            # code...
+            $tmp_file = $request->file('file1');
+            $file = time().".".$tmp_file->getClientOriginalExtension();
+
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/FILE/'.$data->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+        }
+
+        return $nama_file;
+
+     }
+     public function ufile2($request,$data)
+     {
+        # code...
+        $nama_file ="";
+        if ($request->file2) {
+            # code...
+            $tmp_file = $request->file('file2');
+            $file = time().".".$tmp_file->getClientOriginalExtension();
+
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/FILE/'.$data->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+        }
+
+        return $nama_file;
+
+     }
+
+     public function ufile3($request,$data)
+     {
+        # code...
+        $nama_file ="";
+        if ($request->file3) {
+            # code...
+            $tmp_file = $request->file('file3');
+            $file = time().".".$tmp_file->getClientOriginalExtension();
+
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/FILE/'.$data->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+        }
+
+        return $nama_file;
+
+     }
+     public function ufile4($request,$data)
+     {
+        # code...
+        $nama_file ="";
+        if ($request->file4) {
+            # code...
+            $tmp_file = $request->file('file4');
+            $file = time().".".$tmp_file->getClientOriginalExtension();
+
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/FILE/'.$data->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+        }
+
+        return $nama_file;
+
+     }
+
+     public function ufile5($request,$data)
+     {
+        # code...
+        $nama_file ="";
+        if ($request->file5) {
+            # code...
+            $tmp_file = $request->file('file5');
+            $file = time().".".$tmp_file->getClientOriginalExtension();
+
+      	        // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'Tender/FILE/'.$data->id;
+            $tmp_file->move($tujuan_upload,$file);
+            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+            $nama_file=$tujuan_upload.'/'.$file;
+        }
+
+        return $nama_file;
+
+     }
 
     /**
      * Remove the specified resource from storage.

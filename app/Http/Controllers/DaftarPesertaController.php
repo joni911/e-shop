@@ -57,8 +57,8 @@ class DaftarPesertaController extends Controller
 
         $project = [
             'greeting' => 'Hi '.$user->name.',',
-            'body' => 'Terimakasih Telah Mendaftar Di tender ini',
-            'thanks' => 'Thank you this is from codeanddeploy.com',
+            'body' => 'Selamat bergabung di tender '.$data->tender->nama,
+            'thanks' => 'Terimakasih Telah Mendaftar Di tender ini dari bankdaerahbangli.co.id',
             'id' => $data->id
         ];
 

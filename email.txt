@@ -5,4 +5,4 @@ MAIL_USERNAME=e-shop@bankdaerahbangli.co.id
 MAIL_PASSWORD=Trojan212
 MAIL_ENCRYPTION=ssl
 MAIL_FROM_ADDRESS=e-shop@bankdaerahbangli.co.id
-MAIL_FROM_NAME="${APP_NAME}"
+MAIL_FROM_NAME="PT. BPR Bank Daerah Bangli (PERSERODA)"

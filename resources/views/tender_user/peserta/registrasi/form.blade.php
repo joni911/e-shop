@@ -6,10 +6,10 @@
               class="form-control" required name="izin" id="" aria-describedby="helpId" placeholder="" value="{{$data->izin ?? ""}}">
               <input type="text"
               class="form-control" required name="id" hidden id="" aria-describedby="helpId" placeholder="" value="{{$data->id ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan Izin Perusahaan</small>
+            <small id="helpId" class="form-text text-muted">Masukkan Izin Perusahaan SIUP atau TDP</small>
         </div>
         <div class="form-group">
-            <label for="">Nomor Surat *</label>
+            <label for="">Nomor Izin Perusahaan *</label>
             <input type="text"
               class="form-control" required name="nomor_izin" id="" aria-describedby="helpId" placeholder="" value="{{$data->nomor_izin ?? ""}}">
 

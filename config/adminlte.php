@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Bank Daerah Bangli Pengadaan Barang dan Jasa',
     'title_prefix' => '',
     'title_postfix' => '',
 

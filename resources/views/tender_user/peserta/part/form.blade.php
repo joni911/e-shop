@@ -6,7 +6,7 @@
               class="form-control" name="izin" id="" aria-describedby="helpId" placeholder="" value="{{$data->izin ?? ""}}">
               <input type="text"
               class="form-control" name="id" hidden id="" aria-describedby="helpId" placeholder="" value="{{$data->id ?? ""}}">
-              <small id="helpId" class="form-text text-muted">Masukkan Izin Perusahaan NIB, SIUP atau TDP</small>
+              <small id="helpId" class="form-text text-muted">Masukkan Izin Perusahaan NIB atau IUJK</small>
             </div>
         <div class="form-group">
             <label for="">Nomor Izin Perusahaan</label>
@@ -63,7 +63,7 @@
             <input type="text"
               class="form-control" name="notaris" id="" aria-describedby="helpId" placeholder="" value="{{$data->notaris ?? ""}}">
           </div>
-          <h3>Akta Terbaru</h3>
+          <h3>Akta Perubahan Terakhir</h3>
           <div class="form-group">
             <label for="">Nomor</label>
             <input type="number"

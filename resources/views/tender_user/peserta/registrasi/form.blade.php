@@ -6,7 +6,7 @@
               class="form-control" required name="izin" id="" aria-describedby="helpId" placeholder="" value="{{$data->izin ?? ""}}">
               <input type="text"
               class="form-control" required name="id" hidden id="" aria-describedby="helpId" placeholder="" value="{{$data->id ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan Izin Perusahaan SIUP atau TDP</small>
+            <small id="helpId" class="form-text text-muted">Masukkan Izin Perusahaan NIB IUJK </small>
         </div>
         <div class="form-group">
             <label for="">Nomor Izin Perusahaan *</label>
@@ -79,7 +79,7 @@
             <input type="text"
               class="form-control" required name="notaris_b" id="" aria-describedby="helpId" placeholder="" value="{{$data->notaris_b ?? ""}}">
           </div>
-          <h3>NPWP</h3>
+          {{-- <h3>NPWP</h3>
         <div class="form-group">
             <label for="">NPWP *</label>
             <input type="text"
@@ -91,7 +91,7 @@
             <input type="text"
               class="form-control" required name="nama_npwp" id="" aria-describedby="helpId" placeholder="" value="{{$data->nama_npwp ?? ""}}">
             <small id="helpId" class="form-text text-muted">Masukkan Nama Pemilik NPWP</small>
-          </div>
+          </div> --}}
           <h2>Bukti KSWP</h2>
           <div class="form-group">
             <label for="">NPWP *</label>
@@ -105,6 +105,7 @@
               class="form-control" required name="kswp_nama" id="" aria-describedby="helpId" placeholder="" value="{{$data->kswp_nama ?? ""}}">
             <small id="helpId" class="form-text text-muted">Masukkan Nama Pemilik NPWP</small>
           </div>
+          <h2>Data Perusahaan</h2>
           <div class="form-group">
             <label for="">No HP *</label>
             <input type="text"
@@ -127,7 +128,7 @@
               class="form-control" required name="email" id="" aria-describedby="helpId" placeholder="" value="{{$data->email ?? ""}}">
             <small id="helpId" class="form-text text-muted">Masukkan Email Perusahaan</small>
           </div>
-
+          <h2>File Upload</h2>
         @forelse ($file as $tf)
           @if ($tf->nama)
           <div class="form-group">

@@ -2,7 +2,7 @@
     <div class="card-body">
 
         <div class="form-group">
-          <label for="">Pekerjaan *</label>
+          <label for="">Nama Kontrak*</label>
           <input type="text"
             class="form-control" required name="pekerjaan" id="" aria-describedby="helpId" placeholder="" value="{{$data->pekerjaan ?? ""}}">
             <input type="text"

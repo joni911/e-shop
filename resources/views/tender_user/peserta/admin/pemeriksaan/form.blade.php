@@ -94,5 +94,7 @@
         <label for="">Keterangan</label>
         <textarea class="form-control" name="kmanagemen" id="" rows="3">{{$pemeriksaan->kmanagemen ?? ""}}</textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Simpan</button>
+
+  <button type="submit" class="btn btn-primary">Simpan</button>
+
 </form>

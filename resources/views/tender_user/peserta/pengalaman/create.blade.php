@@ -13,10 +13,13 @@
 <body>
     <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Pendaftaran Penglaman Tender</h3>
+          <h3 class="card-title">Pendaftaran Pengalaman Pekerjaan Konstruksi</h3>
         </div>
         <p class="form-text">
-            Masukkanlah Pengalaman Pengalaman dalam pengadaan barang jasa ataupun pembangunan yang telah dilakukan perusahaan anda
+            Memiliki pengalaman paling kurang 1 satu Pekerjaan Konstruksi dalam kurun waktu 4 empat tahun terakhir,
+            baik di lingkungan pemerintah atau swasta termasuk pengalaman subkontrak
+            Untuk kualifikasi Usaha Kecil yang baru berdiri kurang dari 3 tiga tahun,
+            Dalam hal Penyedia belum memiliki pengalaman, dikecualikan dari ketentuan huruf h untuk pengadaan dengan nilai paket sampai dengan paling banyak Rp2.500.000.000,00 dua miliar lima ratus juta rupiah
         </p>
         <!-- /.card-header -->
         <!-- form start -->

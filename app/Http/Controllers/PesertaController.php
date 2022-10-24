@@ -80,7 +80,8 @@ class PesertaController extends Controller
         $data = new peserta();
         $data->tender_id = $request->id;
         $data->nama_pt = $request->nama_pt;
-        $data->NPWP = $request->NPWP;
+        // $data->NPWP = $request->NPWP;
+        $data->NPWP = "";
         $data->no_hp = $request->no_hp;
         $data->email = $request->email;
         $data->alamat = $request->alamat;
@@ -96,7 +97,8 @@ class PesertaController extends Controller
         $data->no_aktab = $request->no_aktab;
         $data->tgl_aktab = $request->tgl_aktab;
         $data->notaris_b = $request->notaris_b;
-        $data->nama_npwp = $request->nama_npwp;
+        // $data->nama_npwp = $request->nama_npwp;
+        $data->nama_npwp = "";
         $data->kswp_npwp = $request->kswp_npwp;
         $data->kswp_nama = $request->kswp_nama;
         $data->penawaran = 0;
@@ -291,7 +293,7 @@ class PesertaController extends Controller
 
         // $data->tender_id = $request->id;
         $data->nama_pt = $request->nama_pt;
-        $data->NPWP = $request->NPWP;
+        // $data->NPWP = $request->NPWP;
         $data->no_hp = $request->no_hp;
         $data->email = $request->email;
         $data->alamat = $request->alamat;
@@ -307,7 +309,7 @@ class PesertaController extends Controller
         $data->no_aktab = $request->no_aktab;
         $data->tgl_aktab = $request->tgl_aktab;
         $data->notaris_b = $request->notaris_b;
-        $data->nama_npwp = $request->nama_npwp;
+        // $data->nama_npwp = $request->nama_npwp;
         $data->kswp_npwp = $request->kswp_npwp;
         $data->kswp_nama = $request->kswp_nama;;
         // $data->penawaran = $request->penawaran;

@@ -11,11 +11,6 @@
             class="form-control" required name="tender_id" id="" hidden aria-describedby="helpId" placeholder="" value="{{$data->tender_id ?? $peserta->tender_id}}">
         </div>
         <div class="form-group">
-            <label for="">Nilai Kontrak *</label>
-            <input type="number"
-              class="form-control" required name="nilai_kontrak" id="" aria-describedby="helpId" placeholder="" value="{{$data->nilai_kontrak ?? ""}}">
-          </div>
-        <div class="form-group">
             <label for="">Lokasi *</label>
             <input type="text"
               class="form-control" required name="lokasi" id="" aria-describedby="helpId" placeholder="" value="{{$data->lokasi ?? ""}}">
@@ -40,6 +35,14 @@
             <input type="text"
               class="form-control" required name="no_kontrak" id="" aria-describedby="helpId" placeholder="" value="{{$data->no_kontrak ?? ""}}">
           </div>
+        <div class="form-group">
+            <label for="">Nilai Kontrak *</label>
+            <input type="number"
+              class="form-control" required name="nilai_kontrak" id="" aria-describedby="helpId" placeholder="" value="{{$data->nilai_kontrak ?? ""}}">
+          </div>
+
+
+
         <div class="form-group">
             <label for="">Tanggal Kontrak *</label>
             <input type="date"

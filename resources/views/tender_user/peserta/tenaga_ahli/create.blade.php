@@ -13,11 +13,18 @@
 <body>
     <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Pendaftaran Tenaga Ahli Tender {{$data->tender->nama ?? $peserta->tender->nama}}</h3>
+          <h3 class="card-title">Pendaftaran Tenaga Ahli Tender</h3>
+          {{-- <h3 class="card-title">Pendaftaran Tenaga Ahli Tender {{$data->tender->nama ?? $peserta->tender->nama}}</h3> --}}
         </div>
-        <p class="form-text">
-            Masukkanlah tim ahli di perusahaan anda disini!
-        </p>
+        <div class="alert alert-warning" role="alert">
+          <h4 class="alert-heading">Tenaga Ahli Yang Dibutuhkan</h4>
+          <li>
+            1 (satu) orang Pelaksana, dengan SKT Pelaksana Bangunan Gedung /Pekerjaan Gedung, Pengalaman 2 Tahun.
+          </li>
+          <li>
+            1 (satu) orang Petugas K3 Konstruksi Tanpa Pengalaman.
+          </li>
+        </div>
         <!-- /.card-header -->
         <!-- form start -->
 

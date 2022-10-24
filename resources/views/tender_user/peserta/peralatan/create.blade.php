@@ -13,7 +13,20 @@
 <body>
     <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Pendaftaran Peralatan Tender {{$data->tender->nama ?? $peralatan->tender->nama}}</h3>
+          <h3 class="card-title">Pendaftaran Peralatan Utama</h3>
+          {{-- <h3 class="card-title">Pendaftaran Peralatan Tender {{$data->tender->nama ?? $peralatan->tender->nama}}</h3> --}}
+        </div>
+        <div class="alert alert-warning" role="alert">
+          <h4 class="alert-heading">Peralatan Yang Dibutuhkan</h4>
+         <li>
+            1 Unit Concrete Mixer kapasitas minimal 3 m3
+         </li>
+         <li>
+            1 Unit Dump Truck kapasitas minimal 8 m3
+         </li>
+         <li>
+            1 Unit Excavator kapasitas minimal 0,3 m3
+         </li>
         </div>
         <!-- /.card-header -->
         <!-- form start -->

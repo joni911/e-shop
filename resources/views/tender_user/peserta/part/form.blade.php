@@ -79,7 +79,7 @@
             <input type="text"
               class="form-control" name="notaris_b" id="" aria-describedby="helpId" placeholder="" value="{{$data->notaris_b ?? ""}}">
           </div>
-          <h3>NPWP</h3>
+          {{-- <h3>NPWP</h3>
         <div class="form-group">
             <label for="">NPWP</label>
             <input type="text"
@@ -91,7 +91,7 @@
             <input type="text"
               class="form-control" name="nama_npwp" id="" aria-describedby="helpId" placeholder="" value="{{$data->nama_npwp ?? ""}}">
             <small id="helpId" class="form-text text-muted">Masukkan Nama Pemilik NPWP</small>
-          </div>
+          </div> --}}
           <h2>Bukti KSWP</h2>
           <div class="form-group">
             <label for="">NPWP</label>
@@ -105,6 +105,7 @@
               class="form-control" name="kswp_nama" id="" aria-describedby="helpId" placeholder="" value="{{$data->kswp_nama ?? ""}}">
             <small id="helpId" class="form-text text-muted">Masukkan Nama Pemilik NPWP</small>
           </div>
+          <h2>Data Perusahaan</h2>
           <div class="form-group">
             <label for="">No HP</label>
             <input type="text"

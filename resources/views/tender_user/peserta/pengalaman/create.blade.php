@@ -15,12 +15,20 @@
         <div class="card-header">
           <h3 class="card-title">Pendaftaran Pengalaman Pekerjaan Konstruksi</h3>
         </div>
-        <p class="form-text">
+        <div class="alert alert-warning" role="alert">
+            <li>
             Memiliki pengalaman paling kurang 1 satu Pekerjaan Konstruksi dalam kurun waktu 4 empat tahun terakhir,
             baik di lingkungan pemerintah atau swasta termasuk pengalaman subkontrak
+            </li>
+           <li>
             Untuk kualifikasi Usaha Kecil yang baru berdiri kurang dari 3 tiga tahun,
-            Dalam hal Penyedia belum memiliki pengalaman, dikecualikan dari ketentuan huruf h untuk pengadaan dengan nilai paket sampai dengan paling banyak Rp2.500.000.000,00 dua miliar lima ratus juta rupiah
-        </p>
+            Dalam hal Penyedia belum memiliki pengalaman, dikecualikan dari ketentuan huruf h untuk pengadaan dengan
+            nilai paket sampai dengan paling banyak Rp2.500.000.000,00 dua miliar lima ratus juta rupiah
+           </li>
+           <li>
+            Jika Tidak ada keterangan bisa di isi -
+           </li>
+        </div>
         <!-- /.card-header -->
         <!-- form start -->
 

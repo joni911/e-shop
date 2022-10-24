@@ -25,7 +25,7 @@ class pesertaRequest extends FormRequest
     {
         return [
             'nama_pt' => 'required',
-            'NPWP' => 'required',
+            // 'NPWP' => 'required',
             'no_hp' => 'required',
             // 'no_tlp' => 'required',
             'alamat' => 'required',
@@ -43,7 +43,7 @@ class pesertaRequest extends FormRequest
             'no_aktab' => 'required',
             'tgl_aktab' => 'required',
             'notaris_b' => 'required',
-            'nama_npwp' => 'required',
+            // 'nama_npwp' => 'required',
             'kswp_npwp' => 'required',
             'kswp_nama' => 'required',
 

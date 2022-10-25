@@ -18,6 +18,7 @@ use App\Http\Controllers\PenawaranFileController;
 use App\Http\Controllers\PenawaranPesertaController;
 use App\Http\Controllers\PenawaranPesertaFileController;
 use App\Http\Controllers\PengalamanTenderController;
+use App\Http\Controllers\PenilaianTenderController;
 use App\Http\Controllers\PeralatanController;
 use App\Http\Controllers\PerubahanController;
 use App\Http\Controllers\PesertaController;
@@ -35,6 +36,7 @@ use App\Http\Controllers\TenderPersyaratanController;
 use App\Http\Controllers\TenderPersyaratanFileController;
 use App\Http\Controllers\UserBarangController;
 use App\Http\Controllers\ValidasiFileController;
+use App\Models\penilaian_tender;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
@@ -118,7 +120,7 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
 
     //dashboard
     Route::resource('dashboard', DashboardController::class);
-
+    Route::resource('periksa', PenilaianTenderController::class);
     Route::get('testmail', function () {
         $user = Auth::user();
         $pt = $user->peserta->nama_pt;

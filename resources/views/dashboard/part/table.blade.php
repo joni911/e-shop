@@ -25,7 +25,7 @@
                     <td>
                         <a name="" id="" class="btn btn-warning" href="{{ route('dashboard.show', [$b->id]) }}" role="button"><i class="fas fa-eye    "></i></a>
 
-
+                        
                     </td>
                   </tr>
             @empty

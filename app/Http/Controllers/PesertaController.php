@@ -195,7 +195,7 @@ class PesertaController extends Controller
 
         $penawaran_peserta=penawaran_peserta::where('peserta_id',$pid)->where('tender_id',$id)->first();
         // $penawaran_file = $penawaran_peserta->penawaran_peserta_file;
-        $file = tender_file_detail::join('pesertas','pesertas.id','tender_file_details.peserta_id')
+         $file = tender_file_detail::join('pesertas','pesertas.id','tender_file_details.peserta_id')
         ->join('tender_files','tender_files.id','tender_file_details.tender_file_id')
         ->join('tenders','tenders.id','tender_files.tender_id')
         ->where('pesertas.id',$pid)

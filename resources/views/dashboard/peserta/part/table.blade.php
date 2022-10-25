@@ -30,6 +30,7 @@
                         <a name="" id="" class="btn btn-primary" href="{{ route('peserta.file', ['id'=>$data->id,'pid'=>$b->id]) }}" role="button">
                             <i class="fas fa-eye    "></i>
                         </a>
+                        
                     </td>
                   </tr>
             @empty

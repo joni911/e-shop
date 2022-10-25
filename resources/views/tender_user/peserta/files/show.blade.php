@@ -133,13 +133,13 @@
     <?php
         $fn = str_replace('.',' ',"{$data->nama_pt}")
     ?>
-    @include('tender_user.peserta.admin.file')
-    @include('tender_user.peserta.admin.file2')
+    @include('tender_user.peserta.files.main.index')
+    {{-- @include('tender_user.peserta.admin.file2')
     @include('tender_user.peserta.admin.pemeriksaan.form')
 
 
 
-    @include('tender_user.peserta.komentar.index')
+    @include('tender_user.peserta.komentar.index') --}}
 
 
 

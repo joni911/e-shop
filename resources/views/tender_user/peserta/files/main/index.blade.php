@@ -14,6 +14,7 @@
             <!-- Aktivity -->
             <h1 class="text-center">
                 Administrasi
+                @include('tender_user.peserta.admin.file3')
             </h1>
             <!-- End Aktivity -->
           </div>
@@ -22,6 +23,11 @@
             <!-- The timeline -->
             <h2 class="text-center">Persyaratan Kualifikasi</h2>
                 @include('tender_user.peserta.admin.file')
+
+                <h3 class="text-center">Pengalaman</h3>
+                @include('tender_user.peserta.admin.pengalaman')
+                <h3 class="text-center">Pekerjaan Sedang Berjalan</h3>
+                @include('tender_user.peserta.admin.pekerjaan_berjalan')
 
 
           </div>
@@ -34,6 +40,8 @@
           <!-- /.tab-pane -->
           <div class="tab-pane" id="s1">
             @include('tender_user.peserta.files.part.penawaran')
+                @include('tender_user.peserta.admin.file2')
+
         </div>
         </div>
         <!-- /.tab-content -->

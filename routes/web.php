@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdministrasiController;
+use App\Http\Controllers\AdministrasiDetailController;
 use App\Http\Controllers\barangController;
 use App\Http\Controllers\DaftarPesertaController;
 use App\Http\Controllers\DashboardController;
@@ -96,6 +98,7 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     Route::resource('tender_file',TenderFileController::class);
     Route::resource('tender_file_detail',TenderFileDetailController::class);
     //Peserta
+    Route::resource('administrasi', AdministrasiController::class);
     Route::resource('peserta',PesertaController::class);
     Route::get('peserta/tender/{id}',[PesertaController::class,'show_peserta'])->name('peserta.tender');
     Route::get('peserta/{id}/file_tender/{pid}',[PesertaController::class,'show_file_peserta'])->name('peserta.file');
@@ -111,6 +114,7 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     Route::resource('penawaran_file', PenawaranFileController::class);
     Route::resource('penawaran_peserta', PenawaranPesertaController::class);
     Route::resource('penawaran_peserta_file', PenawaranPesertaFileController::class);
+    Route::resource('administrasi_list', AdministrasiDetailController::class);
     //daftar peserta
     Route::resource('daftar_peserta', DaftarPesertaController::class);
     //Komentar

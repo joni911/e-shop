@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\pesertaRequest;
+use App\Models\administrasi_detail;
 use App\Models\daftar_peserta;
 use App\Models\komentar;
 use App\Models\pemeriksaan;
@@ -222,10 +223,13 @@ class PesertaController extends Controller
         ->get();
 
         $hak_akses = Auth::user();
+
+        $admin = administrasi_detail::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->get();
         return view('tender_user.peserta.files.show',
         ['data'=>$data,'file'=>$file,
         'komen'=>$komen,'berkas'=>$berkas,'hak_akses'=>$hak_akses,
-        'pemeriksaan' => $pemeriksanaan, 'nilai'=>$nilai,'pp'=>$penawaran_peserta
+        'pemeriksaan' => $pemeriksanaan, 'nilai'=>$nilai,'pp'=>$penawaran_peserta,
+        'admin' =>$admin
         ]);
 
 

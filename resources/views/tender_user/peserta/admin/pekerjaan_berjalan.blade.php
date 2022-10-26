@@ -15,6 +15,7 @@
             <th>Tanggal Selesai Kontrak</th>
             <th>Nilai Kontrak</th>
             <th>Nomor Kontrak</th>
+            {{-- <th>File</th> --}}
           </tr>
         </thead>
         <tbody>
@@ -37,7 +38,7 @@
                     <td>{{$pj->tgl_selesai_kontrak}}</td>
                     <td>{{$pj->tgl_serah_terima}}</td>
                     <td>{{$pj->nilai_kontrak}}</td>
-
+                    {{-- <td>{{$pj}}</td> --}}
                   </tr>
             @empty
                 <tr>

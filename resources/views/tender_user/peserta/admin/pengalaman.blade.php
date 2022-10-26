@@ -15,6 +15,7 @@
             <th>Tanggal Selesai Kontrak</th>
             <th>Nilai Kontrak</th>
             <th>Nomor Kontrak</th>
+            <th>File</th>
           </tr>
         </thead>
         <tbody>
@@ -37,7 +38,7 @@
                     <td>{{$pe->tgl_selesai_kontrak}}</td>
                     <td>{{$pe->tgl_serah_terima}}</td>
                     <td>{{$pe->nilai_kontrak}}</td>
-
+                    <td><a href="/{{$pe->file}}">{{$pe->nama_file}}</a></td>
                   </tr>
             @empty
                 <tr>

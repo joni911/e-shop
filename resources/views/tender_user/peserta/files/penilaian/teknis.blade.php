@@ -16,7 +16,7 @@
 
         <input type="text" class="form-control" name="peserta_id" id="" hidden value="{{$data->id}}" aria-describedby="helpId" placeholder="">
         <input type="text" class="form-control" name="tender_id" id="" hidden value="{{$data->tender_id}}" aria-describedby="helpId" placeholder="">
-
+        
     </div>
     <div class="form-group">
         <label for="">Keterangan</label>

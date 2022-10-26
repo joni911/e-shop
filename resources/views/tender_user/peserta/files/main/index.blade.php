@@ -29,6 +29,7 @@
                 @include('tender_user.peserta.admin.pengalaman')
                 <h3 class="text-center">Pekerjaan Sedang Berjalan</h3>
                 @include('tender_user.peserta.admin.pekerjaan_berjalan')
+                {{-- Penilaian --}}
                 @include('tender_user.peserta.files.penilaian.kualifikasi')
 
 

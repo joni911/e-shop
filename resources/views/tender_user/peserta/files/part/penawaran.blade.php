@@ -8,17 +8,6 @@
             <td scope="row">Nama User</td>
             <td>{{$data->user->name}}</td>
         </tr>
-        <tr>
-            <td>NPWP</td>
-            <td>
-                {{$data->NPWP}}
-            </td>
-        </tr>
-        <tr>
-            <td>Alamat</td>
-            <td>{{$data->alamat}}</td>
-        </tr>
-        <tr>
             <td>No HP</td>
             <td>{{$data->no_hp}}</td>
         </tr>

@@ -13,7 +13,7 @@
 <body>
     <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Pendaftaran Tender {{$data->nama}}</h3>
+          <h3 class="card-title">Pendaftaran Administrasi</h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->

@@ -41,7 +41,8 @@
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a name="" id="" class="btn btn-success" href="{{ route('peralatan.show', [$peserta->id]) }}" role="button">Selesai</a>
+            <a name="" id="" class="btn btn-success" href="{{ route('file_teknis.show', [$peserta->id]) }}" role="button">Berikutnya</a>
+            {{-- <a name="" id="" class="btn btn-success" href="{{ route('peralatan.show', [$peserta->id]) }}" role="button">Berikutnya</a> --}}
           </div>
         </form>
     </div>

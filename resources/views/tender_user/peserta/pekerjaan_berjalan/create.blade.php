@@ -32,7 +32,7 @@
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a name="" id="" class="btn btn-success" href="{{ route('managemen.show', [$peserta->id]) }}" role="button">Selesai</a>
+            <a name="" id="" class="btn btn-success" href="{{ route('tender_home.index') }}" role="button">Selesai Pergi Ke Menu Tender</a>
             {{-- <a name="" id="" class="btn btn-success" href="{{ route('tender_home.show', [$peserta->tender_id]) }}" role="button">Selesai</a> --}}
           </div>
         </form>

@@ -5,6 +5,7 @@ use App\Http\Controllers\AdministrasiDetailController;
 use App\Http\Controllers\barangController;
 use App\Http\Controllers\DaftarPesertaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FileTeknisController;
 use App\Http\Controllers\jenis_kontrakController;
 use App\Http\Controllers\jenis_pengadaanController;
 use App\Http\Controllers\katagori_barangController;
@@ -119,6 +120,7 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     Route::resource('penawaran_peserta', PenawaranPesertaController::class);
     Route::resource('penawaran_peserta_file', PenawaranPesertaFileController::class);
     Route::resource('administrasi_list', AdministrasiDetailController::class);
+    Route::resource('file_teknis', FileTeknisController::class);
     //daftar peserta
     Route::resource('daftar_peserta', DaftarPesertaController::class);
     //Komentar

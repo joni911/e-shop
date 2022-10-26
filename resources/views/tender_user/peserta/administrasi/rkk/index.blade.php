@@ -13,36 +13,37 @@
 <body>
     <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Pendaftaran Tender {{$data->nama}}</h3>
+          <h3 class="card-title">Pendaftaran Rencana Keselamatan Konstruksi (RKK) </h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->
 
-        @if ($list->isEmpty())
-        <form action="{{ route('administrasi_list.store') }}" enctype="multipart/form-data" method="post">
+        @if (!$list)
+        <form action="{{ route('file_teknis.store') }}" enctype="multipart/form-data" method="post">
             @csrf
             <div class="col-md">
-                @include('tender_user.peserta.administrasi.detail.admin')
+                @include('tender_user.peserta.administrasi.rkk.admin')
             </div>
             {{-- @include('tender_user.peserta.part.eform') --}}
           <!-- /.card-body -->
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
-            {{-- <a name="" id="" class="btn btn-success" href="{{ route('administrasi_list.show', [$data->id]) }}" role="button">Berikutnya</a> --}}
-            <a name="" id="" class="btn btn-success" href="{{ route('pengalaman.show', [$peserta->id]) }}" role="button">Berikutnya</a>
-          </div>
+                <a name="" id="" class="btn btn-success" href="{{ route('peralatan.show', [$peserta->id]) }}" role="button">Berikutnya</a>
+        </div>
         </form>
         @else
-            <a name="" id="" class="btn btn-success" href="{{ route('pengalaman.show', [$peserta->id]) }}" role="button">Berikutnya</a>
+                <a name="" id="" class="btn btn-success" href="{{ route('peralatan.show', [$peserta->id]) }}" role="button">Berikutnya</a>
+
         @endif
-        <div class="col-md">
-            @include("tender_user.peserta.administrasi.detail.list")
-        </div>
-        @if (!$list->isEmpty())
-        <div class="col-md">
+
+        @if ($list)
+            <div class="col-md">
+                @include("tender_user.peserta.administrasi.rkk.list")
+            </div>
+            <div class="col-md">
             <p>Untuk Upload Ulang harap hapus file dahulu</p>
-            <form action="{{ route('administrasi_list.destroy' , $peserta->id)}}" method="POST">
+            <form action="{{ route('file_teknis.destroy' , $list->id)}}" method="POST">
                         <input name="_method" type="hidden" value="DELETE">
                         {{ csrf_field() }}
 

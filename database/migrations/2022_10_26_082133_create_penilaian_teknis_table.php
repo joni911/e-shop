@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class SyaratDetails extends Migration
+class CreatePenilaianTeknisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class SyaratDetails extends Migration
      */
     public function up()
     {
-        Schema::create('syarat_details', function (Blueprint $table) {
+        Schema::create('penilaian_teknis', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('syarat_id');
+            $table->bigInteger('tender_id');
+            $table->bigInteger('user_id');
+            $table->bigInteger('peserta_id');
+            $table->string('status');
             $table->longText('keterangan');
             $table->timestamps();
             $table->softDeletes();
@@ -29,6 +32,6 @@ class SyaratDetails extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('syarat_details');
+        Schema::dropIfExists('penilaian_teknis');
     }
 }

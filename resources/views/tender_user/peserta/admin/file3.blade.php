@@ -1,4 +1,4 @@
-<h3 class="text-center">File Penawaran</h3>
+<h3 class="text-center">File Administrasi</h3>
 <table class="table">
     <tbody>
         <tr class="text-center">

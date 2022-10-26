@@ -15,6 +15,7 @@
             <h1 class="text-center">
                 Administrasi
                 @include('tender_user.peserta.admin.file3')
+                @include('tender_user.peserta.files.penilaian.admin')
             </h1>
             <!-- End Aktivity -->
           </div>
@@ -28,6 +29,7 @@
                 @include('tender_user.peserta.admin.pengalaman')
                 <h3 class="text-center">Pekerjaan Sedang Berjalan</h3>
                 @include('tender_user.peserta.admin.pekerjaan_berjalan')
+                @include('tender_user.peserta.files.penilaian.kualifikasi')
 
 
           </div>
@@ -35,13 +37,14 @@
 
           <div class="tab-pane" id="settings">
             @include('tender_user.peserta.files.part.kualifikasi')
+            @include('tender_user.peserta.files.penilaian.teknis')
           </div>
 
           <!-- /.tab-pane -->
           <div class="tab-pane" id="s1">
             @include('tender_user.peserta.files.part.penawaran')
-                @include('tender_user.peserta.admin.file2')
-
+            @include('tender_user.peserta.admin.file2')
+            @include('tender_user.peserta.files.penilaian.peserta')
         </div>
         </div>
         <!-- /.tab-content -->

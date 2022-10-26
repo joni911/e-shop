@@ -8,6 +8,11 @@ use App\Models\daftar_peserta;
 use App\Models\komentar;
 use App\Models\pemeriksaan;
 use App\Models\penawaran_peserta;
+use App\Models\penilaian_administrasi;
+use App\Models\penilaian_kualifikasi;
+use App\Models\penilaian_penawaran_peserta;
+use App\Models\penilaian_peserta;
+use App\Models\penilaian_teknis;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Models\tender_file;
@@ -224,12 +229,17 @@ class PesertaController extends Controller
 
         $hak_akses = Auth::user();
 
+        $p_admin = penilaian_administrasi::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
+        $p_kualifikasi = penilaian_kualifikasi::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
+        $p_teknis = penilaian_teknis::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
+        $p_peserta = penilaian_penawaran_peserta::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
+
         $admin = administrasi_detail::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->get();
         return view('tender_user.peserta.files.show',
         ['data'=>$data,'file'=>$file,
         'komen'=>$komen,'berkas'=>$berkas,'hak_akses'=>$hak_akses,
         'pemeriksaan' => $pemeriksanaan, 'nilai'=>$nilai,'pp'=>$penawaran_peserta,
-        'admin' =>$admin
+        'admin' =>$admin,'pa'=>$p_admin,'pk'=>$p_kualifikasi,'pt'=>$p_teknis,'p_peserta'=>$p_peserta
         ]);
 
 

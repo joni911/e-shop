@@ -20,6 +20,10 @@ use App\Http\Controllers\PenawaranFileController;
 use App\Http\Controllers\PenawaranPesertaController;
 use App\Http\Controllers\PenawaranPesertaFileController;
 use App\Http\Controllers\PengalamanTenderController;
+use App\Http\Controllers\PenilaianAdministrasiController;
+use App\Http\Controllers\PenilaianKualifikasiController;
+use App\Http\Controllers\PenilaianPenawaranPesertaController;
+use App\Http\Controllers\PenilaianTeknisController;
 use App\Http\Controllers\PenilaianTenderController;
 use App\Http\Controllers\PeralatanController;
 use App\Http\Controllers\PerubahanController;
@@ -121,7 +125,11 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     Route::resource('komen', TenderKomenController::class);
     Route::resource('koreksi', KoreksiController::class);
     Route::resource('pemeriksaan', PemeriksaanController::class);
-
+    //penilaian
+    Route::resource('p_admin', PenilaianAdministrasiController::class);
+    Route::resource('p_kualifikasi', PenilaianKualifikasiController::class);
+    Route::resource('p_teknis', PenilaianTeknisController::class);
+    Route::resource('p_peserta', PenilaianPenawaranPesertaController::class);
     //dashboard
     Route::resource('dashboard', DashboardController::class);
     Route::resource('periksa', PenilaianTenderController::class);

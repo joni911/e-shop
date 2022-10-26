@@ -59,7 +59,7 @@
                 <div class="form-group">
                     <label for="">File Bukti Kepemilikan *</label>
                     <input type="file"
-                    accept=".jpg, .jpeg, .png, .xls, .xlsx, .pdf, .doc, .docx, .pdf, .zip, .rar, .7z"
+                    accept=".jpg, .jpeg, .png, .pdf"
                     class="form-control-file" required name="file" id="" placeholder="" aria-describedby="fileHelpId">
                     <small id="fileHelpId" class="form-text text-muted">Masukkan file yang bisa membuktikan kepemilikan alat</small>
                 </div>
@@ -67,7 +67,7 @@
                 <div class="form-group">
                     <label for="">File Bukti Kepemilikan </label>
                     <input type="file"
-                    accept=".jpg, .jpeg, .png, .xls, .xlsx, .pdf, .doc, .docx, .pdf, .zip, .rar, .7z"
+                    accept=".jpg, .jpeg, .png, .pdf"
                     class="form-control-file"  name="file" id="" placeholder="" aria-describedby="fileHelpId">
                     <small id="fileHelpId" class="form-text text-muted">Masukkan file yang bisa membuktikan kepemilikan alat</small>
                 </div>

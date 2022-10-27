@@ -76,7 +76,7 @@ class SyaratController extends Controller
         // return $data;
         $syarat = tender::findorfail($data->tender_id);
 
-        return view('tender.syarat.edit',
+        return view('tender_admin.syarat.edit',
         [
             'data'=>$data,
             'syarat'=>$syarat
@@ -99,7 +99,7 @@ class SyaratController extends Controller
         $data->content = $request->content;
         $data->save();
 
-        return redirect()->route('tender.syarat',$data->tender->id);
+        return redirect()->route('tender_admin.syarat',$data->tender_id);
     }
 
     /**

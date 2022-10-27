@@ -41,7 +41,9 @@
           @forelse ($data->tender->tender_file as $tf)
             <div class="form-group">
               <label for="">{{$tf->nama}}</label>
-              <input type="file" class="form-control-file" name="{{$tf->id}}" id="" placeholder="" aria-describedby="fileHelpId">
+              <input type="file"
+              accept=".jpg, .jpeg, .png, .pdf, .pdf, .zip, .rar, .7z"
+              class="form-control-file" name="{{$tf->id}}" id="" placeholder="" aria-describedby="fileHelpId">
               <small id="fileHelpId" class="form-text text-muted">{{$tf->keterangan}}</small>
             </div>
           @empty

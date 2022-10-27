@@ -6,10 +6,10 @@
               class="form-control" name="izin" id="" aria-describedby="helpId" placeholder="" value="{{$data->izin ?? ""}}">
               <input type="text"
               class="form-control" name="id" hidden id="" aria-describedby="helpId" placeholder="" value="{{$data->id ?? ""}}">
-              <small id="helpId" class="form-text text-muted">Masukkan Izin Perusahaan</small>
+              <small id="helpId" class="form-text text-muted">Masukkan Izin Perusahaan NIB, SIUP atau TDP</small>
             </div>
         <div class="form-group">
-            <label for="">Nomor Surat</label>
+            <label for="">Nomor Izin Perusahaan</label>
             <input type="text"
               class="form-control" name="nomor_izin" id="" aria-describedby="helpId" placeholder="" value="{{$data->nomor_izin ?? ""}}">
               <small id="helpId" class="form-text text-muted">Masukkan Nomor Surat Izin Perusahaan</small>
@@ -23,7 +23,7 @@
 
           </div>
           <div class="form-group">
-            <label for="">Instansi Pemberi x</label>
+            <label for="">Instansi Pemberi</label>
             <input type="text"
               class="form-control" name="instansi_pemberi" id="" aria-describedby="helpId" placeholder="" value="{{$data->instansi_pemberi ?? ""}}">
               <small id="helpId" class="form-text text-muted">Masukkan Masa Berlaku Izin Usaha jika Izin Seumur hidup pakai sampai 2050</small>
@@ -132,7 +132,7 @@
           <div class="form-group">
             <label for="">{{$tf->nama_file}}</label>
             <input id='files' type="file" class="form-control-file" name="{{$tf->id}}" id="" placeholder="Isi File Untuk Update File" aria-describedby="fileHelpId"
-            accept=".jpg, .jpeg, .png, .xls, .xlsx, .pdf, .doc, .docx, .pdf, .zip, .rar, .7z"
+            accept=".jpg, .jpeg, .png, .pdf, .pdf, .zip, .rar, .7z"
             >
             <a href="/{{$tf->file}}">Download File {{$tf->nama_file}}</a>
             {{-- <p>{{$tf}}</p> --}}

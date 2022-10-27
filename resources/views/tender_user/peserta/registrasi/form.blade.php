@@ -132,14 +132,18 @@
           @if ($tf->nama)
           <div class="form-group">
             <label for="">{{$tf->nama}} *</label>
-            <input type="file" class="form-control-file" required name="{{$tf->id}}" id="" placeholder="Isi File Untuk Update File" aria-describedby="fileHelpId">
+            <input type="file"
+            accept=".jpg, .jpeg, .png, .pdf, .pdf, .zip, .rar, .7z"
+            class="form-control-file" required name="{{$tf->id}}" id="" placeholder="Isi File Untuk Update File" aria-describedby="fileHelpId">
             <small id="helpId" class="form-text text-muted">Masukkan File {{$tf->keterangan}}</small>
 
           </div>
           @else
           <div class="form-group">
             <label for="">{{$tf->nama_file}} *</label>
-            <input type="file" class="form-control-file" required name="{{$tf->id}}" id="" placeholder="Isi File Untuk Update File" aria-describedby="fileHelpId">
+            <input type="file"
+            accept=".jpg, .jpeg, .png, .pdf, .pdf, .zip, .rar, .7z"
+            class="form-control-file" required name="{{$tf->id}}" id="" placeholder="Isi File Untuk Update File" aria-describedby="fileHelpId">
             <a href="/{{$tf->file}}">Download File {{$tf->nama_file}}</a>
           </div>
           @endif

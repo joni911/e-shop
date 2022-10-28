@@ -53,7 +53,7 @@ class TenderFileController extends Controller
         // return $id;
         $page = 'lihat';
         $data = tender::findorfail($id);
-        $table = tender_file::where('tender_id','=',$id)->paginate(10);
+        $table = tender_file::where('tender_id','=',$id)->paginate(20);
         return view('tender_admin.files.create',
         ['data'=>$data,'table'=>$table,'page'=>$page]);
     }

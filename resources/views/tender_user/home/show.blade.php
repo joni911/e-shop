@@ -121,7 +121,8 @@
 
                               @endforelse
 
-                              <a href="{{ route('peserta.tender', [$data->id]) }}">Peserta {{$j}}</a>
+                              <a href="#">Peserta {{$j}}</a>
+                              {{-- <a href="{{ route('peserta.tender', [$data->id]) }}">Peserta {{$j}}</a> --}}
                           </td>
                       </tr>
                       <tr>
@@ -154,7 +155,7 @@
                                             @endif
                                         </a>
                                     @else
-                                        <p>Masa Penawaran File Sudah Berakhir</p>
+                                        <p>Upload Dokumen Penawaran Dimulai 1 - 4 November 2022</p>
                                     @endif
                             @else
                                 @if ($peserta)

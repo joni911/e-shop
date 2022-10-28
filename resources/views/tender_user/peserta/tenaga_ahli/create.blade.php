@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Pendaftaran Tenaga Ahli Tender')
+@section('title', 'Personil Managerial')
 
 @section('content_header')
 
@@ -13,11 +13,11 @@
 <body>
     <div class="card card-primary">
         <div class="card-header">
-          <h3 class="card-title">Pendaftaran Tenaga Ahli Tender</h3>
-          {{-- <h3 class="card-title">Pendaftaran Tenaga Ahli Tender {{$data->tender->nama ?? $peserta->tender->nama}}</h3> --}}
+          <h3 class="card-title">Personil Managerial</h3>
+          {{-- <h3 class="card-title">Personil Managerial {{$data->tender->nama ?? $peserta->tender->nama}}</h3> --}}
         </div>
         <div class="alert alert-warning" role="alert">
-          <h4 class="alert-heading">Tenaga Ahli Yang Dibutuhkan</h4>
+          <h4 class="alert-heading">Personil Managerial Yang Dibutuhkan</h4>
           <li>
             1 (satu) orang Pelaksana, dengan SKT Pelaksana Bangunan Gedung /Pekerjaan Gedung, Pengalaman 2 Tahun.
           </li>

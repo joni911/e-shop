@@ -101,4 +101,10 @@
             </a>
         </p>
     @endif
+    {{-- Tutorial --}}
+    <p class="my-0">
+            <a href="https://drive.google.com/file/d/1T9gFB1UPZzJ7unt2iCoyfTiLjMnWEVdN/view?usp=sharing">
+                Tutorial Penggunaan Aplikasi
+            </a>
+        </p>
 @stop

@@ -154,7 +154,7 @@
                                             @endif
                                         </a>
                                     @else
-                                        <p>Masa Penawaran File Sudah Berakhir</p>
+                                        <p>Masa Penawaran File Belum Dimulai</p>
                                     @endif
                             @else
                                 @if ($peserta)

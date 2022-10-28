@@ -154,7 +154,7 @@
                                             @endif
                                         </a>
                                     @else
-                                        <p>Masa Penawaran File Belum Dimulai</p>
+                                        <p>Upload Dokumen Penawaran Dimulai 1 - 4 November 2022</p>
                                     @endif
                             @else
                                 @if ($peserta)

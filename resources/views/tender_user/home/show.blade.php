@@ -121,7 +121,8 @@
 
                               @endforelse
 
-                              <a href="{{ route('peserta.tender', [$data->id]) }}">Peserta {{$j}}</a>
+                              <a href="#">Peserta {{$j}}</a>
+                              {{-- <a href="{{ route('peserta.tender', [$data->id]) }}">Peserta {{$j}}</a> --}}
                           </td>
                       </tr>
                       <tr>

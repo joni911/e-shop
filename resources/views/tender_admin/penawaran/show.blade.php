@@ -21,7 +21,7 @@
         <!-- form start -->
         <div class="card-body">
             <p>Nilai HPS        = @currency($data->hps ?? "")</p>
-            <p>Niali Anggaran   = @currency($data->anggaran ?? "")</p>
+            {{-- <p>Niali Anggaran   = @currency($data->anggaran ?? "")</p> --}}
             <p>Penjelasan : </p>
             <p>{!!$data->penjelasan ?? ""!!}</p>
         </div>

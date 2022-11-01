@@ -19,7 +19,7 @@
         <div class="alert alert-warning" role="alert">
           <h4 class="alert-heading">Peralatan Yang Dibutuhkan</h4>
          <li>
-            1 Unit Concrete Mixer kapasitas minimal 3 m3
+            1 Unit Concrete Mixer kapasitas minimal 0,3 m3
          </li>
          <li>
             1 Unit Dump Truck kapasitas minimal 8 m3

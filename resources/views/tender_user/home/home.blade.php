@@ -48,8 +48,9 @@
           <div class="col-md-12">
             <div class="card">
 
-                {{-- <h4 class="card-title" style="margin-top: 20px; color: #1a642bad" >
-                  Tabel Tender </h4> --}}
+                <h2 class="text-center">
+                    <a href="https://drive.google.com/file/d/1T9gFB1UPZzJ7unt2iCoyfTiLjMnWEVdN/view?usp=sharing" target="_blank">Link Tutorial Penggunaan Aplikasi</a>
+                </h2>
 
               <div class="update ml-3">
                 @if (auth()->user()->hak_akses != 'user')

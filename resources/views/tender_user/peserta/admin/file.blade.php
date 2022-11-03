@@ -16,10 +16,14 @@
                                 @endphp
                                 <?php
 
-                                $fs = round(filesize($tfd->files)/1024/1024,1)
+                                // $fs = round(filesize($tfd->files)/1024/1024,1)
                                 ?>
-                                @if ($fs<=2)
-                                    @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
+                                {{-- @if ($fs<=2)
+
+                                @else
+                                    File Terlalu Besar Silakan Simpan FIle
+                                @endif --}}
+                                @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
                                     $ext == 'JPG' || $ext == 'PNG' || $ext == 'JPEG')
                                     <img src="/{{$tfd->files}}" class="img-fluid" alt="Responsive image">
 
@@ -33,9 +37,6 @@
                                         <br>
                                         Extensi {{$ext}} Tidak di dukung
                                     @endif
-                                @else
-                                    File Terlalu Besar Silakan Simpan FIle
-                                @endif
 
                                 {{-- @include('tender_user.peserta.admin.validasi.create') --}}
                             </div>

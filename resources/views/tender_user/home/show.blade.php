@@ -146,17 +146,7 @@
                                 <h3 class="text-dark">Perusahaan anda {{$daftar_peserta->peserta->nama_pt}} Sudah Terdaftar !</h3>
                                 {{-- <a name="" id="" class="btn btn-primary" href="{{ route('tender_home.edit', [$data->id]) }}" role="button">Cek Dokumen Persyaratan dan Petunjuk disini!</a> --}}
 
-                                    @if ($today>=$upfile->mulai && $today<=$upfile->akhir)
-                                        <a name="" id="" class="btn btn-primary" href="{{ route('penawaran_file.show', [$data->id   ]) }}" role="button">
-                                            @if ($penawaran)
-                                            Lihat File
-                                            @else
-                                            Masukkan File
-                                            @endif
-                                        </a>
-                                    @else
-                                        <p>Upload Dokumen Penawaran Dimulai 1 - 4 November 2022</p>
-                                    @endif
+
                             @else
                                 @if ($peserta)
                                 <x-adminlte-modal id="modalCustom" title="Pendaftaran Tender" size="lg" theme="green"
@@ -184,9 +174,20 @@
                             @else
 
                                 Tender Dimulai pada {{$tahapan->mulai}} <br>
-                                Tender Selesai pada {{$tahapan->akhir}}
+                                Tender Selesai pada {{$tahapan->akhir}} <br>
                             @endif
 
+                            @if ($today>=$upfile->mulai && $today<=$upfile->akhir)
+                                <a name="" id="" class="btn btn-primary" href="{{ route('penawaran_file.show', [$data->id   ]) }}" role="button">
+                                    @if ($penawaran)
+                                    Lihat File
+                                    @else
+                                    Masukkan File
+                                    @endif
+                                </a>
+                            @else
+                                <p>Upload Dokumen Penawaran Dimulai 1 - 4 November 2022</p>
+                            @endif
 
                           </td>
                       </tr>

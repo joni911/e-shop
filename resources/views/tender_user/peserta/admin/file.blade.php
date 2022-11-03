@@ -7,10 +7,10 @@
                 {{-- <a href="{{$tfd->files}}">{{$tfd->tender_file->nama}}</a> --}}
                 {{-- Custom --}}
                     <td>
-                        <x-adminlte-modal id="modalCustom-{{$tfd->id}}" title="{{$tfd->tender_file->nama}}" size="lg" theme="teal"
+                        <x-adminlte-modal id="modalCustom-{{$tfd->id}}" title="{{$tfd->tender_file->nama ?? ""}}" size="lg" theme="teal"
                             icon="fas fa-bell" v-centered static-backdrop scrollable>
                             <div style="height:auto;">
-                                <h3>File {{$tfd->tender_file->nama}}</h3>
+                                <h3>File {{$tfd->tender_file->nama ?? ""}}</h3>
                                 @php
                                     $ext = pathinfo($tfd->files, PATHINFO_EXTENSION)
                                 @endphp
@@ -42,15 +42,15 @@
                             </div>
                             <x-slot name="footerSlot">
                                 {{-- <x-adminlte-button class="mr-auto" type="submit" theme="success" label="Terima"/> --}}
-                                <a name="" id="" class="mr-auto btn btn-primary" href="/{{$tfd->files}}" download="{{$tfd->tender_file->nama}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i> Simpan File</a>
+                                <a name="" id="" class="mr-auto btn btn-primary" href="/{{$tfd->files}}" download="{{$tfd->tender_file->nama ?? ""}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i> Simpan File</a>
 
                                 <x-adminlte-button theme="danger" label="Tutup" data-dismiss="modal"/>
                             </x-slot>
                             </x-adminlte-modal>
 
                             {{-- Example button to open modal --}}
-                            <x-adminlte-button icon="fas fa-eye" label="{{$tfd->tender_file->nama}}" data-toggle="modal" data-target="#modalCustom-{{$tfd->id}}" class="bg-teal"/>
-                            <a name="" id="" class="btn btn-primary" href="/{{$tfd->files}}" download="{{$tfd->tender_file->nama}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i></a>
+                            <x-adminlte-button icon="fas fa-eye" label="{{$tfd->tender_file->nama ?? ""}}" data-toggle="modal" data-target="#modalCustom-{{$tfd->id}}" class="bg-teal"/>
+                            <a name="" id="" class="btn btn-primary" href="/{{$tfd->files}}" download="{{$tfd->tender_file->nama ?? ""}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i></a>
                             {{-- <p>Status File</p> --}}
                             {{-- <p>{{$tfd->validasi_file->status ?? "Belum di verifikasi"}}</p> --}}
                     </td>

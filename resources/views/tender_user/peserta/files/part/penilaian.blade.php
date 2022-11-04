@@ -39,10 +39,13 @@
 
 <form action="{{ route('send.hasil') }}" method="post">
 @csrf
-    <input type="email" name="email" id="" value=" {{$data->email ?? ""}}">
-    <input type="text" name="peserta_id" value="{{$data->id}}" id="">
-    <input type="text" name="tender_id" value="{{$data->tender_id}}" id="">
-    <input type="text" name="point" value="{{$point}}" id="">
+    <input type="text" name="peserta_id" value="{{$data->id}}" hidden id="">
+    <input type="text" name="tender_id" value="{{$data->tender_id}}" hidden id="">
+    <input type="text" name="point" value="{{$point}}" hidden id="">
+    <div class="form-group">
+      <label for="">Email</label>
+      <input type="email" class="form-control" name="email" value="{{$data->email ?? ""}}" id="" aria-describedby="helpId" placeholder="">
+    </div>
     <button type="submit" class="btn btn-primary">Kirim Email</button>
 </form>
 

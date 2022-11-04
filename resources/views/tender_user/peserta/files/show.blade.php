@@ -48,9 +48,9 @@
                 <td>{{$data->user->name}}</td>
             </tr>
             <tr>
-                <td>NPWP</td>
+                <td>Email</td>
                 <td>
-                    {{$data->NPWP}}
+                    {{$data->email ?? ""}}
                 </td>
             </tr>
             <tr>
@@ -61,13 +61,13 @@
                 <td>No HP</td>
                 <td>{{$data->no_hp}}</td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td>Nilai Tender</td>
                 <td>HPS: {{$data->tender->hps}}
                     <br>
                     Pagu : {{$data->tender->nilai_pagu}}
                 </td>
-            </tr>
+            </tr> --}}
             <tr>
                 <td>Peringkat Peserta</td>
                 <td>

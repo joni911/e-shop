@@ -13,13 +13,9 @@
                     @php
                         $ext = pathinfo($apf->file, PATHINFO_EXTENSION)
                     @endphp
-                    <p>{{$ext}}</p>
-                    <?php
-
-                        $fs = round(filesize($apf->file)/1024/1024,1)
-                    ?>
-                    @if ($fs<=2)
-                        @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
+                    
+                    
+                    @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
                         $ext == 'JPG' || $ext == 'PNG' || $ext == 'JPEG')
                         <img src="/{{$apf->file}}" class="img-fluid" alt="Responsive image">
 
@@ -33,9 +29,6 @@
                         <br>
                         Extensi {{$ext}} Tidak di dukung
                         @endif
-                    @else
-                        Ukuran File Terlalu Besar Silakan Simpan File
-                    @endif
 
 
                     <x-slot name="footerSlot">

@@ -13,28 +13,20 @@
                     @php
                         $ext = pathinfo($ppf->file, PATHINFO_EXTENSION)
                     @endphp
-                    <p>{{$ext}}</p>
-                    <?php
+                    
+                    @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
+                    $ext == 'JPG' || $ext == 'PNG' || $ext == 'JPEG')
+                    <img src="/{{$ppf->file}}" class="img-fluid" alt="Responsive image">
 
-                        $fs = round(filesize($ppf->file)/1024/1024,1)
-                    ?>
-                    @if ($fs<=2)
-                        @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
-                        $ext == 'JPG' || $ext == 'PNG' || $ext == 'JPEG')
-                        <img src="/{{$ppf->file}}" class="img-fluid" alt="Responsive image">
+                    @elseif ($ext == 'pdf' || $ext == 'PDF')
+                    <object data="/{{$ppf->file}}" width="750" height="400"></object>
 
-                        @elseif ($ext == 'pdf' || $ext == 'PDF')
-                        <object data="/{{$ppf->file}}" width="750" height="400"></object>
-
-                        @elseif ($ext == 'zip' || $ext == 'rar' || $ext == '7z')
-                        <a name="" id="" class="btn btn-primary" href="/{{$ppf->file}}" role="button"><i class="fas fa-download    "> Download File</i></a>
-                        @else
-                        File {{$ppf->file}}
-                        <br>
-                        Extensi {{$ext}} Tidak di dukung
-                        @endif
+                    @elseif ($ext == 'zip' || $ext == 'rar' || $ext == '7z')
+                    <a name="" id="" class="btn btn-primary" href="/{{$ppf->file}}" role="button"><i class="fas fa-download    "> Download File</i></a>
                     @else
-                        Ukuran File Terlalu Besar Silakan Simpan File
+                    File {{$ppf->file}}
+                    <br>
+                    Extensi {{$ext}} Tidak di dukung
                     @endif
 
 

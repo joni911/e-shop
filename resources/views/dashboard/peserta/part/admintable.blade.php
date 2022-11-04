@@ -74,9 +74,9 @@
                         <a name="" id="" class="btn btn-primary" href="{{ route('peserta.file', ['id'=>$data->id,'pid'=>$b->id]) }}" role="button">
                             <i class="fas fa-eye    "></i>
                         </a>
-                        <a name="" id="" class="btn btn-primary" href="{{ route('periksa.show', [$b->id]) }}" role="button">
+                        {{-- <a name="" id="" class="btn btn-primary" href="{{ route('periksa.show', [$b->id]) }}" role="button">
                             <i class="fas fa-user-check"></i>
-                        </a>
+                        </a> --}}
                     </td>
                   </tr>
             @empty

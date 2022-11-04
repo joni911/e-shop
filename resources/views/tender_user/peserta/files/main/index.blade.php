@@ -6,6 +6,7 @@
           <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Administrasi</a></li>
           <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Evaluasi Teknis</a></li>
           <li class="nav-item"><a class="nav-link" href="#s1" data-toggle="tab">Harga</a></li>
+          <li class="nav-item"><a class="nav-link" href="#s2" data-toggle="tab">Penilaian</a></li>
         </ul>
       </div><!-- /.card-header -->
       <div class="card-body">
@@ -45,10 +46,13 @@
           </div>
 
           <!-- /.tab-pane -->
-          <div class="tab-pane" id="s1">
+        <div class="tab-pane" id="s1">
             @include('tender_user.peserta.files.part.penawaran')
             @include('tender_user.peserta.admin.file2')
             @include('tender_user.peserta.files.penilaian.peserta')
+        </div>
+        <div class="tab-pane" id="s2">
+            @include('tender_user.peserta.files.part.penilaian')
         </div>
         </div>
         <!-- /.tab-content -->

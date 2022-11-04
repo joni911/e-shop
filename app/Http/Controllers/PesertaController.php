@@ -116,7 +116,7 @@ class PesertaController extends Controller
             # code...
             $x = $ts->id;
             $tmp_file = $request->file($x);
-            $file = time()."_".$tmp_file->getClientOriginalExtension();
+            $file = time().".".$tmp_file->getClientOriginalExtension();
 
       	        // isi dengan nama folder tempat kemana file diupload
             $tujuan_upload = 'Tender/FILE/'.$request->id.'/'.$ts->id;
@@ -217,10 +217,15 @@ class PesertaController extends Controller
         ->select('tender_komens.*','pesertas.nama_pt as pt','users.name as user','users.hak_akses as hak_akses')
         ->get();
 
+
         $berkas = tender_file_detail::where('tender_id',$data->tender_id)
         ->where('peserta_id',$data->id)
         ->get();
 
+        // foreach ($berkas as $key => $value) {
+        //     # code...
+        //     echo $value->tender_file->nama."<br>";
+        // }
         $pemeriksanaan = $data->pemeriksaan;
 
         $nilai = pemeriksaan::where('tender_id',$data->tender_id)
@@ -233,16 +238,52 @@ class PesertaController extends Controller
         $p_kualifikasi = penilaian_kualifikasi::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
         $p_teknis = penilaian_teknis::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
         $p_peserta = penilaian_penawaran_peserta::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
-
+        $point = $this->point_tender($p_admin,$p_kualifikasi,$p_teknis,$p_peserta);;
         $admin = administrasi_detail::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->get();
         return view('tender_user.peserta.files.show',
         ['data'=>$data,'file'=>$file,
         'komen'=>$komen,'berkas'=>$berkas,'hak_akses'=>$hak_akses,
         'pemeriksaan' => $pemeriksanaan, 'nilai'=>$nilai,'pp'=>$penawaran_peserta,
-        'admin' =>$admin,'pa'=>$p_admin,'pk'=>$p_kualifikasi,'pt'=>$p_teknis,'p_peserta'=>$p_peserta
+        'admin' =>$admin,'pa'=>$p_admin,'pk'=>$p_kualifikasi,'pt'=>$p_teknis,'p_peserta'=>$p_peserta,
+        'point' => $point
         ]);
 
 
+    }
+
+    public function point_tender($p_admin,$p_kualifikasi,$p_teknis,$p_peserta)
+    {
+        # code...
+        $point = 0;
+        if ($p_admin) {
+            # code...
+            if ($p_admin->status == "Lulus") {
+                # code...
+                $point += 1;
+            }
+        }
+        if ($p_kualifikasi) {
+            # code...
+            if ($p_kualifikasi->status == "Lulus") {
+                # code...
+                $point += 1;
+            }
+        }
+        if ($p_teknis) {
+            # code...
+            if ($p_teknis->status == "Lulus") {
+                # code...
+                $point += 1;
+            }
+        }
+        if ($p_peserta) {
+            # code...
+            if ($p_peserta->status == "Lulus") {
+                # code...
+                $point += 1;
+            }
+        }
+        return $point;
     }
     /**
      * Show the form for editing the specified resource.

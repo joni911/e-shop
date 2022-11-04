@@ -1,15 +1,16 @@
 <h1 class="text-center">Penilaian</h1>
+<h2>Kualifikasi</h2>
+<p>{{$pk->status ?? "Data Belum ada"}}</p>
+<p>
+    {{$pk->keterangan ?? "Data Belum ada"}}
+</p>
 
 <h2>Penilian Administrasi</h2>
 <p>{{$pa->status ?? "Data Belum ada"}}</p>
 <p>
     {{$pa->keterangan ?? "Data Belum ada"}}
 </p>
-<h2>Kualifikasi</h2>
-<p>{{$pk->status ?? "Data Belum ada"}}</p>
-<p>
-    {{$pk->keterangan ?? "Data Belum ada"}}
-</p>
+
 <h2>
     Teknis
 </h2>
@@ -35,4 +36,13 @@
         </p>
        @endif
     @endif
+
+<form action="{{ route('send.hasil') }}" method="post">
+@csrf
+    <input type="email" name="email" id="" value=" {{$data->email ?? ""}}">
+    <input type="text" name="peserta_id" value="{{$data->id}}" id="">
+    <input type="text" name="tender_id" value="{{$data->tender_id}}" id="">
+    <input type="text" name="point" value="{{$point}}" id="">
+    <button type="submit" class="btn btn-primary">Kirim Email</button>
+</form>
 

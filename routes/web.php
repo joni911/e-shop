@@ -135,6 +135,7 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     //dashboard
     Route::resource('dashboard', DashboardController::class);
     Route::resource('periksa', PenilaianTenderController::class);
+    //mail
     Route::get('testmail', function () {
         $user = Auth::user();
         $pt = $user->peserta->nama_pt;
@@ -148,6 +149,8 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
 
         dd("Email is Sent, please check your inbox.");
     });
+
+    Route::post('send_hasil', [PesertaController::class,'send_hasil'])->name('send.hasil');
 
 });
 

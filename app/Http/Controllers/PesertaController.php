@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\pesertaRequest;
+use App\Mail\hasil_penilaian;
 use App\Models\administrasi_detail;
 use App\Models\daftar_peserta;
 use App\Models\komentar;
@@ -22,6 +23,7 @@ use App\Models\tender_status_files;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 
 class PesertaController extends Controller
@@ -249,6 +251,43 @@ class PesertaController extends Controller
         ]);
 
 
+    }
+    public function send_hasil(Request $request)
+    {
+        $pid = $request->peserta_id;
+        $tender_id = $request->tender_id;
+        $point = $request->point;
+        $p_admin = penilaian_administrasi::where('peserta_id',$pid)->where('tender_id',$tender_id)->first();
+        $p_kualifikasi = penilaian_kualifikasi::where('peserta_id',$pid)->where('tender_id',$tender_id)->first();
+        $p_teknis = penilaian_teknis::where('peserta_id',$pid)->where('tender_id',$tender_id)->first();
+        $p_peserta = penilaian_penawaran_peserta::where('peserta_id',$pid)->where('tender_id',$tender_id)->first();
+        $email = $request->email;
+        $pa = $p_admin;
+        $pk = $p_kualifikasi;
+        $pt = $p_teknis;
+        $p_peserta = $p_peserta;
+        if ($point>=4) {
+            # code...
+            $point_k = "Selamat Anda Lulus dan akan masuk ke tahap selanjutnya";
+        } else {
+            # code...
+            $point_k = "Kami dari panitia tender menyampaikan bahwa saudara belum dapat dinyatakan lulus dalam seleksi administrasi";
+        }
+
+        $data = [
+            'pa_s' => $pa['status'],
+            'pa_k' => $pa['keterangan'],
+            'pk_s' => $pk['status'],
+            'pk_k' => $pk['keterangan'],
+            'pt_s' => $pt['status'],
+            'pt_k' => $pt['keterangan'],
+            'pp_s' => $p_peserta['status'],
+            'pp_k' => $p_peserta['keterangan'],
+            'poin' => $point_k
+        ];
+        # code...
+        Mail::to($email)->send(new hasil_penilaian($data));
+        return back()->with('status','Mail sent successfully');;
     }
 
     public function point_tender($p_admin,$p_kualifikasi,$p_teknis,$p_peserta)

@@ -14,7 +14,7 @@
                         $ext = pathinfo($apf->file, PATHINFO_EXTENSION)
                     @endphp
                     
-                    
+
                     @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
                         $ext == 'JPG' || $ext == 'PNG' || $ext == 'JPEG')
                         <img src="/{{$apf->file}}" class="img-fluid" alt="Responsive image">

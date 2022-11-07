@@ -6,6 +6,7 @@ use App\Http\Requests\pesertaRequest;
 use App\Mail\hasil_penilaian;
 use App\Models\administrasi_detail;
 use App\Models\daftar_peserta;
+use App\Models\file_teknis;
 use App\Models\komentar;
 use App\Models\pemeriksaan;
 use App\Models\penawaran_peserta;
@@ -242,12 +243,13 @@ class PesertaController extends Controller
         $p_peserta = penilaian_penawaran_peserta::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
         $point = $this->point_tender($p_admin,$p_kualifikasi,$p_teknis,$p_peserta);;
         $admin = administrasi_detail::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->get();
+        $file_rkk = file_teknis::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->get();
         return view('tender_user.peserta.files.show',
         ['data'=>$data,'file'=>$file,
         'komen'=>$komen,'berkas'=>$berkas,'hak_akses'=>$hak_akses,
         'pemeriksaan' => $pemeriksanaan, 'nilai'=>$nilai,'pp'=>$penawaran_peserta,
         'admin' =>$admin,'pa'=>$p_admin,'pk'=>$p_kualifikasi,'pt'=>$p_teknis,'p_peserta'=>$p_peserta,
-        'point' => $point
+        'point' => $point,'file_rkk'=>$file_rkk
         ]);
 
 

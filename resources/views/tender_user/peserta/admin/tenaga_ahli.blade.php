@@ -31,9 +31,9 @@
                     <td>
                         {{-- <a href="/{{$ta->file}}">{{$ta->nama_file}}</a> --}}
                         {{-- Custom --}}
-                    <x-adminlte-modal id="modalCustom2-ta{{$ta->id}}" title="{{$ta->nama_file}}" size="lg" theme="teal"
+                    <x-adminlte-modal id="modalCustom2-ta{{$ta->id}}" title="{{$ta->nama}}" size="lg" theme="teal"
                         icon="fas fa-bell" v-centered static-backdrop scrollable>
-                        <h3>File {{$ta->nama_file}}</h3>
+                        <h3>File {{$ta->nama}}</h3>
                         <p>{{$ta->file}}</p>
                         @php
                             $ext = pathinfo($ta->file, PATHINFO_EXTENSION)
@@ -63,8 +63,8 @@
                         </x-adminlte-modal>
                         {{-- Example button to open modal --}}
 
-                        <x-adminlte-button icon="fas fa-eye" label="{{$ta->nama_file}}" data-toggle="modal" data-target="#modalCustom2-ta{{$ta->id}}" class="bg-teal"/>
-                        <a name="" id="" class="btn btn-primary" href="/{{$ta->file}}" download="{{$ta->nama_file}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i></a>
+                        <x-adminlte-button icon="fas fa-eye" label="{{$ta->nama}}" data-toggle="modal" data-target="#modalCustom2-ta{{$ta->id}}" class="bg-teal"/>
+                        <a name="" id="" class="btn btn-primary" href="/{{$ta->file}}" download="{{$ta->nama}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i></a>
 
                     </td>
                   </tr>

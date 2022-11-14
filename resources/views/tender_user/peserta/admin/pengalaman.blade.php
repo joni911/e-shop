@@ -39,11 +39,11 @@
                     <td>{{$pe->tgl_serah_terima}}</td>
                     <td>{{$pe->nilai_kontrak}}</td>
                     <td>
-                        {{-- <a href="/{{$pe->file}}">{{$pe->nama}}</a> --}}
+                        {{-- <a href="/{{$pe->file}}">{{$pe->pekerjaan}}</a> --}}
                         {{-- Custom --}}
-                    <x-adminlte-modal id="modalCustom2-pe{{$pe->id}}" title="{{$pe->nama}}" size="lg" theme="teal"
+                    <x-adminlte-modal id="modalCustom2-pe{{$pe->id}}" title="{{$pe->pekerjaan}}" size="lg" theme="teal"
                         icon="fas fa-bell" v-centered static-backdrop scrollable>
-                        <h3>File {{$pe->nama}}</h3>
+                        <h3>File {{$pe->pekerjaan}}</h3>
                         <p>{{$pe->file}}</p>
                         @php
                             $ext = pathinfo($pe->file, PATHINFO_EXTENSION)
@@ -73,8 +73,8 @@
                         </x-adminlte-modal>
                         {{-- Example button to open modal --}}
 
-                        <x-adminlte-button icon="fas fa-eye" label="{{$pe->nama}}" data-toggle="modal" data-target="#modalCustom2-pe{{$pe->id}}" class="bg-teal"/>
-                        <a name="" id="" class="btn btn-primary" href="/{{$pe->file}}" download="{{$pe->nama}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i></a>
+                        <x-adminlte-button icon="fas fa-eye" label="{{$pe->pekerjaan}}" data-toggle="modal" data-target="#modalCustom2-pe{{$pe->id}}" class="bg-teal"/>
+                        <a name="" id="" class="btn btn-primary" href="/{{$pe->file}}" download="{{$pe->pekerjaan}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i></a>
 
                     </td>
                   </tr>

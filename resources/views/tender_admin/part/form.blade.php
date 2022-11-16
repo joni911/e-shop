@@ -17,6 +17,9 @@
                 <option value="">Pilihan Kosong</option>
             @endforelse
           </select>
+          <div>
+            <small id="helpId" class="form-text text-muted">Pilih Jenis Kontrak</small>
+          </div>
         </div>
         <div class="form-group">
           <label for="">Jenis Pengadaan</label>
@@ -28,18 +31,24 @@
                 <option value="">Pilihan Kosong</option>
             @endforelse
           </select>
+          <div>
+            <small id="helpId" class="form-text text-muted">Pilih Jenis Pengadaan</small>
+          </div>
         </div>
         <div class="form-group">
           <label for="">Metode Pengadaan</label>
           <select class="form-control form-control-sm" name="mp" id="mp">
             <option value="{{$data->metode_pengadaan_id ?? ""}}">{{$data->mpn ?? "Pilih Metode Pengadaan"}}</option>
-
+ 
             @forelse ($metode as $m)
                 <option value="{{$m->id}}">{{$m->nama}}</option>
             @empty
                 <option value="">Pilihan Kosong</option>
             @endforelse
           </select>
+          <div>
+            <small id="helpId" class="form-text text-muted">Pilih Metode Pengadaan</small>
+          </div>
         </div>
         <div class="form-group">
           <label for="">K\L\PD</label>
@@ -64,17 +73,17 @@
         <div class="form-group">
           <label for="">Tanggal Anggaran</label>
           <input type="date" class="form-control" name="tanggal" id="" aria-describedby="helpId" placeholder="" value="{{$data->tahun_anggaran ?? ""}}">
-          <small id="helpId" class="form-text text-muted">Help text</small>
+          <small id="helpId" class="form-text text-muted">Pilih Tanggal Anggaran</small>
         </div>
         <div class="form-group">
           <label for="">Nilai Anggaran</label>
           <input type="number" class="form-control" name="nilai" id="" aria-describedby="helpId" placeholder="" value="{{$data->nilai_pagu ?? 0}}">
-          <small id="helpId" class="form-text text-muted">Help text</small>
+          <small id="helpId" class="form-text text-muted">Masukkan Nilai Anggaran</small>
         </div>
         <div class="form-group">
           <label for="">Nilai HPS</label>
           <input type="number" class="form-control" name="hps" id="" aria-describedby="helpId" placeholder="" value="{{$data->hps ?? 0}}">
-          <small id="helpId" class="form-text text-muted">Help text</small>
+          <small id="helpId" class="form-text text-muted">Masukkan Nilai HPS</small>
         </div>
         <div class="form-group">
           <label for="">Status Pengadaan</label>
@@ -86,5 +95,8 @@
                 <option value="">Pilihan Kosong</option>
             @endforelse
           </select>
+          <div>
+            <small id="helpId" class="form-text text-muted">Pilih Status Pengadaann</small>
+          </div>
         </div>
     </div>

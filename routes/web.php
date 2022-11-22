@@ -29,6 +29,7 @@ use App\Http\Controllers\PenilaianTenderController;
 use App\Http\Controllers\PeralatanController;
 use App\Http\Controllers\PerubahanController;
 use App\Http\Controllers\PesertaController;
+use App\Http\Controllers\SanggahController;
 use App\Http\Controllers\StatusTenderController;
 use App\Http\Controllers\SyaratController;
 use App\Http\Controllers\SyaratDetailController;
@@ -123,6 +124,8 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     Route::resource('file_teknis', FileTeknisController::class);
     //daftar peserta
     Route::resource('daftar_peserta', DaftarPesertaController::class);
+    //sanggahan
+    Route::resource('sanggahan', SanggahController::class);
     //Komentar
     Route::resource('komen', TenderKomenController::class);
     Route::resource('koreksi', KoreksiController::class);

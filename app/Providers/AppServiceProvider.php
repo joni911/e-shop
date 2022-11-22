@@ -55,6 +55,14 @@ class AppServiceProvider extends ServiceProvider
                             // 'label'       => 4,
                             'label_color' => 'success',
                         ],
+                        [
+                            'text'        => 'Sanggahan',
+                            'url'         => 'sanggahan',
+                            'icon'        => 'far fa-fw fa-file',
+                            // 'label'       => 4,
+                            'label_color' => 'success',
+                        ]
+                        
                     );
                     break;
 

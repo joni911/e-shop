@@ -22,7 +22,7 @@
 <div class="card">
     <div class="card-header">
         @if ($pemeriksaan == null)
-        <h3 class="card-title-center text-center">Tender {{$data->nama_tender}}
+        <h3 class="card-title-center text-center">Tender {{$data->id}} User {{$data->user_id}}
             <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>
         </h3>
         @else

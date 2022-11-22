@@ -34,6 +34,7 @@
                         No HP : {{$b->no_hp}}
                         {{-- Nilai : {{$b->nilai}} --}}
                         <p>{{$b->managemen}}</p>
+                        <p>User ID {{$b->user_id}} Tender ID {{$b->tender_id}}</p>
                     </td>
                     {{-- <td>
                         @foreach ($b->tender_file_detail as $tfd)

@@ -42,9 +42,35 @@ class SanggahController extends Controller
      */
     public function store(StoresanggahRequest $request)
     {
-        
+        $nama_file = $this->namaFile($request);
+        $user = Auth::user();
+        $data = new sanggah();
+        $data->peserta_id = $request->peserta;
+        $data->tender_id = $request->tender;
+        $data->user_id = $user->id;
+        $data->keterangan = $request->keterangan;
+        $data->file = $nama_file;
+        $data->save();
+        return redirect()->back()->with('success','Data Berhasil disimpan');
     }
 
+    public function namaFile($request)
+    {
+        $nama_file = "";
+
+        # code...
+        $tmp_file = $request->file('file');
+        $file = time().".".$tmp_file->getClientOriginalExtension();
+
+            // isi dengan nama folder tempat kemana file diupload
+        $tujuan_upload = 'Tender/FILE/sanggah/'.$request->id;
+        $tmp_file->move($tujuan_upload,$file);
+        //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+        $nama_file=$tujuan_upload.'/'.$file;
+
+
+        return $nama_file;
+    }
     /**
      * Display the specified resource.
      *
@@ -56,7 +82,8 @@ class SanggahController extends Controller
         $data = tender::findorfail($id);
         $user = Auth::user();
         $peserta = peserta::where('user_id',$user->id)->first();
-        return view('dashboard.sanggahan.pengumuman',['data'=>$data,'peserta'=>$peserta]);
+        $sanggah = sanggah::where('user_id',$user->id)->where('peserta_id',$peserta->id)->where('tender_id',$data->id)->first();
+        return view('dashboard.sanggahan.pengumuman',['data'=>$data,'peserta'=>$peserta,'sanggah'=>$sanggah]);
     }
 
     /**
@@ -88,8 +115,10 @@ class SanggahController extends Controller
      * @param  \App\Models\sanggah  $sanggah
      * @return \Illuminate\Http\Response
      */
-    public function destroy(sanggah $sanggah)
+    public function destroy($id)
     {
-        //
+        $data = sanggah::findorfail($id);
+        $data->delete();
+        return redirect()->back()->with('dangger','Data berhasil dihapus');
     }
 }

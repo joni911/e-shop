@@ -11,6 +11,7 @@
 @section('content')
 
 <body>
+    @include('global.alert')
     @include('dashboard.part.table')
 </body>
 

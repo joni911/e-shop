@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\sanggah;
 use App\Http\Requests\StoresanggahRequest;
 use App\Http\Requests\UpdatesanggahRequest;
+use App\Models\daftar_peserta;
 use App\Models\peserta;
 use App\Models\tender;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ class SanggahController extends Controller
      */
     public function index()
     {
+
         $data = tender::where('default',0)->paginate(10);
         // return $data = tender_file::get();
 
@@ -81,9 +83,28 @@ class SanggahController extends Controller
     {
         $data = tender::findorfail($id);
         $user = Auth::user();
-        $peserta = peserta::where('user_id',$user->id)->first();
-        $sanggah = sanggah::where('user_id',$user->id)->where('peserta_id',$peserta->id)->where('tender_id',$data->id)->first();
-        return view('dashboard.sanggahan.pengumuman',['data'=>$data,'peserta'=>$peserta,'sanggah'=>$sanggah]);
+        $daftar = daftar_peserta::where('daftar_pesertas.tender_id',$id)
+        ->join('pesertas','pesertas.id','daftar_pesertas.peserta_id')
+        ->join('penawaran_pesertas','penawaran_pesertas.peserta_id','pesertas.id')
+        ->join('tenders','tenders.id','pesertas.tender_id')
+
+        ->select('pesertas.*','penawaran_pesertas.penawaran as penawaran_peserta')
+        ->paginate(10);
+
+
+        foreach ($daftar as $key => $value) {
+            if ($value->user_id == $user->id) {
+                # code...
+                $peserta = peserta::where('user_id',$user->id)->first();
+                $sanggah = sanggah::where('user_id',$user->id)->where('peserta_id',$peserta->id)->where('tender_id',$data->id)->first();
+                return view('dashboard.sanggahan.pengumuman',['data'=>$data,'peserta'=>$peserta,'sanggah'=>$sanggah]);
+            }
+            # code...
+        }
+
+        return redirect()->route('sanggahan.index')->with('error','Anda Tidak Dapat melakukakan sanggahan karena belum ikut tender ini!');
+
+
     }
 
     /**

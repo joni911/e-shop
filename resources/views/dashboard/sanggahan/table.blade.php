@@ -1,9 +1,6 @@
 <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Tabel Tender</h3>
-      <br>
-
-      <a name="" id="" class="btn btn-primary" href="{{ route('dashboard.create') }}" role="button">Tambah</a>
+      <h3 class="text-center">Daftar Pengadaan</h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

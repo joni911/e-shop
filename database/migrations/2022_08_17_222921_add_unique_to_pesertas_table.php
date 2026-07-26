@@ -15,7 +15,7 @@ class AddUniqueToPesertasTable extends Migration
     public function up()
     {
         Schema::table('pesertas', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unique();
+            $table->unique('user_id');
         });
     }
 

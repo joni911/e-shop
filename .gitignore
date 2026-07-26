@@ -14,3 +14,13 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
+# Server/hosting files
+.ftpquota
+error_log
+
+# Database dumps
+*.sql
+
+# Tender upload folders
+/Tender/

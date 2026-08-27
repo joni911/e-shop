@@ -1,0 +1,54 @@
+services:
+  db:
+    image: mariadb:10.11
+    container_name: eshop-db
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: pengadaan2
+      MARIADB_USER: e_shop
+      MARIADB_PASSWORD: e_shop_pass
+      MARIADB_ROOT_PASSWORD: root_pass
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    networks:
+      - eshop-net
+
+  web:
+    build: .
+    container_name: eshop-web
+    restart: unless-stopped
+    ports:
+      - "8100:80"
+    environment:
+      APP_NAME: "Sistem Pengadaan Tender"
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8100
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_DATABASE: pengadaan2
+      DB_USERNAME: e_shop
+      DB_PASSWORD: e_shop_pass
+      MAIL_MAILER: log
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - storage_data:/var/www/html/storage
+      - tender_uploads:/var/www/html/public/Tender
+    networks:
+      - eshop-net
+
+volumes:
+  db_data:
+  storage_data:
+  tender_uploads:
+
+networks:
+  eshop-net:

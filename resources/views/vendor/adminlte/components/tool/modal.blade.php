@@ -1,17 +1,18 @@
-<div {{ $attributes->merge(['class' => $makeModalClass(), 'id' => $id]) }}
-     @isset($staticBackdrop) data-backdrop="static" data-keyboard="false" @endisset>
+{{-- Override adminlte::components.tool.modal — Bootstrap 5.3 + tema orange (M3 PRD_UI_MIGRATION) --}}
+<div {{ $attributes->merge(['class' => $makeModalClass(), 'id' => $id, 'tabindex' => '-1', 'aria-hidden' => 'true']) }}
+     @isset($staticBackdrop) data-bs-backdrop="static" data-bs-keyboard="false" @endisset>
 
     <div class="{{ $makeModalDialogClass() }}">
     <div class="modal-content">
 
-        {{--Modal header --}}
+        {{-- Modal header --}}
         <div class="{{ $makeModalHeaderClass() }}">
-            <h4 class="modal-title">
-                @isset($icon)<i class="{{ $icon }} mr-2"></i>@endisset
+            <h5 class="modal-title">
+                @isset($icon)<i class="{{ $icon }} me-2"></i>@endisset
                 @isset($title){{ $title }}@endisset
-            </h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+            </h5>
+            <button type="button" class="modal-close" data-bs-dismiss="modal" aria-label="Close">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
 
@@ -25,8 +26,7 @@
             @isset($footerSlot)
                 {{ $footerSlot }}
             @else
-                <x-adminlte-button class="{{ $makeCloseButtonClass }}"
-                    data-dismiss="modal" label="Close"/>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             @endisset
         </div>
 

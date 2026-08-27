@@ -122,3 +122,22 @@
 /* Table wrapper lama (table-responsive BS4) */
 .table-responsive { display: block; width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .table-responsive > .table { margin-bottom: 0; }
+
+/* Warna tema AdminLTE (untuk modal header bg-teal dll, M3) */
+.bg-teal { background-color: #20c997 !important; }
+.bg-lightblue { background-color: #3c8dbc !important; }
+.bg-maroon { background-color: #d81b60 !important; }
+.bg-navy { background-color: #001f3f !important; }
+.bg-olive { background-color: #3d9970 !important; }
+.bg-lime { background-color: #01ff70 !important; }
+.bg-fuchsia { background-color: #f012be !important; }
+.bg-purple { background-color: #605ca8 !important; }
+.bg-teal .modal-title, .bg-teal .modal-close,
+.bg-lightblue .modal-title, .bg-lightblue .modal-close,
+.bg-maroon .modal-title, .bg-maroon .modal-close,
+.bg-navy .modal-title, .bg-navy .modal-close,
+.bg-olive .modal-title, .bg-olive .modal-close,
+.bg-lime .modal-title, .bg-lime .modal-close,
+.bg-fuchsia .modal-title, .bg-fuchsia .modal-close,
+.bg-purple .modal-title, .bg-purple .modal-close { color: #fff; }
+

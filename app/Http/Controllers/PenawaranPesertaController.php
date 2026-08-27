@@ -43,46 +43,55 @@ class PenawaranPesertaController extends Controller
     {
         //
         $user = Auth::user();
-        $data = tender::findorfail($request->id) ;
-        // return
+        $data = tender::findorfail($request->id);
+
+        // Panitia harus menyiapkan data penawaran (judul, hps, file wajib) lebih dulu
+        if (!$data->penawaran) {
+            return Redirect::back()->withErrors(['msg' => 'Data penawaran untuk tender ini belum disiapkan oleh panitia.']);
+        }
+
+        // validasi file yang di upload
         foreach ($data->penawaran->penawaran_file as $key => $x) {
             # code...
-
-            if (!$request->file($x->id)) {
+            if (!$request->hasFile('file_' . $x->id)) {
                 # code...
                 return Redirect::back()->withErrors(['msg' => 'File '.$x->nama.' Tidak Boleh Kosong']);
             }
         }
 
-        $pp = new penawaran_peserta();
-        $pp->user_id = $user->id;
-        $pp->tender_id = $request->id;
-        $pp->peserta_id = $user->peserta->id;
-        $pp->penawaran = $request->penawaran;
-        $pp->koreksi = 0;
-        $pp->save();
+        // 1 penawaran per (peserta, tender): jika sudah ada di tender ini, perbarui nilai + ganti file.
+        $pp = penawaran_peserta::updateOrCreate(
+            ['peserta_id' => $user->peserta->id, 'tender_id' => $request->id],
+            ['user_id' => $user->id, 'penawaran' => $request->penawaran, 'koreksi' => 0]
+        );
+
+        // Hapus file penawaran lama (hard delete, karena model penawaran_peserta_file memakai SoftDeletes)
+        penawaran_peserta_file::where('penawaran_peserta_id', $pp->id)->forceDelete();
 
 
         foreach ($data->penawaran->penawaran_file as $key => $x) {
             # code...e
-            if ($request->file($x->id)) {
-            $tmp_file = $request->file($x->id);
-            $file = time()."_".$x->nama.".".$tmp_file->getClientOriginalExtension();
+            if ($request->hasFile('file_' . $x->id)) {
+                $tmp_file = $request->file('file_' . $x->id);
+                $file = time()."_".$x->nama.".".$tmp_file->getClientOriginalExtension();
 
-      	    // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/penawaran/'.$request->id.'/'.$user->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
-
+      	        // isi dengan nama folder tempat kemana file diupload
+                $tujuan_upload = 'Tender/penawaran/'.$request->id.'/'.$user->id;
+                $folder = public_path($tujuan_upload);
+                if (!is_dir($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+                $tmp_file->move($folder,$file);
+                //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+                $nama_file=$tujuan_upload.'/'.$file;
 
                 # code...
-                $data = new penawaran_peserta_file();
-                $data->user_id = $user->id;
-                $data->penawaran_peserta_id = $pp->id;
-                $data->file = $nama_file;
-                $data->nama = $x->nama;
-                $data->save();
+                $fileRec = new penawaran_peserta_file();
+                $fileRec->user_id = $user->id;
+                $fileRec->penawaran_peserta_id = $pp->id;
+                $fileRec->file = $nama_file;
+                $fileRec->nama = $x->nama;
+                $fileRec->save();
             }
 
         }

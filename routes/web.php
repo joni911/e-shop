@@ -69,41 +69,48 @@ Auth::routes(['verify' => true]);
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     Route::get('/home', [TenderHomeController::class, 'index'])->name('home');
-    Route::resource('/barang',barangController::class);
     //barang admin
-    Route::get('/CreatePhoto',[barangController::class,'create_photo'])->name('photo.buat');
-    Route::get('/foto/barang/{id}',[barangController::class,'edit_photo'])->name('photo.edit');
-    Route::post('/photoStore',[barangController::class,'photoStore'])->name('photo.simpan');
-    Route::resource('/katagori', katagori_barangController::class);
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('/barang',barangController::class);
+        Route::get('/CreatePhoto',[barangController::class,'create_photo'])->name('photo.buat');
+        Route::get('/foto/barang/{id}',[barangController::class,'edit_photo'])->name('photo.edit');
+        Route::post('/photoStore',[barangController::class,'photoStore'])->name('photo.simpan');
+        Route::resource('/katagori', katagori_barangController::class);
+    });
     Route::resource('komentar',komentarController::class);
 
     //barang user
     Route::resource('shops', UserBarangController::class);
     Route::get('shops/add/{id}',[UserBarangController::class,'add'])->name('shops.add');
 
-    //resource Master
-    Route::resource('jenis_pengadaan',jenis_pengadaanController::class);
-    Route::resource('jenis_kontrak',jenis_kontrakController::class);
-    Route::resource('metode_pengadaan',MetodePengadaanController::class);
-    Route::resource('status_tender',StatusTenderController::class);
-    Route::get('send',[StatusTenderController::class,'send'])->name('send');
-    route::get('test',[StatusTenderController::class,'test']);
-    Route::resource('tahapan',TahapanController::class);
+    //resource Master + Tender (khusus admin)
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('jenis_pengadaan',jenis_pengadaanController::class);
+        Route::resource('jenis_kontrak',jenis_kontrakController::class);
+        Route::resource('metode_pengadaan',MetodePengadaanController::class);
+        Route::resource('status_tender',StatusTenderController::class);
+        Route::get('send',[StatusTenderController::class,'send'])->name('send');
+        route::get('test',[StatusTenderController::class,'test']);
+        Route::resource('tahapan',TahapanController::class);
 
-    //Resource Tender
-    Route::resource('tender_admin',tenderController::class);
-    Route::get('/tender_admin/syarat/{id}',[tenderController::class ,'show_syarat'])->name('tender_admin.syarat');
-    Route::get('/tender_admin/tahapan/{id}',[tenderController::class ,'show_tahapan'])->name('tender_admin.tahapan');
-    Route::resource('perubahan',PerubahanController::class);
+        //Resource Tender
+        Route::resource('tender_admin',tenderController::class);
+        Route::get('/tender_admin/syarat/{id}',[tenderController::class ,'show_syarat'])->name('tender_admin.syarat');
+        Route::get('/tender_admin/tahapan/{id}',[tenderController::class ,'show_tahapan'])->name('tender_admin.tahapan');
+        Route::resource('perubahan',PerubahanController::class);
+    });
     //Home
     Route::resource('tender_home',TenderHomeController::class);
-    //Syarat
-    Route::resource('syarat',SyaratController::class);
-    Route::resource('syarat_detail',SyaratDetailController::class);
-    //FILES
-    Route::resource('tender_file',TenderFileController::class);
-    Route::resource('tender_file_detail',TenderFileDetailController::class);
+    //Syarat (khusus admin)
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('syarat',SyaratController::class);
+        Route::resource('syarat_detail',SyaratDetailController::class);
+        //FILES
+        Route::resource('tender_file',TenderFileController::class);
+        Route::resource('tender_file_detail',TenderFileDetailController::class);
+    });
     //Peserta
+    //Peserta mengisi berkas administrasi (peserta-face)
     Route::resource('administrasi', AdministrasiController::class);
     Route::resource('peserta',PesertaController::class);
     Route::get('peserta/tender/{id}',[PesertaController::class,'show_peserta'])->name('peserta.tender');
@@ -113,13 +120,17 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     Route::resource('peralatan', PeralatanController::class);
     Route::resource('pekerjaan_berjalan', PekerjaanBerjalanController::class);
     Route::resource('managemen', ManagemenController::class);
+    // validasi_file & penawaran_file dilihat/diisi PESERTA (peserta-face)
     Route::resource('validasi_file', ValidasiFileController::class);
-    Route::resource('tender_persyarat', TenderPersyaratanController::class);
-    Route::resource('tender_persyaratan_file', TenderPersyaratanFileController::class);
-    Route::resource('penawaran', PenawaranController::class);
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('tender_persyarat', TenderPersyaratanController::class);
+        Route::resource('tender_persyaratan_file', TenderPersyaratanFileController::class);
+        Route::resource('penawaran', PenawaranController::class);
+    });
     Route::resource('penawaran_file', PenawaranFileController::class);
     Route::resource('penawaran_peserta', PenawaranPesertaController::class);
     Route::resource('penawaran_peserta_file', PenawaranPesertaFileController::class);
+    // administrasi_list & file_teknis diisi PESERTA (peserta-face)
     Route::resource('administrasi_list', AdministrasiDetailController::class);
     Route::resource('file_teknis', FileTeknisController::class);
     //daftar peserta
@@ -129,15 +140,16 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     //Komentar
     Route::resource('komen', TenderKomenController::class);
     Route::resource('koreksi', KoreksiController::class);
-    Route::resource('pemeriksaan', PemeriksaanController::class);
-    //penilaian
-    Route::resource('p_admin', PenilaianAdministrasiController::class);
-    Route::resource('p_kualifikasi', PenilaianKualifikasiController::class);
-    Route::resource('p_teknis', PenilaianTeknisController::class);
-    Route::resource('p_peserta', PenilaianPenawaranPesertaController::class);
-    //dashboard
-    Route::resource('dashboard', DashboardController::class);
-    Route::resource('periksa', PenilaianTenderController::class);
+    //pemeriksaan + penilaian (khusus admin)
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('pemeriksaan', PemeriksaanController::class);
+        Route::resource('p_admin', PenilaianAdministrasiController::class);
+        Route::resource('p_kualifikasi', PenilaianKualifikasiController::class);
+        Route::resource('p_teknis', PenilaianTeknisController::class);
+        Route::resource('p_peserta', PenilaianPenawaranPesertaController::class);
+        Route::resource('dashboard', DashboardController::class);
+        Route::resource('periksa', PenilaianTenderController::class);
+    });
     //mail
     Route::get('testmail', function () {
         $user = Auth::user();
@@ -153,7 +165,7 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
         dd("Email is Sent, please check your inbox.");
     });
 
-    Route::post('send_hasil', [PesertaController::class,'send_hasil'])->name('send.hasil');
+    Route::post('send_hasil', [PesertaController::class,'send_hasil'])->name('send.hasil')->middleware('role:admin');
 
 });
 

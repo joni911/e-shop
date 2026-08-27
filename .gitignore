@@ -22,5 +22,15 @@ error_log
 # Database dumps
 *.sql
 
+# Large local backups (terlalu besar utk repo, jangan di-push)
+/pengadaan2.7z
+/pengadaan2.zip
+
+# Debug script sementara
+/_dbg.php
+
+# Artifak upload saat testing
+/storage/testing-files/
+
 # Tender upload folders
 /Tender/

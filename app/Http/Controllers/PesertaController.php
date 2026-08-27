@@ -80,7 +80,7 @@ class PesertaController extends Controller
         foreach ($file->tender_file as $key => $tc) {
             # code...
             $x = $tc->id;
-            if (!$request->$x) {
+            if (!$request->hasFile('file_' . $x)) {
                 # code...
                 return Redirect::back()->withErrors(['msg' => 'File '.$tc->nama.' Tidak Boleh Kosong']);
             }
@@ -118,15 +118,17 @@ class PesertaController extends Controller
         foreach ($file->tender_file as $key => $ts) {
             # code...
             $x = $ts->id;
-            $tmp_file = $request->file($x);
-            $file = time().".".$tmp_file->getClientOriginalExtension();
+            if ($request->hasFile('file_' . $x)) {
+                $tmp_file = $request->file('file_' . $x);
+                $file = time().".".$tmp_file->getClientOriginalExtension();
 
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$request->id.'/'.$ts->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
-            if ($request->$x) {
+                // isi dengan nama folder tempat kemana file diupload
+                $tujuan_upload = 'Tender/FILE/'.$request->id.'/'.$ts->id;
+                $folder = public_path($tujuan_upload);
+                if (!is_dir($folder)) { mkdir($folder, 0777, true); }
+                $tmp_file->move($folder,$file);
+                //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
+                $nama_file=$tujuan_upload.'/'.$file;
                 # code...
                 //id 	tender_file_id 	user_id 	files 	keterangan 	created_at 	updated_at 	deleted_at
                 $tfs = new tender_file_detail();
@@ -136,7 +138,7 @@ class PesertaController extends Controller
                 $tfs->keterangan = "";
                 $tfs->peserta_id = $data->id;
                 $tfs->tender_id = $request->id;
-                // $tfs->status_id = 0;
+                $tfs->status_id = 0;
                 $tfs->save();
             }
         }
@@ -418,21 +420,22 @@ class PesertaController extends Controller
             $x = $ts->id;
             // echo $ts->id.". ".$ts."<br>";
             // echo $x.'<br>';
-            if ($request->$x) {
+            if ($request->hasFile('file_' . $x)) {
 
-            $tmp_file = $request->file($x);
+            $tmp_file = $request->file('file_' . $x);
             $file = time().".".$tmp_file->getClientOriginalExtension();
 
             // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$request->id.'/'.$ts->id;
-            $tmp_file->move($tujuan_upload,$file);
+            $tujuan_upload = 'Tender/FILE/'.$data->tender_id.'/'.$ts->id;
+            $folder = public_path($tujuan_upload);
+            if (!is_dir($folder)) { mkdir($folder, 0777, true); }
+            $tmp_file->move($folder,$file);
             //nama file dan tujuan di jadikan satu agar mudah di buat link
             $nama_file=$tujuan_upload.'/'.$file;
 
                 # code...
                 //id 	tender_file_id 	user_id 	files 	keterangan 	created_at 	updated_at 	deleted_at
                 $tfs = tender_file_detail::findorfail($x);
-                echo $tfs;
                 $tfs->files = $nama_file;
                 $tfs->save();
                 // return $tfs;

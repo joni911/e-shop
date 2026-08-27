@@ -52,7 +52,7 @@
                   Tabel Tender </h4> --}}
 
               <div class="update ml-3">
-                @if (auth()->user()->hak_akses != 'user')
+                @if (auth()->user()->hak_akses == 'admin')
 
                 <a type="submit" class="btn btn-primary" href="{{ route('tender_admin.create') }}" role="button" style="margin-left: 5px; margin-top: 20px;" ><b>+ Tambah</b></a>
                 @endif

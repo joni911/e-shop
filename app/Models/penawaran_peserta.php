@@ -10,6 +10,14 @@ class penawaran_peserta extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'user_id',
+        'tender_id',
+        'peserta_id',
+        'penawaran',
+        'koreksi',
+    ];
+
     public function penawaran()
     {
         # code...

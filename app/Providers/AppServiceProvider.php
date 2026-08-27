@@ -29,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
-        Blade::directive('currency', function ( $expression ) { return "Rp. <?php echo number_format($expression,0,',','.'); ?>"; });
-        Blade::directive('currencynorp', function ( $expression ) { return "<?php echo number_format($expression,0,',','.'); ?>"; });
+        Blade::directive('currency', function ( $expression ) { return "Rp. <?php echo number_format(is_numeric($expression) ? (float) $expression : 0,0,',','.'); ?>"; });
+        Blade::directive('currencynorp', function ( $expression ) { return "<?php echo number_format(is_numeric($expression) ? (float) $expression : 0,0,',','.'); ?>"; });
 
         Event::listen(BuildingMenu::class, function (BuildingMenu $event) {
             // Add some items to the menu...
@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
 
             $event->menu->add('MAIN NAVIGATION');
             switch ($user->hak_akses) {
-                case 'user':
+                default: // 'user' & 'peserta' -> menu terbatas
                     # code...
                     $event->menu->add(
                         [
@@ -66,7 +66,7 @@ class AppServiceProvider extends ServiceProvider
                     );
                     break;
 
-                default:
+                case 'admin':
                     # code...
                     $event->menu->add(
 

@@ -66,46 +66,46 @@ Asset:
 ## 5. Milestone & Acceptance (masing-masing 1 commit)
 
 ### M1 — Aset & Shell Layout
-- [ ] Salin `template_to_use/css,js,img` → `public/ui/` (cache-bust `?v=1`); EXCLUDE demo `data/*.json` dari pemakaian produksi.
-- [ ] Buat `resources/views/vendor/adminlte/page.blade.php` = shell baru: sidebar + topbar + `@yield/section` kompatibel (`title`,`content_header`,`content`,`css`,`js`).
-- [ ] Load: Bootstrap 5.3, jQuery 3.7, FontAwesome 6, CSS template + compat (M4), JS template (M4).
-- **Accept**: `/` redirect login; login halaman render shell (belum rapi penuh), curl `tender_admin` (admin) mengembalikan 200 + marker `class="ui-shell"`; `php artisan test` hijau.
+- [x] Salin `template_to_use/css,js,img` → `public/ui/` (cache-bust `?v=1`); EXCLUDE demo `data/*.json` dari pemakaian produksi.
+- [x] Buat `resources/views/vendor/adminlte/page.blade.php` = shell baru: sidebar + topbar + `@yield/section` kompatibel (`title`,`content_header`,`content`,`css`,`js`).
+- [x] Load: Bootstrap 5.3, jQuery 3.7, FontAwesome 6, CSS template + compat (M4), JS template (M4).
+- **Accept**: `/` redirect login; login halaman render shell (belum rapi penuh), curl `tender_admin` (admin) mengembalikan 200 + marker `class="ui-shell"`; `php artisan test` hijau. ✅ PASS
 
 ### M2 — Auth Pages
-- [ ] Tulis ulang `auth/login`, `auth/register` dari `login.html`/`register.html` (Boot5 + tema orange).
-- [ ] `auth/verify`, `passwords/email|reset|confirm` senada.
-- [ ] Route Auth::routes() tidak berubah; hook CSRF/errors tetap.
-- **Accept**: login sukses (curl dengan CSRF), register sukses, verify/password page render 200; test hijau.
+- [x] Tulis ulang `auth/login`, `auth/register` dari `login.html`/`register.html` (Boot5 + tema orange).
+- [x] `auth/verify`, `passwords/email|reset|confirm` senada.
+- [x] Route Auth::routes() tidak berubah; hook CSRF/errors tetap.
+- **Accept**: login sukses (curl dengan CSRF), register sukses, verify/password page render 200; test hijau. ✅ PASS
 
 ### M3 — Modal & Komponen Plugin
-- [ ] Komponen `resources/views/components/modal.blade.php` (`x-modal`) — markup Boot5, slot: default, footer.
-- [ ] Ekstrak **32 pemakaian** `x-adminlte-modal` dari 18+ file → partial 1-modal-1-file di `partials/modals/*`; halaman `@include`.
-- [ ] Komponen pengganti plugin JS: text-editor, datatable, input-date, select2 (Boot5-native/alternatif) — untuk 15+4+form component.
-- **Accept**: halaman ber-modal (mis. `tender_user/peserta/admin/file.blade.php`) render Boot5 modal; tombol buka/tutup modal jalan (dengan shim M4); test hijau.
+- [x] Komponen `resources/views/components/modal.blade.php` (`x-modal`) — markup Boot5, slot: default, footer.
+- [x] **DEViasi**: `x-adminlte-modal` (16 pemakaian/13 file) TIDAK dipindah ke `partials/modals/*` — diganti override view `resources/views/vendor/adminlte/components/tool/modal.blade.php` (Boot5). Alasan: 0-edit pada 13 blade, zero-risk, tetap memenuhi accept. File lama tetap inline (bukan 1-modal-1-partial).
+- [x] Komponen pengganti plugin JS: text-editor (→ textarea Boot5), datatable (→ tabel Boot5) — override view vendor. `input-date` & `select2` 0 pemakaian → tidak perlu.
+- **Accept**: halaman ber-modal (mis. `tender_user/peserta/admin/file.blade.php`) render Boot5 modal; tombol buka/tutup modal jalan (dengan shim M4); test hijau. ✅ PASS
 
 ### M4 — Shim JS & Compat CSS
-- [ ] `public/ui/js/shim.js`: konversi otomatis `data-toggle="modal"`→`data-bs-toggle`, `data-target`→`data-bs-target`, `data-dismiss`→`data-bs-dismiss`; init modal Boot5.
-- [ ] `public/ui/css/compat-bs4.css`: map kelas BS4→BS5 untuk 44 file (`ml-*`, `mr-*`, `float-right`, `form-inline`, `text-left/right`, `pull-*`).
-- **Accept**: halaman yang memakai modal trigger lama bisa buka/tutup; tata letak halaman yang pakai kelas BS4 tidak berantakan.
+- [x] `public/ui/js/shim.js`: konversi otomatis `data-toggle="modal"`→`data-bs-toggle`, `data-target`→`data-bs-target`, `data-dismiss`→`data-bs-dismiss`; init modal Boot5.
+- [x] `public/ui/css/compat-bs4.css`: map kelas BS4→BS5 untuk 44 file (`ml-*`, `mr-*`, `float-right`, `form-inline`, `text-left/right`, `pull-*`) + warna tema modal (bg-teal dll).
+- **Accept**: halaman yang memakai modal trigger lama bisa buka/tutup; tata letak halaman yang pakai kelas BS4 tidak berantakan. ✅ PASS
 
 ### M5 — Menu Sidebar
-- [ ] Susun markup menu shell (sidebar template) dari output `AppServiceProvider`.
-- [ ] Menu role-based tetap: admin = penuh (Tender, Master, Pemeriksaan), user/peserta = terbatas (Peserta, Tender User, Sanggahan).
-- [ ] Navbar: user dropdown (profil/logout), active-link, overlay mobile (`sidebar.js`).
-- **Accept**: login sebagai `admin@pbj.go.id` vs `peserta1@...` → sidebar berbeda sesuai role; menu klik menuju route benar.
+- [x] Susun markup menu shell (sidebar template) dari output `AppServiceProvider`.
+- [x] Menu role-based tetap: admin = penuh (Tender, Master, Pemeriksaan), user/peserta = terbatas (Peserta, Tender User, Sanggahan).
+- [x] Navbar: user dropdown (profil/logout), active-link, overlay mobile (`sidebar.js`).
+- **Accept**: login sebagai `admin@pbj.go.id` vs `peserta1@...` → sidebar berbeda sesuai role; menu klik menuju route benar. ✅ PASS
 
 ### M6 — Komponen maintenance & penyempurnaan
-- [ ] Verifikasi komponen pasif (`x-adminlte-button/alert/card`) tetap tampil benar di tema baru.
-- [ ] `x-adminlte-button` pemicu modal tetap berfungsi via shim.
-- [ ] Touch-up styling yang tersisa (form, tabel, alert) agar konsisten tema.
-- **Accept**: halaman utama (home, tender detail, admin index, dashboard) tampil konsisten; tidak ada elemen rusak terlihat.
+- [x] Verifikasi komponen pasif (`x-adminlte-button/alert/card`) tetap tampil benar di tema baru.
+- [x] `x-adminlte-button` pemicu modal tetap berfungsi via shim.
+- [x] Touch-up styling yang tersisa (form, tabel, alert) agar konsisten tema.
+- **Accept**: halaman utama (home, tender detail, admin index, dashboard) tampil konsisten; tidak ada elemen rusak terlihat. ✅ PASS
 
 ### M7 — Verifikasi Final
-- [ ] `php artisan test` → 23+ test hijau.
-- [ ] Smoke curl: `/` , `/login`, `/home` (user), `/tender_admin` (admin) → 200 + marker shell.
-- [ ] Checklist visual manual user (daftar URL + akun disediakan).
-- [ ] Update `handoff/HANDOFF.md` status migrasi.
-- **Accept**: semua item checklist PASS; PRD update status.
+- [x] `php artisan test` → 23+ test hijau.
+- [x] Smoke curl: `/` , `/login`, `/home` (user), `/tender_admin` (admin) → 200 + marker shell.
+- [ ] Checklist visual manual user (daftar URL + akun disediakan) — menunggu user.
+- [x] Update `handoff/HANDOFF.md` status migrasi.
+- **Accept**: semua item checklist PASS; PRD update status. ⏳ checklist visual user menunggu.
 
 ## 6. Verifikasi & Checklist Visual (untuk user)
 

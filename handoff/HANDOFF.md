@@ -13,6 +13,22 @@
 3. **Test suite hijau**: `php artisan test` → **17 passed / 51 assertions** (sqlite :memory: — tidak menyentuh DB MySQL).
 4. **Server lokal** berjalan di `http://127.0.0.1:8000` (artisan serve, auto-reload kode per request). **Catatan**: browser remote (kitesurf/Cloudflare) tidak bisa akses localhost → pengujian E2E dilakukan via curl HTTP (CSRF + session cookie + multipart).
 
+## Status Migrasi UI — `template_to_use` jadi Shell Baru (M1–M7 PRD_UI_MIGRATION.md)
+> Dieksekusi di branch `main` (clone segar `~/e-shop`). Semua milestone **DONE** kecuali checklist visual manual user.
+- **M1 DONE** — Aset template → `public/ui/`; shell `resources/views/vendor/adminlte/page.blade.php` (Bootstrap 5.3 + jQuery 3.7 + FontAwesome 6 + compat-bs4). Commit `afce48a`.
+- **M2 DONE** — Auth pages ditulis ulang (`auth/layout.blade.php` + login/register/verify/passwords×3). Commit `12a758e`.
+- **M3 DONE** — Komponen `x-modal` (Boot5) + override view `adminlte::components.tool.modal` (16 modal/13 blade tanpa edit), `form.text-editor`→textarea Boot5, `tool.datatable`→tabel Boot5. Commit `be2753a`. **Deviasi**: modal TIDAK diekstrak ke `partials/modals/*` (override view lebih aman, 0-edit).
+- **M4 DONE** — `public/ui/js/shim.js` (data-toggle→data-bs-*) + `public/ui/css/compat-bs4.css` (kelas BS4 + bg-teal). (Ikut commit M1.)
+- **M5 DONE** — Menu role-based dari `AppServiceProvider` di shell (`AdminLte::menu('sidebar')`); admin vs user/peserta beda. (Ikut commit M1 + fix.)
+- **M6 DONE** — Komponen pasif (button/alert/card) verifikasi; smoke test 9 halaman 200.
+- **M7 ⏳** — `php artisan test` 23 passed ✅; smoke curl `/`, `/login`, `/home`, `/tender_admin` ✅ (marker `ui-shell`); **checklist visual user menunggu**.
+- **Rollback UI**: hapus `resources/views/vendor/adminlte/page.blade.php` (+ `auth/layout.blade.php` + file override components) → kembali AdminLTE asli. Commit per milestone memudahkan revert.
+
+### Cara mengetes UI baru (browser lokal)
+Server: `php artisan serve --port=8000` (DB sqlite lokal `database/database.sqlite`, sudah migrate+seed).
+Akun: `admin@pbj.go.id` / `peserta1@maju-jaya.co.id` / `peserta2..4@...` — password `password`.
+URL: `/login` (tema baru) → login → `/home` (dashboard) → `/tender_admin` (index) → `/peserta/1/file_tender/1` (halaman ber-modal, peserta1) → `/barang`, `/dashboard`, `/sanggahan`.
+
 ## Perbaikan Bug yang Sudah Diterapkan (semua divalidasi test)
 0. **PEMISAHAN HAK AKSES (admin vs user/peserta)** — sebelum ini semua route hanya `auth+verified` (tidak ada role), dan menu switch cuma kenal `'user'` sehingga peserta dapat menu admin. Sekarang:
    - **Middleware baru** `app/Http/Middleware/CheckRole.php` (alias `role`) — daftar di `bootstrap/app.php`; `'user'` dinormalisasi setara `'peserta'`; `->middleware('role:admin')` → 403 utk non-admin.

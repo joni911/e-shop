@@ -173,6 +173,12 @@ body {
   padding: var(--space-2) var(--space-4);
   font-size: 0.875rem;
   min-height: 36px;
+  color: var(--fg-inverse) !important;
+}
+
+.public-navbar-links .btn-primary:hover {
+  color: var(--fg-inverse) !important;
+  background: var(--primary-hover) !important;
 }
 
 /* ─── Hero Section ─── */

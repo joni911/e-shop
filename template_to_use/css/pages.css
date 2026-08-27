@@ -1,0 +1,473 @@
+/* ============================================================
+   Pengadaan Tender — Page-Specific CSS
+   Auth, Tender Cards, Detail, Forms, Admin Dashboard
+   ============================================================ */
+
+/* ─── AUTH PAGES (Login / Register) ─── */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  background: linear-gradient(135deg, var(--primary-50) 0%, var(--bg) 100%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-8);
+}
+
+.auth-logo {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.auth-logo-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--primary);
+  border-radius: var(--radius-lg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-inverse);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+.auth-logo-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin: 0 auto var(--space-4);
+  display: block;
+}
+
+.auth-logo h1 {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--fg-heading);
+  margin-bottom: var(--space-1);
+}
+
+.auth-logo p {
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  margin: 0;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: var(--space-6);
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+}
+
+.auth-footer a {
+  font-weight: 500;
+}
+
+/* ─── TENDER HOME (Peserta) ─── */
+.tender-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-4);
+}
+
+.tender-card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.tender-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.tender-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  gap: var(--space-3);
+}
+
+.tender-card-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--fg-heading);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.tender-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.tender-card-meta span {
+  font-size: var(--text-xs);
+  color: var(--fg-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.tender-card-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-light);
+}
+
+.tender-card-stat {
+  text-align: center;
+}
+
+.tender-card-stat-value {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-heading);
+}
+
+.tender-card-stat-label {
+  font-size: var(--text-xs);
+  color: var(--fg-muted);
+}
+
+/* ─── TENDER DETAIL ─── */
+.tender-detail-header {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-bottom: var(--space-6);
+  border: 1px solid var(--border-light);
+}
+
+.tender-detail-title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--fg-heading);
+  margin-bottom: var(--space-4);
+}
+
+.tender-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-4);
+}
+
+.tender-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.tender-detail-item-label {
+  font-size: var(--text-xs);
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.tender-detail-item-value {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-heading);
+}
+
+/* Timeline / Tahapan */
+.tahapan-timeline {
+  position: relative;
+  padding-left: var(--space-6);
+}
+
+.tahapan-timeline::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-light);
+}
+
+.tahapan-item {
+  position: relative;
+  padding-bottom: var(--space-6);
+}
+
+.tahapan-item:last-child {
+  padding-bottom: 0;
+}
+
+.tahapan-dot {
+  position: absolute;
+  left: calc(-1 * var(--space-6) + 6px);
+  top: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  border: 2px solid var(--border);
+}
+
+.tahapan-dot.active {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.tahapan-dot.completed {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.tahapan-content {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: var(--space-4);
+}
+
+.tahapan-content h4 {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: var(--space-1);
+}
+
+.tahapan-content p {
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  margin: 0;
+}
+
+/* ─── FORM PAGES (Peserta Registrasi, Edit, dsb) ─── */
+.form-section {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+  overflow: hidden;
+}
+
+.form-section-header {
+  padding: var(--space-4) var(--space-6);
+  background: var(--surface-muted);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.form-section-header h3 {
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin: 0;
+  color: var(--fg-heading);
+}
+
+.form-section-header p {
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  margin: var(--space-1) 0 0;
+}
+
+.form-section-body {
+  padding: var(--space-6);
+}
+
+/* File list in forms */
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface-muted);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+}
+
+.file-item-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-light);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.file-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-item-name {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-item-meta {
+  font-size: var(--text-xs);
+  color: var(--fg-muted);
+}
+
+.file-item-actions {
+  display: flex;
+  gap: var(--space-1);
+}
+
+/* ─── ADMIN DASHBOARD ─── */
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.dashboard-section {
+  margin-bottom: var(--space-6);
+}
+
+.dashboard-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.dashboard-section-header h2 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Penawaran page */
+.penawaran-hps {
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--surface) 100%);
+  border: 1px solid var(--primary-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.penawaran-hps-label {
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  margin-bottom: var(--space-2);
+}
+
+.penawaran-hps-value {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Pemeriksaan checklist */
+.checklist-group {
+  margin-bottom: var(--space-6);
+}
+
+.checklist-group-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--fg-heading);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.checklist-item:last-child {
+  border-bottom: none;
+}
+
+.checklist-radio-group {
+  display: flex;
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+.checklist-radio {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.checklist-radio input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 767.98px) {
+  .tender-grid {
+    grid-template-columns: 1fr;
+  }
+  .tender-detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .auth-card {
+    padding: var(--space-6);
+  }
+  .penawaran-hps-value {
+    font-size: var(--text-2xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+  .tender-card-stats {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+  .checklist-item {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .form-section-body {
+    padding: var(--space-4);
+  }
+}

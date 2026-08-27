@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#FFF8F0" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1A1A1A" media="(prefers-color-scheme: dark)">
+  <meta name="description" content="Daftar tender pengadaan yang sedang dibuka. Akses informasi paket pengadaan, jadwal, dan syarat pendaftaran.">
+  <title>Tender Terbuka — Sistem Pengadaan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=3">
+  <link href="css/theme-public.css?v=4" rel="stylesheet">
+</head>
+<body>
+  <!-- Public Navbar -->
+  <nav class="public-navbar">
+    <a href="public-tenders.html" class="public-navbar-brand">
+      <img src="logo.png?v=3" class="public-navbar-logo" alt="Logo Pengadaan Tender">
+      <div class="public-navbar-brand-text">Pengadaan Tender</div>
+    </a>
+    <div class="public-navbar-links">
+      <a href="public-tenders.html" style="color:var(--primary);background:var(--primary-50);">Beranda</a>
+      <a href="#tender-list">Daftar Tender</a>
+      <a href="login.html" class="btn btn-primary" style="min-height:36px;padding:var(--space-2) var(--space-4);">Login</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="public-hero">
+    <div class="container-narrow">
+      <h1>Tender Pengadaan Terbuka</h1>
+      <p>Temukan peluang pengadaan barang, konstruksi, dan jasa dari instansi pemerintah. Daftar dan ikuti tender secara transparan.</p>
+
+      <!-- Search -->
+      <div class="search-bar">
+        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--fg-muted);flex-shrink:0;">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Cari nama tender, kode paket, atau lokasi...">
+      </div>
+
+      <!-- Stats -->
+      <div class="hero-stats" id="heroStats">
+        <div class="hero-stat">
+          <div class="hero-stat-value" id="statTotal">0</div>
+          <div class="hero-stat-label">Total Tender</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value" id="statAktif">0</div>
+          <div class="hero-stat-label">Sedang Dibuka</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-value" id="statTotalPagu">Rp. 0</div>
+          <div class="hero-stat-label">Total Nilai Pagu</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tender List Section -->
+  <section id="tender-list" style="padding:var(--space-12) 0;">
+    <div class="container-narrow">
+      <!-- Filters -->
+      <div style="display:flex;gap:var(--space-3);flex-wrap:wrap;align-items:center;margin-bottom:var(--space-8);">
+        <div style="flex:1;min-width:200px;">
+          <select id="filterJenis" class="form-select" style="cursor:pointer;">
+            <option value="">Semua Jenis</option>
+            <option>Barang</option>
+            <option>Pekerjaan Konstruksi</option>
+            <option>Jasa Konsultansi</option>
+            <option>Jasa Lainnya</option>
+          </select>
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <select id="filterMetode" class="form-select" style="cursor:pointer;">
+            <option value="">Semua Metode</option>
+            <option>Tender Terbuka</option>
+            <option>Tender Terbatas</option>
+            <option>Pengadaan Langsung</option>
+            <option>Seleksi</option>
+          </select>
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <select id="filterLokasi" class="form-select" style="cursor:pointer;">
+            <option value="">Semua Lokasi</option>
+            <option>Jakarta</option>
+            <option>Bandung</option>
+            <option>Surabaya</option>
+            <option>Bogor</option>
+            <option>Yogyakarta</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="applyFilters()" style="min-height:40px;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-right:4px;">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+          </svg>
+          Filter
+        </button>
+      </div>
+
+      <!-- Tender Grid -->
+      <div class="public-tender-grid" id="tenderGrid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state d-none" id="emptyState" style="text-align:center;padding:var(--space-12);">
+        <svg width="64" height="64" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--border);margin:0 auto var(--space-4);">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+        </svg>
+        <h3 style="font-size:1.25rem;color:var(--fg-heading);margin-bottom:var(--space-2);">Tidak ada tender ditemukan</h3>
+        <p style="color:var(--fg-muted);">Coba ubah kata kunci pencarian atau filter yang dipilih.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Public Footer -->
+  <footer class="public-footer">
+    <div class="container-narrow">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-4);">
+        <div>
+          <div style="font-weight:700;font-size:1.125rem;margin-bottom:var(--space-2);">Pengadaan Tender</div>
+          <p style="font-size:0.875rem;color:rgba(255,255,255,0.6);margin:0;">Sistem informasi pengadaan barang dan jasa pemerintah.</p>
+        </div>
+        <div style="display:flex;gap:var(--space-6);">
+          <a href="public-tenders.html">Beranda</a>
+          <a href="login.html">Login</a>
+          <a href="register.html">Daftar</a>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.1);margin-top:var(--space-6);padding-top:var(--space-4);text-align:center;font-size:0.8125rem;color:rgba(255,255,255,0.4);">
+        &copy; 2024 Sistem Pengadaan Tender. Semua hak dilindungi.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Fetch and render tenders
+    let allTenders = [];
+
+    async function loadTenders() {
+      try {
+        const response = await fetch('data/tenders.json');
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        allTenders = await response.json();
+        renderTenders(allTenders);
+        updateStats(allTenders);
+      } catch (err) {
+        console.error('Fetch error:', err);
+        document.getElementById('tenderGrid').innerHTML = `
+          <div style="grid-column:1/-1;text-align:center;padding:var(--space-12);">
+            <p style="color:var(--fg-muted);">Gagal memuat data tender. Silakan refresh halaman.</p>
+          </div>
+        `;
+      }
+    }
+
+    function renderTenders(tenders) {
+      const grid = document.getElementById('tenderGrid');
+      const empty = document.getElementById('emptyState');
+
+      // Filter only published and active tenders for public
+      const published = tenders.filter(t => t.publish === 1);
+
+      if (published.length === 0) {
+        grid.classList.add('d-none');
+        empty.classList.remove('d-none');
+        return;
+      }
+
+      grid.classList.remove('d-none');
+      empty.classList.add('d-none');
+
+      grid.innerHTML = published.map(t => {
+        const statusBadge = t.status === 'Aktif'
+          ? '<span class="badge badge-success">Aktif</span>'
+          : t.status === 'Selesai'
+          ? '<span class="badge badge-default">Selesai</span>'
+          : '<span class="badge badge-warning">Draft</span>';
+
+        const pendaftaran = t.tahapan.find(th => th.status === 1);
+        const jadwalText = pendaftaran
+          ? `${formatDateShort(pendaftaran.awal)} - ${formatDateShort(pendaftaran.akhir)}`
+          : '-';
+
+        const isPendaftaranAktif = pendaftaran && new Date() >= new Date(pendaftaran.awal) && new Date() <= new Date(pendaftaran.akhir);
+        const pendaftaranBadge = isPendaftaranAktif
+          ? '<span class="badge badge-primary" style="margin-left:auto;">Buka Pendaftaran</span>'
+          : '';
+
+        return `
+          <a href="tender-detail.html?id=${t.id}" class="public-tender-card">
+            <div class="public-tender-card-header">
+              <h3 class="public-tender-card-title">${escapeHtml(t.nama)}</h3>
+              ${statusBadge}
+            </div>
+            <div class="public-tender-card-meta">
+              <span>
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                ${escapeHtml(t.jp)}
+              </span>
+              <span>
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+                ${escapeHtml(t.mp)}
+              </span>
+              <span>
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                ${escapeHtml(t.lokasi)}
+              </span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin-bottom:var(--space-4);">
+              <div>
+                <div class="public-tender-card-value">${formatCurrency(t.nilai_pagu)}</div>
+                <div class="public-tender-card-label">Nilai Pagu</div>
+              </div>
+              <div>
+                <div class="public-tender-card-value">${formatCurrency(t.hps)}</div>
+                <div class="public-tender-card-label">HPS</div>
+              </div>
+            </div>
+            <div class="public-tender-card-footer">
+              <div>
+                <div class="public-tender-card-value" style="font-size:0.8125rem;color:var(--fg);">${jadwalText}</div>
+                <div class="public-tender-card-label">Jadwal Pendaftaran</div>
+              </div>
+              ${pendaftaranBadge}
+            </div>
+          </a>
+        `;
+      }).join('');
+    }
+
+    function updateStats(tenders) {
+      const published = tenders.filter(t => t.publish === 1);
+      const aktif = published.filter(t => t.status === 'Aktif');
+      const totalPagu = published.reduce((sum, t) => sum + (t.nilai_pagu || 0), 0);
+
+      document.getElementById('statTotal').textContent = published.length;
+      document.getElementById('statAktif').textContent = aktif.length;
+      document.getElementById('statTotalPagu').textContent = formatCurrency(totalPagu);
+    }
+
+    function applyFilters() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+      const jenis = document.getElementById('filterJenis').value;
+      const metode = document.getElementById('filterMetode').value;
+      const lokasi = document.getElementById('filterLokasi').value;
+
+      let filtered = allTenders.filter(t => t.publish === 1);
+
+      if (searchTerm) {
+        filtered = filtered.filter(t =>
+          t.nama.toLowerCase().includes(searchTerm) ||
+          t.paket.toLowerCase().includes(searchTerm) ||
+          t.lokasi.toLowerCase().includes(searchTerm)
+        );
+      }
+
+      if (jenis) filtered = filtered.filter(t => t.jp === jenis);
+      if (metode) filtered = filtered.filter(t => t.mp === metode);
+      if (lokasi) filtered = filtered.filter(t => t.lokasi.includes(lokasi));
+
+      renderTenders(filtered);
+    }
+
+    // Live search
+    document.getElementById('searchInput').addEventListener('input', debounce(applyFilters, 300));
+
+    // Filter change events
+    ['filterJenis', 'filterMetode', 'filterLokasi'].forEach(id => {
+      document.getElementById(id).addEventListener('change', applyFilters);
+    });
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function formatCurrency(amount) {
+      if (typeof amount !== 'number') return 'Rp. 0';
+      return 'Rp. ' + amount.toLocaleString('id-ID');
+    }
+
+    function formatDateShort(dateStr) {
+      if (!dateStr) return '-';
+      const d = new Date(dateStr);
+      return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+    }
+
+    function debounce(fn, ms) {
+      let timer;
+      return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn(...args), ms);
+      };
+    }
+
+    // CSS helper for d-none
+    const style = document.createElement('style');
+    style.textContent = '.d-none{display:none!important;}';
+    document.head.appendChild(style);
+
+    loadTenders();
+  </script>
+</body>
+</html>

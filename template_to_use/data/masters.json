@@ -1,0 +1,42 @@
+{
+  "jenis_pengadaan": [
+    {"id": 1, "nama": "Barang"},
+    {"id": 2, "nama": "Pekerjaan Konstruksi"},
+    {"id": 3, "nama": "Jasa Konsultansi"},
+    {"id": 4, "nama": "Jasa Lainnya"}
+  ],
+  "jenis_kontrak": [
+    {"id": 1, "nama": "Lump Sum"},
+    {"id": 2, "nama": "Harga Satuan"},
+    {"id": 3, "nama": "Gabungan Lump Sum dan Harga Satuan"},
+    {"id": 4, "nama": "Terima Jadi (Turnkey)"},
+    {"id": 5, "nama": "Persentase"},
+    {"id": 6, "nama": "Biaya Plus Imbalan"},
+    {"id": 7, "nama": "Waktu Penugasan"}
+  ],
+  "metode_pengadaan": [
+    {"id": 1, "nama": "Tender Terbuka"},
+    {"id": 2, "nama": "Tender Terbatas"},
+    {"id": 3, "nama": "Seleksi"},
+    {"id": 4, "nama": "Pengadaan Langsung"},
+    {"id": 5, "nama": "Penunjukan Langsung"},
+    {"id": 6, "nama": "Sayembara"},
+    {"id": 7, "nama": "Pembelian Langsung"},
+    {"id": 8, "nama": "Swakelola"},
+    {"id": 9, "nama": "Kerjasama"},
+    {"id": 10, "nama": "Konkurs"}
+  ],
+  "status_tender": [
+    {"id": 1, "nama": "Draft"},
+    {"id": 2, "nama": "Aktif"},
+    {"id": 3, "nama": "Selesai"},
+    {"id": 4, "nama": "Dibatalkan"}
+  ],
+  "status_tahapan": [
+    {"id": 0, "nama": "Biasa", "label": "default"},
+    {"id": 1, "nama": "Masa Pendaftaran", "label": "primary"},
+    {"id": 2, "nama": "Masa Pembukaan File", "label": "warning"},
+    {"id": 3, "nama": "Pengumuman Pemenang", "label": "success"},
+    {"id": 4, "nama": "Upload File", "label": "info"}
+  ]
+}

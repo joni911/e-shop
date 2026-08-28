@@ -68,8 +68,9 @@ class PublicTenderRewriteTest extends TestCase
         $tender = tender::first();
         $html = $this->actingAs($peserta)->get('/tender_home/' . $tender->id)->getContent();
 
-        $this->assertStringContainsString('modal-overlay', $html);
+        $this->assertStringContainsString('x-modal-overlay', $html);
         $this->assertStringContainsString('data-modal=', $html);
+        $this->assertStringContainsString('data-modal-close=', $html);
     }
 
     /** Status badge menampilkan $d->stn asli (bukan hardcode Draft) */

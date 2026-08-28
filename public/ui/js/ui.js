@@ -38,8 +38,8 @@ function initModals() {
     });
   });
 
-  // Close on overlay click
-  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  // Close on overlay click (dukung .modal-overlay & .x-modal-overlay)
+  document.querySelectorAll('.modal-overlay, .x-modal-overlay').forEach(overlay => {
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
         overlay.classList.remove('show');
@@ -50,7 +50,7 @@ function initModals() {
   // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show'));
+      document.querySelectorAll('.modal-overlay.show, .x-modal-overlay.show').forEach(m => m.classList.remove('show'));
     }
   });
 }

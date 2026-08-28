@@ -169,3 +169,10 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
 
 });
 
+// ─── ROUTE TEST KOMPONEN UI (hanya ketika APP_ENV=testing) ───
+if (app()->environment('testing')) {
+    Route::get('/ui-preview', function () {
+        return view('ui-preview');
+    });
+}
+

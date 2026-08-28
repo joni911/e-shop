@@ -1,227 +1,199 @@
-@extends('adminlte::page')
+@extends('layouts.peserta')
 
-@section('title', 'Dashboard')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', $data->nama)
 
 @section('content')
-
-  <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
-
-  <body>
-    {{-- <div>
-      <h3 class="card-title">Tabel Barang</h3>
-      <br>
-      <a name="" id="" class="btn btn-primary" href="{{ route('barang.create') }}" role="button">Tambah</a>
-    </div> --}}
-
-    <div class="content">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card" style="background-color: #1a642b7a;">
-
-            {{-- <div class="card"> --}}
-              <div>
-                <h3>{{$data->nama}}</h3>
-              </div>
-              <table class="table">
-                  <tbody>
-                      <tr>
-                          <td scope="row" style="background-color: #1a642b30;">Nama Tender</td>
-                          <td>{{$data->nama}}</td>
-                      </tr>
-                      <tr>
-
-                          <td scope="row" style="background-color: #1a642b30;">Tanggal Pembuatan</td>
-                          <td>{{ Carbon\Carbon::parse($data->created_at)->format('d-m-Y') }}</td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">Tahap Paket Saat Ini</td>
-                          <td>
-                              @foreach ($data->tahapan as $t)
-                                  @if ($t->akhir>$now)
-                                      <p>{{$t->nama}} {{$t->mulai}} : {{$t->akhir}}</p>
-                                      @break
-                                  @else
-
-                                  @endif
-                              @endforeach
-                          </td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">K/L/PD</td>
-                          <td>{{$data->KLPD}}</td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">Satuan Kerja</td>
-                          <td>{{$data->satuan_kerja}}</td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">Jenis Pengadaan</td>
-                          <td>{{$data->jpn}}</td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">Metode Pengadaan</td>
-                          <td>{{$data->mpn}}</td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">Tahun Anggaran</td>
-                          <td>{{$data->tahun_anggaran}}</td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">Nilai Pagu Paket</td>
-                          <td>{{$data->nilai_pagu}}</td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">Jenis Kontrak</td>
-                          <td>{{$data->jkn}}</td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">Lokasi Pekerjaan</td>
-                          <td>{{$data->lokasi_pekerjaan}}</td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">Syarat Kualifikasi</td>
-                          <td>
-                              @forelse ($data->syarat as $s)
-                                  {!! $s->content !!}
-                              @empty
-
-                              @endforelse
-                          </td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">File yang Di Butuhkan</td>
-                          <td>
-                              <?php
-                                  $key = 1;
-                              ?>
-                              @forelse ($data->tender_file as $fs)
-                                  <p>{{$key++}}. {{$fs->nama}}</p>
-                              @empty
-
-                              @endforelse
-                          </td>
-                      </tr>
-                      <tr>
-                          <td style="background-color: #1a642b30;">Peserta</td>
-                          <td>
-                              <?php
-                                  $j = 0;
-                              ?>
-                              @forelse ($data->daftar_peserta as $p)
-                              <?php
-                                  $j++
-                              ?>
-                              @empty
-
-                              @endforelse
-
-                              <a href="#">Peserta {{$j}}</a>
-                              {{-- <a href="{{ route('peserta.tender', [$data->id]) }}">Peserta {{$j}}</a> --}}
-                          </td>
-                      </tr>
-                      <tr>
-                          <td colspan="2" class="text-center">
-                        {{-- <x-adminlte-modal id="modalGreen" title="Pendaftaran" theme="success"
-                            icon="fas fa-pen" size='lg' disable-animations>
-
-                            <h3 class="text-dark">Apakah anda Ingin mendaftarkan {{$peserta->nama_pt}} ?</h3>
-                            <form action="{{ route('daftar_peserta.store') }}" method="post">
-                                @csrf
-                                <input type="text" class="form-control" name="id" value="{{$peserta->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
-                                <input type="text" class="form-control" name="tender_id" value="{{$data->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
-                                <button type="submit" class="btn btn-primary">Daftarkan</button>
-                            </form>
-                        </x-adminlte-modal> --}}
-                        {{-- Example button to open modal --}}
-                        {{-- <x-adminlte-button label="Daftar Sebagai Peserta" data-toggle="modal" data-target="#modalGreen" class="bg-success"/> --}}
-
-                            @if ($today>=$tahapan->mulai && $today<=$tahapan->akhir)
-                                 @if ($daftar_peserta)
-                                <h3 class="text-dark">Perusahaan anda {{$daftar_peserta->peserta->nama_pt}} Sudah Terdaftar !</h3>
-                                {{-- <a name="" id="" class="btn btn-primary" href="{{ route('tender_home.edit', [$data->id]) }}" role="button">Cek Dokumen Persyaratan dan Petunjuk disini!</a> --}}
-
-
-                            @else
-                                @if ($peserta)
-                                <x-adminlte-modal id="modalCustom" title="Pendaftaran Tender" size="lg" theme="green"
-                                icon="fas fa-bell" v-centered static-backdrop scrollable>
-                                <x-slot name="footerSlot">
-                                    <h3 class="text-dark">Apakah anda Ingin mendaftarkan {{$peserta->nama_pt}} ?</h3>
-                                    <p class="text-justify">Dengan menekan tombol DAFTARKAN maka anda akan dinyatakan setuju untuk melakukan proses pengadaan barang jasa sesuai aturan di PT. BPR Bank Daerah Bangli (Perseroda).</p>
-                                    <form action="{{ route('daftar_peserta.store') }}" method="post">
-                                        @csrf
-                                        <input type="text" class="form-control" name="id" value="{{$peserta->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
-                                        <input type="text" class="form-control" name="tender_id" value="{{$data->id}}" id="" aria-describedby="helpId" placeholder="" hidden>
-                                        <x-adminlte-button type="submit" class="mr-auto" theme="success" label="Daftarkan"/>
-                                    </form>
-                                    <x-adminlte-button theme="danger" label="Batalkan" data-dismiss="modal"/>
-                                </x-slot>
-                                </x-adminlte-modal>
-                                <x-adminlte-button label="Daftar Sebagai Peserta" data-toggle="modal" data-target="#modalCustom" class="bg-teal"/>
-
-                                @else
-                                    Belum mendaftarkan perusahaan
-
-                                @endif
-
-                            @endif
-                            @else
-
-                                Tender Dimulai pada {{$tahapan->mulai}} <br>
-                                Tender Selesai pada {{$tahapan->akhir}} <br>
-                            @endif
-
-                            @if ($today>=$upfile->mulai && $today<=$upfile->akhir)
-                                <a name="" id="" class="btn btn-primary" href="{{ route('penawaran_file.show', [$data->id   ]) }}" role="button">
-                                    @if ($penawaran)
-                                    Lihat File
-                                    @else
-                                    Masukkan File
-                                    @endif
-                                </a>
-                            @else
-                                <p>Upload Dokumen Penawaran Dimulai 1 - 4 November 2022</p>
-                            @endif
-
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
-
-          </div>
-
-      </div>
+<div class="page-header">
+    <h1>{{ $data->nama }}</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <span>Detail Tender</span>
     </div>
-
-  </div>
 </div>
 
+{{-- Tender Info --}}
+<div class="tender-detail-header">
+    <div class="tender-detail-title">{{ $data->nama }}</div>
+    <div class="tender-detail-grid">
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">Jenis Pengadaan</span>
+            <span class="tender-detail-item-value">{{ $data->jpn }}</span>
+        </div>
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">Jenis Kontrak</span>
+            <span class="tender-detail-item-value">{{ $data->jkn }}</span>
+        </div>
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">Metode Pengadaan</span>
+            <span class="tender-detail-item-value">{{ $data->mpn }}</span>
+        </div>
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">Status</span>
+            <span class="tender-detail-item-value">{{ $data->stn }}</span>
+        </div>
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">K/L/PD</span>
+            <span class="tender-detail-item-value">{{ $data->KLPD }}</span>
+        </div>
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">Satuan Kerja</span>
+            <span class="tender-detail-item-value">{{ $data->satuan_kerja }}</span>
+        </div>
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">Lokasi</span>
+            <span class="tender-detail-item-value">{{ $data->lokasi_pekerjaan }}</span>
+        </div>
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">Nilai Pagu</span>
+            <span class="tender-detail-item-value text-primary fw-bold">@currency($data->nilai_pagu)</span>
+        </div>
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">HPS</span>
+            <span class="tender-detail-item-value text-primary fw-bold">@currency($data->hps)</span>
+        </div>
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">Tahun Anggaran</span>
+            <span class="tender-detail-item-value">{{ $data->tahun_anggaran }}</span>
+        </div>
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">Tanggal Pembuatan</span>
+            <span class="tender-detail-item-value">{{ Carbon\Carbon::parse($data->created_at)->format('d-m-Y') }}</span>
+        </div>
+        <div class="tender-detail-item">
+            <span class="tender-detail-item-label">Peserta</span>
+            <span class="tender-detail-item-value">
+                @php($j = $data->daftar_peserta->count())
+                <a href="{{ route('peserta.tender', [$data->id]) }}">Peserta {{ $j }}</a>
+            </span>
+        </div>
+    </div>
+</div>
 
+{{-- Action Zones --}}
+<div class="mb-4" id="actionZones">
+    @if(is_object($tahapan) && $today >= $tahapan->mulai && $today <= $tahapan->akhir)
+        @if($daftar_peserta)
+            <div class="alert alert-primary">
+                <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <div class="alert-content">
+                    <strong>Zona Masa Pendaftaran</strong><br>
+                    Periode: {{ \Carbon\Carbon::parse($tahapan->mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($tahapan->akhir)->format('d M Y') }}
+                </div>
+                <span class="badge badge-success ms-auto">Sudah Terdaftar</span>
+            </div>
+        @else
+            @if($peserta)
+                <div class="alert alert-primary">
+                    <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <div class="alert-content">
+                        <strong>Zona Masa Pendaftaran</strong><br>
+                        Periode: {{ \Carbon\Carbon::parse($tahapan->mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($tahapan->akhir)->format('d M Y') }}
+                    </div>
+                    <x-button label="Daftar Sebagai Peserta" data-bs-toggle="modal" data-bs-target="#modalDaftar" variant="primary" class="ms-auto"/>
+                </div>
+            @else
+                <div class="alert alert-warning">
+                    <div class="alert-content"><strong>Zona Masa Pendaftaran</strong> — Belum mendaftarkan perusahaan. Silakan lengkapi profil peserta terlebih dahulu.</div>
+                </div>
+            @endif
+        @endif
+    @elseif(is_object($tahapan))
+        <div class="alert alert-info">
+            <div class="alert-content">
+                Tender Dimulai pada {{ \Carbon\Carbon::parse($tahapan->mulai)->format('d M Y') }}<br>
+                Tender Selesai pada {{ \Carbon\Carbon::parse($tahapan->akhir)->format('d M Y') }}
+            </div>
+        </div>
+    @endif
 
-  {{-- <script src="{{ asset('assets/js/jquery.min.js')}}"></script>
-  <script src="{{ asset('assets/js/popper.js')}}"></script>
-  <script src="{{ asset('assets/js/bootstrap.min.js')}}"></script>
-  <script src="{{ asset('assets/js/main.js')}}"></script> --}}
+    @if(is_object($upfile) && $today >= $upfile->mulai && $today <= $upfile->akhir)
+        <div class="alert alert-info">
+            <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <div class="alert-content">
+                <strong>Zona Upload File</strong><br>
+                Periode: {{ \Carbon\Carbon::parse($upfile->mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($upfile->akhir)->format('d M Y') }}
+            </div>
+            <x-button :label="$penawaran ? 'Lihat File' : 'Masukkan File'" href="{{ route('penawaran_file.show', [$data->id]) }}" variant="primary" class="ms-auto"/>
+        </div>
+    @endif
+</div>
 
-  </body>
-</html>
+{{-- Syarat Kualifikasi --}}
+@if($data->syarat->count())
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>Syarat Kualifikasi</h3>
+    </div>
+    <div class="card-body">
+        @foreach ($data->syarat as $s)
+            {!! $s->content !!}
+        @endforeach
+    </div>
+</div>
+@endif
 
+{{-- File yang dibutuhkan --}}
+@if($data->tender_file->count())
+<div class="card mb-4">
+    <div class="card-header">
+        <h3>File yang Dibutuhkan</h3>
+    </div>
+    <div class="card-body">
+        <ul class="list-unstyled">
+            @foreach ($data->tender_file as $fs)
+                <li class="d-flex align-items-center gap-2 mb-2"><i class="fas fa-file text-primary"></i> {{ $fs->nama }}</li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+@endif
 
+{{-- Tahapan Timeline --}}
+<div class="card">
+    <div class="card-header">
+        <h3>Jadwal Tahapan</h3>
+    </div>
+    <div class="card-body">
+        <div class="tahapan-timeline" id="tahapanTimeline">
+            @if($data->tahapan->count())
+                @foreach ($data->tahapan as $t)
+                    <?php
+                        $isActive = $now >= \Carbon\Carbon::parse($t->mulai) && $now <= \Carbon\Carbon::parse($t->akhir);
+                        $isCompleted = \Carbon\Carbon::parse($t->akhir) < $now;
+                        $dotClass = $isActive ? 'active' : ($isCompleted ? 'completed' : '');
+                    ?>
+                    <div class="tahapan-item">
+                        <div class="tahapan-dot {{ $dotClass }}"></div>
+                        <div class="tahapan-content">
+                            <h4>{{ $t->nama }}</h4>
+                            <p>{{ \Carbon\Carbon::parse($t->mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($t->akhir)->format('d M Y') }}</p>
+                            @if($t->status == 1)<span class="badge badge-primary">Masa Pendaftaran</span>@endif
+                            @if($t->status == 4)<span class="badge badge-info">Upload File</span>@endif
+                            @if($t->status == 3)<span class="badge badge-success">Pengumuman</span>@endif
+                            @if(isset($t->keterangan) && $t->keterangan)<a href="{{ route('perubahan.show', [$t->id]) }}">Periksa Perubahan</a>@endif
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <p class="text-muted">Belum ada tahapan yang diatur.</p>
+            @endif
+        </div>
+    </div>
+</div>
 
-
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-
-@stop
+{{-- Modal Daftar Peserta --}}
+@if($peserta && !$daftar_peserta)
+<x-modal id="modalDaftar" title="Konfirmasi Pendaftaran" size="lg" centered scrollable>
+    <p class="mb-2">Apakah Anda ingin mendaftarkan <strong>{{ $peserta->nama_pt }}</strong>?</p>
+    <p class="text-muted">Dengan menekan tombol DAFTARKAN, Anda menyatakan setuju untuk melakukan proses pengadaan barang/jasa sesuai aturan di PT. BPR Bank Daerah Bangli (Perseroda).</p>
+    <x-slot name="footer">
+        <form action="{{ route('daftar_peserta.store') }}" method="post" class="me-auto">
+            @csrf
+            <input type="hidden" name="id" value="{{ $peserta->id }}">
+            <input type="hidden" name="tender_id" value="{{ $data->id }}">
+            <x-button label="Daftar Sekarang" type="submit" variant="primary"/>
+        </form>
+        <x-button label="Batal" variant="secondary" data-bs-dismiss="modal"/>
+    </x-slot>
+</x-modal>
+@endif
+@endsection

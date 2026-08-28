@@ -1,152 +1,96 @@
-@extends('adminlte::page')
+@extends('layouts.peserta')
 
-@section('title', 'Dashboard')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', 'Daftar Tender')
 
 @section('content')
-
-@php
-    $no = 1;
-    $heads = [
-    'No',
-    'Nama Tender',
-    'HPS',
-    'Status',
-    'Tahapan'
-];
-@endphp
-
-{{-- <!doctype html>
-  <html lang="en">
-    <head>
-
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
-    </head> --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css')}}">
-
-    <body>
-      {{-- <div>
-        <h3 class="card-title">Tabel Barang</h3>
-        <br>
-        <a name="" id="" class="btn btn-primary" href="{{ route('barang.create') }}" role="button">Tambah</a>
-      </div> --}}
-
-      <div class="content">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-
-                <h2 class="text-center">
-                    <a href="https://drive.google.com/file/d/1T9gFB1UPZzJ7unt2iCoyfTiLjMnWEVdN/view?usp=sharing" target="_blank">Link Tutorial Penggunaan Aplikasi</a>
-                </h2>
-
-              <div class="update ml-3">
-                @if (auth()->user()->hak_akses == 'admin')
-
-                <a type="submit" class="btn btn-primary" href="{{ route('tender_admin.create') }}" role="button" style="margin-left: 5px; margin-top: 20px;" ><b>+ Tambah</b></a>
-                @endif
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-
-              <table class="table">
-                <thead class="thead-primary">
-                  <tr>
-
-                    <th><b>No</b></th>
-                    <th><b>Nama Tender</b></th>
-                    <th><b>HPS</b></th>
-                    <th><b>Status</b></th>
-                    <th style="text-align: center"><b>Tahapan</b></th>
-                  </tr>
-                </thead>
-                <tbody>
-                    @forelse ($data as $d)
-                  <tr class="alert" role="alert">
-                    <td>
-                        {{$no++}}
-                    </td>
-                    <td>
-                        <a href="{{ route('tender_home.show', [$d->id]) }}">{{$d->nama}}</a>
-                    </td>
-                    <td>
-                        {{$d->hps}}
-                    </td>
-                    <td>{{$d->stn}}</td>
-                    <td>
-
-                        <table>
-                            @foreach ($d->tahapan as $t)
-                               <tr>
-
-
-
-                                @if ($now<$t->akhir)
-                                    <td class="text-justify"><a href="{{ route('tahapan.show', $d->id) }}">{{$t->nama}}</a></td>
-                                    <td>Mulai {{$t->mulai}}</td>
-                                    <td>Berakhir {{$t->akhir}}</td>
-                                    @break
-                                @else
-                                    {{-- <td class="text-justify">Selesai {{$t->nama}}</td>
-                                    <td>Mulai {{$t->mulai}}</td>
-                                    <td>Berakhir {{$t->akhir}}</td> --}}
-                                @endif
-                               </tr>
-                            @endforeach
-                        </table>
-
-                    </td>
-
-                  </tr>
-
-                  @empty
-
-        @endforelse
-
-
-
-
-
-
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
+<div class="page-header">
+    <h1>Daftar Tender</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <span>Daftar Tender</span>
     </div>
-  </div>
+</div>
 
+@if(session('success'))
+    <x-alert type="success" dismissible>{{ session('success') }}</x-alert>
+@endif
 
+<div class="card mb-4">
+    <div class="card-body">
+        @if(auth()->check() && auth()->user()->hak_akses == 'admin')
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="https://drive.google.com/file/d/1T9gFB1UPZzJ7unt2iCoyfTiLjMnWEVdN/view?usp=sharing" target="_blank" class="fw-semibold">
+                        Link Tutorial Penggunaan Aplikasi
+                    </a>
+                </div>
+                <x-button label="Tambah Tender" href="{{ route('tender_admin.create') }}" variant="primary" icon="fas fa-plus"/>
+            </div>
+        @else
+            <a href="https://drive.google.com/file/d/1T9gFB1UPZzJ7unt2iCoyfTiLjMnWEVdN/view?usp=sharing" target="_blank" class="fw-semibold">
+                Link Tutorial Penggunaan Aplikasi
+            </a>
+        @endif
+    </div>
+</div>
 
-    {{-- <script src="{{ asset('assets/js/jquery.min.js')}}"></script>
-    <script src="{{ asset('assets/js/popper.js')}}"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js')}}"></script>
-    <script src="{{ asset('assets/js/main.js')}}"></script> --}}
+{{-- Grid Tender --}}
+<div class="tender-grid">
+    @forelse ($data as $d)
+        @php
+            $pendaftaranTahap = $d->tahapan->firstWhere('status', 1);
+            $jadwalText = $pendaftaranTahap
+                ? \Carbon\Carbon::parse($pendaftaranTahap->mulai)->format('d M Y') . ' - ' . \Carbon\Carbon::parse($pendaftaranTahap->akhir)->format('d M Y')
+                : '-';
+            $statusBadge = $d->stn == 'Aktif'
+                ? '<span class="badge badge-success">Aktif</span>'
+                : ($d->stn == 'Selesai' ? '<span class="badge badge-default">Selesai</span>' : '<span class="badge badge-warning">Draft</span>');
+        @endphp
+        <a href="{{ route('tender_home.show', [$d->id]) }}" class="tender-card">
+            <div class="tender-card-header">
+                <h3 class="tender-card-title">{{ $d->nama }}</h3>
+                {!! $statusBadge !!}
+            </div>
+            <div class="tender-card-meta">
+                <span>
+                    <i class="fas fa-boxes"></i> {{ $d->jpn }}
+                </span>
+                <span>
+                    <i class="fas fa-route"></i> {{ $d->mpn }}
+                </span>
+                <span>
+                    <i class="fas fa-map-marker-alt"></i> {{ $d->lokasi }}
+                </span>
+            </div>
+            <div class="tender-card-stats">
+                <div class="tender-card-stat">
+                    <div class="tender-card-stat-value">@currency($d->nilai_pagu)</div>
+                    <div class="tender-card-stat-label">Pagu</div>
+                </div>
+                <div class="tender-card-stat">
+                    <div class="tender-card-stat-value">@currency($d->hps)</div>
+                    <div class="tender-card-stat-label">HPS</div>
+                </div>
+                <div class="tender-card-stat">
+                    <div class="tender-card-stat-value">{{ $jadwalText }}</div>
+                    <div class="tender-card-stat-label">Jadwal</div>
+                </div>
+                <div class="tender-card-stat">
+                    <div class="tender-card-stat-value">{{ $d->tahun_anggaran }}</div>
+                    <div class="tender-card-stat-label">Tahun</div>
+                </div>
+            </div>
+        </a>
+    @empty
+        <div class="empty-state">
+            <h3>Tidak ada tender tersedia</h3>
+            <p>Belum ada tender yang dipublikasikan saat ini.</p>
+        </div>
+    @endforelse
+</div>
 
-
-    </body>
-  </html>
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-
-@stop
+@if(method_exists($data, 'links'))
+    <div class="d-flex justify-content-end mt-4">
+        {{ $data->links() }}
+    </div>
+@endif
+@endsection

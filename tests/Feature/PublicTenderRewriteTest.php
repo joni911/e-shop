@@ -61,14 +61,15 @@ class PublicTenderRewriteTest extends TestCase
         $this->assertStringContainsString('HPS', $html);
     }
 
-    /** Modal BS5 markup muncul di detail (x-modal component) */
+    /** Modal custom tema orange muncul di detail (x-modal component) */
     public function test_detail_tender_punya_markup_modal(): void
     {
         $peserta = $this->peserta();
         $tender = tender::first();
         $html = $this->actingAs($peserta)->get('/tender_home/' . $tender->id)->getContent();
 
-        $this->assertStringContainsString('modal', $html);
+        $this->assertStringContainsString('modal-overlay', $html);
+        $this->assertStringContainsString('data-modal=', $html);
     }
 
     /** Status badge menampilkan $d->stn asli (bukan hardcode Draft) */

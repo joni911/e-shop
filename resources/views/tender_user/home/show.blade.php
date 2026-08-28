@@ -88,7 +88,7 @@
                         <strong>Zona Masa Pendaftaran</strong><br>
                         Periode: {{ \Carbon\Carbon::parse($tahapan->mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($tahapan->akhir)->format('d M Y') }}
                     </div>
-                    <x-button label="Daftar Sebagai Peserta" data-bs-toggle="modal" data-bs-target="#modalDaftar" variant="primary" class="ms-auto"/>
+                    <x-button label="Daftar Sebagai Peserta" data-modal="modalDaftar" variant="primary" class="ms-auto"/>
                 </div>
             @else
                 <div class="alert alert-warning">
@@ -193,7 +193,7 @@
             <input type="hidden" name="tender_id" value="{{ $data->id }}">
             <x-button label="Daftar Sekarang" type="submit" variant="primary"/>
         </form>
-        <x-button label="Batal" variant="secondary" data-bs-dismiss="modal"/>
+        <x-button label="Batal" variant="secondary" data-modal-close="modalDaftar"/>
     </x-slot>
 </x-modal>
 @endif

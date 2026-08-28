@@ -10,6 +10,8 @@ class daftar_peserta extends Model
 {
     use HasFactory,SoftDeletes;
 
+    protected $fillable = ['user_id', 'tender_id', 'peserta_id'];
+
     public function user()
     {
         # code...

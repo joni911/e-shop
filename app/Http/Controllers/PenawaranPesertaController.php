@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\daftar_peserta;
 use App\Models\penawaran_peserta;
 use App\Http\Requests\Storepenawaran_pesertaRequest;
 use App\Http\Requests\Updatepenawaran_pesertaRequest;
@@ -44,6 +45,14 @@ class PenawaranPesertaController extends Controller
         //
         $user = Auth::user();
         $data = tender::findorfail($request->id);
+
+        // GUARD ZONA: hanya boleh upload jika SUDAH terdaftar (daftar_peserta) utk tender ini.
+        $daftar = daftar_peserta::where('tender_id', $request->id)
+            ->where('peserta_id', $user->peserta->id)
+            ->first();
+        if (!$daftar) {
+            return Redirect::back()->withErrors(['msg' => 'Anda belum terdaftar sebagai peserta tender ini. Silakan daftar terlebih dahulu sebelum mengupload penawaran.']);
+        }
 
         // Panitia harus menyiapkan data penawaran (judul, hps, file wajib) lebih dulu
         if (!$data->penawaran) {

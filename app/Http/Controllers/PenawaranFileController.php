@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\penawaran_file;
 use App\Http\Requests\Storepenawaran_fileRequest;
 use App\Http\Requests\Updatepenawaran_fileRequest;
+use App\Models\daftar_peserta;
 use App\Models\penawaran;
 use App\Models\penawaran_peserta;
 use App\Models\penawaran_peserta_file;
@@ -66,7 +67,6 @@ class PenawaranFileController extends Controller
     public function show($id)
     {
         //
-        // return $id;
         $tender = tender::findorfail($id);
         $data = penawaran::where('tender_id',$id)->first();
         $user = Auth::user();
@@ -75,9 +75,13 @@ class PenawaranFileController extends Controller
         ->where('tender_id',$tender->id)
         ->first()
         ;
-        // dd($pp->penawaran_peserta_file);
 
-        return view('tender_admin.penawaran.show',['tender'=>$tender,'data'=>$data,'pp'=>$pp]);
+        // Guard zona: hanya boleh UPLOAD jika SUDAH terdaftar (daftar_peserta) utk tender ini.
+        $daftar = daftar_peserta::where('tender_id', $tender->id)
+            ->where('peserta_id', $user->peserta->id)
+            ->first();
+
+        return view('tender_admin.penawaran.show',['tender'=>$tender,'data'=>$data,'pp'=>$pp,'daftar'=>$daftar]);
     }
 
     /**

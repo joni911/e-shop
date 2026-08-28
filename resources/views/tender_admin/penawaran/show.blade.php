@@ -28,6 +28,17 @@
 @endif
 
 @if(!$pp)
+@if(!$daftar)
+    {{-- Zona: belum terdaftar -> tidak boleh upload, wajib daftar dulu --}}
+    <div class="card">
+        <div class="card-body">
+            <x-alert type="warning" dismissible title="Belum Terdaftar">
+                Anda belum terdaftar sebagai peserta untuk tender ini. Silakan <a href="{{ route('tender_home.show', $tender->id) }}">daftar sebagai peserta</a> terlebih dahulu sebelum dapat mengupload penawaran.
+            </x-alert>
+            <a href="{{ route('tender_home.show', $tender->id) }}" class="btn btn-primary">Kembali ke Detail Tender</a>
+        </div>
+    </div>
+@else
 <div class="card" id="formUpload">
     <div class="card-header">
         <h3>Input Penawaran</h3>
@@ -58,6 +69,7 @@
         </form>
     </div>
 </div>
+    @endif
 @else
 <div class="card" id="existingPenawaran">
     <div class="card-header">

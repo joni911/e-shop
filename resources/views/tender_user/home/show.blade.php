@@ -169,7 +169,6 @@
                             @if($t->status == 1)<span class="badge badge-primary">Masa Pendaftaran</span>@endif
                             @if($t->status == 4)<span class="badge badge-info">Upload File</span>@endif
                             @if($t->status == 3)<span class="badge badge-success">Pengumuman</span>@endif
-                            @if(isset($t->keterangan) && $t->keterangan)<a href="{{ route('perubahan.show', [$t->id]) }}">Periksa Perubahan</a>@endif
                         </div>
                     </div>
                 @endforeach

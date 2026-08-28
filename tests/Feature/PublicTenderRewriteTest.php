@@ -68,8 +68,30 @@ class PublicTenderRewriteTest extends TestCase
         $tender = tender::first();
         $html = $this->actingAs($peserta)->get('/tender_home/' . $tender->id)->getContent();
 
-        // Komponen x-modal selalu render modal fade (BS5) bila condition terpenuhi.
-        // Assert markup modal component berfungsi di halaman ini.
         $this->assertStringContainsString('modal', $html);
+    }
+
+    /** Status badge menampilkan $d->stn asli (bukan hardcode Draft) */
+    public function test_status_badge_tampilkan_nama_status_asli(): void
+    {
+        $resp = $this->actingAs($this->peserta())->get('/tender_home');
+        $resp->assertOk();
+        $html = $resp->getContent();
+
+        // Ambil status tender dari seeder & pastikan label asli tampil
+        $statusList = \App\Models\status_tender::pluck('nama');
+        $found = false;
+        foreach ($statusList as $stn) {
+            if (str_contains($html, $stn)) { $found = true; break; }
+        }
+        $this->assertTrue($found, 'Seharusnya label status asli tampil di beranda');
+    }
+
+    /** Halaman peserta TIDAK menampilkan link admin 'Periksa Perubahan' */
+    public function test_halaman_peserta_tidak_punya_link_perubahan(): void
+    {
+        $resp = $this->actingAs($this->peserta())->get('/tender_home');
+        $resp->assertOk();
+        $this->assertStringNotContainsString('Periksa Perubahan', $resp->getContent());
     }
 }

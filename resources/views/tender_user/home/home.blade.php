@@ -41,9 +41,21 @@
             $jadwalText = $pendaftaranTahap
                 ? \Carbon\Carbon::parse($pendaftaranTahap->mulai)->format('d M Y') . ' - ' . \Carbon\Carbon::parse($pendaftaranTahap->akhir)->format('d M Y')
                 : '-';
-            $statusBadge = $d->stn == 'Aktif'
-                ? '<span class="badge badge-success">Aktif</span>'
-                : ($d->stn == 'Selesai' ? '<span class="badge badge-default">Selesai</span>' : '<span class="badge badge-warning">Draft</span>');
+            // Peta status tender -> warna badge (label sesuai $d->stn asli)
+            $badgeMap = [
+                'Publish' => 'success',
+                'Pendaftaran' => 'primary',
+                'Pengambilan Dokumen' => 'info',
+                'Aanwijzing' => 'info',
+                'Penawaran' => 'primary',
+                'Evaluasi' => 'warning',
+                'Negosiasi' => 'warning',
+                'Selesai' => 'default',
+                'Batal' => 'danger',
+                'Draft' => 'warning',
+            ];
+            $badgeColor = $badgeMap[$d->stn] ?? 'secondary';
+            $statusBadge = '<span class="badge badge-' . $badgeColor . '">' . e($d->stn) . '</span>';
         @endphp
         <a href="{{ route('tender_home.show', [$d->id]) }}" class="tender-card">
             <div class="tender-card-header">

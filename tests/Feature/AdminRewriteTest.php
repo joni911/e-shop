@@ -65,4 +65,31 @@ class AdminRewriteTest extends TestCase
         $this->assertStringContainsString('Pemeriksaan', $html);
         $this->assertStringContainsString('table-wrap', $html);
     }
+
+    /** Admin yang login ke /home harus melihat MENU ADMIN (Kelola Tender, Master, Pemeriksaan) */
+    public function test_admin_home_menampilkan_menu_admin(): void
+    {
+        $resp = $this->actingAs($this->admin())->get('/home');
+        $resp->assertOk();
+        $html = $resp->getContent();
+
+        $this->assertStringContainsString('ui-shell', $html);
+        $this->assertStringContainsString('Kelola Tender', $html); // menu admin
+        $this->assertStringContainsString('Master', $html);       // menu admin
+        $this->assertStringNotContainsString('Sanggahan', $html); // menu peserta tidak ada di admin
+    }
+
+    /** Peserta login ke /home harus melihat MENU PESERTA (bukan admin) */
+    public function test_peserta_home_menampilkan_menu_peserta(): void
+    {
+        $p = User::where('hak_akses', 'peserta')->first();
+        $p->forceFill(['email_verified_at' => now()])->save();
+        $resp = $this->actingAs($p)->get('/home');
+        $resp->assertOk();
+        $html = $resp->getContent();
+
+        $this->assertStringContainsString('ui-shell', $html);
+        $this->assertStringContainsString('Sanggahan', $html); // menu peserta
+        $this->assertStringNotContainsString('Kelola Tender', $html); // menu admin tidak ada di peserta
+    }
 }

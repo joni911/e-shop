@@ -1,4 +1,4 @@
-@extends('layouts.peserta')
+@extends(auth()->user()->hak_akses == 'admin' ? 'layouts.admin' : 'layouts.peserta')
 
 @section('title', 'Daftar Tender')
 

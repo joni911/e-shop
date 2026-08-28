@@ -97,8 +97,13 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
         Route::resource('tender_admin',tenderController::class);
         Route::get('/tender_admin/syarat/{id}',[tenderController::class ,'show_syarat'])->name('tender_admin.syarat');
         Route::get('/tender_admin/tahapan/{id}',[tenderController::class ,'show_tahapan'])->name('tender_admin.tahapan');
-        Route::resource('perubahan',PerubahanController::class);
+        // → Mutasi perubahan (create/store/edit/update/destroy) hanya admin. GET (index/show) di luar group (lihat di bawah).
+        Route::resource('perubahan',PerubahanController::class)->only(['create','store','edit','update','destroy']);
     });
+
+    // Perubahan — HANYA baca (index/show) untuk semua role (transparansi jadwal); mutasi admin di atas.
+    Route::resource('perubahan',PerubahanController::class)->only(['index','show']);
+
     //Home
     Route::resource('tender_home',TenderHomeController::class);
     //Syarat (khusus admin)

@@ -1,27 +1,14 @@
-@extends('adminlte::page')
+@extends('layouts.peserta')
 
-@section('title', 'Perubahan')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', 'Perubahan Jadwal')
 
 @section('content')
+<div class="page-header">
+    <h1>Perubahan Jadwal — {{ $tahapan->tender->nama }}</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <span>Perubahan Jadwal</span>
+    </div>
+</div>
 
-<body>
-    @include('perubahan.part.table')
-</body>
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-@include('perubahan.part.deletejs')
-
-
-@stop
+@include('perubahan.part.table')
+@endsection

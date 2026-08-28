@@ -87,11 +87,28 @@ class PublicTenderRewriteTest extends TestCase
         $this->assertTrue($found, 'Seharusnya label status asli tampil di beranda');
     }
 
-    /** Halaman peserta TIDAK menampilkan link admin 'Periksa Perubahan' */
-    public function test_halaman_peserta_tidak_punya_link_perubahan(): void
+    /** Peserta BISA akses perubahan.show (transparansi jadwal) */
+    public function test_peserta_bisa_akses_perubahan_show(): void
     {
-        $resp = $this->actingAs($this->peserta())->get('/tender_home');
+        $tahapan = \App\Models\tahapan::first();
+        if (!$tahapan) { $this->markTestSkipped('Tidak ada tahapan'); }
+
+        $resp = $this->actingAs($this->peserta())->get('/perubahan/' . $tahapan->id);
         $resp->assertOk();
-        $this->assertStringNotContainsString('Periksa Perubahan', $resp->getContent());
+        $this->assertStringContainsString('Perubahan', $resp->getContent());
+    }
+
+    /** Peserta TIDAK bisa akses mutasi perubahan (create) — 403 */
+    public function test_peserta_dilarang_akses_mutasi_perubahan(): void
+    {
+        $this->actingAs($this->peserta())->get('/perubahan/create')->assertForbidden();
+    }
+
+    /** Admin tetap bisa akses perubahan create */
+    public function test_admin_bisa_akses_perubahan_create(): void
+    {
+        $admin = \App\Models\User::where('hak_akses', 'admin')->first();
+        $admin->forceFill(['email_verified_at' => now()])->save();
+        $this->actingAs($admin)->get('/perubahan/create')->assertOk();
     }
 }

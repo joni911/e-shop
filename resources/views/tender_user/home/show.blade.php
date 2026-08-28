@@ -167,8 +167,10 @@
                             <h4>{{ $t->nama }}</h4>
                             <p>{{ \Carbon\Carbon::parse($t->mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($t->akhir)->format('d M Y') }}</p>
                             @if($t->status == 1)<span class="badge badge-primary">Masa Pendaftaran</span>@endif
+                            @if($t->status == 2)<span class="badge badge-info">Pembukaan File</span>@endif
                             @if($t->status == 4)<span class="badge badge-info">Upload File</span>@endif
                             @if($t->status == 3)<span class="badge badge-success">Pengumuman</span>@endif
+                            @if(isset($t->keterangan) && $t->keterangan)<a href="{{ route('perubahan.show', [$t->id]) }}" class="d-block mt-1 text-primary"><i class="fas fa-history"></i> Periksa Perubahan</a>@endif
                         </div>
                     </div>
                 @endforeach

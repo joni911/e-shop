@@ -1,47 +1,28 @@
-<div class="card">
-    <div class="card-header">
-      <h3 class="card-title">Tabel Tender</h3>
-      <br>
+<x-card title="Tabel Tender (Pemeriksaan)">
+    <x-slot:actions>
+        <x-button label="Tambah" href="{{ route('dashboard.create') }}" variant="primary" icon="fas fa-plus"/>
+    </x-slot:actions>
 
-      <a name="" id="" class="btn btn-primary" href="{{ route('dashboard.create') }}" role="button">Tambah</a>
-    </div>
-    <!-- /.card-header -->
-    <div class="card-body">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th style="width: 10px">No</th>
-            <th>Nama</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-            @forelse ($data as $no => $b)
+    <x-table :head="['No', 'Nama', 'Jumlah Peserta', 'Aksi']">
+        @forelse ($data as $no => $b)
+            <tr>
+                <td>{{ $no }}</td>
+                <td>{{ $b->nama }}</td>
+                <td>{{ $b->daftar_peserta->count() ?? 0 }}</td>
+                <td>
+                    <div class="actions">
+                        <x-button label="Periksa" href="{{ route('dashboard.show', [$b->id]) }}" variant="warning" icon="fas fa-eye"/>
+                    </div>
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="4" class="table-empty">Kosong</td>
+            </tr>
+        @endforelse
+    </x-table>
 
-                <tr>
-                    <td scope="row">{{$no}}</td>
-
-                    <td>{{$b->nama}}</td>
-                    <td>
-                        <a name="" id="" class="btn btn-warning" href="{{ route('dashboard.show', [$b->id]) }}" role="button"><i class="fas fa-eye    "></i></a>
-
-                        
-                    </td>
-                  </tr>
-            @empty
-                <tr>
-                    <td colspan="3" align="center">Kosong</td>
-                </tr>
-            @endforelse
-
-
-        </tbody>
-      </table>
-    </div>
-    <!-- /.card-body -->
-    <div class="card-footer clearfix">
-      <ul class="pagination pagination-sm m-0 float-right">
-        {{$data->links()}}
-      </ul>
-    </div>
-  </div>
+    @if(method_exists($data, 'links'))
+        <div class="d-flex justify-content-end mt-4">{{ $data->links() }}</div>
+    @endif
+</x-card>

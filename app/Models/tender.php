@@ -13,23 +13,28 @@ class tender extends Model
     public function status()
     {
         # code...
-        return $this->hasOne('App\Models\status_tender');
+        return $this->belongsTo('App\Models\status_tender', 'status_tender_id');
+    }
+    public function status_tender()
+    {
+        # code...
+        return $this->belongsTo('App\Models\status_tender', 'status_tender_id');
     }
     public function metode()
     {
         # code...
-         return $this->hasOne('App\Models\metode_pengadaan');
+         return $this->belongsTo('App\Models\metode_pengadaan', 'metode_pengadaan_id');
     }
 
     public function jenis_kontrak()
     {
         # code...
-         return $this->hasOne('App\Models\jenis_kontrak');
+         return $this->belongsTo('App\Models\jenis_kontrak', 'jenis_kontrak_id');
     }
     public function jenis_pengadaan()
     {
         # code...
-         return $this->hasOne('App\Models\jenis_pengadaan');
+         return $this->belongsTo('App\Models\jenis_pengadaan', 'jenis_pegadaan_id');
     }
     public function tahapan()
     {

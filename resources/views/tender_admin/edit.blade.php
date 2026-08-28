@@ -1,42 +1,24 @@
-@extends('adminlte::page')
+@extends('layouts.admin')
 
 @section('title', 'Edit Tender')
 
-@section('content_header')
-
-
-
-@stop
-
 @section('content')
+<div class="page-header">
+    <h1>Edit Tender</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <a href="{{ route('tender_admin.index') }}">Kelola Tender</a> / <span>Edit</span>
+    </div>
+</div>
 
-<body>
-    <div class="card card-primary">
-        <div class="card-header">
-          <h3 class="card-title">Edit Tender</h3>
+<x-card title="Edit Tender">
+    <form action="{{ route('tender_admin.update', [$data->id]) }}" enctype="multipart/form-data" method="post">
+        @method('put')
+        @csrf
+        @include('tender_admin.part.form')
+        <div class="d-flex gap-2 mt-4">
+            <x-button label="Simpan" type="submit" variant="primary" icon="fas fa-save"/>
+            <x-button label="Batal" href="{{ route('tender_admin.index') }}" variant="secondary"/>
         </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-
-        <form action="{{ route('tender_admin.update', [$data->id]) }}" enctype="multipart/form-data" method="post">
-            @method('put')
-            @csrf
-            @include('tender_admin.part.form')
-          <!-- /.card-body -->
-
-          <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
-</body>
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-
-@stop
+    </form>
+</x-card>
+@endsection

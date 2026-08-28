@@ -1,27 +1,14 @@
-@extends('adminlte::page')
+@extends('layouts.admin')
 
-@section('title', 'Tender')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', 'Kelola Tender')
 
 @section('content')
+<div class="page-header">
+    <h1>Kelola Tender</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <span>Kelola Tender</span>
+    </div>
+</div>
 
-<body>
-    @include('tender_admin.part.table')
-</body>
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-@include('tender_admin.part.deletejs')
-
-
-@stop
+@include('tender_admin.part.table')
+@endsection

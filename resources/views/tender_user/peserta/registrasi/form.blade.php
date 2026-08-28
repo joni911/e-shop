@@ -1,155 +1,127 @@
 @include('tender_user.peserta.part.alert')
-    <div class="card-body">
-        <div class="form-group">
-            <label for="">Izin Perusahaan *</label>
-            <input type="text"
-              class="form-control" required name="izin" id="" aria-describedby="helpId" placeholder="" value="{{$data->izin ?? ""}}">
-              <input type="text"
-              class="form-control" required name="id" hidden id="" aria-describedby="helpId" placeholder="" value="{{$data->id ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan Izin Perusahaan NIB IUJK </small>
-        </div>
-        <div class="form-group">
-            <label for="">Nomor Izin Perusahaan *</label>
-            <input type="text"
-              class="form-control" required name="nomor_izin" id="" aria-describedby="helpId" placeholder="" value="{{$data->nomor_izin ?? ""}}">
 
-            <small id="helpId" class="form-text text-muted">Masukkan Nomor Surat Izin Perusahaan</small>
-          </div>
-          <div class="form-group">
-            <label for="">Berlaku Sampai *</label>
-            <input type="date"
-              class="form-control" required name="izin_berlaku" id="" aria-describedby="helpId" placeholder="" value="{{$data->izin_berlaku ?? ""}}">
-
-            <small id="helpId" class="form-text text-muted">Masukkan Masa Berlaku Izin Usaha jika Izin Seumur hidup pakai sampai 2050</small>
-          </div>
-          <div class="form-group">
-            <label for="">Instansi Pemberi *</label>
-            <input type="text"
-              class="form-control" required name="instansi_pemberi" id="" aria-describedby="helpId" placeholder="" value="{{$data->instansi_pemberi ?? ""}}">
-
-            <small id="helpId" class="form-text text-muted">Masukkan Instansi Pemeberi Izin</small>
-          </div>
-          <div class="form-group">
-            <label for="">Kualifikasi *</label>
-            <input type="text"
-              class="form-control" required name="kualifikasi" id="" aria-describedby="helpId" placeholder="" value="{{$data->kualifikasi ?? ""}}">
-
-            <small id="helpId" class="form-text text-muted">Masukkan Jenis Kualifikasi Perusahaan</small>
-          </div>
-          <div class="form-group">
-            <label for="">Klasifikasi *</label>
-            <textarea class="form-control" required name="klasifikasi" id="" rows="3">{{$data->klasifikasi ?? ""}}</textarea>
-          </div>
-        <div class="form-group">
-          <label for="">Nama Perusahaan *</label>
-          <input type="text"
-            class="form-control" required name="nama_pt" id="" aria-describedby="helpId" placeholder="" value="{{$data->nama_pt ?? ""}}">
-
-          <small id="helpId" class="form-text text-muted">Masukkan Nama Perusahaan</small>
-        </div>
-        <h3>Akta</h3>
-        <div class="form-group">
-            <label for="">Nomor *</label>
-            <input type="number"
-              class="form-control" required name="no_akta" id="" aria-describedby="helpId" placeholder="" value="{{$data->no_akta ?? ""}}">
-          </div>
-          <div class="form-group">
-            <label for="">Tanggal Surat *</label>
-            <input type="date"
-              class="form-control" required name="tgl_akta" id="" aria-describedby="helpId" placeholder="" value="{{$data->tgl_akta ?? ""}}">
-          </div>
-          <div class="form-group">
-            <label for="">Notaris *</label>
-            <input type="text"
-              class="form-control" required name="notaris" id="" aria-describedby="helpId" placeholder="" value="{{$data->notaris ?? ""}}">
-          </div>
-          <h3>Akta Terbaru</h3>
-          <div class="form-group">
-            <label for="">Nomor *</label>
-            <input type="number"
-              class="form-control" required name="no_aktab" id="" aria-describedby="helpId" placeholder="" value="{{$data->no_aktab ?? ""}}">
-          </div>
-          <div class="form-group">
-            <label for="">Tanggal Surat *</label>
-            <input type="date"
-              class="form-control" required name="tgl_aktab" id="" aria-describedby="helpId" placeholder="" value="{{$data->tgl_aktab ?? ""}}">
-          </div>
-          <div class="form-group">
-            <label for="">Notaris *</label>
-            <input type="text"
-              class="form-control" required name="notaris_b" id="" aria-describedby="helpId" placeholder="" value="{{$data->notaris_b ?? ""}}">
-          </div>
-          {{-- <h3>NPWP</h3>
-        <div class="form-group">
-            <label for="">NPWP *</label>
-            <input type="text"
-              class="form-control" required name="NPWP" id="" aria-describedby="helpId" placeholder="" value="{{$data->NPWP ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan No NPWP</small>
-          </div>
-          <div class="form-group">
-            <label for="">Nama Pemilik NPWP *</label>
-            <input type="text"
-              class="form-control" required name="nama_npwp" id="" aria-describedby="helpId" placeholder="" value="{{$data->nama_npwp ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan Nama Pemilik NPWP</small>
-          </div> --}}
-          <h2>Bukti KSWP</h2>
-          <div class="form-group">
-            <label for="">NPWP *</label>
-            <input type="text"
-              class="form-control" required name="kswp_npwp" id="" aria-describedby="helpId" placeholder="" value="{{$data->kswp_npwp ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan No NPWP</small>
-          </div>
-          <div class="form-group">
-            <label for="">Nama Pemilik NPWP *</label>
-            <input type="text"
-              class="form-control" required name="kswp_nama" id="" aria-describedby="helpId" placeholder="" value="{{$data->kswp_nama ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan Nama Pemilik NPWP</small>
-          </div>
-          <h2>Data Perusahaan</h2>
-          <div class="form-group">
-            <label for="">No HP *</label>
-            <input type="text"
-              class="form-control" required name="no_hp" id="" aria-describedby="helpId" placeholder="" value="{{$data->no_hp ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan Nomor Whatsapp Perusahaan</small>
-          </div>
-          {{-- <div class="form-group">
-            <label for="">No Telephone *</label>
-            <input type="text"
-              class="form-control" required name="no_tlp" id="" aria-describedby="helpId" placeholder="" value="{{$data->no_tlp ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan Nomor Telephone Perusahaan</small>
-          </div> --}}
-          <div class="form-group">
-            <label for="">Alamat *</label>
-            <textarea class="form-control" required name="alamat" id="" rows="3">{{$data->alamat ?? ""}}</textarea>
-          </div>
-          <div class="form-group">
-            <label for="">Email *</label>
-            <input type="email"
-              class="form-control" required name="email" id="" aria-describedby="helpId" placeholder="" value="{{$data->email ?? ""}}">
-            <small id="helpId" class="form-text text-muted">Masukkan Email Perusahaan</small>
-          </div>
-          <h2>File Upload</h2>
-        @forelse ($file as $tf)
-          @if ($tf->nama)
-          <div class="form-group">
-            <label for="">{{$tf->nama}} *</label>
-            <input type="file"
-            accept=".jpg, .jpeg, .png, .pdf, .pdf, .zip, .rar, .7z"
-            class="form-control-file" required name="file_{{$tf->id}}" id="" placeholder="Isi File Untuk Update File" aria-describedby="fileHelpId">
-            <small id="helpId" class="form-text text-muted">Masukkan File {{$tf->keterangan}}</small>
-
-          </div>
-          @else
-          <div class="form-group">
-            <label for="">{{$tf->nama_file}} *</label>
-            <input type="file"
-            accept=".jpg, .jpeg, .png, .pdf, .pdf, .zip, .rar, .7z"
-            class="form-control-file" required name="file_{{$tf->id}}" id="" placeholder="Isi File Untuk Update File" aria-describedby="fileHelpId">
-            <a href="/{{$tf->file}}">Download File {{$tf->nama_file}}</a>
-          </div>
-          @endif
-        @empty
-
-        @endforelse
-
+{{-- Izin Usaha --}}
+<div class="form-section">
+    <div class="form-section-header">
+        <h3>Izin Usaha</h3>
     </div>
+    <div class="form-section-body">
+        <div class="row g-4">
+            <div class="col-12 col-md-6">
+                <x-input label="Izin (NIB/IUJK)" name="izin" value="{{ $data->izin ?? '' }}" required
+                         placeholder="Masukkan Izin Perusahaan NIB IUJK"/>
+            </div>
+            <div class="col-12 col-md-6">
+                <x-input label="Nomor Izin" name="nomor_izin" value="{{ $data->nomor_izin ?? '' }}" required
+                         placeholder="Masukkan Nomor Surat Izin Perusahaan"/>
+            </div>
+            <div class="col-12 col-md-6">
+                <x-input label="Izin Berlaku Sampai" name="izin_berlaku" type="date" value="{{ $data->izin_berlaku ?? '' }}" required
+                         hint="Izin seumur hidup pakai sampai 2050"/>
+            </div>
+            <div class="col-12 col-md-6">
+                <x-input label="Instansi Pemberi" name="instansi_pemberi" value="{{ $data->instansi_pemberi ?? '' }}" required
+                         placeholder="Masukkan Instansi Pemberi Izin"/>
+            </div>
+            <div class="col-12 col-md-6">
+                <x-input label="Kualifikasi" name="kualifikasi" value="{{ $data->kualifikasi ?? '' }}" required
+                         placeholder="Masukkan Jenis Kualifikasi Perusahaan"/>
+            </div>
+            <div class="col-12 col-md-6">
+                <x-textarea label="Klasifikasi" name="klasifikasi" rows="2" value="{{ $data->klasifikasi ?? '' }}" required/>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Data Perusahaan --}}
+<div class="form-section">
+    <div class="form-section-header">
+        <h3>Data Perusahaan</h3>
+    </div>
+    <div class="form-section-body">
+        <div class="row g-4">
+            <div class="col-12 col-md-6">
+                <x-input label="Nama PT" name="nama_pt" value="{{ $data->nama_pt ?? '' }}" required
+                         placeholder="Masukkan Nama Perusahaan"/>
+            </div>
+            <div class="col-12 col-md-6">
+                <x-input label="No. HP" name="no_hp" value="{{ $data->no_hp ?? '' }}" required
+                         placeholder="Masukkan Nomor Whatsapp Perusahaan"/>
+            </div>
+            <div class="col-12 col-md-6">
+                <x-input label="Email" name="email" type="email" value="{{ $data->email ?? '' }}" required
+                         placeholder="Masukkan Email Perusahaan"/>
+            </div>
+            <div class="col-12">
+                <x-textarea label="Alamat" name="alamat" rows="3" value="{{ $data->alamat ?? '' }}" required/>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Akta --}}
+<div class="form-section">
+    <div class="form-section-header">
+        <h3>Akta Pendirian & Perubahan</h3>
+    </div>
+    <div class="form-section-body">
+        <div class="row g-4">
+            <div class="col-12 col-md-4"><x-input label="No. Akta Pendirian" name="no_akta" type="number" value="{{ $data->no_akta ?? '' }}" required/></div>
+            <div class="col-12 col-md-4"><x-input label="Tgl. Akta Pendirian" name="tgl_akta" type="date" value="{{ $data->tgl_akta ?? '' }}" required/></div>
+            <div class="col-12 col-md-4"><x-input label="Notaris" name="notaris" value="{{ $data->notaris ?? '' }}" required/></div>
+            <div class="col-12 col-md-4"><x-input label="No. Akta Terbaru" name="no_aktab" type="number" value="{{ $data->no_aktab ?? '' }}" required/></div>
+            <div class="col-12 col-md-4"><x-input label="Tgl. Akta Terbaru" name="tgl_aktab" type="date" value="{{ $data->tgl_aktab ?? '' }}" required/></div>
+            <div class="col-12 col-md-4"><x-input label="Notaris Terbaru" name="notaris_b" value="{{ $data->notaris_b ?? '' }}" required/></div>
+        </div>
+    </div>
+</div>
+
+{{-- KSWP --}}
+<div class="form-section">
+    <div class="form-section-header">
+        <h3>KSWP (Keterangan Status Wajib Pajak)</h3>
+    </div>
+    <div class="form-section-body">
+        <div class="row g-4">
+            <div class="col-12 col-md-6">
+                <x-input label="NPWP" name="kswp_npwp" value="{{ $data->kswp_npwp ?? '' }}" required
+                         placeholder="Masukkan No NPWP"/>
+            </div>
+            <div class="col-12 col-md-6">
+                <x-input label="Nama Wajib Pajak" name="kswp_nama" value="{{ $data->kswp_nama ?? '' }}" required
+                         placeholder="Masukkan Nama Pemilik NPWP"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Berkas Persyaratan --}}
+<div class="form-section">
+    <div class="form-section-header">
+        <h3>Berkas Persyaratan</h3>
+        <p>Upload dokumen wajib (jpg/jpeg/png/pdf/zip/rar/7z)</p>
+    </div>
+    <div class="form-section-body">
+        <div class="row g-4">
+            @forelse ($file as $tf)
+                <div class="col-12 col-md-6">
+                    @if($tf->nama)
+                        <x-file label="{{ $tf->nama }} *" name="file_{{ $tf->id }}" required
+                                accept=".jpg,.jpeg,.png,.pdf,.zip,.rar,.7z" hint="{{ $tf->keterangan ?? '' }}"/>
+                    @else
+                        <div class="mb-3">
+                            <x-file label="{{ $tf->nama_file }} *" name="file_{{ $tf->id }}" required
+                                    accept=".jpg,.jpeg,.png,.pdf,.zip,.rar,.7z"/>
+                            <a href="/{{ $tf->file }}" class="d-inline-block mt-2">Download File {{ $tf->nama_file }}</a>
+                        </div>
+                    @endif
+                </div>
+            @empty
+                <div class="col-12 text-muted">Tidak ada berkas wajib.</div>
+            @endforelse
+        </div>
+    </div>
+</div>
+
+<input type="hidden" name="id" value="{{ $data->id ?? '' }}">

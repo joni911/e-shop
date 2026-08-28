@@ -1,33 +1,20 @@
-@extends('adminlte::page')
+@extends('layouts.peserta')
 
 @section('title', 'Pendaftaran Kelengkapan Berkas Peserta')
 
-@section('content_header')
-
-
-
-@stop
-
 @section('content')
+<div class="page-header">
+    <h1>Pendaftaran Kelengkapan Berkas Peserta</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <span>Registrasi Peserta</span>
+    </div>
+</div>
 
-<body>
-    <div class="card card-danger">
-        <div class="card-header">
-          <h2 class="card-title">Anda Belum melengkapi berkas berksa yang dibutuhkan!</h2>
-
-        </div>
-        <p class="text-center">Daftarkan perusahaan anda di link berikut ini </p>
-          <a name="" id="" class="btn btn-success" href="{{ route('peserta.create') }}" role="button">Daftarkan Perusahaan Anda</a>
-      </div>
-
-</body>
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-
-@stop
+<div class="card">
+    <div class="card-body text-center py-5">
+        <h2 class="mb-3">Anda Belum Melengkapi Berkas yang Dibutuhkan!</h2>
+        <p class="text-muted">Daftarkan perusahaan Anda di link berikut ini:</p>
+        <x-button label="Daftarkan Perusahaan Anda" href="{{ route('peserta.create') }}" variant="success" icon="fas fa-building"/>
+    </div>
+</div>
+@endsection

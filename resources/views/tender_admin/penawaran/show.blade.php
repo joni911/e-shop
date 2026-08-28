@@ -1,92 +1,93 @@
-@extends('adminlte::page')
+@extends('layouts.peserta')
 
-@section('title', 'Create Penawaran')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', 'Upload Penawaran')
 
 @section('content')
-
-<body>
-
-    @include('global.alert')
-    <div class="card card-primary">
-        <div class="card-header">
-            <h3 class="card-title">Tambah Penawaran {{$tender->nama}}</h3>
-        </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-        <div class="card-body">
-            <p>Nilai HPS        = @currency(optional($data)->hps ?? "")</p>
-            {{-- <p>Niali Anggaran   = @currency($data->anggaran ?? "")</p> --}}
-            <p>Penjelasan : </p>
-            <p>{!! optional($data)->penjelasan ?? "" !!}</p>
-        </div>
-
-
-        @if (!$pp)
-            <form action="{{ route('penawaran_peserta.store') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="card-body">
-                    <div class="form-group">
-                    <label for="">Penawaran *</label>
-                    <input type="number"
-                        class="form-control" required name="penawaran" id="" aria-describedby="helpId" placeholder="">
-                    <small id="helpId" class="form-text text-muted">Masukkan nominal penawaran anda disini!</small>
-                    </div>
-                    @forelse (optional($data)->penawaran_file ?? [] as $no => $pf)
-                    <div class="form-group">
-                        <label for="">{{$pf->nama}} *</label>
-                        <input required type="file" class="form-control-file" name="file_{{$pf->id}}" id="" placeholder="" aria-describedby="fileHelpId">
-                        <small id="fileHelpId" class="form-text text-muted">{{$pf->keterangan}}</small>
-                    </div>
-
-                    @empty
-
-                    @endforelse
-
-                    <input type="text" class="form-control" name="id" hidden value="{{$tender->id}}" id="" aria-describedby="helpId" placeholder="">
-
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    {{-- <a name="" id="" class="btn btn-success" href="{{ route('tender_file.show',[$syarat->id]) }}" role="button">Selesai</a> --}}
-
-                </div>
-            </form>
-        @else
-        <?php
-            $no = 1;
-        ?>
-        <div class="card-body">
-            <p>Penawaran : @currency($pp->penawaran)</p>
-            @forelse ($pp->penawaran_peserta_file as $item)
-
-                <p><a href="/{{$item->file}}" download="{{$item->nama}}">{{$no++}}. {{$item->nama}}</a></p>
-
-            @empty
-
-            @endforelse
-        </div>
-        @endif
+<div class="page-header">
+    <h1>Upload Penawaran</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <a href="{{ route('tender_home.show', $tender->id) }}">Detail Tender</a> / <span>Penawaran</span>
     </div>
-</body>
+</div>
 
-@stop
+@include('global.alert')
 
-@section('css')
+{{-- HPS Display --}}
+<div class="penawaran-hps">
+    <div class="penawaran-hps-label">Harga Perkiraan Sendiri (HPS)</div>
+    <div class="penawaran-hps-value">@currency(optional($data)->hps ?? 0)</div>
+</div>
 
-@stop
+@if($data)
+<div class="card mb-4">
+    <div class="card-body">
+        <p><strong>Penjelasan:</strong></p>
+        <p>{!! optional($data)->penjelasan ?? '' !!}</p>
+    </div>
+</div>
+@endif
 
-@section('js')
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-<script type="text/javascript">
-    $('#summernote').summernote({
-        height: 400
-    });
-</script>
-@stop
+@if(!$pp)
+<div class="card" id="formUpload">
+    <div class="card-header">
+        <h3>Input Penawaran</h3>
+    </div>
+    <div class="card-body">
+        <form action="{{ route('penawaran_peserta.store') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" name="id" value="{{ $tender->id }}">
+
+            <div class="form-group">
+                <x-input label="Nilai Penawaran (Rp)" name="penawaran" type="number" required
+                         placeholder="Masukkan nominal penawaran" hint="Masukkan tanpa titik atau koma"/>
+            </div>
+
+            @forelse (optional($data)->penawaran_file ?? [] as $pf)
+                <div class="form-group">
+                    <x-file label="{{ $pf->nama }} *" name="file_{{ $pf->id }}" required
+                            accept=".pdf,.jpg,.jpeg,.zip" hint="{{ $pf->keterangan ?? '' }}"/>
+                </div>
+            @empty
+                <p class="text-muted">Tidak ada file penawaran yang diwajibkan.</p>
+            @endforelse
+
+            <div class="d-flex gap-3 justify-content-end mt-4">
+                <a href="{{ route('tender_home.show', $tender->id) }}" class="btn btn-secondary">Batal</a>
+                <x-button label="Kirim Penawaran" type="submit" variant="primary" icon="fas fa-paper-plane"/>
+            </div>
+        </form>
+    </div>
+</div>
+@else
+<div class="card" id="existingPenawaran">
+    <div class="card-header">
+        <h3>Penawaran Anda</h3>
+    </div>
+    <div class="card-body">
+        <div class="row g-4 mb-4">
+            <div class="col-12 col-md-6">
+                <div class="tender-detail-item">
+                    <span class="tender-detail-item-label">Nilai Penawaran</span>
+                    <span class="tender-detail-item-value text-primary fw-bold">@currency($pp->penawaran)</span>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="mb-3" style="font-size:var(--text-sm);font-weight:600;">File Penawaran</h4>
+        @forelse ($pp->penawaran_peserta_file as $no => $item)
+            <div class="file-item">
+                <div class="file-item-icon"><i class="fas fa-file text-primary"></i></div>
+                <div class="file-item-info">
+                    <div class="file-item-name">{{ $item->nama }}</div>
+                </div>
+                <div class="file-item-actions">
+                    <a href="/{{ $item->file }}" download="{{ $item->nama }}" class="btn btn-sm btn-secondary">Download</a>
+                </div>
+            </div>
+        @empty
+            <p class="text-muted">Belum ada file penawaran.</p>
+        @endforelse
+    </div>
+</div>
+@endif
+@endsection

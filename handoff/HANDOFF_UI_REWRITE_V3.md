@@ -3,7 +3,7 @@
 > Dokumen untuk melanjutkan pekerjaan besok.
 > **Branch aktif**: `update-ui-2` (dibuat dari `7e1dc57` = snapshot bersih sebelum migrasi UI).
 > **PRD acuan**: `handoff/PRD_UI_REWRITE_v3.md`.
-> **Status**: Migrasi UI **BERJALAN** — F0–F4 (bagian inti) selesai. F4 sisa + F5 + F6 belum.
+> **Status**: Migrasi UI **BERJALAN** — F0–F4 (semua) selesai. F5 + F6 belum.
 
 ---
 
@@ -41,11 +41,11 @@
 | **F2** Beranda & Detail | ✅ SELESAI | home (tender-card grid) + show (detail header + tahapan timeline + modal) + `Perubahan` + `PublicTenderRewriteTest` |
 | **F3** Registrasi & Upload | ✅ SELESAI | registrasi (form-section + steps) + upload penawaran (HPS + form) + `RegistrasiUploadTestSeeder` + guard zona |
 | **F4** Admin (bagian inti) | ✅ DONE | kelola tender (index/create/edit) + dashboard pemeriksaan + fix relasi tender + `AdminRewriteTest` (+ fix role menu) |
-| **F4** sisa (dashboard/show & tahapan) | ⏳ BELUM | Halaman pemeriksaan detail & atur tahapan masih AdminLTE |
+| **F4** sisa (dashboard/show & tahapan) | ✅ SELESAI | `dashboard/peserta/show` (Daftar Peserta Tender, layout admin, data kelengkapan + penawaran currency) + `tender_admin/tahapan` (Atur Tahapan dari template: alert info + tabel badge status + form tambah; aksi Edit/Hapus dipertahankan) + `AdminF4SisaTest` |
 | **F5** Master data + e-shop | ⏳ BELUM | jenis_kontrak, jenis_pengadaan, metode, status, tahapan, katagori, perubahan, e-shop (Barang/shops/user_barang) |
 | **F6** Cleanup AdminLTE | ⏳ BELUM | Hapus semua `@extends('adminlte::page')`, `x-adminlte-*`, package AdminLTE, aset vendor |
 
-**Test**: `php artisan test` → **49 passed / 164 assertions** (sqlite :memory:).
+**Test**: `php artisan test` → **53 passed / 185 assertions** (sqlite :memory:).
 
 ---
 
@@ -113,9 +113,10 @@ Semua load: Bootstrap 5.3 CDN, jQuery 3.7, FontAwesome 6, `public/ui/css/*`, `pu
 
 ## 8. HALAMAN YANG MASIH PERLU DI-REWRITE (pekerjaan besok)
 
-### F4 sisa (prioritas)
-- `resources/views/dashboard/peserta/show` — pemeriksaan peserta **detail** (kompleks: tabel penilaian 4 tahap, file) → template `admin-pemeriksaan.html`
-- `resources/views/tender_admin/tahapan/*` — atur tahapan → template `tender-admin-tahapan.html`
+### F4 sisa ✅ (sudah dikerjakan)
+- `dashboard/peserta/show` → layout admin + x-card/x-table, semua field kelengkapan (email/NPWP/alamat/no_hp/managemen/user_id/tender_id) + penawaran `@currency` + aksi Lihat File + pagination
+- `tender_admin/tahapan/create` → dari template `tender-admin-tahapan.html`: alert info tender, tabel (badge status 0-4, keterangan + link Periksa Perubahan, aksi Edit/Hapus), form tambah (x-input/x-select, submit `tahapan.store`)
+- Part lama `dashboard/peserta/part/{admintable,table}.blade.php` jadi tidak terpakai (bisa dirapikan saat F6)
 
 ### F5 Master data & e-shop (semua masih `@extends('adminlte::page')`)
 - `jenis_kontrak`, `jenis_pengadaan`, `metode_pengadaan`, `status_tender`, `tahapan`, `katagori`, `perubahan` (index/create/edit → pakai komponen `x-card`/`x-table`/`x-form`)
@@ -141,9 +142,9 @@ Semua load: Bootstrap 5.3 CDN, jQuery 3.7, FontAwesome 6, `public/ui/css/*`, `pu
 | `penawaran-upload.html` | Upload | `tender_admin.penawaran.show` ✅ |
 | `tender-admin-index.html` | Kelola | `tender_admin.index` ✅ |
 | `tender-admin-form.html` | Form | `tender_admin.create/edit` ✅ |
-| `tender-admin-tahapan.html` | Tahapan | `tender_admin.tahapan` ⏳ |
+| `tender-admin-tahapan.html` | Tahapan | `tender_admin.tahapan` ✅ |
 | `admin-dashboard.html` | Dashboard | `dashboard.index` ✅ (belum pakai stats card template) |
-| `admin-pemeriksaan.html` | Pemeriksaan | `dashboard.peserta.show` ⏳ |
+| `admin-pemeriksaan.html` | Pemeriksaan | `dashboard.peserta.show` ✅ (daftar peserta; template checklist per-peserta belum dipakai — belum ada route form pemeriksaan) |
 | `public-tenders.html` | Publik | (belum ada route/controller) |
 
 ---
@@ -155,6 +156,7 @@ Semua load: Bootstrap 5.3 CDN, jQuery 3.7, FontAwesome 6, `public/ui/css/*`, `pu
 - `RegistrasiUploadTest` (2) — registrasi/upload
 - `PenawaranPesertaTest` (7) — upload + guard zona
 - `AdminRewriteTest` (6) — kelola tender + menu role
+- `AdminF4SisaTest` (4) — atur tahapan (render + store) + daftar peserta
 - `PendaftaranTest`, `PenawaranPesertaTest` lama (sudah diupdate sesuai aturan baru)
 - `HakAksesTest` (6), `ExampleTest`, dll
 
@@ -192,11 +194,12 @@ Kredensial:
 ---
 
 ## 13. PERLU DICEK / RISIKO BESOK
-1. **`dashboard.show` (pemeriksaan detail)** — paling kompleks, banyak tabel penilaian & file; hati-hati data field.
-2. **Form admin**: pastikan relasi `jenis_pengadaan`/`metode`/`status_tender` menampilkan nama benar (sudah fix belongsTo).
-3. **e-shop legacy** (`Barang`/`shops`/`user_barang`) — mungkin tidak dipakai domain pengadaan; konfirmasi apakah perlu di-rewrite.
-4. **Router `/`** masih `redirect()->route('login')` — OK.
-5. **`@php` di loop** — ingat pakai `<?php ?>` bila error blade.
+1. **Form admin**: pastikan relasi `jenis_pengadaan`/`metode`/`status_tender` menampilkan nama benar (sudah fix belongsTo).
+2. **e-shop legacy** (`Barang`/`shops`/`user_barang`) — mungkin tidak dipakai domain pengadaan; konfirmasi apakah perlu di-rewrite.
+3. **Router `/`** masih `redirect()->route('login')` — OK.
+4. **`@php` di loop** — ingat pakai `<?php ?>` bila error blade.
+5. **Part lama** `dashboard/peserta/part/*` sekarang orphan (tidak di-include) — hapus saat F6 bila aman.
+6. **`tender_admin/tahapan/tahapan.blade.php`** (dipakai `TahapanController@show` → `/tahapan/{id}`) masih AdminLTE — masuk scope F5 master.
 
 ---
 
@@ -208,4 +211,4 @@ Kredensial:
 
 ---
 
-*Sesi UI rewrite v3 selesai sampai F4 (bagian inti). Lanjut besok: F4 sisa → F5 → F6 (cleanup AdminLTE). Semua keputusan & patch penting sudah didokumentasikan di atas.*
+*Sesi UI rewrite v3 selesai sampai F4 (semua). Lanjut besok: F5 → F6 (cleanup AdminLTE). Semua keputusan & patch penting sudah didokumentasikan di atas.*

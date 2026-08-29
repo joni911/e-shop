@@ -4,6 +4,7 @@
         @forelse ($pp->penawaran_peserta_file as $ppf)
             @php
                 $pv = $ppf; // path ->file, id ->id
+                $pv_prefix = 'penawaran';
                 $label = $ppf->nama ?? 'File ' . $ppf->id;
             @endphp
             @include('tender_user.peserta.files.part.preview')

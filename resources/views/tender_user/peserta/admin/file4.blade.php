@@ -4,14 +4,16 @@
             <div class="d-flex gap-2 flex-wrap">
                 @if ($rkk->smkk)
                     @php
-                        $pv = (object) ['id' => 'smkk-' . $rkk->id, 'files' => $rkk->smkk];
+                        $pv = (object) ['id' => $rkk->id, 'files' => $rkk->smkk];
+                        $pv_prefix = 'smkk';
                         $label = 'SMKK';
                     @endphp
                     @include('tender_user.peserta.files.part.preview')
                 @endif
                 @if ($rkk->komitmen)
                     @php
-                        $pv = (object) ['id' => 'komitmen-' . $rkk->id, 'files' => $rkk->komitmen];
+                        $pv = (object) ['id' => $rkk->id, 'files' => $rkk->komitmen];
+                        $pv_prefix = 'komitmen';
                         $label = 'Pakta Komitmen SMKK';
                     @endphp
                     @include('tender_user.peserta.files.part.preview')

@@ -2,6 +2,7 @@
     @forelse ($berkas as $tfd)
         @php
             $pv = $tfd;
+            $pv_prefix = 'berkas';
             $label = $tfd->tender_file->nama ?? 'File ' . $tfd->id;
         @endphp
         @include('tender_user.peserta.files.part.preview')

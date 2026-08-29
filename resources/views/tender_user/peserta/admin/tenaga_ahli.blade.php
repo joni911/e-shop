@@ -11,6 +11,7 @@
             <td>
                 @php
                     $pv = $ta; // path ->file
+                    $pv_prefix = 'ta';
                     $label = $ta->nama_file ?? $ta->nama;
                 @endphp
                 <div class="d-flex gap-2 flex-wrap">

@@ -1,17 +1,16 @@
 {{-- Preview file dalam modal custom (x-modal) — pengganti x-adminlte-modal
      Parameter (harus di-set sebelum include):
-       $pv    : objek item file (->id, path ->files ATAU ->file)
-       $label : judul tombol/modal
-       $fn    : (opsional) nama tambahan untuk unduhan
-     -------------------------------------------------------------
-     Contoh:
-       @php $pv = $pe; $label = $pe->pekerjaan; @endphp
-       @include('tender_user.peserta.files.part.preview')
+       $pv        : objek item file (->id, path ->files ATAU ->file)
+       $label     : judul tombol/modal
+       $pv_prefix : (PENTING) prefix unik per konteks agar id modal TIDAK duplikat
+                    antar tabel (mis. 'berkas', 'penawaran', 'admin-file', 'pengalaman', 'ta', 'alat')
+       $fn        : (opsional) nama tambahan untuk unduhan
 --}}
 @php
+    $pv_prefix = $pv_prefix ?? 'fp';
     $pv_path = $pv->files ?? $pv->file ?? '';
     $pv_ext  = strtolower(pathinfo($pv_path, PATHINFO_EXTENSION));
-    $pv_id   = 'fp-' . ($pv->id ?? md5($pv_path));
+    $pv_id   = $pv_prefix . '-' . ($pv->id ?? md5($pv_path));
     $pv_dl   = trim($label . ' ' . ($fn ?? ''));
 @endphp
 

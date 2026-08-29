@@ -16,6 +16,7 @@
             <td>
                 @php
                     $pv = $pe; // path ->file
+                    $pv_prefix = 'pengalaman';
                     $label = $pe->pekerjaan;
                 @endphp
                 <div class="d-flex gap-2 flex-wrap">

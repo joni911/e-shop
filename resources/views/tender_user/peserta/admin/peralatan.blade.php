@@ -14,6 +14,7 @@
             <td>
                 @php
                     $pv = $p; // path ->file
+                    $pv_prefix = 'alat';
                     $label = $p->nama;
                 @endphp
                 <div class="d-flex gap-2 flex-wrap">

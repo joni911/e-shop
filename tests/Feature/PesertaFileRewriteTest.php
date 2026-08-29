@@ -52,6 +52,16 @@ class PesertaFileRewriteTest extends TestCase
         // tidak boleh ada sisa AdminLTE
         $this->assertStringNotContainsString('x-adminlte', $html);
         $this->assertStringNotContainsString('adminlte::page', $html);
+
+        // id modal harus UNIK (regression: dulu 'fp-{id}' bisa duplikat antar konteks
+        // → getElementById mengembalikan modal tab pertama walau klik di tab lain)
+        preg_match_all('/data-modal="([^"]+)"/', $html, $mt);
+        $this->assertNotEmpty($mt[1] || [], 'Tidak ada trigger modal ditemukan');
+        $this->assertCount(count(array_unique($mt[1])), $mt[1], 'data-modal duplikat ditemukan');
+        foreach ($mt[1] as $tid) {
+            preg_match_all('/id="' . preg_quote($tid, '/') . '"/', $html, $mm);
+            $this->assertCount(1, $mm[0], 'Modal id ' . $tid . ' muncul lebih dari sekali');
+        }
     }
 
     public function test_peserta_lihat_berkas_renders_shell_peserta(): void

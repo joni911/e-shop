@@ -4,6 +4,7 @@
         @forelse ($admin as $apf)
             @php
                 $pv = $apf; // path ->file
+                $pv_prefix = 'admin-file';
                 $label = $apf->nama ?? 'File ' . $apf->id;
             @endphp
             @include('tender_user.peserta.files.part.preview')

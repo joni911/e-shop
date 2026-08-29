@@ -1,123 +1,75 @@
-@extends('adminlte::page')
+@extends(auth()->user()->hak_akses == 'admin' ? 'layouts.admin' : 'layouts.peserta')
 
-@section('title', 'Tender')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', 'Sanggah Banding')
 
 @section('content')
+<div class="page-header">
+    <h1>Sanggah Banding</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <a href="{{ route('sanggahan.index') }}">Sanggahan</a> / <span>{{ $data->nama }}</span>
+    </div>
+</div>
 
-<body>
-    @include('global.alert')
-    <div class="container-fluid">
-        <h2 class="text-center">Sanggah Banding </h2>
-        <p>Bagi Peserta yang ingin mengecek hasil evalusi bisa membuka file dibawah</p>
-        <div class="container text-center">
-            <x-adminlte-modal id="modalPurple" title="Dokumen Berita Acara Evaluasi" theme="warning" icon="fas fa-file"
-                size='lg' disable-animations>
-                <iframe src="https://drive.google.com/file/d/1_xsXiFa1pvIZa2lRRslC7b_Iy8JfF42b/preview" frameborder="0"
-                    scrolling="no" style="overflow:hidden;height:480px;width:100%" height="480px" width="100%"></iframe>
-            </x-adminlte-modal>
-            {{-- Example button to open modal --}}
-            <x-adminlte-button label="Buka Berita Acara Evaluasi" data-toggle="modal" data-target="#modalPurple"
-                class="bg-warning" />
-        </div>
-        <p>
-            Untuk Masa Sanggah Banding akan di lakukan pada tgl 23 Nopember 2022 bisa di akses di link di bawah jika
-            waktu sanggah banding sudah di buka maka peserta dapat mengakses form di bawah ini
-        </p>
-        @if ($sanggah)
-        <h2 class="text-center">Sanggahan</h2>
-        <p>{!!$sanggah->keterangan!!}</p>
-        <div class="container text-center">
-            {{-- Minimal --}}
-            <x-adminlte-modal id="modalMin" title="Minimal" theme="success" size="lg">
-                <object data="/{{$sanggah->file}}" frameborder="0" scrolling="no"
-                    style="overflow:hidden;height:480px;width:100%" height="480px" width="100%"></object>
-            </x-adminlte-modal>
-            {{-- Example button to open modal --}}
-            <x-adminlte-button label="Buka File Sanggahan" theme="success" data-toggle="modal" data-target="#modalMin" />
+@include('global.alert')
 
-            <x-adminlte-modal id="modalCustom" title="Hapus Sanggahan" size="sm" theme="danger" icon="fas fa-bell"
-                v-centered static-backdrop scrollable>
-                <p>Apakah anda yakin menghapus sanggahan anda?</p>
-                <x-slot name="footerSlot">
-                    <form method="POST" action="{{ route('sanggahan.destroy', $sanggah->id) }}">
-                        @csrf
-                        @method("DELETE")
-                        <button type="submit" class="btn btn btn-danger btn-flat show_confirm" data-toggle="tooltip"
-                            title='Delete'>Hapus</button>
-                    </form>
-                    <x-adminlte-button theme="success" label="Batal" data-dismiss="modal" />
-                </x-slot>
-            </x-adminlte-modal>
-            {{-- Example button to open modal --}}
-            <x-adminlte-button label="Hapus Data" data-toggle="modal" data-target="#modalCustom" class="bg-danger" />
+{{-- Berita Acara Evaluasi --}}
+<x-card title="Sanggah Banding">
+    <p>Bagi peserta yang ingin mengecek hasil evaluasi, silakan buka dokumen Berita Acara Evaluasi di bawah ini.</p>
 
+    <x-button label="Buka Berita Acara Evaluasi" variant="warning" icon="fas fa-file" data-modal="modal-berita-acara"/>
+    <x-modal id="modal-berita-acara" title="Dokumen Berita Acara Evaluasi" size="lg">
+        <iframe src="https://drive.google.com/file/d/1_xsXiFa1pvIZa2lRRslC7b_Iy8JfF42b/preview" frameborder="0" scrolling="no" style="overflow:hidden;height:480px;width:100%" height="480px" width="100%"></iframe>
+        <x-slot:footer>
+            <x-button label="Tutup" variant="secondary" data-modal-close="modal-berita-acara"/>
+        </x-slot:footer>
+    </x-modal>
+</x-card>
 
-        </div>
-        <p class="text-center">Untuk mengedit dokumen silakan hapus dan kirim ulang</p>
-        @else
-        <form action="{{ route('sanggahan.store') }}" enctype="multipart/form-data" method="post">
+@if ($sanggah)
+    {{-- Sanggahan sudah ada --}}
+    <x-card title="Sanggahan">
+        <p>{!! $sanggah->keterangan !!}</p>
+
+        @if ($sanggah->file)
+            <x-button label="Buka File Sanggahan" variant="success" icon="fas fa-file" data-modal="modal-sanggah-file"/>
+            <x-modal id="modal-sanggah-file" title="File Sanggahan" size="lg">
+                <object data="/{{ $sanggah->file }}" frameborder="0" scrolling="no" style="overflow:hidden;height:480px;width:100%" height="480px" width="100%"></object>
+                <x-slot:footer>
+                    <x-button label="Download" href="/{{ $sanggah->file }}" variant="primary" icon="fas fa-download"/>
+                    <x-button label="Tutup" variant="secondary" data-modal-close="modal-sanggah-file"/>
+                </x-slot:footer>
+            </x-modal>
+        @endif
+    </x-card>
+
+    <x-card title="Hapus Sanggahan">
+        <p class="text-muted">Untuk mengedit dokumen, silakan hapus lalu kirim ulang.</p>
+        <form method="POST" action="{{ route('sanggahan.destroy', $sanggah->id) }}" onsubmit="return confirm('Apakah Anda yakin menghapus sanggahan Anda?')">
             @csrf
-            @php
-            $config = [
-            "height" => "100",
-            "toolbar" => [
-            // [groupName, [list of button]]
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'video']],
-            ['view', ['fullscreen', 'codeview', 'help']],
-            ],
-            ]
-            @endphp
-            <x-adminlte-text-editor name="keterangan" label="Keterangan *" label-class="text" igroup-size="sm"
-                placeholder="Tulis sanggahan disini..." :config="$config" />
-
-            <div class="form-group">
-                <label for="">Masukkan File Sanggahan Disini *</label>
-                <input type="file" class="form-control-file" required name="file" id="" placeholder=""
-                    aria-describedby="fileHelpId">
-                {{-- <small id="fileHelpId" class="form-text text-muted">Hasil sanggahan akan di kirim ke </small> --}}
-
-                <input type="text" name="peserta" hidden value="{{$peserta->id}}">
-                <input type="text" name="tender" hidden value="{{$data->id}}">
+            @method('DELETE')
+            <x-button label="Hapus Data" type="submit" variant="danger" icon="fas fa-trash"/>
+        </form>
+    </x-card>
+@else
+    {{-- Form sanggahan baru --}}
+    <x-card title="Kirim Sanggahan">
+        <p class="text-muted">Untuk masa sanggah banding, isi keterangan dan unggah file di bawah ini.</p>
+        <form action="{{ route('sanggahan.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="row g-4">
+                <div class="col-12">
+                    <x-textarea label="Keterangan" name="keterangan" rows="4" placeholder="Tulis sanggahan di sini..."/>
+                </div>
+                <div class="col-12 col-md-6">
+                    <x-file label="File Sanggahan" name="file" required hint="Berkas pendukung sanggahan (PDF/gambar/arsip)"/>
+                </div>
             </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <input type="hidden" name="peserta" value="{{ $peserta->id }}">
+            <input type="hidden" name="tender" value="{{ $data->id }}">
+            <div class="d-flex gap-3 justify-content-end mt-4">
+                <x-button label="Submit" type="submit" variant="primary"/>
             </div>
         </form>
-        @endif
-
-    </div>
-
-</body>
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-@include('dashboard.part.deletejs')
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-<script type="text/javascript">
-    $('#summernote').summernote({
-        height: 400
-    });
-
-</script>
-
-
-@stop
+    </x-card>
+@endif
+@endsection

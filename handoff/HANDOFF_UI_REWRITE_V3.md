@@ -45,7 +45,7 @@
 | **F5** Master data + e-shop | ✅ (bagian fungsional) | `tahapan` ✅, `jenis_kontrak` ✅, `jenis_pengadaan` ✅, `metode_pengadaan` ✅, `status_tender` ✅ (+fix route update), `katagori` ✅, `Barang` (admin e-shop) ✅. Bukan fungsional (controller kosong): `perubahan` create/edit, `shops`/`user_barang` |
 | **F6** Cleanup AdminLTE | ⏳ BELUM | Hapus semua `@extends('adminlte::page')`, `x-adminlte-*`, package AdminLTE, aset vendor |
 
-**Test**: `php artisan test` → **64 passed / 255 assertions** (sqlite :memory:).
+**Test**: `php artisan test` → **67 passed / 287 assertions** (sqlite :memory:).
 
 ---
 
@@ -137,6 +137,11 @@ Semua load: Bootstrap 5.3 CDN, jQuery 3.7, FontAwesome 6, `public/ui/css/*`, `pu
 - Partial `admin/file*` & tabel (pengalaman/pekerjaan_berjalan/tenaga_ahli/peralatan) di-rewrite: semua `x-adminlte-modal` → partial baru `files/part/preview` (x-modal custom preview img/pdf/arsip + tombol Download + Tutup) — id modal unik per-record
 - Fix null-safety: `$pp` (penawaran_peserta) bisa null → `(($pp->penawaran ?? 0))` — parens PENTING: `(float) $pp->x ?? 0` tetap error (precedence cast > null-coalesce)
 - `peserta/2/file_tender/1` (dan sembarang pid/tid) render 200 + ui-shell, zero x-adminlte
+
+### F5 EXTRA 2 — edit peserta & sanggahan ✅
+- **`peserta.edit`** (`/peserta/{id}/edit` → `tender_user/peserta/edit`) — rewrite ke layout dinamis per role + komponen; form SELF-CONTAINED (tidak lagi include `part/form`): Identitas Perusahaan, Izin, Akta, Akta Perubahan, Bukti KSWP, Data Perusahaan, File Pendukung (x-file per tender_file_detail + link download existing). Submit PUT `/peserta/{id}`; tombol Berikutnya → `administrasi_list.show`. `part/form` masih dipakai create/dashboard (belum di-rewrite).
+- **`sanggahan.index`** (`/sanggahan` → `dashboard/sanggahan/index`) — rewrite layout dinamis + x-card/x-table (No/Nama/Aksi Sanggahan) + pagination.
+- **`sanggahan.show`** (`dashboard/sanggahan/pengumuman`) — rewrite: modal Berita Acara (iframe Google Drive) via x-modal, jika sudah ada sanggah → tampil keterangan {!! !!} + modal file + tombol hapus (confirm); jika belum → form store (textarea keterangan + x-file + hidden peserta/tender). Catatan: editor rich-text Summernote diganti textarea biasa (fungsi kirim tetap sama, tanpa toolbar).
 - e-shop legacy: `Barang`, `user_barang`, `shops`
 
 ### F6 Cleanup AdminLTE (terakhir)

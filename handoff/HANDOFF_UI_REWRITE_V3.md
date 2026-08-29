@@ -45,7 +45,7 @@
 | **F5** Master data + e-shop | ✅ (bagian fungsional) | `tahapan` ✅, `jenis_kontrak` ✅, `jenis_pengadaan` ✅, `metode_pengadaan` ✅, `status_tender` ✅ (+fix route update), `katagori` ✅, `Barang` (admin e-shop) ✅. Bukan fungsional (controller kosong): `perubahan` create/edit, `shops`/`user_barang` |
 | **F6** Cleanup AdminLTE | ⏳ BELUM | Hapus semua `@extends('adminlte::page')`, `x-adminlte-*`, package AdminLTE, aset vendor |
 
-**Test**: `php artisan test` → **62 passed / 240 assertions** (sqlite :memory:).
+**Test**: `php artisan test` → **64 passed / 255 assertions** (sqlite :memory:).
 
 ---
 
@@ -131,6 +131,12 @@ Semua load: Bootstrap 5.3 CDN, jQuery 3.7, FontAwesome 6, `public/ui/css/*`, `pu
 ⏳ **Tidak bisa di-rewrite (controller kosong / tidak berfungsi)**:
 - `perubahan` create/edit — `PerubahanController@create()/edit()` KOSONG (render blank 200, tidak ada view aktif); butuh implementasi controller dulu
 - `shops`/`user_barang` — `shops/index.blade.php` kosong (hanya @extends), `user_barang/index` render widget dummy `Barang.part.table`; `UserBarangController@show/add` kosong. Storefront e-shop non-fungsional — rewrite = menambah fitur (di luar PRD non-goal). Konfirmasi ke pemilik sebelum dikerjakan.
+
+### F5 EXTRA — halaman berkas peserta `peserta.file` ✅
+- **`peserta.file`** (`peserta/{id}/file_tender/{pid}` → `tender_user/peserta/files/show`) — rewrite ke layout DINAMIS (admin→layouts.admin, peserta→layouts.peserta): card data peserta (perusahaan/user/email/alamat/no_hp/peringkat+nilai/file), status kesimpulan pemeriksaan (x-alert info/danger/success + tombol Edit), card penawaran, tab BS5 (Kualifikasi/Administrasi/Teknis/Harga/Penilaian)
+- Partial `admin/file*` & tabel (pengalaman/pekerjaan_berjalan/tenaga_ahli/peralatan) di-rewrite: semua `x-adminlte-modal` → partial baru `files/part/preview` (x-modal custom preview img/pdf/arsip + tombol Download + Tutup) — id modal unik per-record
+- Fix null-safety: `$pp` (penawaran_peserta) bisa null → `(($pp->penawaran ?? 0))` — parens PENTING: `(float) $pp->x ?? 0` tetap error (precedence cast > null-coalesce)
+- `peserta/2/file_tender/1` (dan sembarang pid/tid) render 200 + ui-shell, zero x-adminlte
 - e-shop legacy: `Barang`, `user_barang`, `shops`
 
 ### F6 Cleanup AdminLTE (terakhir)
@@ -170,6 +176,7 @@ Semua load: Bootstrap 5.3 CDN, jQuery 3.7, FontAwesome 6, `public/ui/css/*`, `pu
 - `AdminF4SisaTest` (4) — atur tahapan (render + store) + daftar peserta
 - `TahapanMasterTest` (3) — master tahapan index/create (regression crash)/edit
 - `MasterDataRewriteTest` (6) — 4 master index/create/edit + status_tender fix route update + katagori store + Barang CRUD render
+- `PesertaFileRewriteTest` (2) — halaman berkas peserta (admin + peserta) render shell + tabs + zero x-adminlte
 - `PendaftaranTest`, `PenawaranPesertaTest` lama (sudah diupdate sesuai aturan baru)
 - `HakAksesTest` (6), `ExampleTest`, dll
 

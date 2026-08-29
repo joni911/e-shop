@@ -1,23 +1,20 @@
-<table class="table">
+<table class="table align-middle mb-0">
     <tbody>
         <tr>
-            <td scope="row">Nama Perusahaan</td>
-            <td>{{$data->nama_pt}}</td>
+            <th style="width: 220px;">Nama Perusahaan</th>
+            <td>{{ $data->nama_pt }}</td>
         </tr>
         <tr>
-            <td scope="row">Nama User</td>
-            <td>{{$data->user->name}}</td>
+            <th>Nama User</th>
+            <td>{{ $data->user->name }}</td>
         </tr>
-            <td>No HP</td>
-            <td>{{$data->no_hp}}</td>
-        </tr>
-
         <tr>
-            <td>Penawaran : </td>
-            <td>
-                @currency($pp->penawaran)
-            </td>
+            <th>No HP</th>
+            <td>{{ $data->no_hp }}</td>
         </tr>
-
+        <tr>
+            <th>Penawaran</th>
+            <td>@currency(($pp->penawaran ?? 0))</td>
+        </tr>
     </tbody>
 </table>

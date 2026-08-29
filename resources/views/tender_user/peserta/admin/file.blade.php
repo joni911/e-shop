@@ -1,53 +1,12 @@
-
-<table class="table">
-
-    <tbody>
-        <tr class="text-center">
-            @foreach ($berkas as $tfd)
-                {{-- <a href="{{$tfd->files}}">{{$tfd->tender_file->nama}}</a> --}}
-                {{-- Custom --}}
-                    <td>
-                        <x-adminlte-modal id="modalCustom-{{$tfd->id}}" title="{{$tfd->tender_file->nama}}" size="lg" theme="teal"
-                            icon="fas fa-bell" v-centered static-backdrop scrollable>
-                            <div style="height:auto;">
-                                <h3>File {{$tfd->tender_file->nama}}</h3>
-                                @php
-                                    $ext = pathinfo($tfd->files, PATHINFO_EXTENSION)
-                                @endphp
-                                @if ($ext == 'jpg' || $ext == 'png' || $ext == 'jpeg' ||
-                                    $ext == 'JPG' || $ext == 'PNG' || $ext == 'JPEG')
-                                    <img src="/{{$tfd->files}}" class="img-fluid" alt="Responsive image">
-
-                                    @elseif ($ext == 'pdf' || $ext == 'PDF')
-                                        <object data="/{{$tfd->files}}" width="750" height="400"></object>
-
-                                    @elseif ($ext == 'zip' || $ext == 'rar' || $ext == '7z')
-                                        <a name="" id="" class="btn btn-primary" href="/{{$tfd->files}}" role="button"><i class="fas fa-download    "> Download File</i></a>
-                                    @else
-                                        File {{$tfd->files}}
-                                        <br>
-                                        Extensi {{$ext}} Tidak di dukung
-                                    @endif
-
-                                {{-- @include('tender_user.peserta.admin.validasi.create') --}}
-                            </div>
-                            <x-slot name="footerSlot">
-                                {{-- <x-adminlte-button class="mr-auto" type="submit" theme="success" label="Terima"/> --}}
-                                <a name="" id="" class="mr-auto btn btn-primary" href="/{{$tfd->files}}" download="{{$tfd->tender_file->nama}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i> Simpan File</a>
-
-                                <x-adminlte-button theme="danger" label="Tutup" data-dismiss="modal"/>
-                            </x-slot>
-                            </x-adminlte-modal>
-
-                            {{-- Example button to open modal --}}
-                            <x-adminlte-button icon="fas fa-eye" label="{{$tfd->tender_file->nama}}" data-toggle="modal" data-target="#modalCustom-{{$tfd->id}}" class="bg-teal"/>
-                            <a name="" id="" class="btn btn-primary" href="/{{$tfd->files}}" download="{{$tfd->tender_file->nama}} {{$fn}}" role="button"><i class="fa fa-download" aria-hidden="true"></i></a>
-                            {{-- <p>Status File</p> --}}
-                            {{-- <p>{{$tfd->validasi_file->status ?? "Belum di verifikasi"}}</p> --}}
-                    </td>
-
-            @endforeach
-        </tr>
-
-    </tbody>
-</table>
+<div class="d-flex gap-2 flex-wrap">
+    @forelse ($berkas as $tfd)
+        @php
+            $pv = $tfd;
+            $label = $tfd->tender_file->nama ?? 'File ' . $tfd->id;
+        @endphp
+        @include('tender_user.peserta.files.part.preview')
+        <x-button label="Download" href="/{{ $tfd->files }}" :download="$label . ' ' . $fn" variant="primary" size="sm" icon="fas fa-download"/>
+    @empty
+        <p class="text-muted mb-0">Tidak ada berkas.</p>
+    @endforelse
+</div>

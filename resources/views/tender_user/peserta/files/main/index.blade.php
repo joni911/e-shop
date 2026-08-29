@@ -1,62 +1,55 @@
-<div class="col-md">
-    <div class="card">
-      <div class="card-header p-2">
-        <ul class="nav nav-pills text-center">
-          <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Persyaratan Kualifikasi</a></li>
-          <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Administrasi</a></li>
-          <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Evaluasi Teknis</a></li>
-          <li class="nav-item"><a class="nav-link" href="#s1" data-toggle="tab">Harga</a></li>
-          <li class="nav-item"><a class="nav-link" href="#s2" data-toggle="tab">Penilaian</a></li>
+<div class="card">
+    <div class="card-header p-2">
+        <ul class="nav nav-pills card-header-pills gap-1 flex-wrap" id="fileTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-kualifikasi" type="button" role="tab">Persyaratan Kualifikasi</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-administrasi" type="button" role="tab">Administrasi</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-teknis" type="button" role="tab">Evaluasi Teknis</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-harga" type="button" role="tab">Harga</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-penilaian" type="button" role="tab">Penilaian</button>
+            </li>
         </ul>
-      </div><!-- /.card-header -->
-      <div class="card-body">
-        <div class="tab-content">
-          <div class="active tab-pane" id="activity">
-            <!-- Aktivity -->
+    </div>
+    <div class="card-body">
+        <div class="tab-content" id="fileTabsContent">
+            <div class="tab-pane fade show active" id="tab-kualifikasi" role="tabpanel">
                 <h2 class="text-center">Persyaratan Kualifikasi</h2>
-                    @include('tender_user.peserta.admin.file')
+                @include('tender_user.peserta.admin.file')
+                <h3 class="text-center">Pengalaman</h3>
+                @include('tender_user.peserta.admin.pengalaman')
+                <h3 class="text-center">Pekerjaan Sedang Berjalan</h3>
+                @include('tender_user.peserta.admin.pekerjaan_berjalan')
+                @include('tender_user.peserta.files.penilaian.kualifikasi')
+            </div>
 
-                    <h3 class="text-center">Pengalaman</h3>
-                    @include('tender_user.peserta.admin.pengalaman')
-                    <h3 class="text-center">Pekerjaan Sedang Berjalan</h3>
-                    @include('tender_user.peserta.admin.pekerjaan_berjalan')
-                    {{-- Penilaian --}}
-                    @include('tender_user.peserta.files.penilaian.kualifikasi')
-            <!-- End Aktivity -->
-          </div>
-          <!-- /.tab-pane -->
-          <div class="tab-pane" id="timeline">
-            <!-- The timeline -->
-            <h1 class="text-center">
-                Administrasi
-
-            </h1>
+            <div class="tab-pane fade" id="tab-administrasi" role="tabpanel">
+                <h2 class="text-center">Administrasi</h2>
                 @include('tender_user.peserta.admin.file3')
                 @include('tender_user.peserta.files.penilaian.admin')
+            </div>
 
+            <div class="tab-pane fade" id="tab-teknis" role="tabpanel">
+                @include('tender_user.peserta.files.part.kualifikasi')
+                @include('tender_user.peserta.files.penilaian.teknis')
+            </div>
 
+            <div class="tab-pane fade" id="tab-harga" role="tabpanel">
+                @include('tender_user.peserta.files.part.penawaran')
+                @include('tender_user.peserta.admin.file2')
+                @include('tender_user.peserta.files.penilaian.peserta')
+            </div>
 
-
-          </div>
-          <!-- /.tab-pane -->
-
-          <div class="tab-pane" id="settings">
-            @include('tender_user.peserta.files.part.kualifikasi')
-            @include('tender_user.peserta.files.penilaian.teknis')
-          </div>
-
-          <!-- /.tab-pane -->
-        <div class="tab-pane" id="s1">
-            @include('tender_user.peserta.files.part.penawaran')
-            @include('tender_user.peserta.admin.file2')
-            @include('tender_user.peserta.files.penilaian.peserta')
+            <div class="tab-pane fade" id="tab-penilaian" role="tabpanel">
+                @include('tender_user.peserta.files.part.penilaian')
+            </div>
         </div>
-        <div class="tab-pane" id="s2">
-            @include('tender_user.peserta.files.part.penilaian')
-        </div>
-        </div>
-        <!-- /.tab-content -->
-      </div><!-- /.card-body -->
     </div>
-    <!-- /.card -->
-  </div>
+</div>

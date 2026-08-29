@@ -1,156 +1,97 @@
-@extends('adminlte::page')
+@extends(auth()->user()->hak_akses == 'admin' ? 'layouts.admin' : 'layouts.peserta')
 
-@section('title', 'Daftar Peserta')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', 'File Peserta')
 
 @section('content')
+@php
+    $fn = str_replace('.', ' ', "{$data->nama_pt}");
+@endphp
 
 @if ($message = Session::get('warning-limit'))
-
-<x-adminlte-alert theme="warning" title="Warning" dismissable>
-    <strong>{{ $message }}</strong>
-</x-adminlte-alert>
-
-
+    <x-alert type="warning" dismissible>{{ $message }}</x-alert>
 @endif
-@include('global.alert')
-<div class="card">
-    <div class="card-header">
-        @if ($pemeriksaan == null)
-        <h3 class="card-title-center text-center">Tender {{$data->id}} User {{$data->user_id}}
-            <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>
-        </h3>
-        @else
-            @if ($pemeriksaan->kesimpulan != 'Lulus')
-            <h3 class="card-title-center text-center bg-danger">Tender {{$data->nama_tender}} {{$pemeriksaan->kesimpulan}}
-                <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>
-            </h3>
-            @else
-            <h3 class="card-title-center text-center bg-success">Tender {{$data->nama_tender}} {{$pemeriksaan->kesimpulan}}
-                <a name="" id="" class="btn-sm btn-primary" href="{{ route('peserta.edit', ['pesertum'=>$data->id]) }}" role="button"><i class="fas fa-pencil-alt    "></i> Edit</a>
-            </h3>
-            @endif
-        @endif
+
+<div class="page-header">
+    <h1>File Peserta</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <span>File Peserta</span>
     </div>
-    <table class="table">
+</div>
+
+{{-- Status kesimpulan pemeriksaan --}}
+@if ($pemeriksaan == null)
+    <x-alert type="info">
+        <strong>Tender {{ $data->id }} — User {{ $data->user_id }}</strong>
+        <x-button label="Edit" href="{{ route('peserta.edit', ['pesertum' => $data->id]) }}" variant="primary" size="sm" icon="fas fa-pencil-alt"/>
+    </x-alert>
+@elseif ($pemeriksaan->kesimpulan != 'Lulus')
+    <x-alert type="danger" :title="$pemeriksaan->kesimpulan">
+        Tender {{ $data->nama_tender }}
+        <x-button label="Edit" href="{{ route('peserta.edit', ['pesertum' => $data->id]) }}" variant="primary" size="sm" icon="fas fa-pencil-alt"/>
+    </x-alert>
+@else
+    <x-alert type="success" :title="$pemeriksaan->kesimpulan">
+        Tender {{ $data->nama_tender }}
+        <x-button label="Edit" href="{{ route('peserta.edit', ['pesertum' => $data->id]) }}" variant="primary" size="sm" icon="fas fa-pencil-alt"/>
+    </x-alert>
+@endif
+
+{{-- Data peserta --}}
+<x-card title="Data Peserta">
+    <table class="table align-middle mb-0">
         <tbody>
             <tr>
-                <td scope="row">Nama Perusahaan</td>
-                <td>{{$data->nama_pt}}</td>
+                <th style="width: 240px;">Nama Perusahaan</th>
+                <td>{{ $data->nama_pt }}</td>
             </tr>
             <tr>
-                <td scope="row">Nama User</td>
-                <td>{{$data->user->name}}</td>
+                <th>Nama User</th>
+                <td>{{ $data->user->name }}</td>
             </tr>
             <tr>
-                <td>Email</td>
+                <th>Email</th>
+                <td>{{ $data->email ?? '' }}</td>
+            </tr>
+            <tr>
+                <th>Alamat</th>
+                <td>{{ $data->alamat }}</td>
+            </tr>
+            <tr>
+                <th>No HP</th>
+                <td>{{ $data->no_hp }}</td>
+            </tr>
+            <tr>
+                <th>Peringkat Peserta</th>
                 <td>
-                    {{$data->email ?? ""}}
-                </td>
-            </tr>
-            <tr>
-                <td>Alamat</td>
-                <td>{{$data->alamat}}</td>
-            </tr>
-            <tr>
-                <td>No HP</td>
-                <td>{{$data->no_hp}}</td>
-            </tr>
-            {{-- <tr>
-                <td>Nilai Tender</td>
-                <td>HPS: {{$data->tender->hps}}
-                    <br>
-                    Pagu : {{$data->tender->nilai_pagu}}
-                </td>
-            </tr> --}}
-            <tr>
-                <td>Peringkat Peserta</td>
-                <td>
-
                     @forelse ($nilai as $urut => $n)
                         @if ($n->peserta_id == $data->id)
-                            Peringkat ke : {{$urut+1}}
+                            Peringkat ke : {{ $urut + 1 }}
                             <br>
-                            Nilai :{{$n->nilai}}
+                            Nilai : {{ $n->nilai }}
                         @endif
                     @empty
                         Tender Belum dinilai
                     @endforelse
                 </td>
             </tr>
-            {{-- <tr>
-                <td>Penawaran</td>
-                <td>Penwaran : {{$data->penawaran}}
-                    Koreksi : {{$data->harga_koreksi}}
-                        @if ($data->harga_koreksi<=0 && $data->user_id == Auth::id())
-                        <x-adminlte-modal id="modalCustomml-{{$data->id}}" title="Hapus Data {{$data->nama_perusahaan}}" size="sm" theme="success"
-                            icon="fas fa-plus" v-centered static-backdrop scrollable>
-                            <div style="height:50px;">Apakah Anda yakin Mengubah Data {{$data->nama_perusahaan}}?</div>
-                            <form action="{{ route('koreksi.store') }}" method="POST">
-                            @csrf
-                            <div class="form-group">
-                              <label for="">Ajukan Koreksi Penawaran</label>
-                            <input type="text" class="form-control" name="id" value="{{$data->id}}" hidden id="" aria-describedby="helpId" placeholder="">
-                              <input type="number"
-                                class="form-control" name="koreksi" id="" aria-describedby="helpId" placeholder="">
-                            </div>
-
-                            <x-slot name="footerSlot">
-                                    <x-adminlte-button type="submit" class="mr-auto" theme="success" label="Ya"/>
-                            </form>
-
-                                <x-adminlte-button theme="danger" label="Tidak" data-dismiss="modal"/>
-                            </x-slot>
-                            </x-adminlte-modal>
-
-                            <x-adminlte-button icon="fas fa-pencil-alt" data-toggle="modal" data-target="#modalCustomml-{{$data->id}}" class="bg-green"/>
-                        @endif
-                </td>
-
-            </tr> --}}
-
             <tr>
-                <td>File</td>
+                <th>File</th>
                 <td>
                     @forelse ($file as $f)
-                       <a href="/{{$f->file}}">{{$f->id}}</a> <br>
+                        <a href="/{{ $f->file }}">{{ $f->id }}</a><br>
                     @empty
-
                     @endforelse
                 </td>
             </tr>
-
         </tbody>
     </table>
-    <h3 class="text-center">Penawaran Peserta</h3>
-        <h5 class="text-center">Penawaran : {{$pp->penawaran}}</h5>
-    <h3 class="text-center">File</h3>
-    <?php
-        $fn = str_replace('.',' ',"{$data->nama_pt}")
-    ?>
-    @include('tender_user.peserta.files.main.index')
-    {{-- @include('tender_user.peserta.admin.file2')
-    @include('tender_user.peserta.admin.pemeriksaan.form')
+</x-card>
 
+{{-- Penawaran --}}
+<x-card title="Penawaran Peserta">
+    <h5 class="mb-0">Penawaran : {{ $pp->penawaran ?? '' }}</h5>
+</x-card>
 
-
-    @include('tender_user.peserta.komentar.index') --}}
-
-
-
-</div>
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-
-@stop
+{{-- Tabs berkas & penilaian --}}
+@include('tender_user.peserta.files.main.index')
+@endsection

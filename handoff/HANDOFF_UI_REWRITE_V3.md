@@ -42,10 +42,10 @@
 | **F3** Registrasi & Upload | ✅ SELESAI | registrasi (form-section + steps) + upload penawaran (HPS + form) + `RegistrasiUploadTestSeeder` + guard zona |
 | **F4** Admin (bagian inti) | ✅ DONE | kelola tender (index/create/edit) + dashboard pemeriksaan + fix relasi tender + `AdminRewriteTest` (+ fix role menu) |
 | **F4** sisa (dashboard/show & tahapan) | ✅ SELESAI | `dashboard/peserta/show` (Daftar Peserta Tender, layout admin, data kelengkapan + penawaran currency) + `tender_admin/tahapan` (Atur Tahapan dari template: alert info + tabel badge status + form tambah; aksi Edit/Hapus dipertahankan) + `AdminF4SisaTest` |
-| **F5** Master data + e-shop | ⏳ BELUM | jenis_kontrak, jenis_pengadaan, metode, status, tahapan, katagori, perubahan, e-shop (Barang/shops/user_barang) |
+| **F5** Master data + e-shop | ⏳ partial | `tahapan` (index/create/edit) ✅ sudah — sisa: jenis_kontrak, jenis_pengadaan, metode, status, katagori, perubahan, e-shop (Barang/shops/user_barang) |
 | **F6** Cleanup AdminLTE | ⏳ BELUM | Hapus semua `@extends('adminlte::page')`, `x-adminlte-*`, package AdminLTE, aset vendor |
 
-**Test**: `php artisan test` → **53 passed / 185 assertions** (sqlite :memory:).
+**Test**: `php artisan test` → **56 passed / 202 assertions** (sqlite :memory:).
 
 ---
 
@@ -119,7 +119,9 @@ Semua load: Bootstrap 5.3 CDN, jQuery 3.7, FontAwesome 6, `public/ui/css/*`, `pu
 - Part lama `dashboard/peserta/part/{admintable,table}.blade.php` jadi tidak terpakai (bisa dirapikan saat F6)
 
 ### F5 Master data & e-shop (semua masih `@extends('adminlte::page')`)
-- `jenis_kontrak`, `jenis_pengadaan`, `metode_pengadaan`, `status_tender`, `tahapan`, `katagori`, `perubahan` (index/create/edit → pakai komponen `x-card`/`x-table`/`x-form`)
+- ✅ **`tahapan`** (index/create/edit) SUDAH: fix bug crash `Undefined variable $data` di master create (controller `create()` tidak pass `$data`; form lama akses `$data->status`). Rewrite ke layout admin + `x-card`/`x-table`/`x-input`/`x-select` + `TahapanMasterTest`.
+  - Catatan: master create tidak punya hidden `tender_id`; `tahapan.store` set `tender_id = $request->id` (NOT NULL di DB) → form master submit akan gagal di DB. Fungsional utama tetap via "Atur Tahapan" per tender (`tender_admin.tahapan`). Tidak mengubah controller (PRD non-goal).
+- ⏳ sisanya: jenis_kontrak, jenis_pengadaan, metode_pengadaan, status_tender, katagori, perubahan (index/create/edit → pakai komponen `x-card`/`x-table`/`x-form`)
 - e-shop legacy: `Barang`, `user_barang`, `shops`
 
 ### F6 Cleanup AdminLTE (terakhir)
@@ -157,6 +159,7 @@ Semua load: Bootstrap 5.3 CDN, jQuery 3.7, FontAwesome 6, `public/ui/css/*`, `pu
 - `PenawaranPesertaTest` (7) — upload + guard zona
 - `AdminRewriteTest` (6) — kelola tender + menu role
 - `AdminF4SisaTest` (4) — atur tahapan (render + store) + daftar peserta
+- `TahapanMasterTest` (3) — master tahapan index/create (regression crash)/edit
 - `PendaftaranTest`, `PenawaranPesertaTest` lama (sudah diupdate sesuai aturan baru)
 - `HakAksesTest` (6), `ExampleTest`, dll
 

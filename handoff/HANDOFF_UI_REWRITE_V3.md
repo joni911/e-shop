@@ -227,6 +227,13 @@ Kredensial:
 5. **Part lama** `dashboard/peserta/part/*` sekarang orphan (tidak di-include) — hapus saat F6 bila aman.
 6. **`tender_admin/tahapan/tahapan.blade.php`** (dipakai `TahapanController@show` → `/tahapan/{id}`) masih AdminLTE — masuk scope F5 master.
 
+## 15. CEK FUNGSI EMAIL (2026-08-29) — BERMASALAH
+- **Gejala**: `Mail::raw()` / `hasil_penilaian` / `EmailNotification` → `535 Authentication credentials invalid`.
+- **Akar**: API key Resend di `.env` (`MAIL_PASSWORD=sk-...`) **TIDAK VALID** — verifikasi langsung `GET api.resend.com/api-keys` → `"API key is invalid"`. Perlu key baru dari pemilik (format `re_...`), lalu set `MAIL_PASSWORD`.
+- **Fix yang sudah dilakukan**: `MAIL_ENCRYPTION` `tls` → `ssl` (port 465 = SMTP-SSL; `tls`/STARTTLS salah untuk port 465).
+- **Alur email yang dipakai (semua kode OK)**: `RegisterController` (EmailNotification), `DaftarPesertaController` (NotifikasiDaftarTender), `PemeriksaanController@send` (hasil Lulus/Tidak), `PesertaController@send_hasil` (hasil_penilaian markdown), `komentarController`/`TenderKomenController`, `StatusTenderController@send` (test).
+- **Langkah**: minta pemilik key Resend baru → set `.env` → verifikasi `Mail::raw` via tinker.
+
 ---
 
 ## 14. REFERENSI FILE

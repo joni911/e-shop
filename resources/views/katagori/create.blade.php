@@ -1,49 +1,30 @@
-@extends('adminlte::page')
+@extends('layouts.admin')
 
-@section('title', 'Create Katagori')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', 'Tambah Katagori')
 
 @section('content')
+<div class="page-header">
+    <h1>Tambah Katagori</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <a href="{{ route('katagori.index') }}">Katagori</a> / <span>Tambah</span>
+    </div>
+</div>
 
-<body>
-    <div class="card card-primary">
-        <div class="card-header">
-          <h3 class="card-title">Tambah Barang</h3>
+<x-card title="Tambah Katagori">
+    <form action="{{ route('katagori.store') }}" method="POST">
+        @csrf
+        <div class="row g-4">
+            <div class="col-12 col-md-6">
+                <x-input label="Nama Katagori" name="nama" placeholder="Masukkan nama katagori" required/>
+            </div>
+            <div class="col-12 col-md-6">
+                <x-input label="Keterangan" name="keterangan" placeholder="Masukkan keterangan"/>
+            </div>
         </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-        <form action="{{ route('katagori.store') }}" enctype="multipart/form-data" method="post">
-            @csrf
-          <div class="card-body">
-            <div class="form-group">
-              <label for="nama">Nama katagori</label>
-              <input type="text" class="form-control" id='nama' name='nama' placeholder="Masukkan nama Barang">
-            </div>
-            <div class="form-group">
-                <label for="keterangan">Keterangan katagori</label>
-                <input type="text" class="form-control" id='keterangan' name='keterangan' placeholder="Masukkan nama Barang">
-            </div>
-
-          <!-- /.card-body -->
-
-          <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
-</body>
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-
-@stop
+        <div class="d-flex gap-3 justify-content-end mt-4">
+            <x-button label="Kembali" href="{{ route('katagori.index') }}" variant="secondary"/>
+            <x-button label="Submit" type="submit" variant="primary"/>
+        </div>
+    </form>
+</x-card>
+@endsection

@@ -1,110 +1,79 @@
-@extends('adminlte::page')
+@extends('layouts.admin')
 
-@section('title', 'Create Barang')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', $barang->nama)
 
 @section('content')
+<div class="page-header">
+    <h1>{{ $barang->nama }}</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <a href="{{ route('barang.index') }}">Barang</a> / <span>{{ $barang->nama }}</span>
+    </div>
+</div>
 
-<body>
-    <!-- Default box -->
-    <div class="card card-solid">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12 col-sm-6">
-                    <h2><a href="/">Menu</a></h2>
-                    <h3 class="d-inline-block d-sm-none">{{$barang->nama}}</h3>
-                    @include('Barang.slide')
-                </div>
-                <div class="col-12 col-sm-6">
-                    <h3 class="my-3">{{$barang->nama}}</h3>
-                    <p>
-                        {{$barang->keterangan}}
-                    </p>
+<div class="row g-4">
+    {{-- Galeri Foto --}}
+    <div class="col-12 col-md-6">
+        <x-card title="Foto Barang">
+            @forelse($barang->barang_photo as $bp)
+                <img src="/{{ $bp->foto }}" alt="Foto {{ $barang->nama }}" class="img-fluid rounded mb-2">
+            @empty
+                <p class="text-muted mb-0">Belum ada foto</p>
+            @endforelse
+        </x-card>
+    </div>
 
-                    <hr>
-                    <div class="bg-gray py-2 px-3 mt-4">
-                        <h2 class="mb-0">
-                            @currency($barang->harga)
-                        </h2>
-                        <h4 class="mt-0">
-                            <small>Ex Tax: @currency($barang->harga)</small>
-                        </h4>
-                    </div>
+    {{-- Info Barang --}}
+    <div class="col-12 col-md-6">
+        <x-card title="Detail Barang">
+            <h3 class="fw-medium mb-2">{{ $barang->nama }}</h3>
+            <p>{{ $barang->keterangan }}</p>
 
-                    <div class="mt-4">
-                        <div class="btn btn-primary btn-lg btn-flat">
-                            <i class="fas fa-cart-plus fa-lg mr-2"></i>
-                            Add to Cart
-                        </div>
-
-                        <div class="btn btn-default btn-lg btn-flat">
-                            <i class="fas fa-heart fa-lg mr-2"></i>
-                            Add to Wishlist
-                        </div>
-                    </div>
-
-                    <div class="mt-4 product-share">
-                        <a href="#" class="text-gray">
-                            <i class="fab fa-facebook-square fa-2x"></i>
-                        </a>
-                        <a href="#" class="text-gray">
-                            <i class="fab fa-twitter-square fa-2x"></i>
-                        </a>
-                        <a href="#" class="text-gray">
-                            <i class="fas fa-envelope-square fa-2x"></i>
-                        </a>
-                        <a href="#" class="text-gray">
-                            <i class="fas fa-rss-square fa-2x"></i>
-                        </a>
-                    </div>
-                </div>
+            <div class="bg-light border rounded p-3 mt-3 mb-3">
+                <h2 class="mb-0" style="color: var(--bs-primary);">@currency($barang->harga)</h2>
+                <small class="text-muted">Ex Tax: @currency($barang->harga)</small>
             </div>
-            <div class="row mt-4">
-                <nav class="w-100">
-                    <div class="nav nav-tabs" id="product-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="product-desc-tab" data-toggle="tab" href="#product-desc"
-                            role="tab" aria-controls="product-desc" aria-selected="true">Description</a>
-                        <a class="nav-item nav-link" id="product-comments-tab" data-toggle="tab"
-                            href="#product-comments" role="tab" aria-controls="product-comments"
-                            aria-selected="false">Comments</a>
 
-                    </div>
-                </nav>
-                <div class="tab-content p-3" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="product-desc" role="tabpanel"
-                        aria-labelledby="product-desc-tab">
-                        {{$barang->deskripsi}}
-                    </div>
-                    <div class="tab-pane fade" id="product-comments" role="tabpanel"
-                        aria-labelledby="product-comments-tab">
-
-                        @include('Barang.part.komentar')
-                    </div>
-
-                </div>
+            <div class="d-flex gap-3 flex-wrap">
+                <x-button label="Add to Cart" variant="primary" icon="fas fa-cart-plus"/>
+                <x-button label="Add to Wishlist" variant="secondary" icon="fas fa-heart"/>
             </div>
+
+            <div class="mt-4 d-flex gap-3">
+                <a href="#" class="text-secondary"><i class="fab fa-facebook-square fa-2x"></i></a>
+                <a href="#" class="text-secondary"><i class="fab fa-twitter-square fa-2x"></i></a>
+                <a href="#" class="text-secondary"><i class="fas fa-envelope-square fa-2x"></i></a>
+                <a href="#" class="text-secondary"><i class="fas fa-rss-square fa-2x"></i></a>
+            </div>
+        </x-card>
+    </div>
+</div>
+
+{{-- Deskripsi --}}
+<x-card title="Deskripsi">
+    {{ $barang->deskripsi }}
+</x-card>
+
+{{-- Komentar --}}
+<x-card title="Komentar">
+    @forelse($komentar as $k)
+        <div class="border-bottom pb-3 mb-3">
+            <div class="d-flex justify-content-between">
+                <span class="fw-medium">{{ $k->nama_user }}</span>
+                <small class="text-muted">{{ $k->created_at }}</small>
+            </div>
+            <p class="mb-0 mt-1">{{ $k->komentar }}</p>
         </div>
-        <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
+    @empty
+        <p class="text-muted mb-0">Belum ada komentar</p>
+    @endforelse
 
-    </section>
-    <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-</body>
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-
-@stop
+    <form action="{{ route('komentar.store') }}" method="POST" class="mt-3">
+        @csrf
+        <input type="hidden" name="id" value="{{ $barang->id }}">
+        <x-textarea label="Komentar" name="komentar" rows="3" required/>
+        <div class="mt-3">
+            <x-button label="Simpan" type="submit" variant="primary"/>
+        </div>
+    </form>
+</x-card>
+@endsection

@@ -42,10 +42,10 @@
 | **F3** Registrasi & Upload | ✅ SELESAI | registrasi (form-section + steps) + upload penawaran (HPS + form) + `RegistrasiUploadTestSeeder` + guard zona |
 | **F4** Admin (bagian inti) | ✅ DONE | kelola tender (index/create/edit) + dashboard pemeriksaan + fix relasi tender + `AdminRewriteTest` (+ fix role menu) |
 | **F4** sisa (dashboard/show & tahapan) | ✅ SELESAI | `dashboard/peserta/show` (Daftar Peserta Tender, layout admin, data kelengkapan + penawaran currency) + `tender_admin/tahapan` (Atur Tahapan dari template: alert info + tabel badge status + form tambah; aksi Edit/Hapus dipertahankan) + `AdminF4SisaTest` |
-| **F5** Master data + e-shop | ⏳ partial | `tahapan` (index/create/edit) ✅ sudah — sisa: jenis_kontrak, jenis_pengadaan, metode, status, katagori, perubahan, e-shop (Barang/shops/user_barang) |
+| **F5** Master data + e-shop | ✅ (bagian fungsional) | `tahapan` ✅, `jenis_kontrak` ✅, `jenis_pengadaan` ✅, `metode_pengadaan` ✅, `status_tender` ✅ (+fix route update), `katagori` ✅, `Barang` (admin e-shop) ✅. Bukan fungsional (controller kosong): `perubahan` create/edit, `shops`/`user_barang` |
 | **F6** Cleanup AdminLTE | ⏳ BELUM | Hapus semua `@extends('adminlte::page')`, `x-adminlte-*`, package AdminLTE, aset vendor |
 
-**Test**: `php artisan test` → **56 passed / 202 assertions** (sqlite :memory:).
+**Test**: `php artisan test` → **62 passed / 240 assertions** (sqlite :memory:).
 
 ---
 
@@ -76,6 +76,10 @@ Blade compiler error `unexpected token endforeach` jika ada `@php ... @endphp` d
 - **Hanya boleh upload penawaran jika SUDAH terdaftar** (`daftar_peserta`) utk tender tsb.
 - Di `PenawaranPesertaController@store` & `PenawaranFileController@show` + view (pesan "Belum Terdaftar" bila belum daftar).
 - Model `daftar_peserta` ditambah `$fillable`.
+
+### 4.6 Bug route master `status_tender` edit
+- View lama pakai `route('status_tender_admin.update')` — **route tidak terdaftar** → submit edit pasti 404.
+- Sudah diganti `route('status_tender.update', [$data->id])` (route resource asli).
 
 ---
 
@@ -118,10 +122,15 @@ Semua load: Bootstrap 5.3 CDN, jQuery 3.7, FontAwesome 6, `public/ui/css/*`, `pu
 - `tender_admin/tahapan/create` → dari template `tender-admin-tahapan.html`: alert info tender, tabel (badge status 0-4, keterangan + link Periksa Perubahan, aksi Edit/Hapus), form tambah (x-input/x-select, submit `tahapan.store`)
 - Part lama `dashboard/peserta/part/{admintable,table}.blade.php` jadi tidak terpakai (bisa dirapikan saat F6)
 
-### F5 Master data & e-shop (semua masih `@extends('adminlte::page')`)
-- ✅ **`tahapan`** (index/create/edit) SUDAH: fix bug crash `Undefined variable $data` di master create (controller `create()` tidak pass `$data`; form lama akses `$data->status`). Rewrite ke layout admin + `x-card`/`x-table`/`x-input`/`x-select` + `TahapanMasterTest`.
-  - Catatan: master create tidak punya hidden `tender_id`; `tahapan.store` set `tender_id = $request->id` (NOT NULL di DB) → form master submit akan gagal di DB. Fungsional utama tetap via "Atur Tahapan" per tender (`tender_admin.tahapan`). Tidak mengubah controller (PRD non-goal).
-- ⏳ sisanya: jenis_kontrak, jenis_pengadaan, metode_pengadaan, status_tender, katagori, perubahan (index/create/edit → pakai komponen `x-card`/`x-table`/`x-form`)
+### F5 Master data & e-shop — SELESAI (bagian fungsional)
+✅ **Sudah di-rewrite ke layout admin + komponen** (`x-card`/`x-table`/`x-input`/`x-select`/`x-textarea`):
+- `jenis_kontrak`, `jenis_pengadaan`, `metode_pengadaan`, `status_tender` (index/create/edit; field `nama` saja) — pola seragam
+- `katagori` (index/create; field `nama` + `keterangan`; variable `$katagori` collection)
+- `Barang` e-shop admin (index/create/edit/show): index bersihkan markup dummy e-shop → tabel data asli (Nama link show, Jumlah, Aksi Edit+Foto); form nama/katagori/harga/jumlah/keterangan/deskripsi; show galeri foto + info + deskripsi + komentar
+- Part lama (`part/form`, `part/table`, `part/alert`) jadi orphan (rapikan saat F6)
+⏳ **Tidak bisa di-rewrite (controller kosong / tidak berfungsi)**:
+- `perubahan` create/edit — `PerubahanController@create()/edit()` KOSONG (render blank 200, tidak ada view aktif); butuh implementasi controller dulu
+- `shops`/`user_barang` — `shops/index.blade.php` kosong (hanya @extends), `user_barang/index` render widget dummy `Barang.part.table`; `UserBarangController@show/add` kosong. Storefront e-shop non-fungsional — rewrite = menambah fitur (di luar PRD non-goal). Konfirmasi ke pemilik sebelum dikerjakan.
 - e-shop legacy: `Barang`, `user_barang`, `shops`
 
 ### F6 Cleanup AdminLTE (terakhir)
@@ -160,6 +169,7 @@ Semua load: Bootstrap 5.3 CDN, jQuery 3.7, FontAwesome 6, `public/ui/css/*`, `pu
 - `AdminRewriteTest` (6) — kelola tender + menu role
 - `AdminF4SisaTest` (4) — atur tahapan (render + store) + daftar peserta
 - `TahapanMasterTest` (3) — master tahapan index/create (regression crash)/edit
+- `MasterDataRewriteTest` (6) — 4 master index/create/edit + status_tender fix route update + katagori store + Barang CRUD render
 - `PendaftaranTest`, `PenawaranPesertaTest` lama (sudah diupdate sesuai aturan baru)
 - `HakAksesTest` (6), `ExampleTest`, dll
 
@@ -198,7 +208,8 @@ Kredensial:
 
 ## 13. PERLU DICEK / RISIKO BESOK
 1. **Form admin**: pastikan relasi `jenis_pengadaan`/`metode`/`status_tender` menampilkan nama benar (sudah fix belongsTo).
-2. **e-shop legacy** (`Barang`/`shops`/`user_barang`) — mungkin tidak dipakai domain pengadaan; konfirmasi apakah perlu di-rewrite.
+2. **e-shop legacy** (`Barang`/`shops`/`user_barang`) — `Barang` admin sudah di-rewrite; `shops`/`user_barang` storefront **non-fungsional** (controller & view kosong) — perlu keputusan pemilik: diimplementasikan atau dihapus.
+3. **`perubahan` create/edit** — `PerubahanController@create()/edit()` kosong; kalau fitur benar-benar dipakai, implementasikan form (tahapan_id + nama) — perlu konfirmasi.
 3. **Router `/`** masih `redirect()->route('login')` — OK.
 4. **`@php` di loop** — ingat pakai `<?php ?>` bila error blade.
 5. **Part lama** `dashboard/peserta/part/*` sekarang orphan (tidak di-include) — hapus saat F6 bila aman.

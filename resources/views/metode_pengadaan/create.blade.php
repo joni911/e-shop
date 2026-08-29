@@ -1,41 +1,27 @@
-@extends('adminlte::page')
+@extends('layouts.admin')
 
-@section('title', 'Create Metode Pengadaan')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', 'Tambah Metode Pengadaan')
 
 @section('content')
+<div class="page-header">
+    <h1>Tambah Metode Pengadaan</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <a href="{{ route('metode_pengadaan.index') }}">Metode Pengadaan</a> / <span>Tambah</span>
+    </div>
+</div>
 
-<body>
-    <div class="card card-primary">
-        <div class="card-header">
-          <h3 class="card-title">Tambah Metode Pengadaan</h3>
+<x-card title="Tambah Metode Pengadaan">
+    <form action="{{ route('metode_pengadaan.store') }}" method="POST">
+        @csrf
+        <div class="row g-4">
+            <div class="col-12 col-md-6">
+                <x-input label="Nama" name="nama" placeholder="Masukkan nama" required/>
+            </div>
         </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-
-        <form action="{{ route('metode_pengadaan.store') }}" enctype="multipart/form-data" method="post">
-            @csrf
-            @include('metode_pengadaan.part.form')
-          <!-- /.card-body -->
-
-          <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </form>
-      </div>
-</body>
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-
-@stop
+        <div class="d-flex gap-3 justify-content-end mt-4">
+            <x-button label="Kembali" href="{{ route('metode_pengadaan.index') }}" variant="secondary"/>
+            <x-button label="Submit" type="submit" variant="primary"/>
+        </div>
+    </form>
+</x-card>
+@endsection

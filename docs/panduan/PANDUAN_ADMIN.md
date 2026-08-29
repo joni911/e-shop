@@ -1,120 +1,215 @@
 # Panduan Penggunaan — Admin / Panitia PBJ
 
-Sistem Pengadaan Barang/Jasa (PBJ) — Laravel 12 + Blade + Bootstrap 5 (tema orange)
-Akses: `http://127.0.0.1:8000` (lokal) atau URL server produksi.
+Sistem Pengadaan Barang/Jasa (PBJ) — Laravel 12 + Blade + Bootstrap 5 (tema orange).
+Dokumen ini menjabarkan **seluruh menu & halaman yang dapat diakses admin**, berdasarkan pemetaan router → controller → fungsi.
 
 ---
 
 ## 1. Masuk Sistem
 
-1. Buka halaman **Login** (`/login`).
-2. Masukkan **email** dan **password** akun admin/panitia.
-3. Klik **Login**.
-   - Akun harus sudah **verified email** (verifikasi otomatis saat pendaftaran).
-   - Jika lupa password: gunakan **Lupa Password** (`/password/reset`).
+1. Buka **Login** (`/login`).
+2. Masukkan **email** dan **password** akun admin/panitia, klik **Login**.
+   - Akun harus **verified email**.
+   - Lupa password → **Lupa Password** (`/password/reset`).
 
-Akun contoh (hasil seed):
-| Peran | Email | Password |
+Akun contoh (hasil seed): `admin@pbj.go.id` / `password`
+
+---
+
+## 2. Navigasi Sidebar (Layout Admin)
+
+| Menu | Halaman | Fungsi |
 |---|---|---|
-| Admin | `admin@pbj.go.id` | `password` |
+| **Peserta** | `/peserta/create` | Buka profil/registrasi peserta |
+| **Beranda Tender** | `/home` | Daftar tender yang tampil (publish) |
+| **Kelola Tender** | `/tender_admin` | Pusat CRUD tender + tahapan + syarat |
+| **Master → Jenis Pengadaan** | `/jenis_pengadaan` | CRUD jenis pengadaan |
+| **Master → Jenis Kontrak** | `/jenis_kontrak` | CRUD jenis kontrak |
+| **Master → Metode Pengadaan** | `/metode_pengadaan` | CRUD metode pengadaan |
+| **Master → Status Tender** | `/status_tender` | CRUD status tender |
+| **Master → Tahapan** | `/tahapan` | Master tahapan (index/create/edit) |
+| **Pemeriksaan** | `/dashboard` | Daftar tender untuk diperiksa & dinilai |
+
+> Halaman lain yang dapat diakses admin (lewat URL/tautan kontekstual) dijelaskan di bagian 3–8.
 
 ---
 
-## 2. Menu Admin (Sidebar)
+## 3. Master Data
 
-Setelah login, menu di sisi kiri (layout admin):
+Semua modul master berbentuk **tabel + tombol Tambah + form (field `nama`)**.
 
-- **Peserta** — membuka profil/registrasi peserta (untuk pengelolaan data perusahaan).
-- **Beranda Tender** (`/home`) — daftar tender yang sedang berjalan/publish.
-- **Kelola Tender** (`/tender_admin`) — pusat pembuatan & pengelolaan tender.
-- **Master** (submenu):
-  - **Jenis Pengadaan** (`/jenis_pengadaan`) — CRUD jenis (Barang, Jasa, Konstruksi, dll).
-  - **Jenis Kontrak** (`/jenis_kontrak`) — CRUD jenis kontrak (Lump Sum, Harga Satuan, dll).
-  - **Metode Pengadaan** (`/metode_pengadaan`) — CRUD metode (Tender Umum, Terbatas, dll).
-  - **Status Tender** (`/status_tender`) — CRUD status (Draft, Publish, Selesai, dll).
-  - **Tahapan** (`/tahapan`) — daftar master tahapan (jadwal umum).
-- **Pemeriksaan** (`/dashboard`) — daftar tender untuk diperiksa & dinilai.
+### 3.1 Jenis Pengadaan (`/jenis_pengadaan`)
+Contoh: Barang, Pekerjaan Konstruksi, Jasa Lainnya.
+- Tombol **Tambah** → isi `nama` → **Submit**.
+- Tabel: No, Nama, Aksi (**Edit** / **Hapus**).
+- Route: `jenis_pengadaan.*` (index/create/store/edit/update/destroy).
 
-Menu tambahan yang dapat diakses admin (tidak selalu di sidebar):
-- **Barang / e-shop** (`/barang`, `/katagori`) — modul e-commerce lama.
-- **Perubahan** (`/perubahan`) — transparansi jadwal/perubahan (baca untuk semua role).
+### 3.2 Jenis Kontrak (`/jenis_kontrak`)
+Contoh: Lump Sum, Harga Satuan, Gabungan. Sama seperti di atas (`jenis_kontrak.*`).
 
----
+### 3.3 Metode Pengadaan (`/metode_pengadaan`)
+Contoh: Tender Umum, Tender Terbatas, Pemilihan Langsung, Penunjukan Langsung (`metode_pengadaan.*`).
 
-## 3. Alur Kerja Admin (PBJ)
+### 3.4 Status Tender (`/status_tender`)
+Contoh: Draft, Publish, Berjalan, Selesai, Batal (`status_tender.*`).
 
-### 3.1 Persiapan Master Data
-Lengkapi master data sebelum membuat tender:
-1. **Jenis Pengadaan** — klik **Tambah**, isi nama, **Submit**. (Edit/hapus lewat tombol di tabel.)
-2. **Jenis Kontrak** — sama seperti di atas.
-3. **Metode Pengadaan** — sama.
-4. **Status Tender** — sama (contoh: Draft, Publish, Selesai, Batal).
-
-### 3.2 Membuat Tender
-1. Menu **Kelola Tender** → **+ Tambah**.
-2. Isi form:
-   - **Nama** paket pengadaan *(wajib)*
-   - **Paket** — kode paket *(wajib)*
-   - **Jenis Pengadaan** (dropdown), **Jenis Kontrak** (dropdown), **Metode Pengadaan** (dropdown), **Status Tender** (dropdown)
-   - **KLPD**, **Sumber Dana**, **Satuan Kerja**, **Tahun Anggaran** (tanggal), **Lokasi Pekerjaan**
-   - **Nilai Pagu** dan **HPS** (angka)
-3. Klik **Submit** → tender tersimpan.
-4. Selanjutnya atur **Tahapan** dan **Syarat**.
-
-### 3.3 Mengatur Tahapan Tender
-Buka **Kelola Tender** → klik aksi pada tender → **Tahapan** (`/tender_admin/tahapan/{id}`).
-1. Di halaman **Atur Tahapan Tender**, lihat daftar tahapan yang sudah ada (badge status berwarna).
-2. **Tambah Tahapan Baru**:
-   - **Nama Tahap** (mis. Pendaftaran, Upload File, Pengumuman Pemenang)
-   - **Status Tahapan**: `0=Biasa`, `1=Masa Pendaftaran`, `2=Masa Pembukaan File`, `3=Pengumuman Pemenang`, `4=Upload File`
-   - **Tanggal Mulai** dan **Tanggal Selesai**
-   - Klik **Tambah Tahapan**.
-3. **PENTING**: pastikan setiap tender punya minimal:
-   - 1 tahapan berstatus **Masa Pendaftaran (1)** → menyalakan tombol "Daftar" untuk peserta
-   - 1 tahapan berstatus **Upload File (4)** → menyalakan tombol "Masukkan File"
-4. Edit/hapus tahapan lewat tombol di tabel.
-
-### 3.4 Mengatur Syarat Tender
-Buka **Kelola Tender** → aksi → **Syarat** (`/tender_admin/syarat/{id}`).
-- Isi **judul**, **izin**, **usaha**, **content/keterangan**.
-- Tambah **Detail Syarat** (`/syarat_detail`) bila perlu.
-
-### 3.5 File Template & Persyaratan Teknis
-- **Tender File** (`/tender_file`) — daftar file yang wajib diunggah peserta (Dokumen Kualifikasi, Surat Penawaran, Akta, dll).
-- **Persyaratan Teknis** — atur lewat `tender_home/{id}/edit` (judul, penjelasan, file pendukung).
-- **Administrasi** (`/administrasi`) — daftar administrasi yang akan diperiksa + detailnya.
-
-### 3.6 Penawaran Tender
-- **Penawaran** (`/penawaran`) — siapkan data penawaran: judul, penjelasan, anggaran, HPS.
-- **Catatan**: `penawaran_files` (berkas wajib penawaran) biasanya diisi via seeder; pastikan sudah ada sebelum peserta upload (jika belum, halaman upload peserta akan menampilkan pesan "belum disiapkan").
-
-### 3.7 Pemeriksaan & Penilaian (Inti)
-1. Buka **Pemeriksaan** (`/dashboard`) → daftar tender.
-2. Klik **Periksa** pada tender → halaman **Daftar Peserta Tender** — lihat nama PT, nilai penawaran, dan kelengkapan (email, NPWP, alamat, no HP).
-3. Klik **Lihat File** pada peserta → halaman **File Peserta** dengan tab:
-   - **Persyaratan Kualifikasi** — lihat berkas, pengalaman, pekerjaan berjalan + form penilaian kualifikasi (Lulus/Tidak Lulus + keterangan).
-   - **Administrasi** — file administrasi + penilaian administrasi.
-   - **Evaluasi Teknis** — file RKK, tenaga ahli, peralatan + penilaian teknis.
-   - **Harga** — penawaran + file penawaran + penilaian penawaran.
-   - **Penilaian** — ringkasan 4 penilaian + **Kirim Email** hasil ke peserta.
-   - Tombol **Edit** membuka form data perusahaan peserta.
-4. Penilaian: setiap item **Lulus** = 1 poin; total **4/4 = Lulus** semua tahap.
-5. **Kirim Email**: isi email peserta, klik **Kirim Email** → sistem mengirim hasil penilaian (status per tahap + kesimpulan).
-
-### 3.8 Sanggahan
-- Menu **Sanggahan** (`/sanggahan`) → daftar tender yang memiliki masa sanggah.
-- Klik **Sanggahan** pada tender → lihat **Berita Acara Evaluasi** (modal) dan **Sanggahan** peserta yang masuk (keterangan + file).
-- Jika belum ada sanggahan, form pengiriman hanya tampil untuk peserta yang terdaftar.
-
-### 3.9 Modul Lain
-- **Barang / e-shop** (`/barang`) — kelola barang (nama, katagori, harga, jumlah, keterangan, deskripsi, foto). Lihat detail + komentar.
-- **Perubahan** (`/perubahan`) — lihat riwayat perubahan jadwal (transparansi).
-- **Komentar** — komentar pada barang (`/komentar`) & diskusi per peserta (`/komen`).
+### 3.5 Tahapan (`/tahapan`)
+Master tahapan umum: tabel No/Nama/Aksi; **Tambah** form (`nama`, `awal`, `akhir`, `status` 0–4).
+- `0=Biasa, 1=Masa Pendaftaran, 2=Masa Pembukaan File, 3=Pengumuman Pemenang, 4=Upload File`.
+- **Catatan**: tahapan yang dipakai peserta adalah yang dibuat **per tender** (lihat 4.3).
 
 ---
 
-## 4. Data Penting yang Harus Diperhatikan
-- Tender dengan `default=1` dipakai untuk **registrasi awal peserta** (jangan dihapus).
-- **Soft delete** dipakai hampir semua tabel — hapus data berarti "arsip", tidak permanen.
-- File peserta tersimpan di `public/Tender/...`; path disimpan di database.
-- Email dikirim via SMTP Resend (konfigurasi di `.env`); pastikan API key valid.
+## 4. Kelola Tender (Inti)
+
+### 4.1 Daftar Tender (`/tender_admin`)
+- Tabel daftar tender (nama, jenis, metode, status, pagu, HPS, aksi).
+- Tombol **+ Tambah** → form create.
+
+### 4.2 Buat / Edit Tender (`/tender_admin/create`, `/tender_admin/{id}/edit`)
+Field form:
+- **Nama** *(wajib)* — nama paket pengadaan
+- **Paket** *(wajib)* — kode paket
+- **Jenis Pengadaan** *(select, wajib)* — dari `jenis_pengadaans`
+- **Jenis Kontrak** *(select, wajib)*
+- **Metode Pengadaan** *(select, wajib)*
+- **Status Tender** *(select, wajib)*
+- **KLPD**, **Sumber Dana**, **Satuan Kerja**, **Tahun Anggaran** *(date)*, **Lokasi Pekerjaan** *(wajib)*
+- **Nilai Pagu** *(number)* dan **HPS** *(number)*
+
+Setelah submit → lanjut atur **Tahapan**.
+
+### 4.3 Atur Tahapan Tender (`/tender_admin/tahapan/{id}`)
+- **Info tender** + peringatan: wajib ada minimal 1 tahapan **Masa Pendaftaran** dan 1 **Upload File**.
+- **Daftar Tahapan** (tabel): Nama Tahap, Mulai, Selesai, Status (badge warna), Keterangan (+ link **Periksa Perubahan**), Aksi (**Edit** / **Hapus**).
+- **Tambah Tahapan Baru**: Nama Tahap *(wajib)*, Status Tahapan *(select 0–4)*, Tanggal Mulai *(wajib)*, Tanggal Selesai *(wajib)* → **Tambah Tahapan**.
+- Edit tahapan juga mengubah **Perubahan** (riwayat).
+
+### 4.4 Atur Syarat Tender (`/tender_admin/syarat/{id}`)
+Form syarat: **Nama/Judul** *(wajib)*, **Izin** *(wajib)*, **Usaha** *(wajib)*, **Content/Keterangan** *(wajib)*.
+Detail syarat: `/syarat_detail` (keterangan detail tiap syarat).
+
+### 4.5 Detail / Lihat Tender (`/tender_admin/{id}`)
+Halaman detail informasi tender.
+
+---
+
+## 5. Template & Persyaratan (Admin)
+
+### 5.1 Tender File (`/tender_file`)
+File wajib yang harus diunggah peserta saat registrasi (Dokumen Kualifikasi, Surat Penawaran, Akta, dll).
+- Form: **Nama** *(wajib)*, **Keterangan** *(wajib)*, file.
+- Rincian per file: `/tender_file_detail`.
+
+### 5.2 Tender Persyaratan (`/tender_persyarat`, `/tender_persyaratan_file`)
+Persyaratan teknis tender + file pendukungnya.
+- Form: **Nama**, **Content/Keterangan** + file.
+- Juga bisa diatur lewat `tender_home/{id}/edit`.
+
+### 5.3 Administrasi (`/administrasi`, `/administrasi_list`)
+- **Administrasi**: daftar administrasi yang akan diperiksa (form: nama, dsb).
+- **Administrasi List/Detail**: detail administrasi per peserta (dipakai peserta untuk mengunggah berkas administrasi).
+
+### 5.4 Penawaran Tender (`/penawaran`)
+Data penawaran yang disiapkan admin per tender:
+- Form: **Penawaran** (judul/penjelasan) + file wajib penawaran (untuk peserta).
+- **PENTING**: jika `penawaran_files` belum disiapkan, peserta tidak bisa upload penawaran (akan ada pesan). Biasanya diisi via seeder — pastikan via halaman ini bila sudah tersedia.
+
+---
+
+## 6. Pemeriksaan & Penilaian
+
+### 6.1 Pemeriksaan (`/dashboard`)
+- Daftar tender → klik **Periksa** pada tender.
+- Halaman **Daftar Peserta Tender**: kolom No, Nama PT (+ penawaran `@currency`), Cek Kelengkapan (email, NPWP, alamat, no HP, managemen, user/tender id), Aksi **Lihat File**.
+
+### 6.2 File Peserta (`/peserta/{id}/file_tender/{pid}`)
+Halaman detail berkas + penilaian per peserta, dengan tab:
+1. **Persyaratan Kualifikasi** — berkas kualifikasi (modal preview + download), tabel Pengalaman, tabel Pekerjaan Berjalan + form **Penilaian Kualifikasi**.
+2. **Administrasi** — file administrasi + form **Penilaian Administrasi**.
+3. **Evaluasi Teknis** — File RKK (SMKK + Pakta Komitmen), Tenaga Ahli, Peralatan + form **Penilaian Teknis**.
+4. **Harga** — penawaran peserta + file penawaran + form **Penilaian Penawaran**.
+5. **Penilaian** — ringkasan 4 penilaian + **Kirim Email** hasil (form email + point tersembunyi).
+- Tombol **Edit** di atas membuka form edit data perusahaan peserta.
+
+### 6.3 Form Penilaian (pada tab halaman peserta)
+Setiap form: select **Status** (Lulus / Tidak Lulus) + **Keterangan** → **Simpan** (store/update sesuai status).
+
+### 6.4 Modul Penilaian Terpisah (resource CRUD)
+Route admin lengkap untuk masing-masing tabel penilaian:
+- `p_admin` (Penilaian Administrasi), `p_kualifikasi` (Kualifikasi), `p_teknis` (Teknis), `p_peserta` (Penawaran), `periksa` (Penilaian keseluruhan) — index/create/store/show/edit/update/destroy.
+- Form penilaian sama: status Lulus/Tidak Lulus + keterangan.
+
+### 6.5 Pemeriksaan Checklist (`/pemeriksaan`)
+Checklist pemeriksaan per peserta: **Pengalaman, Tenaga Ahli, Peralatan, Pekerjaan Berjalan, Managemen, File** — masing-masing status **Ada/Tidak** + keterangan. Nilai otomatis: jumlah "Lulus" / 6 × 100; kesimpulan Lulus jika 100%.
+
+### 6.6 Kirim Email Hasil (`POST /send_hasil`)
+Dari tab Penilaian: isi email peserta → **Kirim Email** → sistem mengirim `hasil_penilaian` (status 4 tahap + kesimpulan).
+
+### 6.7 Validasi File (`/validasi_file`)
+Validasi berkas peserta (status valid/tidak) — diisi/dilihat untuk memastikan kelengkapan dokumen.
+
+### 6.8 Koreksi (`/koreksi`)
+Peserta mengajukan koreksi harga penawaran; admin mengelola koreksi. **Aturan**: koreksi hanya 1× per peserta.
+
+---
+
+## 7. Sanggahan (`/sanggahan`)
+
+- **Index**: daftar tender → tombol **Sanggahan**.
+- **Detail**: 
+  - Modal **Berita Acara Evaluasi** (iframe dokumen).
+  - Jika sudah ada sanggahan peserta: lihat keterangan & file sanggahan; tombol **Hapus** (untuk mengubah, hapus lalu kirim ulang).
+  - Jika belum ada: form **Kirim Sanggahan** (keterangan + file) — form hanya tampil untuk peserta yang terdaftar.
+- Admin melihat sanggahan yang masuk sebagai panitia.
+
+---
+
+## 8. Perubahan & Transparansi (`/perubahan`)
+
+- **Index**: riwayat perubahan jadwal/tahapan (link dari tabel tahapan).
+- **Show** (`/perubahan/{id}`): detail perubahan per tahapan — semua role dapat **membaca** (transparansi); hanya admin yang dapat membuat/mengubah (create/edit).
+
+---
+
+## 9. Modul Barang / e-Shop (Modul Terpisah)
+
+### 9.1 Barang (`/barang`)
+- **Index**: tabel No, Nama (link ke detail), Jumlah, Aksi (**Edit**, **Foto**).
+- **Create/Edit**: Nama Barang *(wajib)*, Katagori *(select)*, Harga *(number)*, Jumlah *(number)*, Keterangan, Deskripsi.
+- **Show**: galeri foto, detail (nama, keterangan, harga + ex tax), tombol Add to Cart/Wishlist (dekoratif), **Deskripsi**, **Komentar** (list + form komentar).
+- **Foto**: `/foto/barang/{id}` (edit foto) & `POST /photoStore` (simpan foto).
+
+### 9.2 Katagori (`/katagori`)
+- Tabel No, Nama, Keterangan; **Tambah** form (`nama`, `keterangan`).
+
+### 9.3 Komentar (`/komentar`)
+Komentar pada barang (modul e-shop).
+
+---
+
+## 10. Ringkasan Route Admin (Dari `route:list`)
+
+**CRUD lengkap (index/create/store/show/edit/update/destroy)**: `jenis_pengadaan`, `jenis_kontrak`, `metode_pengadaan`, `status_tender`, `tahapan`, `katagori`, `barang`, `syarat`, `syarat_detail`, `tender_file`, `tender_file_detail`, `tender_persyarat`, `tender_persyaratan_file`, `penawaran`, `p_admin`, `p_kualifikasi`, `p_teknis`, `p_peserta`, `periksa`, `pemeriksaan`, `dashboard`.
+
+**Route spesial admin**:
+| Method | URL | Nama | Fungsi |
+|---|---|---|---|
+| GET | `/tender_admin/syarat/{id}` | `tender_admin.syarat` | Kelola syarat per tender |
+| GET | `/tender_admin/tahapan/{id}` | `tender_admin.tahapan` | Atur tahapan per tender |
+| POST | `/send_hasil` | `send.hasil` | Kirim email hasil penilaian |
+| GET | `/send` | `send` | Test kirim notifikasi (email contoh) |
+| GET | `/test` | — | Route test |
+| GET | `/CreatePhoto` | `photo.buat` | Upload foto barang |
+| POST | `/photoStore` | `photo.simpan` | Simpan foto barang |
+| GET/POST | `/perubahan/*` | `perubahan.*` | Mutasi perubahan (hanya admin; baca utk semua) |
+
+---
+
+## 11. Hal Penting
+
+- **Tender default** (`default=1`) dipakai registrasi awal peserta — jangan dihapus.
+- **Soft delete** hampir semua tabel — hapus = arsip.
+- File peserta tersimpan di `public/Tender/...`; path di DB.
+- Email via SMTP Resend (`.env`); pastikan API key valid (sudah diverifikasi berfungsi).
+- Halaman yang masih memakai tampilan lama (AdminLTE) akan di-rewrite bertahap (proyek UI rewrite F6) — fungsi tetap sama.

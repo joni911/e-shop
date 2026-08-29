@@ -58,6 +58,19 @@ function initModals() {
 function openModal(id) {
   const modal = document.getElementById(id);
   if (modal) {
+    // Hoist modal ke <body> jika berada di dalam kontainer tersembunyi
+    // (mis. tab-pane Bootstrap non-aktif). position:fixed TIDAK menembus
+    // ancestor display:none/visibility:hidden, jadi modal di tab selain yang
+    // aktif tidak akan terlihat walaupun class .show ditambahkan.
+    let parent = modal.parentElement;
+    while (parent && parent !== document.body) {
+      const style = window.getComputedStyle(parent);
+      if (style.display === 'none' || style.visibility === 'hidden') {
+        document.body.appendChild(modal);
+        break;
+      }
+      parent = parent.parentElement;
+    }
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
     // Focus first focusable element

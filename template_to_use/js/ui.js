@@ -38,8 +38,8 @@ function initModals() {
     });
   });
 
-  // Close on overlay click
-  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  // Close on overlay click (dukung .modal-overlay & .x-modal-overlay)
+  document.querySelectorAll('.modal-overlay, .x-modal-overlay').forEach(overlay => {
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
         overlay.classList.remove('show');
@@ -50,7 +50,7 @@ function initModals() {
   // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show'));
+      document.querySelectorAll('.modal-overlay.show, .x-modal-overlay.show').forEach(m => m.classList.remove('show'));
     }
   });
 }
@@ -58,6 +58,19 @@ function initModals() {
 function openModal(id) {
   const modal = document.getElementById(id);
   if (modal) {
+    // Hoist modal ke <body> jika berada di dalam kontainer tersembunyi
+    // (mis. tab-pane Bootstrap non-aktif). position:fixed TIDAK menembus
+    // ancestor display:none/visibility:hidden, jadi modal di tab selain yang
+    // aktif tidak akan terlihat walaupun class .show ditambahkan.
+    let parent = modal.parentElement;
+    while (parent && parent !== document.body) {
+      const style = window.getComputedStyle(parent);
+      if (style.display === 'none' || style.visibility === 'hidden') {
+        document.body.appendChild(modal);
+        break;
+      }
+      parent = parent.parentElement;
+    }
     modal.classList.add('show');
     document.body.style.overflow = 'hidden';
     // Focus first focusable element

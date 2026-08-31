@@ -41,6 +41,9 @@ class SyaratController extends Controller
         $data = new syarat();
         $data->tender_id = $request->id;
         $data->judul = $request->nama;
+        // Kolom wajib (NOT NULL tanpa default) yang tidak ada di form — isi default
+        $data->izin = $request->izin ?? $request->nama;
+        $data->usaha = $request->usaha ?? '';
         $data->content = $request->content;
         $data->save();
 
@@ -96,6 +99,8 @@ class SyaratController extends Controller
         //
         $data = syarat::findorfail($id);
         $data->judul = $request->nama;
+        $data->izin = $request->izin ?? $data->izin;
+        $data->usaha = $request->usaha ?? $data->usaha;
         $data->content = $request->content;
         $data->save();
 

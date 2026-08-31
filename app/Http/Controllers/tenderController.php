@@ -64,6 +64,7 @@ class tenderController extends Controller
         $data = new tender();
         $data->user_id = $user->id;
         $data->nama = $request->nama;
+        $data->paket = $request->nama;
         $data->tahapan_id = 0;
         $data->jenis_pegadaan_id = $request->jp;
         $data->jenis_kontrak_id = $request->jk;
@@ -175,6 +176,7 @@ class tenderController extends Controller
     {
         $data = tender::findorfail($id);
         $data->nama = $request->nama;
+        $data->paket = $request->nama;
         $data->tahapan_id = 0;
         $data->jenis_pegadaan_id = $request->jp;
         $data->jenis_kontrak_id = $request->jk;

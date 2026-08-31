@@ -229,13 +229,12 @@ class PesertaSeeder extends Seeder
             'nama' => 'H. Ahmad Fauzi, SE',
             'tgl_menjabat' => '2015-01-01',
             'tgl_berakhir' => '2025-01-01',
-            'no_rekening' => '012345678901',
-            'master_id' => '100001',
+            'ktp' => '3171010101800001',
             'alamat' => 'Jl. Cilandak No. 10, Jakarta',
             'npwp' => '123456789012345',
             'status' => 'Direktur Utama',
             'file1' => 'Tender/FILE/managemen/ktp.pdf',
-            'ket1' => 'Sertifikat 1',
+            'ket1' => 'KTP',
         ]);
 
         // Daftar peserta (mengikuti lelang tender 2)
@@ -377,13 +376,12 @@ class PesertaSeeder extends Seeder
             'nama' => 'Siti Rahma, MBA',
             'tgl_menjabat' => '2016-01-01',
             'tgl_berakhir' => '2026-01-01',
-            'no_rekening' => '023456789012',
-            'master_id' => '100002',
+            'ktp' => '3171030202850002',
             'alamat' => 'Jl. Pasar Minggu No. 25, Jakarta',
             'npwp' => '987654321098765',
             'status' => 'Direktur Utama',
             'file1' => 'Tender/FILE/managemen/p2-ktp.pdf',
-            'ket1' => 'Sertifikat 1',
+            'ket1' => 'KTP',
         ]);
 
         // Daftar peserta 2
@@ -508,13 +506,12 @@ class PesertaSeeder extends Seeder
             'nama' => 'Drs. Bambang Priyanto, MM',
             'tgl_menjabat' => '2014-01-01',
             'tgl_berakhir' => '2024-01-01',
-            'no_rekening' => '034567890123',
-            'master_id' => '100003',
+            'ktp' => '3171011507780003',
             'alamat' => 'Jl. Sudirman No. 88, Jakarta',
             'npwp' => '555444333222111',
             'status' => 'Direktur Utama',
             'file1' => 'Tender/FILE/managemen/p3-ktp.pdf',
-            'ket1' => 'Sertifikat 1',
+            'ket1' => 'KTP',
         ]);
 
         // Daftar peserta 3
@@ -639,13 +636,12 @@ class PesertaSeeder extends Seeder
             'nama' => 'Yulia Kusuma, SH',
             'tgl_menjabat' => '2017-01-01',
             'tgl_berakhir' => '2027-01-01',
-            'no_rekening' => '045678901234',
-            'master_id' => '100004',
+            'ktp' => '3171040205780004',
             'alamat' => 'Jl. Gatot Subroto No. 45, Jakarta',
             'npwp' => '777666555444333',
             'status' => 'Direktur Utama',
             'file1' => 'Tender/FILE/managemen/p4-ktp.pdf',
-            'ket1' => 'Sertifikat 1',
+            'ket1' => 'KTP',
         ]);
 
         // Daftar peserta 4

@@ -5,8 +5,7 @@
           <tr>
             <th style="width: 10px">No</th>
             <th>Nama</th>
-            <th>No Rekening</th>
-            <th>Master ID</th>
+            <th>KTP</th>
             <th>NPWP</th>
             <th>Alamat</th>
             <th>Tgl Menjabat</th>
@@ -24,8 +23,7 @@
                 <tr>
                     <td scope="row">{{$no}}</td>
                     <td>{{$m->nama}}</td>
-                    <td>{{$m->no_rekening}}</td>
-                    <td>{{$m->master_id}}</td>
+                    <td>{{$m->ktp}}</td>
                     <td>{{$m->NPWP}}</td>
                     <td>{{$m->alamat}}</td>
                     <td>{{$m->tgl_menjabat}}</td>

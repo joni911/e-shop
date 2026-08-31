@@ -152,8 +152,7 @@ class ManagemenController extends Controller
         $data->nama = $request->nama;
         $data->tgl_menjabat = $request->tgl_menjabat;
         $data->tgl_berakhir = $request->tgl_berakhir;
-        $data->no_rekening = $request->no_rekening;
-        $data->master_id = $request->master_id;
+        $data->ktp = $request->ktp;
         $data->alamat = $request->alamat;
         $data->npwp = $request->npwp;
         $data->status = $request->status;
@@ -223,8 +222,7 @@ class ManagemenController extends Controller
         $data->nama = $request->nama;
         $data->tgl_menjabat = $request->tgl_menjabat;
         $data->tgl_berakhir = $request->tgl_berakhir;
-        $data->no_rekening = $request->no_rekening;
-        $data->master_id = $request->master_id;
+        $data->ktp = $request->ktp;
         $data->alamat = $request->alamat;
         $data->npwp = $request->npwp;
         $data->status = $request->status;

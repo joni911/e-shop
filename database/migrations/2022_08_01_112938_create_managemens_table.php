@@ -21,8 +21,7 @@ class CreateManagemensTable extends Migration
             $table->string('nama');
             $table->date('tgl_menjabat')->nullable();
             $table->date('tgl_berakhir')->nullable();
-            $table->string('no_rekening')->nullable();
-            $table->string('master_id')->nullable();
+            $table->string('ktp');
             $table->longText('alamat');
             $table->string('npwp');
             $table->string('status');

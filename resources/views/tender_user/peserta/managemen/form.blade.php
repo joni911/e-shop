@@ -21,14 +21,9 @@
             value="{{$data->tgl_berakhir ?? ""}}">
     </div>
     <div class="form-group">
-        <label for="">No Rekening *</label>
-        <input type="text" class="form-control" required name="no_rekening" id="" aria-describedby="helpId" placeholder=""
-            value="{{$data->no_rekening ?? ""}}">
-    </div>
-    <div class="form-group">
-        <label for="">Master ID Nasabah *</label>
-        <input type="text" class="form-control" required name="master_id" id="" aria-describedby="helpId" placeholder=""
-            value="{{$data->master_id ?? ""}}">
+        <label for="">KTP *</label>
+        <input type="text" class="form-control" required name="ktp" id="" aria-describedby="helpId" placeholder=""
+            value="{{$data->ktp ?? ""}}">
     </div>
     <div class="form-group">
         <label for="">NPWP *</label>

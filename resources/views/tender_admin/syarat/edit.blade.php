@@ -1,57 +1,45 @@
-@extends('adminlte::page')
+@extends('layouts.admin')
 
-@section('title', 'Create Syarat')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', 'Edit Syarat')
 
 @section('content')
-
-<body>
-    <div class="card card-primary">
-        <div class="card-header">
-          <h3 class="card-title">Tambah Syarat {{$syarat->nama}}</h3>
-        </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-
-        <form action="{{ route('syarat.update',[$data->id]) }}" enctype="multipart/form-data" method="post">
-            @csrf
-            @method('put')
-            @include('tender_admin.syarat.part.form')
-          <!-- /.card-body -->
-
-          <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          <a name="" id="" class="btn btn-success" href="{{ route('tender_file.edit',[$data->id]) }}" role="button">Selesai X</a>
-
-          </div>
-        </form>
-
-        <div class="card-header">
-            <h3 class="card-title">Daftar Syarat {{$syarat->nama}}</h3>
-        </div>
-
-        {{-- @include('tender.syarat.table') --}}
-
+<div class="page-header">
+    <h1>Edit Syarat — {{ $syarat->nama }}</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <a href="{{ route('tender_admin.index') }}">Kelola Tender</a> / <a href="{{ route('tender_admin.syarat', [$syarat->id]) }}">Syarat</a> / <span>Edit</span>
     </div>
-</body>
+</div>
 
-@stop
+@if ($errors->any())
+    <x-alert type="danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </x-alert>
+@endif
 
-@section('css')
+<x-card title="Edit Syarat">
+    <form action="{{ route('syarat.update', [$data->id]) }}" method="POST">
+        @csrf
+        @method('PUT')
 
-@stop
+        <div class="row g-4">
+            <div class="col-12 col-md-6">
+                <x-input label="Nama Persyaratan" name="nama" value="{{ $data->judul ?? '' }}" required/>
+            </div>
+        </div>
+        <div class="row g-4 mt-0">
+            <div class="col-12">
+                <x-textarea label="Detail Persyaratan" name="content" rows="6" required>{{ $data->content ?? '' }}</x-textarea>
+            </div>
+        </div>
 
-@section('js')
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-<script type="text/javascript">
-    $('#summernote').summernote({
-        height: 400
-    });
-</script>
-@stop
+        <div class="d-flex gap-3 justify-content-end mt-4">
+            <x-button label="Kembali" href="{{ route('tender_admin.syarat', [$syarat->id]) }}" variant="secondary" icon="fas fa-arrow-left"/>
+            <x-button label="Simpan" type="submit" variant="primary" icon="fas fa-save"/>
+        </div>
+    </form>
+</x-card>
+@endsection

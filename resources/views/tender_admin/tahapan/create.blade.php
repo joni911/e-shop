@@ -15,6 +15,28 @@
     </div>
 </div>
 
+{{-- Step wizard --}}
+@php
+    $steps = [
+        ['label' => 'Data Tender', 'icon' => 'fas fa-file-alt', 'url' => route('tender_admin.edit', [$data->id])],
+        ['label' => 'Tahapan', 'icon' => 'fas fa-calendar-alt', 'active' => true],
+        ['label' => 'Syarat', 'icon' => 'fas fa-list-check', 'url' => route('tender_admin.syarat', [$data->id])],
+        ['label' => 'File Tender', 'icon' => 'fas fa-folder-open', 'url' => route('tender_file.show', [$data->id])],
+        ['label' => 'Persyaratan & Penawaran', 'icon' => 'fas fa-file-signature', 'url' => route('tender_persyarat.show', [$data->id])],
+    ];
+@endphp
+<x-card title="Langkah Pengaturan Tender" class="mb-4">
+    <div class="d-flex flex-wrap gap-2">
+        @foreach($steps as $i => $s)
+            @if(isset($s['active']))
+                <span class="badge badge-primary px-3 py-2"><i class="{{ $s['icon'] }}"></i> {{ $i+1 }}. {{ $s['label'] }}</span>
+            @else
+                <a href="{{ $s['url'] }}" class="badge badge-default px-3 py-2 text-decoration-none"><i class="{{ $s['icon'] }}"></i> {{ $i+1 }}. {{ $s['label'] }}</a>
+            @endif
+        @endforeach
+    </div>
+</x-card>
+
 {{-- Tender Info --}}
 <x-alert type="info" class="mb-4">
     <strong>{{ $data->nama }}</strong><br>
@@ -84,5 +106,11 @@
             <x-button label="Tambah Tahapan" type="submit" variant="primary"/>
         </div>
     </form>
+</x-card>
+
+{{-- Next step: lanjut ke Syarat --}}
+<x-card title="Langkah Berikutnya">
+    <p class="text-muted mb-3">Setelah tahapan selesai, lanjutkan mengatur <strong>Syarat Kualifikasi</strong> yang wajib dipenuhi peserta.</p>
+    <x-button label="Next Step: Atur Syarat" href="{{ route('tender_admin.syarat', [$data->id]) }}" variant="success" icon="fas fa-arrow-right"/>
 </x-card>
 @endsection

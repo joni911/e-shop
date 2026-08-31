@@ -37,6 +37,9 @@
             <div class="col-12 col-md-6">
                 <x-select label="Jenis" name="status" :value="$data->status" :options="[0 => 'Biasa', 1 => 'Masa Pendaftaran', 2 => 'Masa Pembukaan File', 3 => 'Pengumuman Pemenang', 4 => 'Upload File']" required/>
             </div>
+            <div class="col-12">
+                <x-textarea label="Keterangan Edit" name="keterangan" rows="3" required hint="Isi alasan perubahan tahapan — akan tercatat sebagai riwayat perubahan">{{ $data->keterangan ?? '' }}</x-textarea>
+            </div>
         </div>
         <div class="d-flex gap-3 justify-content-end mt-4">
             <x-button label="Kembali" href="{{ route('tahapan.index') }}" variant="secondary"/>

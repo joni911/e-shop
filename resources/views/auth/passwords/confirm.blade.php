@@ -1,4 +1,4 @@
-@extends('layouts.peserta')
+@extends('layouts.guest')
 
 @section('title', 'Konfirmasi Password')
 

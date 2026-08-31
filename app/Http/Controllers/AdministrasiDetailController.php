@@ -6,9 +6,12 @@ use App\Models\administrasi_detail;
 use App\Http\Requests\Storeadministrasi_detailRequest;
 use App\Http\Requests\Updateadministrasi_detailRequest;
 use App\Models\administrasi;
+use App\Models\daftar_peserta;
 use App\Models\peserta;
 use App\Models\tender;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class AdministrasiDetailController extends Controller
 {
@@ -42,24 +45,32 @@ class AdministrasiDetailController extends Controller
     {
         $tid = $request->default;
         $p = $request->peserta;
-        $admin = administrasi::where('tender_id',$tid)->get();
         $user = Auth::user();
+
+        // GUARD: user harus punya profil peserta & sudah terdaftar di tender ini.
+        $profil = $user->peserta;
+        if (!$profil || (int) $p !== (int) $profil->id) {
+            return Redirect::back()->withErrors(['msg' => 'Data peserta tidak valid.']);
+        }
+        $daftar = daftar_peserta::where('tender_id', $tid)
+            ->where('peserta_id', $profil->id)
+            ->first();
+        if (!$daftar) {
+            return Redirect::back()->withErrors(['msg' => 'Anda belum terdaftar sebagai peserta tender ini. Silakan daftar terlebih dahulu sebelum mengupload berkas administrasi.']);
+        }
+
+        $admin = administrasi::where('tender_id',$tid)->get();
+        $uploader = app(FileUploadService::class);
         foreach ($admin as $key => $a) {
             $x = $a->id;
             $tender_id = "1".$x;
             $nama_n = "2".$x;
             $admin_id = "3".$x;
             $request->$tender_id;
-            if ($request->$x) {
+            if ($request->hasFile($x)) {
 
-            $tmp_file = $request->file($x);
-            $file = time()."-".$x.".".$tmp_file->getClientOriginalExtension();
-
-            // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/administrasi/'.$p.'/'.$a->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat link
-            $nama_file=$tujuan_upload.'/'.$file;
+                $relativeDir = 'Tender/administrasi/'.$p.'/'.$a->id;
+                $nama_file = $uploader->store($request->file($x), $relativeDir, $a->nama);
 
                 $ad = new administrasi_detail();
                 $ad->user_id = $user->id;
@@ -70,18 +81,11 @@ class AdministrasiDetailController extends Controller
                 $ad->file = $nama_file;
                 $ad->save();
                 # code...
-                //id 	tender_file_id 	user_id 	files 	keterangan 	created_at 	updated_at 	deleted_at
-                // $tfs = administrasi_detail::findorfail($x);
-                // echo $tfs;
-                // $tfs->files = $nama_file;
-                // $tfs->save();
-                // return $tfs;
-
             }
 
 
         }
-        return redirect()->back();
+        return redirect()->back()->with('success','Berkas administrasi berhasil diupload.');
     }
 
     public function upfile($request)

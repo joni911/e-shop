@@ -148,38 +148,81 @@ function initAlertDismiss() {
 
 /* ─── Form Validation Helpers ─── */
 function initFormValidation() {
-  document.querySelectorAll('form[data-validate]').forEach(form => {
+  // Aktif untuk semua form yang punya input [required] (tidak perlu data-validate).
+  document.querySelectorAll('form').forEach(form => {
+    // Skip jika form tidak punya field required sama sekali
+    if (!form.querySelector('[required]')) return;
+
     form.addEventListener('submit', (e) => {
       let valid = true;
-      form.querySelectorAll('[required]').forEach(field => {
-        if (!field.value.trim()) {
-          valid = false;
-          field.classList.add('is-invalid');
-          field.style.borderColor = 'var(--danger)';
-        } else {
-          field.classList.remove('is-invalid');
-          field.style.borderColor = '';
-        }
-      });
+      const firstInvalid = validateForm(form, () => { valid = false; });
 
       if (!valid) {
         e.preventDefault();
-        // Focus first invalid
-        const firstInvalid = form.querySelector('.is-invalid');
         if (firstInvalid) firstInvalid.focus();
+        // Popup error UX: beri tahu user field mana yang belum diisi
+        const missing = getMissingLabels(form);
+        if (missing.length > 0) {
+          showToast('Lengkapi field wajib: ' + missing.join(', '), 'danger', 6000);
+        }
       }
     });
 
-    // Clear invalid on input
+    // Clear invalid state saat user mulai mengisi/memilih file
     form.querySelectorAll('[required]').forEach(field => {
-      field.addEventListener('input', () => {
-        if (field.value.trim()) {
+      const evt = field.type === 'file' ? 'change' : 'input';
+      field.addEventListener(evt, () => {
+        if (isFieldValid(field)) {
           field.classList.remove('is-invalid');
           field.style.borderColor = '';
+          const wrapper = field.closest('.form-file');
+          if (wrapper) wrapper.classList.remove('has-error');
+          const label = wrapper?.querySelector('.form-file-label');
+          if (label) label.style.borderColor = '';
         }
       });
     });
   });
+}
+
+function validateForm(form, onInvalid) {
+  let firstInvalid = null;
+  form.querySelectorAll('[required]').forEach(field => {
+    if (!isFieldValid(field)) {
+      field.classList.add('is-invalid');
+      if (field.type !== 'file') field.style.borderColor = 'var(--danger)';
+      const wrapper = field.closest('.form-file');
+      if (wrapper) wrapper.classList.add('has-error');
+      if (!firstInvalid) firstInvalid = field;
+      if (onInvalid) onInvalid();
+    } else {
+      field.classList.remove('is-invalid');
+      if (field.type !== 'file') field.style.borderColor = '';
+      const wrapper = field.closest('.form-file');
+      if (wrapper) wrapper.classList.remove('has-error');
+    }
+  });
+  return firstInvalid;
+}
+
+function isFieldValid(field) {
+  if (field.type === 'file') {
+    return field.files.length > 0;
+  }
+  return field.value.trim() !== '';
+}
+
+function getMissingLabels(form) {
+  const missing = [];
+  form.querySelectorAll('[required]').forEach(field => {
+    if (!isFieldValid(field)) {
+      const label = field.closest('.form-group, .mb-3, .mb-4, .form-section')
+        ?.querySelector('.form-label, label');
+      const text = label?.textContent.replace(/\s+/, ' ').trim() || field.name || field.id;
+      if (text && !missing.includes(text)) missing.push(text.replace(/\s*\*\s*$/, '').replace(/\s+/, ' '));
+    }
+  });
+  return missing.slice(0, 5);
 }
 
 /* ─── Confirm Actions ─── */
@@ -204,6 +247,32 @@ function formatDate(dateStr) {
   if (!dateStr) return '-';
   const d = new Date(dateStr);
   return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+/* Fallback showToast bila app.js belum dimuat (ui.js dimuat lebih dulu) */
+function showToast(message, type = 'info', duration = 3000) {
+  if (typeof window.__toastShown === 'undefined') {
+    window.__toastShown = true;
+    setTimeout(() => { window.__toastShown = false; }, 100);
+  }
+  const toast = document.createElement('div');
+  toast.className = `alert alert-${type}`;
+  toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 400px;
+    animation: slideInRight 300ms ease;
+  `;
+  toast.innerHTML = `
+    <span class="alert-content">${String(message)}</span>
+    <button class="alert-close" style="background:none;border:none;cursor:pointer;margin-left:12px;color:inherit;">×</button>
+  `;
+  document.body.appendChild(toast);
+  const close = toast.querySelector('.alert-close');
+  if (close) close.addEventListener('click', () => toast.remove());
+  setTimeout(() => toast.remove(), duration);
 }
 
 function debounce(fn, ms = 300) {

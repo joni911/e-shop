@@ -70,15 +70,23 @@ class PenawaranFileController extends Controller
         $tender = tender::findorfail($id);
         $data = penawaran::where('tender_id',$id)->first();
         $user = Auth::user();
+
+        // GUARD: user belum punya profil peserta -> arahkan lengkapi profil dulu.
+        $profil = $user->peserta;
+        if (!$profil) {
+            return redirect()->route('peserta.index')
+                ->withErrors(['msg' => 'Lengkapi profil peserta terlebih dahulu sebelum mengupload penawaran.']);
+        }
+
         $pp = penawaran_peserta::
-        where('peserta_id',$user->peserta->id)
+        where('peserta_id',$profil->id)
         ->where('tender_id',$tender->id)
         ->first()
         ;
 
         // Guard zona: hanya boleh UPLOAD jika SUDAH terdaftar (daftar_peserta) utk tender ini.
         $daftar = daftar_peserta::where('tender_id', $tender->id)
-            ->where('peserta_id', $user->peserta->id)
+            ->where('peserta_id', $profil->id)
             ->first();
 
         return view('tender_admin.penawaran.show',['tender'=>$tender,'data'=>$data,'pp'=>$pp,'daftar'=>$daftar]);

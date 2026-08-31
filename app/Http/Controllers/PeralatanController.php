@@ -6,6 +6,7 @@ use App\Models\peralatan;
 use App\Http\Requests\StoreperalatanRequest;
 use App\Http\Requests\UpdateperalatanRequest;
 use App\Models\peserta;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Auth;
 
 class PeralatanController extends Controller
@@ -62,16 +63,9 @@ class PeralatanController extends Controller
     {
         # code...
         $nama_file ="";
-        if ($request->file()) {
-            # code...
-             $tmp_file = $request->file('file');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/peralatan/'.$request->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
+        if ($request->file('file')) {
+            $uploader = app(FileUploadService::class);
+            $nama_file = $uploader->store($request->file('file'), 'Tender/peralatan/'.$request->id, 'peralatan');
         }
 
         return $nama_file;
@@ -139,16 +133,10 @@ class PeralatanController extends Controller
     {
         # code...
         $nama_file ="";
-        if ($request->file()) {
-            # code...
-            $tmp_file = $request->file('file');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/peralatan/'.$data->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
+        if ($request->file('file')) {
+            $uploader = app(FileUploadService::class);
+            $uploader->delete($data->file);
+            $nama_file = $uploader->store($request->file('file'), 'Tender/peralatan/'.$data->id, 'peralatan');
         }
 
         return $nama_file;

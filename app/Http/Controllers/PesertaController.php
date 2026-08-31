@@ -22,6 +22,7 @@ use App\Models\tender_file_detail;
 use App\Models\tender_komen;
 use App\Models\tender_status_files;
 use App\Models\User;
+use App\Services\FileUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -115,20 +116,14 @@ class PesertaController extends Controller
         $data->user_id = $user->id;
         $data->save();
         //upload file setelah falidasi
+        $uploader = app(FileUploadService::class);
         foreach ($file->tender_file as $key => $ts) {
             # code...
             $x = $ts->id;
             if ($request->hasFile('file_' . $x)) {
-                $tmp_file = $request->file('file_' . $x);
-                $file = time().".".$tmp_file->getClientOriginalExtension();
+                $relativeDir = 'Tender/FILE/'.$request->id.'/'.$ts->id;
+                $nama_file = $uploader->store($request->file('file_' . $x), $relativeDir, $ts->nama);
 
-                // isi dengan nama folder tempat kemana file diupload
-                $tujuan_upload = 'Tender/FILE/'.$request->id.'/'.$ts->id;
-                $folder = public_path($tujuan_upload);
-                if (!is_dir($folder)) { mkdir($folder, 0777, true); }
-                $tmp_file->move($folder,$file);
-                //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-                $nama_file=$tujuan_upload.'/'.$file;
                 # code...
                 //id 	tender_file_id 	user_id 	files 	keterangan 	created_at 	updated_at 	deleted_at
                 $tfs = new tender_file_detail();
@@ -414,6 +409,7 @@ class PesertaController extends Controller
         $data->harga_koreksi = 0;
         $data->save();
         //upload file setelah falidasi
+        $uploader = app(FileUploadService::class);
         foreach ($file as $key => $ts) {
             # code...
             // return $ts;
@@ -422,20 +418,14 @@ class PesertaController extends Controller
             // echo $x.'<br>';
             if ($request->hasFile('file_' . $x)) {
 
-            $tmp_file = $request->file('file_' . $x);
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-            // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$data->tender_id.'/'.$ts->id;
-            $folder = public_path($tujuan_upload);
-            if (!is_dir($folder)) { mkdir($folder, 0777, true); }
-            $tmp_file->move($folder,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat link
-            $nama_file=$tujuan_upload.'/'.$file;
+                $relativeDir = 'Tender/FILE/'.$data->tender_id.'/'.$ts->id;
+                $nama_file = $uploader->store($request->file('file_' . $x), $relativeDir, $ts->nama_file);
 
                 # code...
                 //id 	tender_file_id 	user_id 	files 	keterangan 	created_at 	updated_at 	deleted_at
                 $tfs = tender_file_detail::findorfail($x);
+                // Hapus file lama sebelum ganti (agar tidak menumpuk)
+                $uploader->delete($tfs->files);
                 $tfs->files = $nama_file;
                 $tfs->save();
                 // return $tfs;

@@ -7,6 +7,7 @@ use App\Http\Requests\Storetenaga_ahliRequest;
 use App\Http\Requests\Updatetenaga_ahliRequest;
 use App\Models\pengalaman_tender;
 use App\Models\peserta;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Auth;
 
 class TenagaAhliController extends Controller
@@ -65,16 +66,9 @@ class TenagaAhliController extends Controller
     {
         # code...
         $nama_file ="";
-        if ($request->file()) {
-            # code...
-            $tmp_file = $request->file('file');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/tenaga_ahli/'.$request->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
+        if ($request->file('file')) {
+            $uploader = app(FileUploadService::class);
+            $nama_file = $uploader->store($request->file('file'), 'Tender/tenaga_ahli/'.$request->id, 'tenaga_ahli');
         }
 
         return $nama_file;
@@ -145,16 +139,10 @@ class TenagaAhliController extends Controller
     {
         # code...
         $nama_file ="";
-        if ($request->file()) {
-            # code...
-            $tmp_file = $request->file('file');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/tenaga_ahli/'.$data->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
+        if ($request->file('file')) {
+            $uploader = app(FileUploadService::class);
+            $uploader->delete($data->file);
+            $nama_file = $uploader->store($request->file('file'), 'Tender/tenaga_ahli/'.$data->id, 'tenaga_ahli');
         }
 
         return $nama_file;

@@ -106,14 +106,24 @@
     @endif
 
     @if(is_object($upfile) && $today >= $upfile->mulai && $today <= $upfile->akhir)
-        <div class="alert alert-info">
-            <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
-            <div class="alert-content">
-                <strong>Zona Upload File</strong><br>
-                Periode: {{ \Carbon\Carbon::parse($upfile->mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($upfile->akhir)->format('d M Y') }}
+        @if($daftar_peserta)
+            <div class="alert alert-info">
+                <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                <div class="alert-content">
+                    <strong>Zona Upload File</strong><br>
+                    Periode: {{ \Carbon\Carbon::parse($upfile->mulai)->format('d M Y') }} - {{ \Carbon\Carbon::parse($upfile->akhir)->format('d M Y') }}
+                </div>
+                <x-button :label="$penawaran ? 'Lihat File' : 'Masukkan File'" href="{{ route('penawaran_file.show', [$data->id]) }}" variant="primary" class="ms-auto"/>
             </div>
-            <x-button :label="$penawaran ? 'Lihat File' : 'Masukkan File'" href="{{ route('penawaran_file.show', [$data->id]) }}" variant="primary" class="ms-auto"/>
-        </div>
+        @else
+            <div class="alert alert-warning">
+                <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.94 5h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.67-1.33-3.46 0L4.35 17c-.77 1.33.2 3 1.73 3z"/></svg>
+                <div class="alert-content">
+                    <strong>Zona Upload File</strong> — Anda belum terdaftar sebagai peserta tender ini.
+                    Silakan daftar terlebih dahulu pada masa pendaftaran sebelum dapat mengupload file.
+                </div>
+            </div>
+        @endif
     @endif
 </div>
 

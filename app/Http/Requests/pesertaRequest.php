@@ -23,13 +23,13 @@ class pesertaRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'nama_pt' => 'required',
             // 'NPWP' => 'required',
             'no_hp' => 'required',
             // 'no_tlp' => 'required',
             'alamat' => 'required',
-            'email' => 'required',
+            'email' => 'required|email',
             // 'penawaran' => 'required',
             'izin' => 'required',
             'nomor_izin' => 'required',
@@ -47,6 +47,39 @@ class pesertaRequest extends FormRequest
             'kswp_npwp' => 'required',
             'kswp_nama' => 'required',
 
+        ];
+
+        // Saat create: berkas wajib tender harus diupload & valid.
+        // Saat update: berkas opsional (boleh tidak diubah) — jika ada harus valid.
+        // Catatan: required file ditangani controller (pesan 'msg') agar kompatibel
+        // dengan alur lama; di sini hanya validasi format & ukuran.
+        $tenderId = $this->input('id');
+        if ($tenderId) {
+            $tender = \App\Models\tender::with('tender_file')->find($tenderId);
+            if ($tender) {
+                $mode = $this->isMethod('put') ? 'nullable' : 'nullable';
+                foreach ($tender->tender_file as $tf) {
+                    $rules['file_' . $tf->id] = $mode.'|file|mimes:jpg,jpeg,png,pdf,zip,rar,7z|max:10240';
+                }
+            }
+        }
+
+        return $rules;
+    }
+
+    /**
+     * Pesan error ramah pengguna.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'nama_pt.required' => 'Nama perusahaan wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'file_*.required' => 'File wajib tidak boleh kosong.',
+            'file_*.mimes' => 'Format file harus jpg, jpeg, png, pdf, zip, rar, atau 7z.',
+            'file_*.max' => 'Ukuran file maksimal 10 MB.',
         ];
     }
 }

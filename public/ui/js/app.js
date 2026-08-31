@@ -43,22 +43,92 @@ function initTableSearch() {
   });
 }
 
-/* ─── File input display ─── */
+/* ─── File input display + live preview ─── */
 function initFileInputs() {
   document.querySelectorAll('input[type="file"]').forEach(input => {
     input.addEventListener('change', () => {
-      const label = input.closest('.form-file')?.querySelector('.form-file-label');
-      if (label) {
-        if (input.files.length > 0) {
-          label.textContent = input.files[0].name;
+      const wrapper = input.closest('.form-file');
+      const label = wrapper?.querySelector('.form-file-label');
+      const name = input.name || '';
+
+      if (input.files.length > 0) {
+        const file = input.files[0];
+        if (label) {
+          label.textContent = file.name;
           label.style.color = 'var(--primary)';
-        } else {
+        }
+        wrapper?.classList.remove('has-error');
+        showFilePreview(input, file);
+      } else {
+        if (label) {
           label.textContent = label.dataset.placeholder || 'Pilih file...';
           label.style.color = '';
         }
+        clearFilePreview(input);
       }
     });
   });
+}
+
+/* ─── Live preview file baru (gambar & pdf) ─── */
+function showFilePreview(input, file) {
+  const container = input.closest('.form-file')?.parentElement?.querySelector('[data-preview="new"]');
+  if (!container) return;
+
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
+  const isPdf = ext === 'pdf' || file.type === 'application/pdf';
+
+  if (isImage) {
+    const url = URL.createObjectURL(file);
+    container.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = url;
+    img.className = 'file-preview-thumb';
+    img.alt = file.name;
+    container.appendChild(img);
+    container.classList.remove('d-none');
+  } else if (isPdf) {
+    const url = URL.createObjectURL(file);
+    container.innerHTML = `
+      <div class="file-preview-pdf">
+        <i class="fas fa-file-pdf text-danger"></i>
+        <span>${escapeHtml(file.name)}</span>
+      </div>
+      <a href="${url}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary">
+        <i class="fas fa-eye"></i> Lihat PDF
+      </a>`;
+    container.classList.remove('d-none');
+  } else {
+    container.innerHTML = `
+      <div class="file-preview-pdf">
+        <i class="fas fa-file"></i>
+        <span>${escapeHtml(file.name)} (${formatBytes(file.size)})</span>
+      </div>`;
+    container.classList.remove('d-none');
+  }
+}
+
+function clearFilePreview(input) {
+  const container = input.closest('.form-file')?.parentElement?.querySelector('[data-preview="new"]');
+  if (container) {
+    container.innerHTML = '';
+    container.classList.add('d-none');
+  }
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str ?? '';
+  return div.innerHTML;
+}
+
+function formatBytes(bytes) {
+  if (!bytes) return '';
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let i = 0, v = bytes;
+  while (v >= 1024 && i < units.length - 1) { v /= 1024; i++; }
+  return v.toFixed(1) + ' ' + units[i];
 }
 
 /* ─── Fetch helpers ─── */

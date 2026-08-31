@@ -54,9 +54,19 @@
             </div>
 
             @forelse (optional($data)->penawaran_file ?? [] as $pf)
+                @php
+                    // Tampilkan file yang sudah diupload (untuk update/re-upload)
+                    $existingFile = null;
+                    if ($pp) {
+                        $existingFile = $pp->penawaran_peserta_file
+                            ->where('nama', $pf->nama)
+                            ->first();
+                    }
+                @endphp
                 <div class="form-group">
                     <x-file label="{{ $pf->nama }} *" name="file_{{ $pf->id }}" required
-                            accept=".pdf,.jpg,.jpeg,.zip" hint="{{ $pf->keterangan ?? '' }}"/>
+                            accept=".pdf,.jpg,.jpeg,.zip" hint="{{ $pf->keterangan ?? '' }}"
+                            :current="optional($existingFile)->file" download_label="File penawaran saat ini"/>
                 </div>
             @empty
                 <p class="text-muted">Tidak ada file penawaran yang diwajibkan.</p>
@@ -87,12 +97,18 @@
 
         <h4 class="mb-3" style="font-size:var(--text-sm);font-weight:600;">File Penawaran</h4>
         @forelse ($pp->penawaran_peserta_file as $no => $item)
+            @php
+                $pv = $item; // path ->file
+                $pv_prefix = 'penawaran-existing';
+                $label = $item->nama ?? 'File ' . $item->id;
+            @endphp
             <div class="file-item">
                 <div class="file-item-icon"><i class="fas fa-file text-primary"></i></div>
                 <div class="file-item-info">
                     <div class="file-item-name">{{ $item->nama }}</div>
                 </div>
                 <div class="file-item-actions">
+                    @include('tender_user.peserta.files.part.preview')
                     <a href="/{{ $item->file }}" download="{{ $item->nama }}" class="btn btn-sm btn-secondary">Download</a>
                 </div>
             </div>

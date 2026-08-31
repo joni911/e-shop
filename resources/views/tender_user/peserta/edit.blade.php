@@ -123,10 +123,9 @@
     <x-card title="File Pendukung">
         @forelse ($file as $tf)
             <div class="mb-4">
-                <x-file :label="$tf->nama_file" name="file_{{ $tf->id }}" accept=".jpg, .jpeg, .png, .pdf, .zip, .rar, .7z" hint="Isi untuk memperbarui file"/>
-                <div class="mt-2">
-                    <a href="/{{ $tf->file }}">Download File {{ $tf->nama_file }}</a>
-                </div>
+                <x-file :label="$tf->nama_file" name="file_{{ $tf->id }}" accept=".jpg, .jpeg, .png, .pdf, .zip, .rar, .7z"
+                        :current="$tf->file" download_label="Download file saat ini"
+                        hint="Isi untuk memperbarui file"/>
             </div>
         @empty
             <p class="text-muted mb-0">Tidak ada file pendukung.</p>

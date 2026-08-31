@@ -41,13 +41,34 @@ class DaftarPesertaController extends Controller
     {
         //
         $user = Auth::user();
+
+        // GUARD: user harus sudah punya profil peserta.
+        $profil = $user->peserta;
+        if (!$profil) {
+            return redirect()->back()->withErrors(['msg' => 'Lengkapi profil peserta terlebih dahulu sebelum mendaftar tender.']);
+        }
+
+        // Validasi kepemilikan: peserta_id harus milik user yang sedang login.
+        if ((int) $request->id !== (int) $profil->id) {
+            return redirect()->back()->withErrors(['msg' => 'Data peserta tidak valid.']);
+        }
+
+        // Cegah duplikat: jika sudah terdaftar di tender ini (termasuk soft-deleted), tolak.
+        $existing = daftar_peserta::withTrashed()
+            ->where('tender_id', $request->tender_id)
+            ->where('peserta_id', $profil->id)
+            ->first();
+        if ($existing) {
+            return redirect()->back()->withErrors(['msg' => 'Anda sudah terdaftar sebagai peserta tender ini.']);
+        }
+
         $data  = new daftar_peserta();
         $data->peserta_id = $request->id;
         $data->tender_id = $request->tender_id;
         $data->user_id = $user->id;
         $data->save();
         $this->send($user,$data);
-        return redirect()->back();
+        return redirect()->back()->with('success','Berhasil mendaftar sebagai peserta tender.');
     }
 
     public function send($user,$data)

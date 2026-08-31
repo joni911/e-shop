@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\pengalaman_tender;
 use App\Http\Requests\Storepengalaman_tenderRequest;
 use App\Http\Requests\Updatepengalaman_tenderRequest;
+use App\Models\daftar_peserta;
 use App\Models\peserta;
 use App\Models\tender;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class PengalamanTenderController extends Controller
 {
@@ -39,9 +42,21 @@ class PengalamanTenderController extends Controller
      */
     public function store(Storepengalaman_tenderRequest $request)
     {
+        $user = Auth::user();
+
+        // GUARD: user harus punya profil peserta & sudah terdaftar di tender ini.
+        $profil = $user->peserta;
+        if (!$profil || (int) $request->id !== (int) $profil->id) {
+            return Redirect::back()->withErrors(['msg' => 'Data peserta tidak valid.']);
+        }
+        $daftar = daftar_peserta::where('tender_id', $request->tender_id)
+            ->where('peserta_id', $profil->id)
+            ->first();
+        if (!$daftar) {
+            return Redirect::back()->withErrors(['msg' => 'Anda belum terdaftar sebagai peserta tender ini. Silakan daftar terlebih dahulu.']);
+        }
 
         $file = $this->pengalaman_file($request);
-        $user = Auth::user();
         $data = new pengalaman_tender();
         $data->peserta_id = $request->id;
         $data->tender_id = $request->tender_id;
@@ -69,16 +84,9 @@ class PengalamanTenderController extends Controller
     {
         # code...
         $nama_file ="";
-        if ($request->file()) {
-            # code...
-             $tmp_file = $request->file('file1');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/pengalaman/'.$request->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
+        if ($request->file('file1')) {
+            $uploader = app(FileUploadService::class);
+            $nama_file = $uploader->store($request->file('file1'), 'Tender/pengalaman/'.$request->id, 'pengalaman');
         }
 
         return $nama_file;
@@ -154,16 +162,11 @@ class PengalamanTenderController extends Controller
     {
         # code...
         $nama_file ="";
-        if ($request->file()) {
-            # code...
-             $tmp_file = $request->file('file1');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/pengalaman/'.$data->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
+        if ($request->file('file1')) {
+            $uploader = app(FileUploadService::class);
+            // Hapus file lama
+            $uploader->delete($data->file);
+            $nama_file = $uploader->store($request->file('file1'), 'Tender/pengalaman/'.$data->id, 'pengalaman');
         }
 
         return $nama_file;

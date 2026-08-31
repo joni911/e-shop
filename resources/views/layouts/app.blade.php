@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('ui/css/base.css?v=1') }}" rel="stylesheet">
-    <link href="{{ asset('ui/css/components.css?v=1') }}" rel="stylesheet">
+    <link href="{{ asset('ui/css/components.css?v=2') }}" rel="stylesheet">
     <link href="{{ asset('ui/css/pages.css?v=1') }}" rel="stylesheet">
     @stack('css')
     @yield('css')
@@ -79,8 +79,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('ui/js/sidebar.js?v=1') }}"></script>
-    <script src="{{ asset('ui/js/ui.js?v=1') }}"></script>
-    <script src="{{ asset('ui/js/app.js?v=1') }}"></script>
+    <script src="{{ asset('ui/js/ui.js?v=2') }}"></script>
+    <script src="{{ asset('ui/js/app.js?v=2') }}"></script>
     @stack('js')
     @yield('js')
 </body>

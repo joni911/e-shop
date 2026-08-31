@@ -6,6 +6,7 @@ use App\Models\managemen;
 use App\Http\Requests\StoremanagemenRequest;
 use App\Http\Requests\UpdatemanagemenRequest;
 use App\Models\peserta;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Auth;
 
 class ManagemenController extends Controller
@@ -39,100 +40,25 @@ class ManagemenController extends Controller
 
      public function file1($request)
      {
-        # code...
-        $nama_file = "";
-        if ($request->file1) {
-            # code...
-            $tmp_file = $request->file('file1');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$request->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
-        }
-
-        return $nama_file;
-
+        return $this->uploadFileField($request, 'file1', 'Tender/FILE/'.$request->id);
      }
      public function file2($request)
      {
-        # code...
-        $nama_file ="";
-        if ($request->file2) {
-            # code...
-            $tmp_file = $request->file('file2');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$request->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
-        }
-
-        return $nama_file;
-
+        return $this->uploadFileField($request, 'file2', 'Tender/FILE/'.$request->id);
      }
 
      public function file3($request)
      {
-        # code...
-        $nama_file ="";
-        if ($request->file3) {
-            # code...
-            $tmp_file = $request->file('file3');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$request->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
-        }
-
-        return $nama_file;
-
+        return $this->uploadFileField($request, 'file3', 'Tender/FILE/'.$request->id);
      }
      public function file4($request)
      {
-        # code...
-        $nama_file ="";
-        if ($request->file4) {
-            # code...
-            $tmp_file = $request->file('file4');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$request->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
-        }
-
-        return $nama_file;
-
+        return $this->uploadFileField($request, 'file4', 'Tender/FILE/'.$request->id);
      }
 
      public function file5($request)
      {
-        # code...
-        $nama_file ="";
-        if ($request->file5) {
-            # code...
-            $tmp_file = $request->file('file5');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$request->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
-        }
-
-        return $nama_file;
-
+        return $this->uploadFileField($request, 'file5', 'Tender/FILE/'.$request->id);
      }
     public function store(StoremanagemenRequest $request)
     {
@@ -257,100 +183,46 @@ class ManagemenController extends Controller
 
     public function ufile1($request,$data)
      {
-        # code...
-        $nama_file = "";
-        if ($request->file1) {
-            # code...
-            $tmp_file = $request->file('file1');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$data->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
-        }
-
-        return $nama_file;
-
+        return $this->uploadFileField($request, 'file1', 'Tender/FILE/'.$data->id, $data->file1);
      }
      public function ufile2($request,$data)
      {
-        # code...
-        $nama_file ="";
-        if ($request->file2) {
-            # code...
-            $tmp_file = $request->file('file2');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$data->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
-        }
-
-        return $nama_file;
-
+        return $this->uploadFileField($request, 'file2', 'Tender/FILE/'.$data->id, $data->file2);
      }
 
      public function ufile3($request,$data)
      {
-        # code...
-        $nama_file ="";
-        if ($request->file3) {
-            # code...
-            $tmp_file = $request->file('file3');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$data->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
-        }
-
-        return $nama_file;
-
+        return $this->uploadFileField($request, 'file3', 'Tender/FILE/'.$data->id, $data->file3);
      }
      public function ufile4($request,$data)
      {
-        # code...
-        $nama_file ="";
-        if ($request->file4) {
-            # code...
-            $tmp_file = $request->file('file4');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$data->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
-        }
-
-        return $nama_file;
-
+        return $this->uploadFileField($request, 'file4', 'Tender/FILE/'.$data->id, $data->file4);
      }
 
      public function ufile5($request,$data)
      {
-        # code...
-        $nama_file ="";
-        if ($request->file5) {
-            # code...
-            $tmp_file = $request->file('file5');
-            $file = time().".".$tmp_file->getClientOriginalExtension();
+        return $this->uploadFileField($request, 'file5', 'Tender/FILE/'.$data->id, $data->file5);
+     }
 
-      	        // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload = 'Tender/FILE/'.$data->id;
-            $tmp_file->move($tujuan_upload,$file);
-            //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-            $nama_file=$tujuan_upload.'/'.$file;
+     /**
+      * Helper upload field file (create/update) dengan nama unik.
+      *
+      * @param  \Illuminate\Http\Request  $request
+      * @param  string  $field  nama input file
+      * @param  string  $dir    folder relatif public
+      * @param  string|null  $old   file lama (untuk dihapus saat update)
+      * @return string
+      */
+     private function uploadFileField($request, string $field, string $dir, ?string $old = null): string
+     {
+        if (!$request->hasFile($field)) {
+            return '';
         }
-
-        return $nama_file;
-
+        $uploader = app(FileUploadService::class);
+        if ($old) {
+            $uploader->delete($old);
+        }
+        return $uploader->store($request->file($field), $dir, $field) ?? '';
      }
 
     /**

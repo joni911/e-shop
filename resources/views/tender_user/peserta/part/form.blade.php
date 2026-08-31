@@ -131,12 +131,10 @@
 
         @forelse ($file as $tf)
           <div class="form-group">
-            <label for="">{{$tf->nama_file}}</label>
-            <input id='files' type="file" class="form-control-file" name="file_{{$tf->id}}" id="" placeholder="Isi File Untuk Update File" aria-describedby="fileHelpId"
-            accept=".jpg, .jpeg, .png, .pdf, .pdf, .zip, .rar, .7z"
-            >
-            <a href="/{{$tf->file}}">Download File {{$tf->nama_file}}</a>
-            {{-- <p>{{$tf}}</p> --}}
+            <x-file :label="($tf->nama ?? $tf->nama_file ?? 'File') . ' *'" name="file_{{$tf->id}}" required
+                    accept=".jpg, .jpeg, .png, .pdf, .zip, .rar, .7z"
+                    :current="$tf->file ?? null" download_label="Download file saat ini"
+                    hint="Isi file untuk upload"/>
           </div>
         @empty
 

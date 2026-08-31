@@ -7,10 +7,13 @@ use App\Http\Requests\Storefile_teknisRequest;
 use App\Http\Requests\Updatefile_teknisRequest;
 use App\Models\administrasi;
 use App\Models\administrasi_detail;
+use App\Models\daftar_peserta;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Models\tender_file;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class FileTeknisController extends Controller
 {
@@ -47,6 +50,18 @@ class FileTeknisController extends Controller
             $pid = $request->peserta;
             $user = Auth::user();
 
+            // GUARD: user harus punya profil peserta & sudah terdaftar di tender ini.
+            $profil = $user->peserta;
+            if (!$profil || (int) $pid !== (int) $profil->id) {
+                return Redirect::back()->withErrors(['msg' => 'Data peserta tidak valid.']);
+            }
+            $daftar = daftar_peserta::where('tender_id', $tid)
+                ->where('peserta_id', $profil->id)
+                ->first();
+            if (!$daftar) {
+                return Redirect::back()->withErrors(['msg' => 'Anda belum terdaftar sebagai peserta tender ini. Silakan daftar terlebih dahulu sebelum mengupload file teknis.']);
+            }
+
             $smkk = $this->fsmkk($request);
             $komitmen = $this->fkomit($request);
 
@@ -58,7 +73,7 @@ class FileTeknisController extends Controller
             $data->komitmen = $komitmen;
             $data->save();
 
-            return redirect()->back();
+            return redirect()->back()->with('success','File teknis berhasil diupload.');
 
     }
 
@@ -67,14 +82,9 @@ class FileTeknisController extends Controller
         # code...
             $tid = $request->tender_id;
             $pid = $request->peserta;
+            $uploader = app(FileUploadService::class);
             $tmp_smkk = $request->file('smkk');
-            $file_smkk = "smkk - ".time().".".$tmp_smkk->getClientOriginalExtension();
-
-            // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload_smkk = 'Tender/administrasi/'.$tid.'/'.$pid;
-            $tmp_smkk->move($tujuan_upload_smkk,$file_smkk);
-            //nama file dan tujuan di jadikan satu agar mudah di buat link
-            $smkk=$tujuan_upload_smkk.'/'.$file_smkk;
+            $smkk = $uploader->store($tmp_smkk, 'Tender/administrasi/'.$tid.'/'.$pid, 'smkk');
 
             return $smkk;
     }
@@ -85,15 +95,10 @@ class FileTeknisController extends Controller
             $tid = $request->tender_id;
             $pid = $request->peserta;
 
-
+            $uploader = app(FileUploadService::class);
             $tmp_file_komitmen = $request->file('komitmen');
-            $file_komitmen = "komitmen - ".time().".".$tmp_file_komitmen->getClientOriginalExtension();
+            $komitmen = $uploader->store($tmp_file_komitmen, 'Tender/administrasi/'.$tid.'/'.$pid, 'komitmen');
 
-            // isi dengan nama folder tempat kemana file diupload
-            $tujuan_upload_komitmen = 'Tender/administrasi/'.$tid.'/'.$pid;
-            $tmp_file_komitmen->move($tujuan_upload_komitmen,$file_komitmen);
-            //nama file dan tujuan di jadikan satu agar mudah di buat link
-            $komitmen=$tujuan_upload_komitmen.'/'.$file_komitmen;
             return $komitmen;
     }
 

@@ -9,6 +9,7 @@ use App\Http\Requests\Updatepenawaran_pesertaRequest;
 use App\Models\penawaran;
 use App\Models\penawaran_peserta_file;
 use App\Models\tender;
+use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -44,11 +45,18 @@ class PenawaranPesertaController extends Controller
     {
         //
         $user = Auth::user();
+
+        // GUARD: user belum punya profil peserta -> arahkan lengkapi profil dulu.
+        $profil = $user->peserta;
+        if (!$profil) {
+            return Redirect::back()->withErrors(['msg' => 'Lengkapi profil peserta terlebih dahulu sebelum mengupload penawaran.']);
+        }
+
         $data = tender::findorfail($request->id);
 
         // GUARD ZONA: hanya boleh upload jika SUDAH terdaftar (daftar_peserta) utk tender ini.
         $daftar = daftar_peserta::where('tender_id', $request->id)
-            ->where('peserta_id', $user->peserta->id)
+            ->where('peserta_id', $profil->id)
             ->first();
         if (!$daftar) {
             return Redirect::back()->withErrors(['msg' => 'Anda belum terdaftar sebagai peserta tender ini. Silakan daftar terlebih dahulu sebelum mengupload penawaran.']);
@@ -70,29 +78,23 @@ class PenawaranPesertaController extends Controller
 
         // 1 penawaran per (peserta, tender): jika sudah ada di tender ini, perbarui nilai + ganti file.
         $pp = penawaran_peserta::updateOrCreate(
-            ['peserta_id' => $user->peserta->id, 'tender_id' => $request->id],
+            ['peserta_id' => $profil->id, 'tender_id' => $request->id],
             ['user_id' => $user->id, 'penawaran' => $request->penawaran, 'koreksi' => 0]
         );
 
         // Hapus file penawaran lama (hard delete, karena model penawaran_peserta_file memakai SoftDeletes)
         penawaran_peserta_file::where('penawaran_peserta_id', $pp->id)->forceDelete();
 
-
+        $uploader = app(FileUploadService::class);
         foreach ($data->penawaran->penawaran_file as $key => $x) {
             # code...e
             if ($request->hasFile('file_' . $x->id)) {
-                $tmp_file = $request->file('file_' . $x->id);
-                $file = time()."_".$x->nama.".".$tmp_file->getClientOriginalExtension();
-
-      	        // isi dengan nama folder tempat kemana file diupload
-                $tujuan_upload = 'Tender/penawaran/'.$request->id.'/'.$user->id;
-                $folder = public_path($tujuan_upload);
-                if (!is_dir($folder)) {
-                    mkdir($folder, 0777, true);
-                }
-                $tmp_file->move($folder,$file);
-                //nama file dan tujuan di jadikan satu agar mudah di buat linkgit
-                $nama_file=$tujuan_upload.'/'.$file;
+                $relativeDir = 'Tender/penawaran/'.$request->id.'/'.$user->id;
+                $nama_file = $uploader->store(
+                    $request->file('file_' . $x->id),
+                    $relativeDir,
+                    $x->nama
+                );
 
                 # code...
                 $fileRec = new penawaran_peserta_file();

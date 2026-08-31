@@ -106,16 +106,8 @@
         <div class="row g-4">
             @forelse ($file as $tf)
                 <div class="col-12 col-md-6">
-                    @if($tf->nama)
-                        <x-file label="{{ $tf->nama }} *" name="file_{{ $tf->id }}" required
-                                accept=".jpg,.jpeg,.png,.pdf,.zip,.rar,.7z" hint="{{ $tf->keterangan ?? '' }}"/>
-                    @else
-                        <div class="mb-3">
-                            <x-file label="{{ $tf->nama_file }} *" name="file_{{ $tf->id }}" required
-                                    accept=".jpg,.jpeg,.png,.pdf,.zip,.rar,.7z"/>
-                            <a href="/{{ $tf->file }}" class="d-inline-block mt-2">Download File {{ $tf->nama_file }}</a>
-                        </div>
-                    @endif
+                    <x-file :label="($tf->nama ?? $tf->nama_file) . ' *'" name="file_{{ $tf->id }}" required
+                            accept=".jpg,.jpeg,.png,.pdf,.zip,.rar,.7z" hint="{{ $tf->keterangan ?? '' }}"/>
                 </div>
             @empty
                 <div class="col-12 text-muted">Tidak ada berkas wajib.</div>

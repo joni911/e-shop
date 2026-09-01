@@ -26,6 +26,7 @@
     $currentExt = $hasCurrent ? strtolower(pathinfo($current, PATHINFO_EXTENSION)) : '';
     $isImage = in_array($currentExt, ['jpg', 'jpeg', 'png', 'gif', 'webp']);
     $isPdf = $currentExt === 'pdf';
+    $hasError = $errors->has($name);
 @endphp
 
 @if($label)
@@ -40,7 +41,7 @@
     </label>
 @endif
 
-<div class="form-file {{ $hasCurrent ? 'has-file' : '' }}">
+<div class="form-file {{ $hasCurrent ? 'has-file' : '' }} {{ $hasError ? 'has-error' : '' }}">
     <input @if($fid) id="{{ $fid }}" @endif type="file" name="{{ $name }}"
            @if($accept) accept="{{ $accept }}" @endif
            @if($multiple) multiple @endif
@@ -83,5 +84,5 @@
     <small class="form-hint">{{ $hint }}</small>
 @endif
 @error($name)
-    <div class="form-error">{{ $message }}</div>
+    <div class="form-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
 @enderror

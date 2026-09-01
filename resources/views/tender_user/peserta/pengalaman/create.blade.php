@@ -12,6 +12,8 @@
 
 @include('global.alert')
 
+@include('tender_user.peserta.part.validation-alert')
+
 <x-alert type="warning" title="Ketentuan Pengalaman" class="mb-4">
     <ul class="mb-0">
         <li>Memiliki pengalaman paling kurang 1 (satu) Pekerjaan Konstruksi dalam kurun waktu 4 (empat) tahun terakhir, baik di lingkungan pemerintah maupun swasta, termasuk pengalaman subkontrak.</li>

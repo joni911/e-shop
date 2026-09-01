@@ -83,7 +83,7 @@ class PesertaController extends Controller
             $x = $tc->id;
             if (!$request->hasFile('file_' . $x)) {
                 # code...
-                return Redirect::back()->withErrors(['msg' => 'File '.$tc->nama.' Tidak Boleh Kosong']);
+                return Redirect::back()->withInput()->withErrors(['msg' => 'File '.$tc->nama.' Tidak Boleh Kosong']);
             }
         }
         //save file

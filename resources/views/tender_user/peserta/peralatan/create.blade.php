@@ -12,6 +12,8 @@
 
 @include('global.alert')
 
+@include('tender_user.peserta.part.validation-alert')
+
 <x-alert type="warning" title="Peralatan Yang Dibutuhkan" class="mb-4">
     <ul class="mb-0">
         <li>1 Unit Concrete Mixer kapasitas minimal 0,3 m3</li>

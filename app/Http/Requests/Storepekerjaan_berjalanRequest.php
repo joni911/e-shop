@@ -24,17 +24,46 @@ class Storepekerjaan_berjalanRequest extends FormRequest
     public function rules()
     {
         return [
-            'pekerjaan' => 'required',
-            'lokasi' => 'required',
-            'instansi' => 'required',
-            'alamat' => 'required',
-            'no_hp' => 'required',
-            'no_kontrak' => 'required',
-            'tgl_kontrak' => 'required',
-            'presentasi' => 'required|integer|min:1|max:100' ,
-            'tgl_selesai_kontrak' => 'required',
-            'tgl_serah_terima' => 'required',
-            'keterangan' => 'required'
+            'pekerjaan' => 'required|string',
+            'lokasi' => 'required|string',
+            'instansi' => 'required|string',
+            'alamat' => 'required|string',
+            'no_hp' => 'required|numeric',
+            'no_kontrak' => 'required|string',
+            'nilai_kontrak' => 'required|numeric|min:0',
+            'tgl_kontrak' => 'required|date',
+            'presentasi' => 'required|integer|min:1|max:100',
+            'tgl_selesai_kontrak' => 'required|date|after_or_equal:tgl_kontrak',
+            'tgl_serah_terima' => 'required|date',
+            'keterangan' => 'required|string',
+        ];
+    }
+
+    /**
+     * Pesan error ramah pengguna.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'pekerjaan.required' => 'Nama pekerjaan wajib diisi.',
+            'lokasi.required' => 'Lokasi wajib diisi.',
+            'instansi.required' => 'Instansi pemberi tugas wajib diisi.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'no_hp.required' => 'Nomor telepon wajib diisi.',
+            'no_hp.numeric' => 'Nomor telepon harus berupa angka.',
+            'no_kontrak.required' => 'Nomor kontrak wajib diisi.',
+            'nilai_kontrak.required' => 'Nilai kontrak wajib diisi.',
+            'nilai_kontrak.numeric' => 'Nilai kontrak harus berupa angka.',
+            'tgl_kontrak.required' => 'Tanggal kontrak wajib diisi.',
+            'presentasi.required' => 'Persentase pelaksanaan wajib diisi.',
+            'presentasi.min' => 'Persentase pelaksanaan minimal 1%.',
+            'presentasi.max' => 'Persentase pelaksanaan maksimal 100%.',
+            'tgl_selesai_kontrak.required' => 'Tanggal selesai kontrak wajib diisi.',
+            'tgl_selesai_kontrak.after_or_equal' => 'Tanggal selesai kontrak tidak boleh sebelum tanggal kontrak.',
+            'tgl_serah_terima.required' => 'Tanggal serah terima wajib diisi.',
+            'keterangan.required' => 'Keterangan wajib diisi.',
         ];
     }
 }

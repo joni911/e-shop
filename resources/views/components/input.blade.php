@@ -15,6 +15,9 @@
 @php
     $fid = $id ?? ($name ? Str::of($name)->replace(['.', '[]', '[', ']'], ['_', '', '_', ''])->toString() : null);
     $fid = $fid ? preg_replace('/[^A-Za-z0-9_]/', '_', $fid) : null;
+    // Retensi input: jika validasi gagal, pakai nilai lama dari session (old())
+    $value = old($name, $value);
+    $hasError = $errors->has($name);
 @endphp
 
 @if($label)
@@ -27,7 +30,7 @@
 <input type="{{ $type }}"
        @if($fid) id="{{ $fid }}" @endif
        name="{{ $name }}"
-       class="form-control"
+       class="form-control {{ $hasError ? 'is-invalid' : '' }}"
        value="{{ $value }}"
        placeholder="{{ $placeholder }}"
        @if($required) required @endif
@@ -37,5 +40,5 @@
     <small class="form-hint">{{ $hint }}</small>
 @endif
 @error($name)
-    <div class="form-error">{{ $message }}</div>
+    <div class="form-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
 @enderror

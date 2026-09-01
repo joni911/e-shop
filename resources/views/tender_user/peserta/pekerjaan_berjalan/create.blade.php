@@ -12,6 +12,8 @@
 
 @include('global.alert')
 
+@include('tender_user.peserta.part.validation-alert')
+
 <x-card title="{{ $status == 'show' ? 'Tambah Pekerjaan Berjalan' : 'Edit Pekerjaan Berjalan' }}">
     <form action="{{ $status == 'show' ? route('pekerjaan_berjalan.store') : route('pekerjaan_berjalan.update', [$data]) }}" method="POST">
         @csrf

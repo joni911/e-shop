@@ -12,6 +12,8 @@
 
 @include('global.alert')
 
+@include('tender_user.peserta.part.validation-alert')
+
 <x-alert type="warning" title="Personil Managerial Yang Dibutuhkan" class="mb-4">
     <ul class="mb-0">
         <li>1 (satu) orang Pelaksana, dengan SKT Pelaksana Bangunan Gedung/Pekerjaan Gedung, Pengalaman 2 Tahun.</li>

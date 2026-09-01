@@ -14,6 +14,9 @@
 
 @php
     $fid = $id ?? ($name ? preg_replace('/[^A-Za-z0-9_]/', '_', Str::of($name)->replace(['.', '[]', '[', ']'], ['_', '', '_', ''])->toString()) : null);
+    // Retensi input: jika validasi gagal, pakai nilai lama dari session (old())
+    $value = old($name, $value);
+    $hasError = $errors->has($name);
 @endphp
 
 @if($label)
@@ -24,7 +27,7 @@
 @endif
 
 <textarea @if($fid) id="{{ $fid }}" @endif name="{{ $name }}" rows="{{ $rows }}"
-          class="form-textarea" placeholder="{{ $placeholder }}"
+          class="form-textarea {{ $hasError ? 'is-invalid' : '' }}" placeholder="{{ $placeholder }}"
           @if($required) required @endif
           {{ $attributes }}>{{ $value ?: $slot }}</textarea>
 
@@ -32,5 +35,5 @@
     <small class="form-hint">{{ $hint }}</small>
 @endif
 @error($name)
-    <div class="form-error">{{ $message }}</div>
+    <div class="form-error"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
 @enderror

@@ -34,6 +34,7 @@
 
 <form action="{{ route('peserta.store') }}" enctype="multipart/form-data" method="post">
     @csrf
+    @include('tender_user.peserta.part.validation-alert')
     @include('tender_user.peserta.registrasi.form')
     <div class="d-flex gap-3 justify-content-end mt-4">
         <a href="{{ route('home') }}" class="btn btn-secondary">Batal</a>

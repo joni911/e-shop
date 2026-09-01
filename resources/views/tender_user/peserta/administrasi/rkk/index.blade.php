@@ -12,6 +12,8 @@
 
 @include('global.alert')
 
+@include('tender_user.peserta.part.validation-alert')
+
 @if (!$list)
 <x-card title="Upload RKK">
     <form action="{{ route('file_teknis.store') }}" method="POST" enctype="multipart/form-data">

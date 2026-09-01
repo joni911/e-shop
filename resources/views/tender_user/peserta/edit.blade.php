@@ -14,15 +14,7 @@
     </div>
 </div>
 
-@if ($errors->any())
-    <x-alert type="danger">
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </x-alert>
-@endif
+@include('tender_user.peserta.part.validation-alert')
 
 <form action="{{ route('peserta.update', [$data->id]) }}" method="POST" enctype="multipart/form-data">
     @csrf

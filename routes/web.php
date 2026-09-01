@@ -117,6 +117,8 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     //Peserta
     //Peserta mengisi berkas administrasi (peserta-face)
     Route::resource('administrasi', AdministrasiController::class);
+    // Halaman administrasi per TENDER (show resource bind ke id administrasi, bukan tender)
+    Route::get('administrasi/tender/{id}', [AdministrasiController::class, 'show'])->name('administrasi.tender');
     Route::resource('peserta',PesertaController::class);
     Route::get('peserta/tender/{id}',[PesertaController::class,'show_peserta'])->name('peserta.tender');
     Route::get('peserta/{id}/file_tender/{pid}',[PesertaController::class,'show_file_peserta'])->name('peserta.file');
@@ -129,8 +131,12 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     Route::resource('validasi_file', ValidasiFileController::class);
     Route::middleware('role:admin')->group(function () {
         Route::resource('tender_persyarat', TenderPersyaratanController::class);
+        // Halaman persyaratan per TENDER (show resource bind ke id tender_persyarat, bukan tender)
+        Route::get('tender_persyarat/tender/{id}', [TenderPersyaratanController::class, 'show'])->name('tender_persyarat.tender');
         Route::resource('tender_persyaratan_file', TenderPersyaratanFileController::class);
         Route::resource('penawaran', PenawaranController::class);
+        // Halaman persiapan penawaran per TENDER (show resource bind ke id penawaran, bukan tender)
+        Route::get('penawaran/tender/{id}', [PenawaranController::class, 'show'])->name('penawaran.tender');
     });
     Route::resource('penawaran_file', PenawaranFileController::class);
     Route::resource('penawaran_peserta', PenawaranPesertaController::class);

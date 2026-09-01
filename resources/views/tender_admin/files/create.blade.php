@@ -17,7 +17,7 @@
         ['label' => 'Tahapan', 'icon' => 'fas fa-calendar-alt', 'url' => route('tender_admin.tahapan', [$data->id])],
         ['label' => 'Syarat', 'icon' => 'fas fa-list-check', 'url' => route('tender_admin.syarat', [$data->id])],
         ['label' => 'File Tender', 'icon' => 'fas fa-folder-open', 'active' => true],
-        ['label' => 'Persyaratan & Penawaran', 'icon' => 'fas fa-file-signature', 'url' => route('tender_persyarat.show', [$data->id])],
+        ['label' => 'Persyaratan & Penawaran', 'icon' => 'fas fa-file-signature', 'url' => route('tender_persyarat.tender', [$data->id])],
     ];
 @endphp
 <x-card title="Langkah Pengaturan Tender" class="mb-4">
@@ -96,6 +96,6 @@
 {{-- Next step --}}
 <x-card title="Langkah Berikutnya">
     <p class="text-muted mb-3">Setelah file wajib selesai, lanjutkan mengatur <strong>Persyaratan & Penawaran</strong> (spesifikasi teknis + data penawaran panitia).</p>
-    <x-button label="Next Step: Persyaratan & Penawaran" href="{{ route('tender_persyarat.show', [$data->id]) }}" variant="success" icon="fas fa-arrow-right"/>
+    <x-button label="Next Step: Persyaratan & Penawaran" href="{{ route('tender_persyarat.tender', [$data->id]) }}" variant="success" icon="fas fa-arrow-right"/>
 </x-card>
 @endsection

@@ -17,7 +17,7 @@
         ['label' => 'Tahapan', 'icon' => 'fas fa-calendar-alt', 'url' => route('tender_admin.tahapan', [$syarat->id])],
         ['label' => 'Syarat', 'icon' => 'fas fa-list-check', 'active' => true],
         ['label' => 'File Tender', 'icon' => 'fas fa-folder-open', 'url' => route('tender_file.show', [$syarat->id])],
-        ['label' => 'Persyaratan & Penawaran', 'icon' => 'fas fa-file-signature', 'url' => route('tender_persyarat.show', [$syarat->id])],
+        ['label' => 'Persyaratan & Penawaran', 'icon' => 'fas fa-file-signature', 'url' => route('tender_persyarat.tender', [$syarat->id])],
     ];
 @endphp
 <x-card title="Langkah Pengaturan Tender" class="mb-4">

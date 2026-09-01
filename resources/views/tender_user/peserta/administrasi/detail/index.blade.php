@@ -1,68 +1,51 @@
-@extends('adminlte::page')
+@extends('layouts.peserta')
 
-@section('title', 'Pendaftaran Peserta Tender')
-
-@section('content_header')
-
-
-
-@stop
+@section('title', 'Pendaftaran Administrasi')
 
 @section('content')
+<div class="page-header">
+    <h1>Pendaftaran Administrasi</h1>
+    <div class="breadcrumb">
+        <a href="{{ route('home') }}">Beranda</a> / <span>Administrasi</span>
+    </div>
+</div>
 
-<body>
-    <div class="card card-primary">
-        <div class="card-header">
-          <h3 class="card-title">Pendaftaran Administrasi</h3>
-        </div>
-        <!-- /.card-header -->
-        <!-- form start -->
+@include('global.alert')
+@include('tender_user.peserta.part.validation-alert')
 
-        @if ($list->isEmpty())
-        <form action="{{ route('administrasi_list.store') }}" enctype="multipart/form-data" method="post">
+@if ($list->isEmpty())
+    <x-card title="Upload Dokumen Administrasi">
+        <p class="text-muted mb-4">Upload dokumen administrasi wajib berikut (format PDF).</p>
+        <form action="{{ route('administrasi_list.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="col-md">
-                @include('tender_user.peserta.administrasi.detail.admin')
+            @include('tender_user.peserta.administrasi.detail.admin')
+
+            <div class="d-flex gap-3 justify-content-end mt-4">
+                <x-button label="Kembali" href="{{ route('file_teknis.show', [$peserta->id]) }}" variant="secondary" icon="fas fa-arrow-left"/>
+                <x-button label="Submit" type="submit" variant="primary" icon="fas fa-save"/>
             </div>
-            {{-- @include('tender_user.peserta.part.eform') --}}
-          <!-- /.card-body -->
-
-          <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            {{-- <a name="" id="" class="btn btn-success" href="{{ route('administrasi_list.show', [$data->id]) }}" role="button">Berikutnya</a> --}}
-            <a name="" id="" class="btn btn-success" href="{{ route('pengalaman.show', [$peserta->id]) }}" role="button">Berikutnya</a>
-          </div>
         </form>
-        @else
-            <a name="" id="" class="btn btn-success" href="{{ route('pengalaman.show', [$peserta->id]) }}" role="button">Berikutnya</a>
-        @endif
-        <div class="col-md">
-            @include("tender_user.peserta.administrasi.detail.list")
-        </div>
-        @if (!$list->isEmpty())
-        <div class="col-md">
-            <p>Untuk Upload Ulang harap hapus file dahulu</p>
-            <form action="{{ route('administrasi_list.destroy' , $peserta->id)}}" method="POST">
-                        <input name="_method" type="hidden" value="DELETE">
-                        {{ csrf_field() }}
+    </x-card>
+@else
+    <x-alert type="success" title="Dokumen Administrasi Sudah Diupload">
+        Semua berkas administrasi sudah diupload.
+    </x-alert>
+    <div class="d-flex gap-3">
+        <x-button label="Berikutnya: Pengalaman" href="{{ route('pengalaman.show', [$peserta->id]) }}" variant="success" icon="fas fa-arrow-right"/>
+    </div>
+@endif
 
-                        <div class="modal-footer no-border">
-                            {{-- <button type="button" class="btn btn-info" data-dismiss="modal">No</button> --}}
-                            <button type="submit" class="btn btn-danger">Hapus</button>
-                        </div>
-            </form>
-        </div>
-        @endif
-      </div>
+{{-- Daftar file yang sudah diupload --}}
+@include('tender_user.peserta.administrasi.detail.list')
 
-</body>
-
-@stop
-
-@section('css')
-
-@stop
-
-@section('js')
-
-@stop
+@if (!$list->isEmpty())
+    <x-card title="Upload Ulang">
+        <p class="text-muted">Untuk mengupload ulang dokumen administrasi, hapus file yang sudah ada terlebih dahulu.</p>
+        <form action="{{ route('administrasi_list.destroy', [$peserta->id]) }}" method="POST" onsubmit="return confirm('Hapus semua dokumen administrasi yang sudah diupload?')">
+            @csrf
+            @method('DELETE')
+            <x-button label="Hapus Semua Dokumen" type="submit" variant="danger" icon="fas fa-trash"/>
+        </form>
+    </x-card>
+@endif
+@endsection

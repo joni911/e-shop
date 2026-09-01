@@ -6,9 +6,9 @@
           <input type="text"
             class="form-control" required name="pekerjaan" id="" aria-describedby="helpId" placeholder="" value="{{$data->pekerjaan ?? ""}}">
             <input type="text"
-            class="form-control" required name="id" id="" hidden aria-describedby="helpId" placeholder="" value="{{$data->id ?? $peserta->id}}">
+            class="form-control" required name="id" id="" hidden aria-describedby="helpId" placeholder="" value="{{$peserta->id}}">
             <input type="text"
-            class="form-control" required name="tender_id" id="" hidden aria-describedby="helpId" placeholder="" value="{{$data->tender_id ?? $peserta->tender_id}}">
+            class="form-control" required name="tender_id" id="" hidden aria-describedby="helpId" placeholder="" value="{{$peserta->tender_id}}">
         </div>
         <div class="form-group">
             <label for="">Lokasi *</label>

@@ -6,9 +6,9 @@
           <input type="text"
             class="form-control" required name="nama" id="" aria-describedby="helpId" placeholder="" value="{{$data->nama ?? ""}}">
             <input type="text"
-            class="form-control" required name="id" id="" hidden aria-describedby="helpId" placeholder="" value="{{$data->id ?? $peralatan->id}}">
+            class="form-control" required name="id" id="" hidden aria-describedby="helpId" placeholder="" value="{{$peralatan->id}}">
             <input type="text"
-            class="form-control" required name="tender_id" id="" hidden aria-describedby="helpId" placeholder="" value="{{$data->tender_id ?? $peralatan->tender_id}}">
+            class="form-control" required name="tender_id" id="" hidden aria-describedby="helpId" placeholder="" value="{{$peralatan->tender_id}}">
         </div>
         <div class="form-group">
             <label for="">Jumlah *</label>

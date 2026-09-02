@@ -44,6 +44,10 @@
             <span><i class="fas fa-user-tie me-2"></i>Managemen</span>
             <i class="fas fa-chevron-right"></i>
         </a>
+        <a href="{{ route('administrasi_list.show', [$profil->id]) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-folder-open me-2"></i>Administrasi (Upload Berkas)</span>
+            <i class="fas fa-chevron-right"></i>
+        </a>
     </div>
     <div class="mt-3 d-flex gap-2 align-items-center">
         <a class="btn btn-secondary" href="{{ route('peserta.tenders') }}">Kembali ke Tender Saya</a>

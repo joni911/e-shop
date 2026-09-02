@@ -48,6 +48,7 @@ class TenderWizardTest extends TestCase
         // 2) pilih tender → wizard set context session
         $this->actingAs($user)->get(route('peserta.wizard', [$profil->id, $profil->tender_id]))
              ->assertOk()
+             ->assertSee('Administrasi')
              ->assertSessionHas(TenderContext::KEY);
         $this->assertEquals($profil->tender_id, TenderContext::tenderId());
 

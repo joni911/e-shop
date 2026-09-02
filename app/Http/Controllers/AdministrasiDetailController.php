@@ -10,6 +10,7 @@ use App\Models\daftar_peserta;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Services\FileUploadService;
+use App\Services\TenderContext;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
@@ -100,18 +101,17 @@ class AdministrasiDetailController extends Controller
      */
     public function show($id)
     {
-        $peserta= peserta::findorfail($id);
-        $tid = $peserta->tender_id;
-        $tender = tender::findorfail($tid);
-        $admin = administrasi::where('tender_id',$tid)->get();
+        $peserta = peserta::findorfail($id);
+        // Konteks wizard (bila dipilih) menentukan tender aktif, bukan selalu $peserta->tender_id.
+        $tenderId = TenderContext::tenderId($peserta->tender_id ?? null) ?? $peserta->tender_id;
+        $tender = tender::findorfail($tenderId);
+        $admin = administrasi::where('tender_id', $tenderId)->get();
+        $list = administrasi_detail::where('peserta_id', $id)->where('tender_id', $tenderId)->get();
 
-        $list = administrasi_detail::where('peserta_id',$id)->where('tender_id',$tid)->get();
-        // if ($list->isEmpty()) {
-        //     # code...
-        //     return "null";
-        // }
-        return view('tender_user.peserta.administrasi.detail.index',['data'=>$tender,'admin'=>$admin,'peserta'=>$peserta,'list'=>$list]);
-
+        return view('tender_user.peserta.administrasi.detail.index', [
+            'data' => $tender, 'admin' => $admin, 'peserta' => $peserta, 'list' => $list,
+            'tender' => $tender, 'tenderId' => $tenderId,
+        ]);
     }
 
     /**

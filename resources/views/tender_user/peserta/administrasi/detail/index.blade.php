@@ -12,6 +12,7 @@
 
 @include('global.alert')
 @include('tender_user.peserta.part.validation-alert')
+@include('tender_user.peserta.part.tender-head')
 
 @if ($list->isEmpty())
     <x-card title="Upload Dokumen Administrasi">

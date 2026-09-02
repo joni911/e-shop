@@ -6,7 +6,9 @@ use App\Models\managemen;
 use App\Http\Requests\StoremanagemenRequest;
 use App\Http\Requests\UpdatemanagemenRequest;
 use App\Models\peserta;
+use App\Models\tender;
 use App\Services\FileUploadService;
+use App\Services\TenderContext;
 use Illuminate\Support\Facades\Auth;
 
 class ManagemenController extends Controller
@@ -71,6 +73,13 @@ class ManagemenController extends Controller
         $nf5 = $this->file5($request);
 
         $user = Auth::user();
+        $profil = $user->peserta;
+        if ($profil && !$request->filled('id')) {
+            $request->id = $profil->id;
+        }
+        if ($profil && !$request->filled('tender_id')) {
+            $request->tender_id = TenderContext::tenderId($profil->tender_id ?? null) ?? $profil->tender_id;
+        }
         $data = new managemen();
         $data->user_id = $user->id;
         $data->peserta_id = $request->id;
@@ -107,8 +116,14 @@ class ManagemenController extends Controller
         $status = 'show';
         $data = '';
         $p = peserta::findorfail($id);
-        $list = managemen::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.managemen.create',['managemen'=>$p,'list'=>$list,'status'=>$status]);
+        $tenderId = TenderContext::tenderId($p->tender_id);
+        $tender = $tenderId ? tender::find($tenderId) : null;
+        $list = managemen::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
+        return view('tender_user.peserta.managemen.create', [
+            'managemen' => $p, 'peserta' => $p,
+            'list' => $list, 'status' => $status,
+            'tenderId' => $tenderId, 'tender' => $tender,
+        ]);
     }
 
     /**
@@ -122,8 +137,14 @@ class ManagemenController extends Controller
         $status = 'edit';
         $data = managemen::findorfail($id);
         $p = peserta::findorfail($data->peserta_id);
-        $list = managemen::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.managemen.create',['managemen'=>$p,'list'=>$list,'status'=>$status,'data'=>$data]);
+        $tenderId = empty($data->tender_id) ? TenderContext::tenderId($p->tender_id) : $data->tender_id;
+        $tender = $tenderId ? tender::find($tenderId) : null;
+        $list = managemen::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
+        return view('tender_user.peserta.managemen.create', [
+            'managemen' => $p, 'peserta' => $p,
+            'list' => $list, 'status' => $status, 'data' => $data,
+            'tenderId' => $tenderId, 'tender' => $tender,
+        ]);
     }
 
     /**

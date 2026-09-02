@@ -26,9 +26,9 @@
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <div class="nav-section-title">Menu Utama</div>
-                    <a href="{{ route('peserta.create') }}" class="nav-link">
+                    <a href="{{ route('peserta.tenders') }}" class="nav-link">
                         <i class="fas fa-file nav-icon"></i>
-                        <span class="nav-text">Peserta</span>
+                        <span class="nav-text">Tender Saya</span>
                     </a>
                     <a href="{{ route('home') }}" class="nav-link">
                         <i class="fas fa-home nav-icon"></i>

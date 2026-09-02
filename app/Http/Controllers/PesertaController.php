@@ -23,6 +23,7 @@ use App\Models\tender_komen;
 use App\Models\tender_status_files;
 use App\Models\User;
 use App\Services\FileUploadService;
+use App\Services\TenderContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -30,6 +31,133 @@ use Illuminate\Support\Facades\Redirect;
 
 class PesertaController extends Controller
 {
+    /**
+     * Hub "Tender Saya" — daftar tender yang sudah didaftarkan oleh profil login
+     * plus status pengisian tiap langkah wizard kelengkapan (per peserta-tender).
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
+     */
+    public function myTenders(Request $request)
+    {
+        $user = Auth::user();
+        $profil = $user->peserta; // 1 data perusahaan per user (hasOne)
+
+        // Belum punya profil → arahkan ke halaman onboarding pendaftaran.
+        if (!$profil) {
+            return redirect()->route('peserta.index');
+        }
+
+        // Daftar step wizard yang ditampilkan di hub, urutannya konsisten dgn stepper halaman.
+        $steps = $this->pesertaSteps($profil);
+
+        // Keikutsertaan (daftar_pesertas) milik profil; masing-masing = 1 baris tender di hub.
+        $daftar = $profil->daftar_peserta;
+
+        $rows = collect($daftar)->map(function ($item) use ($profil) {
+            $tender = $item->tender;
+            if (!$tender) {
+                return null;
+            }
+            // Ambil alias-nama relasi tersambung (jenis/metode/status) bila dipakai view.
+            return [
+                'daftar_id' => $item->id,
+                'tender'    => $tender,
+                'tahapan'   => $tender->tahapan()->where('status', 1)->first()
+                                    ?? $tender->tahapan()->orderBy('mulai', 'desc')->first(),
+            ];
+        })->filter()->values();
+
+        return view('tender_user.peserta.tenders.index', [
+            'profil' => $profil,
+            'steps'  => $steps,
+            'rows'   => $rows,
+        ]);
+    }
+
+    /**
+     * Hitung status pengisian tiap langkah wizard untuk satu profil peserta.
+     *
+     * @param  \App\Models\peserta  $profil
+     * @return \Illuminate\Support\Collection  tiap item: [key,label,url,done(mixed)]
+     */
+    protected function pesertaSteps($profil)
+    {
+        // Data Perusahaan dianggap terisi bila profil ada.
+        $withTender = function ($rel, $tenderId) { return null; };
+
+        $steps = collect([
+            [
+                'key'   => 'perusahaan',
+                'label' => 'Data Perusahaan',
+                'url'   => route('peserta.edit', [$profil->id]),
+                'done'  => true,
+            ],
+            [
+                'key'   => 'pengalaman',
+                'label' => 'Pengalaman',
+                'url'   => route('pengalaman.show', [$profil->id]),
+                'done'  => (int) $profil->pengalaman()->count() > 0,
+            ],
+            [
+                'key'   => 'tenaga',
+                'label' => 'Tenaga Ahli',
+                'url'   => route('tenagaahli.show', [$profil->id]),
+                'done'  => (int) $profil->tenaga_ahli()->count() > 0,
+            ],
+            [
+                'key'   => 'peralatan',
+                'label' => 'Peralatan',
+                'url'   => route('peralatan.show', [$profil->id]),
+                'done'  => (int) $profil->peralatan()->count() > 0,
+            ],
+            [
+                'key'   => 'pekerjaan',
+                'label' => 'Pekerjaan Berjalan',
+                'url'   => route('pekerjaan_berjalan.show', [$profil->id]),
+                'done'  => (int) $profil->pekerjaan()->count() > 0,
+            ],
+            [
+                'key'   => 'managemen',
+                'label' => 'Managemen',
+                'url'   => route('managemen.show', [$profil->id]),
+                'done'  => (int) $profil->managemen()->count() > 0,
+            ],
+        ]);
+
+        return $steps;
+    }
+
+    public function wizard($id, $tenderId)
+    {
+        $user = Auth::user();
+        $profil = $user->peserta;
+
+        // Hanya pemilik profil (role peserta) yang boleh membuka wizard profilnya.
+        if (!$profil || (int) $profil->id !== (int) $id) {
+            return redirect()->route('peserta.tenders')->withErrors(['msg' => 'Profil peserta tidak valid.']);
+        }
+
+        // Validasi: peserta harus terdaftar di tender ini (daftar_pesertas).
+        $ikut = daftar_peserta::where('peserta_id', $id)->where('tender_id', $tenderId)->exists();
+        if (!$ikut) {
+            return redirect()->route('peserta.tenders')->withErrors(['msg' => 'Anda belum terdaftar di tender tersebut.']);
+        }
+
+        $tender = tender::find($tenderId);
+        if (!$tender) {
+            return redirect()->route('peserta.tenders')->withErrors(['msg' => 'Tender tidak ditemukan.']);
+        }
+
+        // Simpan konteks peserta × tender (dipakai semua halaman kelengkapan).
+        TenderContext::set((int) $profil->id, (int) $tender->id);
+
+        return view('tender_user.peserta.tenders.wizard', [
+            'profil' => $profil,
+            'tender' => $tender,
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -48,6 +176,7 @@ class PesertaController extends Controller
     public function create()
     {
         $user = Auth::user();
+        // return $user->peserta;
         if ($user->peserta != null) {
             return redirect()->route('peserta.edit',[$user->peserta->id]);
         }

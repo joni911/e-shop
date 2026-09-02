@@ -6,6 +6,8 @@ use App\Models\pekerjaan_berjalan;
 use App\Http\Requests\Storepekerjaan_berjalanRequest;
 use App\Http\Requests\Updatepekerjaan_berjalanRequest;
 use App\Models\peserta;
+use App\Models\tender;
+use App\Services\TenderContext;
 use Illuminate\Support\Facades\Auth;
 
 class PekerjaanBerjalanController extends Controller
@@ -39,6 +41,13 @@ class PekerjaanBerjalanController extends Controller
     public function store(Storepekerjaan_berjalanRequest $request)
     {
         $user = Auth::user();
+        $profil = $user->peserta;
+        if ($profil && !$request->filled('id')) {
+            $request->id = $profil->id;
+        }
+        if ($profil && !$request->filled('tender_id')) {
+            $request->tender_id = TenderContext::tenderId($profil->tender_id ?? null) ?? $profil->tender_id;
+        }
         $data = new pekerjaan_berjalan();
         $data->peserta_id = $request->id;
         $data->tender_id = $request->tender_id;
@@ -70,8 +79,13 @@ class PekerjaanBerjalanController extends Controller
     {
         $status = 'show';
         $p = peserta::findorfail($id);
-        $list = pekerjaan_berjalan::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.pekerjaan_berjalan.create',['peserta'=>$p,'list'=>$list,'status'=>$status]);
+        $tenderId = TenderContext::tenderId($p->tender_id);
+        $tender = $tenderId ? tender::find($tenderId) : null;
+        $list = pekerjaan_berjalan::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
+        return view('tender_user.peserta.pekerjaan_berjalan.create', [
+            'peserta' => $p, 'list' => $list, 'status' => $status,
+            'tenderId' => $tenderId, 'tender' => $tender,
+        ]);
     }
 
     /**
@@ -85,8 +99,13 @@ class PekerjaanBerjalanController extends Controller
         $status = 'edit';
         $data = pekerjaan_berjalan::findorfail($id);
         $p = peserta::findorfail($data->peserta_id);
-        $list = pekerjaan_berjalan::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.pekerjaan_berjalan.create',['peserta'=>$p,'list'=>$list,'status'=>$status,'data'=>$data]);
+        $tenderId = empty($data->tender_id) ? TenderContext::tenderId($p->tender_id) : $data->tender_id;
+        $tender = $tenderId ? tender::find($tenderId) : null;
+        $list = pekerjaan_berjalan::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
+        return view('tender_user.peserta.pekerjaan_berjalan.create', [
+            'peserta' => $p, 'list' => $list, 'status' => $status, 'data' => $data,
+            'tenderId' => $tenderId, 'tender' => $tender,
+        ]);
     }
 
     /**

@@ -6,7 +6,9 @@ use App\Models\peralatan;
 use App\Http\Requests\StoreperalatanRequest;
 use App\Http\Requests\UpdateperalatanRequest;
 use App\Models\peserta;
+use App\Models\tender;
 use App\Services\FileUploadService;
+use App\Services\TenderContext;
 use Illuminate\Support\Facades\Auth;
 
 class PeralatanController extends Controller
@@ -41,6 +43,13 @@ class PeralatanController extends Controller
     {
         $file = $this->peralatan_file($request);
         $user = Auth::user();
+        $profil = $user->peserta;
+        if ($profil && !$request->filled('id')) {
+            $request->id = $profil->id;
+        }
+        if ($profil && !$request->filled('tender_id')) {
+            $request->tender_id = TenderContext::tenderId($profil->tender_id ?? null) ?? $profil->tender_id;
+        }
         $data = new peralatan();
         $data->nama = $request->nama;
         $data->tender_id = $request->tender_id;
@@ -80,8 +89,14 @@ class PeralatanController extends Controller
     {
         $status = 'show';
         $p = peserta::findorfail($id);
-        $list = peralatan::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.peralatan.create',['peralatan'=>$p,'list'=>$list,'status'=>$status]);
+        $tenderId = TenderContext::tenderId($p->tender_id);
+        $tender = $tenderId ? tender::find($tenderId) : null;
+        $list = peralatan::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
+        return view('tender_user.peserta.peralatan.create', [
+            'peralatan' => $p, 'peserta' => $p,
+            'list' => $list, 'status' => $status,
+            'tenderId' => $tenderId, 'tender' => $tender,
+        ]);
     }
 
     /**
@@ -95,8 +110,14 @@ class PeralatanController extends Controller
         $status = 'edit';
         $data = peralatan::findorfail($id);
         $p = peserta::findorfail($data->peserta_id);
-        $list = peralatan::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.peralatan.create',['peralatan'=>$p,'list'=>$list,'status'=>$status,'data'=>$data]);
+        $tenderId = empty($data->tender_id) ? TenderContext::tenderId($p->tender_id) : $data->tender_id;
+        $tender = $tenderId ? tender::find($tenderId) : null;
+        $list = peralatan::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
+        return view('tender_user.peserta.peralatan.create', [
+            'peralatan' => $p, 'peserta' => $p,
+            'list' => $list, 'status' => $status, 'data' => $data,
+            'tenderId' => $tenderId, 'tender' => $tender,
+        ]);
     }
 
     /**

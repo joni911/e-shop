@@ -119,6 +119,10 @@ Route::middleware(['middleware' => 'auth','verified' ])->group(function () {
     Route::resource('administrasi', AdministrasiController::class);
     // Halaman administrasi per TENDER (show resource bind ke id administrasi, bukan tender)
     Route::get('administrasi/tender/{id}', [AdministrasiController::class, 'show'])->name('administrasi.tender');
+    // Hub "Tender Saya" untuk peserta — tampilkan tender terdaftar milik profil login.
+    Route::get('peserta/tenders',[PesertaController::class,'myTenders'])->name('peserta.tenders');
+    // Wizard konteks: pilih tender → set session peserta×tender → mulai pengisian.
+    Route::get('peserta/tenders/wizard/{peserta}/{tender}',[PesertaController::class,'wizard'])->name('peserta.wizard');
     Route::resource('peserta',PesertaController::class);
     Route::get('peserta/tender/{id}',[PesertaController::class,'show_peserta'])->name('peserta.tender');
     Route::get('peserta/{id}/file_tender/{pid}',[PesertaController::class,'show_file_peserta'])->name('peserta.file');

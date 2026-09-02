@@ -1,10 +1,10 @@
 @extends('layouts.peserta')
 
-@section('title', 'Pendaftaran Pengalaman Tender')
+@section('title', 'Tambah Pengalaman Tender')
 
 @section('content')
 <div class="page-header">
-    <h1>Pendaftaran Pengalaman Pekerjaan Konstruksi</h1>
+    <h1>Tambah Pengalaman Pekerjaan Konstruksi</h1>
     <div class="breadcrumb">
         <a href="{{ route('home') }}">Beranda</a> / <span>Pengalaman</span>
     </div>
@@ -14,6 +14,8 @@
 
 @include('tender_user.peserta.part.validation-alert')
 
+@include('tender_user.peserta.part.tender-head')
+
 <x-alert type="warning" title="Ketentuan Pengalaman" class="mb-4">
     <ul class="mb-0">
         <li>Memiliki pengalaman paling kurang 1 (satu) Pekerjaan Konstruksi dalam kurun waktu 4 (empat) tahun terakhir, baik di lingkungan pemerintah maupun swasta, termasuk pengalaman subkontrak.</li>
@@ -22,57 +24,57 @@
     </ul>
 </x-alert>
 
-<x-card title="{{ $status == 'show' ? 'Tambah Pengalaman' : 'Edit Pengalaman' }}">
-    <form action="{{ $status == 'show' ? route('pengalaman.store') : route('pengalaman.update', [$data->id]) }}" method="POST" enctype="multipart/form-data">
+<x-card title="Tambah Pengalaman">
+    <form action="{{ route('pengalaman.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @if($status != 'show') @method('PUT') @endif
+        <input type="hidden" name="id" value="{{ $peserta->id }}">
+        <input type="hidden" name="tender_id" value="{{ $tenderId ?? '' }}">
 
         <div class="row g-4">
             <div class="col-12 col-md-6">
-                <x-input label="Nama Kontrak" name="pekerjaan" value="{{ $data->pekerjaan ?? '' }}" required/>
+                <x-input label="Nama Kontrak" name="pekerjaan" required/>
             </div>
             <div class="col-12 col-md-6">
-                <x-input label="Lokasi" name="lokasi" value="{{ $data->lokasi ?? '' }}" required/>
+                <x-input label="Lokasi" name="lokasi" required/>
             </div>
             <div class="col-12 col-md-6">
-                <x-input label="Instansi Pemberi Tugas" name="instansi" value="{{ $data->instansi ?? '' }}" required/>
+                <x-input label="Instansi Pemberi Tugas" name="instansi" required/>
             </div>
             <div class="col-12">
-                <x-textarea label="Alamat" name="alamat" rows="3" required>{{ $data->alamat ?? '' }}</x-textarea>
+                <x-textarea label="Alamat" name="alamat" rows="3" required></x-textarea>
             </div>
             <div class="col-12 col-md-6">
-                <x-input label="No. Telepon" name="no_hp" type="number" value="{{ $data->no_hp ?? '' }}" required/>
+                <x-input label="No. Telepon" name="no_hp" type="number" required/>
             </div>
             <div class="col-12 col-md-6">
-                <x-input label="No. Kontrak" name="no_kontrak" value="{{ $data->no_kontrak ?? '' }}" required/>
+                <x-input label="No. Kontrak" name="no_kontrak" required/>
             </div>
             <div class="col-12 col-md-6">
-                <x-input label="Nilai Kontrak" name="nilai_kontrak" type="number" value="{{ $data->nilai_kontrak ?? '' }}" required/>
+                <x-input label="Nilai Kontrak" name="nilai_kontrak" type="number" required/>
             </div>
             <div class="col-12 col-md-6">
-                <x-input label="Tanggal Kontrak" name="tgl_kontrak" type="date" value="{{ $data->tgl_kontrak ?? '' }}" required/>
+                <x-input label="Tanggal Kontrak" name="tgl_kontrak" type="date" required/>
             </div>
             <div class="col-12 col-md-6">
-                <x-input label="Persentase Pelaksanaan" name="presentasi" type="number" value="{{ $data->presentasi ?? '' }}" required hint="Dalam persen (%)"/>
+                <x-input label="Persentase Pelaksanaan" name="presentasi" type="number" required hint="Dalam persen (%)"/>
             </div>
             <div class="col-12 col-md-6">
-                <x-input label="Tanggal Selesai Kontrak" name="tgl_selesai_kontrak" type="date" value="{{ $data->tgl_selesai_kontrak ?? '' }}" required/>
+                <x-input label="Tanggal Selesai Kontrak" name="tgl_selesai_kontrak" type="date" required/>
             </div>
             <div class="col-12 col-md-6">
-                <x-input label="Tanggal Serah Terima" name="tgl_serah_terima" type="date" value="{{ $data->tgl_serah_terima ?? '' }}" required/>
+                <x-input label="Tanggal Serah Terima" name="tgl_serah_terima" type="date" required/>
             </div>
             <div class="col-12">
-                <x-textarea label="Keterangan" name="keterangan" rows="3" required>{{ $data->keterangan ?? '' }}</x-textarea>
+                <x-textarea label="Keterangan" name="keterangan" rows="3" required></x-textarea>
             </div>
         </div>
 
         <div class="row g-4 mt-0">
             <div class="col-12 col-md-6">
-                <x-file label="File Pendukung" name="file1" required accept=".jpg,.jpeg,.png,.xls,.xlsx,.pdf,.doc,.docx,.zip,.rar,.7z"
-                        :current="$data->file ?? null" download_label="Download file saat ini"/>
+                <x-file label="File Pendukung" name="file1" required accept=".jpg,.jpeg,.png,.xls,.xlsx,.pdf,.doc,.docx,.zip,.rar,.7z"/>
             </div>
             <div class="col-12 col-md-6">
-                <x-input label="Nama File" name="nama_file" value="{{ $data->nama_file ?? '' }}" required/>
+                <x-input label="Nama File" name="nama_file" required/>
             </div>
         </div>
 

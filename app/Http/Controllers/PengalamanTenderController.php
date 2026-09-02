@@ -9,7 +9,9 @@ use App\Models\daftar_peserta;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Services\FileUploadService;
+use App\Services\TenderContext;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 class PengalamanTenderController extends Controller
@@ -44,15 +46,66 @@ class PengalamanTenderController extends Controller
     {
         $user = Auth::user();
 
+        // LOG ANALISA: snapshot input yang dikirim form saat submit.
+        Log::info('[PENGALAMAN-STORE] ENTRY', [
+            'user_id'       => $user->id ?? null,
+            'user_email'    => $user->email ?? null,
+            'method'        => $request->method(),
+            'url'           => $request->fullUrl(),
+            'posted_id'     => $request->input('id'),
+            'posted_tender_id' => $request->input('tender_id'),
+            'has_file1'     => $request->hasFile('file1'),
+            'input_all'     => $request->except(['_token', '_method']),
+        ]);
+
         // GUARD: user harus punya profil peserta & sudah terdaftar di tender ini.
         $profil = $user->peserta;
+
+        // FALLBACK (uji di controller): form Tambah belum mengirim hidden id/tender_id → ambil dari profil peserta login.
+        if ($profil && !$request->filled('id')) {
+            $request->id = $profil->id;
+        }
+        if ($profil && !$request->filled('tender_id')) {
+            // Prioritas: tender konteks wizard → fallback tender milik profil.
+            $request->tender_id = TenderContext::tenderId($profil->tender_id ?? null) ?? $profil->tender_id;
+        }
+
+        // LOG ANALISA: profil peserta milik user login (pembanding guard id).
+        Log::info('[PENGALAMAN-STORE] GUARD-1 (id peserta)', [
+            'user_id'              => $user->id ?? null,
+            'peserta_id_login'     => $profil->id ?? null,
+            'peserta_tender_login' => $profil->tender_id ?? null,
+            'posted_id'            => $request->input('id'),
+            'match'                => $profil && ((int) $request->input('id') === (int) $profil->id),
+        ]);
+
         if (!$profil || (int) $request->id !== (int) $profil->id) {
+            Log::warning('[PENGALAMAN-STORE] GAGAL Guard-1: Data peserta tidak valid', [
+                'user_id' => $user->id ?? null,
+                'posted_id' => $request->input('id'),
+                'peserta_id_login' => $profil->id ?? null,
+            ]);
             return Redirect::back()->withErrors(['msg' => 'Data peserta tidak valid.']);
         }
+
         $daftar = daftar_peserta::where('tender_id', $request->tender_id)
             ->where('peserta_id', $profil->id)
             ->first();
+
+        // LOG ANALISA: hasil cek pendaftaran user di tender target (guard 2).
+        Log::info('[PENGALAMAN-STORE] GUARD-2 (terdaftar di tender?)', [
+            'user_id'            => $user->id ?? null,
+            'peserta_id'         => $profil->id,
+            'posted_tender_id'   => $request->input('tender_id'),
+            'terdaftar_ditemukan' => $daftar ? $daftar->id : null,
+        ]);
+
         if (!$daftar) {
+            Log::warning('[PENGALAMAN-STORE] GAGAL Guard-2: belum terdaftar di tender', [
+                'user_id' => $user->id ?? null,
+                'peserta_id' => $profil->id,
+                'posted_tender_id' => $request->input('tender_id'),
+            ]);
             return Redirect::back()->withErrors(['msg' => 'Anda belum terdaftar sebagai peserta tender ini. Silakan daftar terlebih dahulu.']);
         }
 
@@ -77,6 +130,14 @@ class PengalamanTenderController extends Controller
         $data->nama_file = $request->nama_file;
         $data->save();
 
+        Log::info('[PENGALAMAN-STORE] BERHASIL disimpan', [
+            'user_id'     => $user->id ?? null,
+            'peserta_id'  => $request->input('id'),
+            'tender_id'   => $request->input('tender_id'),
+            'pengalaman_id' => $data->id,
+            'file'        => $file,
+        ]);
+
         return redirect()->back()->with('success','Data '.$data->pekerjaan.' telah disimpan');
     }
 
@@ -99,10 +160,18 @@ class PengalamanTenderController extends Controller
      */
     public function show($id)
     {
-        $status = 'show';
         $p = peserta::findorfail($id);
-        $list = pengalaman_tender::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.pengalaman.create',['peserta'=>$p,'list'=>$list,'status'=>$status]);
+        $tenderId = TenderContext::tenderId($p->tender_id);
+        $tender = $tenderId ? tender::find($tenderId) : null;
+        $list = pengalaman_tender::where('peserta_id', $p->id)
+            ->where('tender_id', $tenderId)
+            ->paginate(10);
+        return view('tender_user.peserta.pengalaman.show', [
+            'peserta' => $p,
+            'list'    => $list,
+            'tender'  => $tender,
+            'tenderId'=> $tenderId,
+        ]);
     }
 
     /**
@@ -113,11 +182,20 @@ class PengalamanTenderController extends Controller
      */
     public function edit($id)
     {
-        $status = 'edit';
         $data = pengalaman_tender::findorfail($id);
         $p = peserta::findorfail($data->peserta_id);
-        $list = pengalaman_tender::where('peserta_id',$p->id)->where('tender_id',$p->tender_id)->paginate(10);
-        return view('tender_user.peserta.pengalaman.create',['peserta'=>$p,'list'=>$list,'data'=>$data,'status'=>$status]);
+        $tenderId = empty($data->tender_id) ? TenderContext::tenderId($p->tender_id) : $data->tender_id;
+        $tender = $tenderId ? tender::find($tenderId) : null;
+        $list = pengalaman_tender::where('peserta_id', $p->id)
+            ->where('tender_id', $tenderId)
+            ->paginate(10);
+        return view('tender_user.peserta.pengalaman.edit', [
+            'peserta' => $p,
+            'list'    => $list,
+            'data'    => $data,
+            'tender'  => $tender,
+            'tenderId'=> $tenderId,
+        ]);
     }
 
     /**

@@ -14,6 +14,8 @@
 
 @include('tender_user.peserta.part.validation-alert')
 
+@include('tender_user.peserta.part.tender-head')
+
 <x-alert type="warning" title="Peralatan Yang Dibutuhkan" class="mb-4">
     <ul class="mb-0">
         <li>1 Unit Concrete Mixer kapasitas minimal 0,3 m3</li>
@@ -26,6 +28,8 @@
     <form action="{{ $status == 'show' ? route('peralatan.store') : route('peralatan.update', [$data]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if($status != 'show') @method('PUT') @endif
+        <input type="hidden" name="id" value="{{ $peralatan->id ?? '' }}">
+        <input type="hidden" name="tender_id" value="{{ $data->tender_id ?? ($tenderId ?? '') }}">
 
         <div class="row g-4">
             <div class="col-12 col-md-6">

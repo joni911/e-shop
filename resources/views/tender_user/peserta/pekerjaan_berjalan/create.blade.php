@@ -14,10 +14,14 @@
 
 @include('tender_user.peserta.part.validation-alert')
 
+@include('tender_user.peserta.part.tender-head')
+
 <x-card title="{{ $status == 'show' ? 'Tambah Pekerjaan Berjalan' : 'Edit Pekerjaan Berjalan' }}">
-    <form action="{{ $status == 'show' ? route('pekerjaan_berjalan.store') : route('pekerjaan_berjalan.update', [$data]) }}" method="POST">
+        <form action="{{ $status == 'show' ? route('pekerjaan_berjalan.store') : route('pekerjaan_berjalan.update', [$data]) }}" method="POST">
         @csrf
         @if($status != 'show') @method('PUT') @endif
+        <input type="hidden" name="id" value="{{ $peserta->id ?? '' }}">
+        <input type="hidden" name="tender_id" value="{{ $data->tender_id ?? ($tenderId ?? '') }}">
 
         <div class="row g-4">
             <div class="col-12 col-md-6">

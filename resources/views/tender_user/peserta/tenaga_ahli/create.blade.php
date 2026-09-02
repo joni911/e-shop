@@ -14,6 +14,8 @@
 
 @include('tender_user.peserta.part.validation-alert')
 
+@include('tender_user.peserta.part.tender-head')
+
 <x-alert type="warning" title="Personil Managerial Yang Dibutuhkan" class="mb-4">
     <ul class="mb-0">
         <li>1 (satu) orang Pelaksana, dengan SKT Pelaksana Bangunan Gedung/Pekerjaan Gedung, Pengalaman 2 Tahun.</li>
@@ -25,6 +27,8 @@
     <form action="{{ $status == 'show' ? route('tenagaahli.store') : route('tenagaahli.update', [$data]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if($status != 'show') @method('PUT') @endif
+        <input type="hidden" name="id" value="{{ $peserta->id ?? '' }}">
+        <input type="hidden" name="tender_id" value="{{ $data->tender_id ?? ($tenderId ?? '') }}">
 
         <div class="row g-4">
             <div class="col-12 col-md-6">

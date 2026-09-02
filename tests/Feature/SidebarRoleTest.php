@@ -52,17 +52,15 @@ class SidebarRoleTest extends TestCase
 
     public function test_peserta_di_halaman_shared_mendapat_sidebar_peserta(): void
     {
-        // Peserta dengan profil -> /peserta/create redirect ke edit (layout dinamis peserta)
+        // Peserta dengan profil kini dituntun via hub "Tender Saya" (menu sidebar peserta).
         $p = $this->peserta();
-        $resp = $this->actingAs($p)->get('/peserta/create');
-        if ($resp->isRedirect()) {
-            $resp = $this->actingAs($p)->get($resp->headers->get('Location'));
-        }
+        $resp = $this->actingAs($p)->get(route('peserta.tenders'));
         $resp->assertOk();
         $html = $resp->getContent();
 
         // Sidebar peserta
         $this->assertStringContainsString('Sanggahan', $html);
+        $this->assertStringContainsString('Tender Saya', $html);
         // Sidebar admin TIDAK muncul
         $this->assertStringNotContainsString('Kelola Tender', $html);
         $this->assertStringNotContainsString('Pemeriksaan', $html);

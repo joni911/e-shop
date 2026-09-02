@@ -51,4 +51,22 @@ class PesertaTendersHubTest extends TestCase
             ->assertSee('Tender yang Diikuti')
             ->assertSee('Edit Profil Perusahaan');
     }
+
+    public function test_show_tender_terdaftar_oleh_peserta_diarahkan_ke_hub(): void
+    {
+        $user = User::where('hak_akses', 'peserta')->first();
+        $user->forceFill(['email_verified_at' => now()])->save();
+        $profil = $user->peserta;
+        $this->assertNotNull($profil);
+
+        daftar_peserta::updateOrCreate(
+            ['tender_id' => $profil->tender_id, 'peserta_id' => $profil->id],
+            ['user_id' => $user->id]
+        );
+
+        // peserta membuka peserta.show untuk tender yang dia ikuti → ke hub
+        $this->actingAs($user)
+            ->get(route('peserta.show', [$profil->tender_id]))
+            ->assertRedirect(route('peserta.tenders'));
+    }
 }

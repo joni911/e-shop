@@ -286,8 +286,13 @@ class PesertaController extends Controller
     }
     public function show($id)
     {
-
         $user = Auth::user();
+
+        // Funnel: role peserta membuka tender-nya lewat hub "Tender Saya" → pilih dulu tendernya.
+        if ($user->hak_akses == 'peserta' && !is_null($this->getPeserta($user, $id))) {
+            return redirect()->route('peserta.tenders');
+        }
+
         $peserta = $this->getPeserta($user,$id);
         if (is_null($peserta)) {
             # code...

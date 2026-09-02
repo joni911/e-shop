@@ -53,7 +53,8 @@ class PengalamanShowEditBladeTest extends TestCase
         $this->actingAs($user)
             ->get("/pengalaman/{$profil->id}")
             ->assertStatus(200)
-            ->assertSee('Tambah Pengalaman');
+            ->assertSee('Tambah Pengalaman')
+            ->assertSee('Tender:');
 
         // GET /pengalaman/{id}/edit -> edit.blade.php
         $this->actingAs($user)

@@ -10,6 +10,8 @@
 
 @section('content')
 
+@include('tender_user.peserta.part.tender-head')
+
 <body>
     <div class="card card-primary">
         <div class="card-header">

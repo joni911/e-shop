@@ -11,26 +11,7 @@
 </div>
 
 {{-- Step wizard --}}
-@php
-    $steps = [
-        ['label' => 'Data Tender', 'icon' => 'fas fa-file-alt', 'url' => route('tender_admin.edit', [$syarat->id])],
-        ['label' => 'Tahapan', 'icon' => 'fas fa-calendar-alt', 'url' => route('tender_admin.tahapan', [$syarat->id])],
-        ['label' => 'Syarat', 'icon' => 'fas fa-list-check', 'active' => true],
-        ['label' => 'File Tender', 'icon' => 'fas fa-folder-open', 'url' => route('tender_file.show', [$syarat->id])],
-        ['label' => 'Persyaratan & Penawaran', 'icon' => 'fas fa-file-signature', 'url' => route('tender_persyarat.tender', [$syarat->id])],
-    ];
-@endphp
-<x-card title="Langkah Pengaturan Tender" class="mb-4">
-    <div class="d-flex flex-wrap gap-2">
-        @foreach($steps as $i => $s)
-            @if(isset($s['active']))
-                <span class="badge badge-primary px-3 py-2"><i class="{{ $s['icon'] }}"></i> {{ $i+1 }}. {{ $s['label'] }}</span>
-            @else
-                <a href="{{ $s['url'] }}" class="badge badge-default px-3 py-2 text-decoration-none"><i class="{{ $s['icon'] }}"></i> {{ $i+1 }}. {{ $s['label'] }}</a>
-            @endif
-        @endforeach
-    </div>
-</x-card>
+@include('tender_admin.part.tender-setup-steps', ['tender' => $syarat, 'active' => 3])
 
 @if ($errors->any())
     <x-alert type="danger">

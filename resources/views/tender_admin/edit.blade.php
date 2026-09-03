@@ -10,6 +10,9 @@
     </div>
 </div>
 
+{{-- Step wizard --}}
+@include('tender_admin.part.tender-setup-steps', ['tender' => $data, 'active' => 1])
+
 <x-card title="Edit Tender">
     <form action="{{ route('tender_admin.update', [$data->id]) }}" enctype="multipart/form-data" method="post">
         @method('put')

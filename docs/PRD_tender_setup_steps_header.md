@@ -2,7 +2,7 @@
 
 - **Cabang:** `feat/tender-saya-hub`
 - **Tanggal:** lihat commit (dokumen dibuat untuk pengerjaan lanjutan)
-- **Status:** Rencana disetujui (belum seluruhnya dieksekusi; dieksekusi bertahap berikutnya)
+- **Status:** ✅ Dieksekusi (commit lihat git log cabang `feat/tender-saya-hub`). 96 test hijau (499 assertions).
 - **Pelaku:** Developer (pi)
 
 ---
@@ -142,11 +142,11 @@ Catatan:
 ---
 
 ## 8. Backlog / langkah selanjutnya (restant)
-- [ ] Buat partial `tender_setup-steps`.
-- [ ] Ganti 6 file duplikat → include (aktif 2..7).
-- [ ] Tambah partial pada `tender_admin/edit.blade.php` (aktif=1).
-- [ ] Putuskan perlakuan halaman `create` (new tender tanpa id) — default tak tampil.
-- [ ] Konfirmasi nama route aktual langkah "File Tender".
-- [ ] Jalankan suite test + push.
+- [x] Buat partial `tender-setup-steps` (`resources/views/tender_admin/part/tender-setup-steps.blade.php`).
+- [x] Ganti 6 file duplikat → include (aktif 2..7: tahapan, syarat, file, persyaratan, penawaran, administrasi).
+- [x] Tambah partial pada `tender_admin/edit.blade.php` (aktif=1, Data Tender badge non-klik).
+- [x] Perlakuan halaman `create` (new tender tanpa id): partial TIDAK ditampilkan — guarded `@if(isset($tender)...)`.
+- [x] Konfirmasi nama route langkah "File Tender" = `tender_file.show` (TenderFileController@show terima id tender).
+- [x] Jalankan suite test + push — **96 passed (499 assertions)**, termasuk test baru `SetupWizardHeaderTest` (verifikasi 7 halaman: 1 badge aktif non-klik + 6 tautan route() dinamis, tanpa `127.0.0.1`).
 
 *(Catatan: dokumen ini disimpan di cabang fitur untuk melanjutkan esok; belum mengeksekusi kode di atas kecuali setujukan lebih dulu.)*

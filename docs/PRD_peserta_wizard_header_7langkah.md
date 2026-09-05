@@ -1,7 +1,7 @@
 # PRD — Header Wizard Peserta 7 Langkah (Data Perusahaan → Administrasi) di atas semua halaman langkah
 
 - **Cabang:** `feat/tender-saya-hub`
-- **Status:** ✅ Disetujui (keputusan user: (1) langkah aktif bisa diklik, (2) bebas lompat tanpa gating, (3) stepper 7 langkah termasuk Administrasi)
+- **Status:** ✅ Dieksekusi (commit di cabang `feat/tender-saya-hub`). Keputusan user: (1) langkah aktif bisa diklik, (2) bebas lompat tanpa gating, (3) stepper 7 langkah termasuk Administrasi. 111 test hijau (668 assertions).
 - **Pola rujukan:** `docs/PRD_tender_setup_steps_header.md` (versi admin, sudah dieksekusi)
 
 ---

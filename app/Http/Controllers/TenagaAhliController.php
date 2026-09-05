@@ -9,6 +9,7 @@ use App\Models\pengalaman_tender;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Services\FileUploadService;
+use App\Services\PesertaWizardService;
 use App\Services\TenderContext;
 use Illuminate\Support\Facades\Auth;
 
@@ -106,6 +107,7 @@ class TenagaAhliController extends Controller
         $list = tenaga_ahli::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
         return view('tender_user.peserta.tenaga_ahli.create', [
             'peserta' => $p,
+            'steps' => PesertaWizardService::steps($p, 'tenaga'),
             'list' => $list,
             'status' => $status,
             'tenderId' => $tenderId,
@@ -131,6 +133,7 @@ class TenagaAhliController extends Controller
             'peserta' => $p,
             'list' => $list,
             'data' => $data,
+            'steps' => PesertaWizardService::steps($p, 'tenaga'),
             'status' => $status,
             'tenderId' => $tenderId,
             'tender' => $tender,

@@ -9,6 +9,7 @@ use App\Models\daftar_peserta;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Services\FileUploadService;
+use App\Services\PesertaWizardService;
 use App\Services\TenderContext;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -168,6 +169,7 @@ class PengalamanTenderController extends Controller
             ->paginate(10);
         return view('tender_user.peserta.pengalaman.show', [
             'peserta' => $p,
+            'steps'   => PesertaWizardService::steps($p, 'pengalaman'),
             'list'    => $list,
             'tender'  => $tender,
             'tenderId'=> $tenderId,
@@ -191,6 +193,7 @@ class PengalamanTenderController extends Controller
             ->paginate(10);
         return view('tender_user.peserta.pengalaman.edit', [
             'peserta' => $p,
+            'steps'   => PesertaWizardService::steps($p, 'pengalaman'),
             'list'    => $list,
             'data'    => $data,
             'tender'  => $tender,

@@ -14,6 +14,7 @@
 
 @include('tender_user.peserta.part.validation-alert')
 
+@include('tender_user.peserta.part.peserta-steps', ['steps' => $steps, 'activeKey' => 'tenaga'])
 @include('tender_user.peserta.part.tender-head')
 
 <x-alert type="warning" title="Personil Managerial Yang Dibutuhkan" class="mb-4">

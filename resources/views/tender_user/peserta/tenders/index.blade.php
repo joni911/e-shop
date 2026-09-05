@@ -14,19 +14,7 @@
 
 {{-- Status pengisian kelengkapan perusahaan (global utk profil) --}}
 <x-card title="Status Kelengkapan &mdash; {{ $profil->nama_pt ?? 'Perusahaan' }}">
-    <div class="steps mb-2">
-        @foreach ($steps as $i => $s)
-            @if($i > 0)<div class="step-divider"></div>@endif
-            <div class="step {{ !empty($s['done']) ? 'done' : '' }}">
-                <a class="step-link" href="{{ $s['url'] }}">
-                    <div class="step-number">
-                        @if(!empty($s['done'])) ✓ @else {{ $i + 1 }} @endif
-                    </div>
-                    <span>{{ $s['label'] }}</span>
-                </a>
-            </div>
-        @endforeach
-    </div>
+    @include('tender_user.peserta.part.peserta-steps', ['steps' => $steps])
     <a class="btn btn-primary" href="{{ route('peserta.edit', [$profil->id]) }}">
         <i class="fas fa-building nav-icon"></i> Edit Profil Perusahaan
     </a>

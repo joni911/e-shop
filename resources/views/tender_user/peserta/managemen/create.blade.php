@@ -29,6 +29,7 @@
 
 @include('tender_user.peserta.part.validation-alert')
 
+@include('tender_user.peserta.part.peserta-steps', ['steps' => $steps, 'activeKey' => 'managemen'])
 @include('tender_user.peserta.part.tender-head')
 
 <x-card :title="$isShow ? 'Tambah Managemen Perusahaan' : 'Edit Managemen Perusahaan'">

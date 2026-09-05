@@ -14,6 +14,7 @@
 
 @include('tender_user.peserta.part.validation-alert')
 
+@include('tender_user.peserta.part.peserta-steps', ['steps' => $steps, 'activeKey' => 'pekerjaan'])
 @include('tender_user.peserta.part.tender-head')
 
 <x-card title="{{ $status == 'show' ? 'Tambah Pekerjaan Berjalan' : 'Edit Pekerjaan Berjalan' }}">

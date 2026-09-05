@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatemanagemenRequest;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Services\FileUploadService;
+use App\Services\PesertaWizardService;
 use App\Services\TenderContext;
 use Illuminate\Support\Facades\Auth;
 
@@ -121,6 +122,7 @@ class ManagemenController extends Controller
         $list = managemen::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
         return view('tender_user.peserta.managemen.create', [
             'managemen' => $p, 'peserta' => $p,
+            'steps' => PesertaWizardService::steps($p, 'managemen'),
             'list' => $list, 'status' => $status,
             'tenderId' => $tenderId, 'tender' => $tender,
         ]);
@@ -142,6 +144,7 @@ class ManagemenController extends Controller
         $list = managemen::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
         return view('tender_user.peserta.managemen.create', [
             'managemen' => $p, 'peserta' => $p,
+            'steps' => PesertaWizardService::steps($p, 'managemen'),
             'list' => $list, 'status' => $status, 'data' => $data,
             'tenderId' => $tenderId, 'tender' => $tender,
         ]);

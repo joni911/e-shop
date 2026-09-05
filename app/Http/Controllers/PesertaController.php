@@ -23,6 +23,7 @@ use App\Models\tender_komen;
 use App\Models\tender_status_files;
 use App\Models\User;
 use App\Services\FileUploadService;
+use App\Services\PesertaWizardService;
 use App\Services\TenderContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +50,7 @@ class PesertaController extends Controller
         }
 
         // Daftar step wizard yang ditampilkan di hub, urutannya konsisten dgn stepper halaman.
-        $steps = $this->pesertaSteps($profil);
+        $steps = PesertaWizardService::steps($profil);
 
         // Keikutsertaan (daftar_pesertas) milik profil; masing-masing = 1 baris tender di hub.
         $daftar = $profil->daftar_peserta;
@@ -73,59 +74,6 @@ class PesertaController extends Controller
             'steps'  => $steps,
             'rows'   => $rows,
         ]);
-    }
-
-    /**
-     * Hitung status pengisian tiap langkah wizard untuk satu profil peserta.
-     *
-     * @param  \App\Models\peserta  $profil
-     * @return \Illuminate\Support\Collection  tiap item: [key,label,url,done(mixed)]
-     */
-    protected function pesertaSteps($profil)
-    {
-        // Data Perusahaan dianggap terisi bila profil ada.
-        $withTender = function ($rel, $tenderId) { return null; };
-
-        $steps = collect([
-            [
-                'key'   => 'perusahaan',
-                'label' => 'Data Perusahaan',
-                'url'   => route('peserta.edit', [$profil->id]),
-                'done'  => true,
-            ],
-            [
-                'key'   => 'pengalaman',
-                'label' => 'Pengalaman',
-                'url'   => route('pengalaman.show', [$profil->id]),
-                'done'  => (int) $profil->pengalaman()->count() > 0,
-            ],
-            [
-                'key'   => 'tenaga',
-                'label' => 'Tenaga Ahli',
-                'url'   => route('tenagaahli.show', [$profil->id]),
-                'done'  => (int) $profil->tenaga_ahli()->count() > 0,
-            ],
-            [
-                'key'   => 'peralatan',
-                'label' => 'Peralatan',
-                'url'   => route('peralatan.show', [$profil->id]),
-                'done'  => (int) $profil->peralatan()->count() > 0,
-            ],
-            [
-                'key'   => 'pekerjaan',
-                'label' => 'Pekerjaan Berjalan',
-                'url'   => route('pekerjaan_berjalan.show', [$profil->id]),
-                'done'  => (int) $profil->pekerjaan()->count() > 0,
-            ],
-            [
-                'key'   => 'managemen',
-                'label' => 'Managemen',
-                'url'   => route('managemen.show', [$profil->id]),
-                'done'  => (int) $profil->managemen()->count() > 0,
-            ],
-        ]);
-
-        return $steps;
     }
 
     public function wizard($id, $tenderId)
@@ -479,7 +427,11 @@ class PesertaController extends Controller
         ,'tender_file_details.files as file')
         ->get();
 
-        return view('tender_user.peserta.edit',['data'=>$data,'file'=>$file]);
+        return view('tender_user.peserta.edit', [
+            'data'  => $data,
+            'file'  => $file,
+            'steps' => PesertaWizardService::steps($data, 'perusahaan'),
+        ]);
     }
 
     /**

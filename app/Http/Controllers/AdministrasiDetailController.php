@@ -10,6 +10,7 @@ use App\Models\daftar_peserta;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Services\FileUploadService;
+use App\Services\PesertaWizardService;
 use App\Services\TenderContext;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -110,6 +111,7 @@ class AdministrasiDetailController extends Controller
 
         return view('tender_user.peserta.administrasi.detail.index', [
             'data' => $tender, 'admin' => $admin, 'peserta' => $peserta, 'list' => $list,
+            'steps' => PesertaWizardService::steps($peserta, 'administrasi'),
             'tender' => $tender, 'tenderId' => $tenderId,
         ]);
     }

@@ -7,6 +7,7 @@ use App\Http\Requests\Storepekerjaan_berjalanRequest;
 use App\Http\Requests\Updatepekerjaan_berjalanRequest;
 use App\Models\peserta;
 use App\Models\tender;
+use App\Services\PesertaWizardService;
 use App\Services\TenderContext;
 use Illuminate\Support\Facades\Auth;
 
@@ -83,7 +84,9 @@ class PekerjaanBerjalanController extends Controller
         $tender = $tenderId ? tender::find($tenderId) : null;
         $list = pekerjaan_berjalan::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
         return view('tender_user.peserta.pekerjaan_berjalan.create', [
-            'peserta' => $p, 'list' => $list, 'status' => $status,
+            'peserta' => $p,
+            'steps' => PesertaWizardService::steps($p, 'pekerjaan'),
+            'list' => $list, 'status' => $status,
             'tenderId' => $tenderId, 'tender' => $tender,
         ]);
     }
@@ -103,7 +106,9 @@ class PekerjaanBerjalanController extends Controller
         $tender = $tenderId ? tender::find($tenderId) : null;
         $list = pekerjaan_berjalan::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
         return view('tender_user.peserta.pekerjaan_berjalan.create', [
-            'peserta' => $p, 'list' => $list, 'status' => $status, 'data' => $data,
+            'peserta' => $p,
+            'steps' => PesertaWizardService::steps($p, 'pekerjaan'),
+            'list' => $list, 'status' => $status, 'data' => $data,
             'tenderId' => $tenderId, 'tender' => $tender,
         ]);
     }

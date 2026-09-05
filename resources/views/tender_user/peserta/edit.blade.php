@@ -15,6 +15,7 @@
 </div>
 
 @include('tender_user.peserta.part.validation-alert')
+@include('tender_user.peserta.part.peserta-steps', ['steps' => $steps, 'activeKey' => 'perusahaan'])
 
 <form action="{{ route('peserta.update', [$data->id]) }}" method="POST" enctype="multipart/form-data">
     @csrf

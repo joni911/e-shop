@@ -14,6 +14,7 @@
 
 @include('tender_user.peserta.part.validation-alert')
 
+@include('tender_user.peserta.part.peserta-steps', ['steps' => $steps, 'activeKey' => 'pengalaman'])
 @include('tender_user.peserta.part.tender-head')
 
 <x-alert type="warning" title="Ketentuan Pengalaman" class="mb-4">

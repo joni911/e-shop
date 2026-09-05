@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateperalatanRequest;
 use App\Models\peserta;
 use App\Models\tender;
 use App\Services\FileUploadService;
+use App\Services\PesertaWizardService;
 use App\Services\TenderContext;
 use Illuminate\Support\Facades\Auth;
 
@@ -94,6 +95,7 @@ class PeralatanController extends Controller
         $list = peralatan::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
         return view('tender_user.peserta.peralatan.create', [
             'peralatan' => $p, 'peserta' => $p,
+            'steps' => PesertaWizardService::steps($p, 'peralatan'),
             'list' => $list, 'status' => $status,
             'tenderId' => $tenderId, 'tender' => $tender,
         ]);
@@ -115,6 +117,7 @@ class PeralatanController extends Controller
         $list = peralatan::where('peserta_id', $p->id)->where('tender_id', $tenderId)->paginate(10);
         return view('tender_user.peserta.peralatan.create', [
             'peralatan' => $p, 'peserta' => $p,
+            'steps' => PesertaWizardService::steps($p, 'peralatan'),
             'list' => $list, 'status' => $status, 'data' => $data,
             'tenderId' => $tenderId, 'tender' => $tender,
         ]);

@@ -276,10 +276,14 @@ class PesertaController extends Controller
 
     public function show_file_peserta($id,$pid)
     {
-        // $p = $
-        $data = peserta::join('tenders','tenders.id','pesertas.tender_id')
-        ->select('pesertas.*','tenders.nama as nama_tender')
-        ->findorfail($pid);
+        // Konteks halaman: $id = TENDER aktif (dari URL), $pid = peserta.
+        // Catatan: peserta.tender_id ≠ tender yg sedang dilihat — satu peserta bisa ikut
+        // banyak tender (daftar_pesertas) → SEMUA lookup per-tender memakai $id, bukan
+        // $data->tender_id (bug lama: file administrasi/teknis/penilaian hilang saat
+        // membuka tender kedua/dst karena terfilter tender registrasi awal).
+        $tender = tender::findorfail($id);
+        $data = peserta::findorfail($pid);
+        $data->nama_tender = $tender->nama;
 
         $penawaran_peserta=penawaran_peserta::where('peserta_id',$pid)->where('tender_id',$id)->first();
         // $penawaran_file = $penawaran_peserta->penawaran_peserta_file;
@@ -300,7 +304,7 @@ class PesertaController extends Controller
         ->get();
 
 
-        $berkas = tender_file_detail::where('tender_id',$data->tender_id)
+        $berkas = tender_file_detail::where('tender_id',$id)
         ->where('peserta_id',$data->id)
         ->get();
 
@@ -310,25 +314,25 @@ class PesertaController extends Controller
         // }
         $pemeriksanaan = $data->pemeriksaan;
 
-        $nilai = pemeriksaan::where('tender_id',$data->tender_id)
+        $nilai = pemeriksaan::where('tender_id',$id)
         ->orderBy('nilai','desc')
         ->get();
 
         $hak_akses = Auth::user();
 
-        $p_admin = penilaian_administrasi::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
-        $p_kualifikasi = penilaian_kualifikasi::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
-        $p_teknis = penilaian_teknis::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
-        $p_peserta = penilaian_penawaran_peserta::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->first();
+        $p_admin = penilaian_administrasi::where('peserta_id',$pid)->where('tender_id',$id)->first();
+        $p_kualifikasi = penilaian_kualifikasi::where('peserta_id',$pid)->where('tender_id',$id)->first();
+        $p_teknis = penilaian_teknis::where('peserta_id',$pid)->where('tender_id',$id)->first();
+        $p_peserta = penilaian_penawaran_peserta::where('peserta_id',$pid)->where('tender_id',$id)->first();
         $point = $this->point_tender($p_admin,$p_kualifikasi,$p_teknis,$p_peserta);;
-        $admin = administrasi_detail::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->get();
-        $file_rkk = file_teknis::where('peserta_id',$pid)->where('tender_id',$data->tender_id)->get();
+        $admin = administrasi_detail::where('peserta_id',$pid)->where('tender_id',$id)->get();
+        $file_rkk = file_teknis::where('peserta_id',$pid)->where('tender_id',$id)->get();
         return view('tender_user.peserta.files.show',
         ['data'=>$data,'file'=>$file,
         'komen'=>$komen,'berkas'=>$berkas,'hak_akses'=>$hak_akses,
         'pemeriksaan' => $pemeriksanaan, 'nilai'=>$nilai,'pp'=>$penawaran_peserta,
         'admin' =>$admin,'pa'=>$p_admin,'pk'=>$p_kualifikasi,'pt'=>$p_teknis,'p_peserta'=>$p_peserta,
-        'point' => $point,'file_rkk'=>$file_rkk
+        'point' => $point,'file_rkk'=>$file_rkk, 'tender' => $tender
         ]);
 
 

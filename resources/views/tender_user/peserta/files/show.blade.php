@@ -38,7 +38,7 @@
 
 {{-- Kelengkapan berkas wajib --}}
 @php
-    $wajibFiles = $data->tender->tender_file ?? collect();
+    $wajibFiles = $tender->tender_file ?? collect();
     $uploadedIds = $berkas->pluck('tender_file_id')->all();
     $totalWajib = $wajibFiles->count();
     $totalUploaded = collect($uploadedIds)->unique()->count();

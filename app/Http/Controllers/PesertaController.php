@@ -129,6 +129,14 @@ class PesertaController extends Controller
             return redirect()->route('peserta.edit',[$user->peserta->id]);
         }
         $default = tender::where('default',1)->first();
+        // Tanpa tender default (mis. skenario dev 1 tender non-default) → pakai tender terbaru
+        // supaya /peserta/create tetap membuka form, bukan error 500.
+        if (!$default) {
+            $default = tender::orderBy('id','desc')->first();
+            if (!$default) {
+                return redirect()->route('peserta.index');
+            }
+        }
         $data = tender::join('jenis_pengadaans','jenis_pengadaans.id','tenders.jenis_pegadaan_id')
             ->join('jenis_kontraks','jenis_kontraks.id','tenders.jenis_kontrak_id')
             ->join('metode_pengadaans','metode_pengadaans.id','tenders.metode_pengadaan_id')

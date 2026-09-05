@@ -49,12 +49,14 @@ class DevSingleTenderSeeder extends Seeder
         // ── 3. Satu tender uji coba lengkap (idempotent; jadwal di-reset ke hari ini) ──
         $this->call(TenderTestingSeeder::class);
 
-        // Registrasi peserta baru (/peserta/create) membutuhkan tender ber-flag default=1.
+        // Opsi B: tender NON-default (default=0) → tampil di beranda/tender_home & bisa
+        // didaftar peserta. Peserta TANPA profil diarahkan (TenderHomeController::show)
+        // ke /peserta/{id} (form registrasi profil + berkas utk tender tsb).
         $t = tender::where('nama', 'Pengadaan Meubelair Kantor (Tender Uji Coba)')->first();
-        if ($t && (int) $t->default !== 1) {
-            $t->default = 1;
+        if ($t && (int) $t->default !== 0) {
+            $t->default = 0;
             $t->save();
-            $this->command?->info('[ok] Tender uji ditandai default=1 (untuk alur registrasi /peserta/create).');
+            $this->command?->info('[ok] Tender uji default=0 (muncul di beranda, peserta daftar lewat detail tender /peserta/{id}).');
         }
 
         // ── 4. Ringkasan ─────────────────────────────────────────────────────

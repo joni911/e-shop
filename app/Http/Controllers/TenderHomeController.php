@@ -82,7 +82,9 @@ class TenderHomeController extends Controller
         ->findorfail($id);
 
         if (!$Peserta) {
-            return redirect()->route('peserta.index');
+            // Belum punya profil perusahaan → bawa langsung ke form registrasi tender ini
+            // (peserta.show menampilkan form pendaftaran profil + berkas wajib tender tsb).
+            return redirect()->route('peserta.show', [$data->id]);
         }
         $daftar_peserta = daftar_peserta::where('peserta_id',$Peserta->id)
         ->where('tender_id',$data->id)->first();
